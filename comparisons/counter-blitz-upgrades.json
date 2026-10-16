@@ -112,11 +112,11 @@
       "id": "cheer",
       "name": "Cheer Every Turn",
       "recommended": true,
-      "pitch": "Make Tidus's Cheer fire every turn: cheap evasive creatures, counters at the start of each combat, and unblockability for anything with a counter. A lower curve and constant card draw.",
+      "pitch": "Make Tidus's Cheer fire every turn: cheap evasive creatures, counters at the start of each combat, and unblockability for anything with a counter. Tekuthal doubles each Cheer's proliferate, and Kutzil stops opponents from responding while you attack.",
       "plays_like": "Fast, evasive pressure; draws every turn",
       "metrics": {
         "Evasive counter creatures": "10+",
-        "Proliferate sources": 5,
+        "Proliferate sources": "5 (×2 with Tekuthal)",
         "Board wipes": 2,
         "Game Changers": 1,
         "Counter boosters": 3
@@ -124,8 +124,8 @@
       "swaps": [
         {
           "in": "Luminarch Aspirant",
-          "out": "Gatta and Luzzu",
-          "why": "2 mana: a +1/+1 counter on a creature at the start of every combat, so Tidus always has counters to move. Gatta and Luzzu is a one-shot damage trick."
+          "out": "Generous Patron",
+          "why": "2 mana: a +1/+1 counter on a creature at the start of every combat, so Tidus always has counters to move. Generous Patron only draws when you put counters on creatures you don't control; with Lulu gone, nothing in the deck does that."
         },
         {
           "in": "Silent Hallcreeper",
@@ -143,14 +143,14 @@
           "why": "2-mana flyer that proliferates on hit. Promise of Loyalty makes you sacrifice your own creatures too."
         },
         {
-          "in": "Ozolith, the Shattered Spire",
+          "in": "Conclave Mentor",
           "out": "Yuna's Decision",
-          "why": "Every +1/+1 counter placement gets +1, so each counter source hits harder. It can also add a counter itself, or cycle. Yuna's Decision is a clunky 4-mana sorcery."
+          "why": "+1 extra counter on every placement (including Tidus's moves) on a 2-mana creature. The same job as Ozolith for €0.26. Yuna's Decision is a clunky 4-mana sorcery."
         },
         {
-          "in": "Rosa, Resolute White Mage",
+          "in": "Tekuthal, Inquiry Dominus",
           "out": "Lulu, Stern Guardian",
-          "why": "A +1/+1 counter and lifelink on a creature each combat. Lulu is defensive; this deck wants to attack."
+          "why": "A 3/5 flyer that doubles every proliferate: Tidus's Cheer, Thrummingbird and Inexorable Tide all proliferate twice. Lulu is defensive; this deck wants to attack."
         },
         {
           "in": "Herald of Secret Streams",
@@ -168,9 +168,9 @@
           "why": "2-mana instant: +1/+1 counter and protection from a colour. Saves a creature and pushes damage through. Forgotten Ancient is slow."
         },
         {
-          "in": "Training Regimen",
-          "out": "Sunscorch Regent",
-          "why": "A counter every combat, and trample for everything with a counter. Sunscorch Regent is a 5-drop that mostly gains life."
+          "in": "Kutzil, Malamet Exemplar",
+          "out": "Altered Ego",
+          "why": "Draws a card whenever creatures pumped by counters hit a player, and opponents can't cast spells during your turn, so no removal or tricks while your small evasive creatures attack. Altered Ego is a 4+ mana copy effect with no evasion."
         }
       ],
       "picked": true
