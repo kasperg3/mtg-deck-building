@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Deck Upgrade Comparison</title>
+<style>
+  :root {
+    --bg: #f6f5f2; --surface: #ffffff; --surface-2: #efede8; --text: #1d1c1a; --muted: #6b6862;
+    --border: #dcd8d0; --accent: #4f46e5; --in: #15803d; --in-bg: #dcfce7; --out: #b91c1c; --out-bg: #fee2e2;
+    --bar: #4f46e5; --bar-ghost: #c7c3ba; --star: #b45309;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #141413; --surface: #1e1d1b; --surface-2: #2a2926; --text: #ecebe7; --muted: #a29f97;
+      --border: #3a3834; --accent: #8b85ff; --in: #4ade80; --in-bg: #14321f; --out: #f87171; --out-bg: #3b1717;
+      --bar: #8b85ff; --bar-ghost: #4a4843; --star: #fbbf24;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #141413; --surface: #1e1d1b; --surface-2: #2a2926; --text: #ecebe7; --muted: #a29f97;
+    --border: #3a3834; --accent: #8b85ff; --in: #4ade80; --in-bg: #14321f; --out: #f87171; --out-bg: #3b1717;
+    --bar: #8b85ff; --bar-ghost: #4a4843; --star: #fbbf24;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text);
+    font: 15px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 24px 16px 80px; }
+  h1 { font-size: 28px; margin: 0 0 4px; }
+  h2 { font-size: 21px; margin: 40px 0 12px; }
+  h3 { font-size: 17px; margin: 0 0 6px; }
+  p { margin: 0 0 10px; }
+  .muted { color: var(--muted); }
+  .small { font-size: 13px; }
+  a { color: var(--accent); }
+
+  header.top { display: flex; gap: 20px; align-items: flex-start; }
+  header.top img { width: 150px; border-radius: 8px; flex: none; cursor: zoom-in; }
+  nav.jump { position: sticky; top: 0; z-index: 5; background: var(--bg); border-bottom: 1px solid var(--border);
+    display: flex; gap: 6px; flex-wrap: wrap; padding: 10px 0; margin-top: 20px; }
+  nav.jump a { text-decoration: none; padding: 4px 10px; border-radius: 999px; background: var(--surface-2);
+    color: var(--text); font-size: 13px; }
+  nav.jump a:hover { background: var(--accent); color: #fff; }
+
+  .panel { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 16px; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  ul.notes { margin: 0; padding-left: 18px; }
+  ul.notes li { margin-bottom: 4px; }
+
+  table { border-collapse: collapse; width: 100%; font-size: 14px; }
+  th, td { text-align: left; padding: 7px 10px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  th { color: var(--muted); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: .03em; }
+  td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .table-scroll { overflow-x: auto; }
+  .bad { color: var(--out); font-weight: 600; }
+  .rec { color: var(--star); font-weight: 600; }
+
+  .curve { display: flex; align-items: flex-end; gap: 4px; height: 110px; padding-top: 14px; }
+  .curve .col { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%; }
+  .curve .bars { position: relative; width: 100%; flex: 1; }
+  .curve .ghost, .curve .fill { position: absolute; bottom: 0; border-radius: 3px 3px 0 0; }
+  .curve .ghost { left: 0; right: 0; border: 1.5px dashed var(--bar-ghost); border-bottom: none; }
+  .curve .fill { left: 18%; right: 18%; background: var(--bar); }
+  .curve .val { font-size: 11px; font-variant-numeric: tabular-nums; position: absolute; left: 0; right: 0; text-align: center; }
+  .curve .lbl { font-size: 11px; color: var(--muted); margin-top: 3px; }
+  .legend { font-size: 12px; color: var(--muted); display: flex; gap: 14px; margin-top: 6px; }
+  .legend span::before { content: ""; display: inline-block; width: 10px; height: 10px; margin-right: 5px; vertical-align: -1px; border-radius: 2px; }
+  .legend .l-fill::before { background: var(--bar); }
+  .legend .l-ghost::before { border: 1.5px dashed var(--bar-ghost); }
+
+  .curves { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
+
+  section.dir { margin-top: 44px; }
+  .dir-head { display: flex; justify-content: space-between; gap: 16px; align-items: baseline; flex-wrap: wrap; }
+  .pill { display: inline-block; font-size: 12px; padding: 2px 8px; border-radius: 999px; background: var(--surface-2); margin-left: 6px; }
+  .pill.rec { background: var(--star); color: #fff; }
+
+  .swaps { display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 14px; margin-top: 14px; }
+  .swap { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 12px; }
+  .swap .pair { display: grid; grid-template-columns: 1fr 22px 1fr; align-items: center; gap: 6px; }
+  .swap .arrow { text-align: center; color: var(--muted); font-size: 18px; }
+  .swap .why { font-size: 13px; margin-top: 10px; color: var(--text); }
+  .card { position: relative; }
+  .card img { width: 100%; display: block; border-radius: 4.75% / 3.5%; cursor: zoom-in; background: var(--surface-2); aspect-ratio: 488/680; }
+  .card.out img { filter: grayscale(.55) brightness(.9); }
+  .card .tag { position: absolute; top: 6px; left: 6px; font-size: 11px; font-weight: 700; padding: 1px 7px; border-radius: 4px; letter-spacing: .04em; }
+  .card.in .tag { background: var(--in-bg); color: var(--in); }
+  .card.out .tag { background: var(--out-bg); color: var(--out); }
+  .card .meta { font-size: 12px; margin-top: 5px; display: flex; justify-content: space-between; gap: 6px; }
+  .card .meta .price { font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .card .name-fallback { aspect-ratio: 488/680; border: 1px dashed var(--border); border-radius: 8px; display: flex; align-items: center; justify-content: center; text-align: center; padding: 10px; font-weight: 600; }
+  .totals { font-size: 14px; margin-top: 10px; }
+  .pill.picked { background: var(--in-bg); color: var(--in); font-weight: 600; }
+  details.buy { margin-top: 16px; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; }
+  details.buy[open] { border-color: var(--accent); }
+  details.buy summary { cursor: pointer; padding: 12px 16px; font-weight: 600; list-style: none; display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+  details.buy summary::-webkit-details-marker { display: none; }
+  details.buy summary::before { content: "▸"; margin-right: 6px; color: var(--muted); }
+  details.buy[open] summary::before { content: "▾"; }
+  details.buy summary .t { flex: 1; }
+  details.buy .body { padding: 0 16px 16px; display: grid; grid-template-columns: 1.4fr 1fr; gap: 16px; }
+  details.buy textarea { width: 100%; min-height: 240px; font: 13px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace;
+    background: var(--surface-2); color: var(--text); border: 1px solid var(--border); border-radius: 8px; padding: 10px; resize: vertical; }
+  .copy-row { display: flex; gap: 8px; align-items: center; margin-bottom: 8px; flex-wrap: wrap; }
+  button.copy { font: inherit; font-size: 13px; font-weight: 600; padding: 6px 14px; border-radius: 8px; border: none; background: var(--accent); color: #fff; cursor: pointer; }
+  button.copy:hover { filter: brightness(1.1); }
+  .copied { font-size: 13px; color: var(--in); }
+  @media (max-width: 720px) { details.buy .body { grid-template-columns: 1fr; } }
+
+  #lightbox { position: fixed; inset: 0; background: rgba(0,0,0,.8); display: none; align-items: center; justify-content: center; gap: 12px; z-index: 50; padding: 16px; cursor: zoom-out; }
+  #lightbox.open { display: flex; }
+  #lightbox img { max-height: 90vh; max-width: min(46vw, 488px); border-radius: 18px; }
+  #lightbox img:only-child { max-width: 92vw; }
+
+  footer { margin-top: 50px; font-size: 12px; color: var(--muted); }
+  @media (max-width: 720px) {
+    header.top { flex-direction: column; }
+    header.top img { width: 120px; }
+    .grid2 { grid-template-columns: 1fr; }
+    .swaps { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap" id="app"></div>
+<div id="lightbox"></div>
+<script id="data" type="application/json">{"title": "World Shaper \u2014 Upgrade Options", "deck": "decks/world-shaper.md", "date": "2026-10-16", "budget_eur": 40, "summary": "Hearthhull, the Worldseed drains each opponent for 2 whenever you sacrifice a land, and once stationed it trades lands for cards. The stock list ramps far more than it needs to, is top-heavy, and has no way to protect its key pieces. Budget: up to \u20ac40 per deck (Cardmarket). The picked direction uses that budget; the other directions were sized for $20.", "analysis": {"notes": ["Top-heavy: 15 nonland cards cost 5 or more (World Breaker 7, Omnath 7, three 6-drops, nine 5-drops).", "Too much ramp: 42 lands plus ~15 ramp pieces. Some ramp spells can become engines.", "No protection at all for the commander or the board.", "Interaction is good: ~10 spot removal, 6 at instant speed, 4 board wipes.", "Mana base: Wastes is a colourless basic in a three-colour deck and should go.", "Commander check: the card search flags that Hearthhull has no 'can be your commander' text (it's an artifact, not a creature). It is the precon's face commander, so check with your playgroup. Lord Windgrace (in Scorched Earth Drain) and Szarel can legally be your commander."], "interaction": [{"category": "Spot removal", "stock": 10, "target": "8\u201310", "cards": ["Infernal Grasp", "Rakdos Charm", "Tear Asunder", "Beast Within", "Putrefy", "Windgrace's Judgment", "Binding the Old Gods", "Mayhem Devil", "Omnath, Locus of Rage", "World Breaker"]}, {"category": "Board wipes", "stock": 4, "target": "2\u20133", "cards": ["Blasphemous Act", "Gaze of Granite", "Planetary Annihilation", "Pest Infestation"]}, {"category": "Instant-speed answers", "stock": 6, "target": "5+", "cards": ["Infernal Grasp", "Rakdos Charm", "Tear Asunder", "Beast Within", "Putrefy", "Windgrace's Judgment"]}, {"category": "Protection", "stock": 0, "target": "2\u20133", "low": true, "cards": []}, {"category": "Card draw", "stock": 9, "target": "8\u201310", "cards": ["Night's Whisper", "Tireless Tracker", "Sprouting Goblin", "Evendo Brushrazer", "Korvold, Fae-Cursed King", "The Gitrog Monster", "Escape to the Wilds", "Eumidian Wastewaker", "Hearthhull (commander)"]}, {"category": "Ramp", "stock": 15, "target": "8\u201310", "low": true, "cards": ["Sol Ring", "Arcane Signet", "Farseek", "Nature's Lore", "Cultivate", "Harrow", "Roiling Regrowth", "Skyshroud Claim", "Springbloom Druid", "Oracle of Mul Daya", "Worldsoul's Rage", "Horizon Explorer", "Aftermath Analyst", "Exploration Broodship", "Splendid Reclamation"]}], "stock_metrics": {"Lands": 42, "Ramp pieces": "~15", "Protection": 0, "Free land-sac outlets": 0, "Game Changers": 0}}, "core": {"name": "Core package", "description": "Protection for your key permanents (Heroic Intervention stops a board wipe; Tamiyo's Safekeeping protects Hearthhull before it's a creature), plus a free outlet that turns any land into a 2-life drain with Hearthhull. It also removes the colourless Wastes.", "swaps": [{"in": "Tamiyo's Safekeeping", "out": "Satyr Wayfinder", "why": "One mana: hexproof and indestructible on any permanent, including Hearthhull before it becomes a creature. Satyr Wayfinder is a weak 2-drop that only digs for a land."}, {"in": "Heroic Intervention", "out": "Planetary Annihilation", "why": "Instant: all your permanents gain hexproof and indestructible, which stops a board wipe or targeted removal. Planetary Annihilation makes every player sacrifice down to six lands; you're the land deck, so it hurts you most."}, {"in": "Zuran Orb", "out": "Wastes", "why": "0 mana: sacrifice a land and gain 2 life. With Hearthhull, each opponent also loses 2, so any spare land becomes a drain, at instant speed. Wastes produces colourless mana in a three-colour deck."}], "cost_usd": 15.18, "cost_eur": 15.29}, "directions": [{"id": "drain", "name": "Scorched Earth Drain", "recommended": true, "pitch": "Sacrifice lands every turn, replay them from the graveyard, and let Hearthhull drain the table 2 life at a time. Ramp spells become sacrifice outlets, graveyard-land engines and landfall damage.", "plays_like": "Burns the table out with land sacrifices", "metrics": {"Lands": 41, "Ramp pieces": "~13", "Protection": 3, "Free land-sac outlets": 3, "Game Changers": 0}, "swaps": [{"in": "Ramunap Excavator", "out": "Skyshroud Claim", "why": "Play lands from your graveyard, so every sacrificed land comes back. Skyshroud Claim is a fourth 4-mana ramp spell."}, {"in": "Conduit of Worlds", "out": "Cultivate", "why": "A second way to replay lands from your graveyard, and it can also recast a permanent from there. Cultivate is redundant ramp."}, {"in": "Sylvan Safekeeper", "out": "Juri, Master of the Revue", "why": "Sacrifice a land: a creature gains shroud. That's free protection and a free 2-point drain with Hearthhull. Juri only grows from creatures dying, not lands."}, {"in": "Tunneling Geopede", "out": "Centaur Vinecrasher", "why": "Every land that enters pings each opponent for 1, so replaying sacrificed lands means extra damage."}, {"in": "Retreat to Hagra", "out": "Formless Genesis", "why": "Each land that enters drains each opponent 1, or gives a creature deathtouch."}, {"in": "Lord Windgrace", "out": "Moraug, Fury of Akoum", "why": "Planeswalker: +2 draws extra cards from discarded lands, \u22123 returns two lands from the graveyard. It can also legally be your commander. Moraug is a 6-drop that only pays off if you attack."}, {"in": "Ob Nixilis, the Fallen", "out": "World Breaker", "why": "Every land that enters drains a player for 3 and grows Ob Nixilis. World Breaker costs 7."}], "picked": true, "curve": {"buckets": {"0": 1, "1": 6, "2": 11, "3": 19, "4": 7, "5": 10, "6": 2, "7+": 2}, "average": 3.29, "nonland": 58}, "cost_usd": 37.34, "cost_eur": 29.63, "out_value_usd": 5.07, "out_value_eur": 5.0, "game_changers": []}, {"id": "landfall", "name": "Landfall Army", "pitch": "Turn the deck's extra land drops into creature tokens, mana and damage. Hearthhull's extra land plays and the sacrifice-and-replay loop trigger landfall several times a turn.", "plays_like": "Wide board of tokens; explosive turns", "metrics": {"Lands": 41, "Ramp pieces": "~13 (+Treasure)", "Protection": 2, "Free land-sac outlets": 1, "Game Changers": 0}, "swaps": [{"in": "Tireless Provisioner", "out": "Cultivate", "why": "Every land that enters makes a Treasure or a Food. Ramp that keeps paying off, unlike a one-shot sorcery."}, {"in": "Mina and Denn, Wildborn", "out": "Skyshroud Claim", "why": "Play an extra land each turn, and return lands to your hand to replay them for more landfall."}, {"in": "Tunneling Geopede", "out": "Juri, Master of the Revue", "why": "Every land that enters pings each opponent for 1."}, {"in": "Ob Nixilis, the Fallen", "out": "Centaur Vinecrasher", "why": "Every land that enters drains a player for 3 and grows Ob Nixilis."}, {"in": "Sporemound", "out": "Formless Genesis", "why": "A 1/1 Saproling on every landfall; with extra land drops and replays, that's several tokens a turn."}, {"in": "Phylath, World Sculptor", "out": "God-Eternal Bontu", "why": "Makes a Plant per basic land when it enters, and every landfall puts four +1/+1 counters on a Plant."}, {"in": "Avenger of Zendikar", "out": "World Breaker", "why": "A same-cost 7-drop that wins games: a 0/1 Plant per land you control, and every landfall grows them all. It also fuels Phylath."}], "curve": {"buckets": {"0": 1, "1": 5, "2": 11, "3": 18, "4": 7, "5": 9, "6": 4, "7+": 3}, "average": 3.47, "nonland": 58}, "cost_usd": 22.75, "cost_eur": 21.91, "out_value_usd": 3.69, "out_value_eur": 2.93, "game_changers": []}, {"id": "loam", "name": "Lands Recursion", "pitch": "Treat your graveyard as a second hand of lands. Loop Life from the Loam, replay lands with Crucible effects, and draw cards off discarded lands. This direction grinds out the longest games.", "plays_like": "Grindy value; never runs out of cards", "metrics": {"Lands": 41, "Ramp pieces": "~13", "Protection": 2, "Free land-sac outlets": 1, "Game Changers": 0}, "swaps": [{"in": "Life from the Loam", "out": "Cultivate", "why": "Return three lands from your graveyard to your hand, and dredge it back instead of drawing to keep the loop going. Endless fuel for Hearthhull."}, {"in": "Conduit of Worlds", "out": "Skyshroud Claim", "why": "Play lands from your graveyard, and recast a permanent from there each turn."}, {"in": "Marwyn, the Preserver", "out": "Moraug, Fury of Akoum", "why": "2 mana: your lands have hexproof, and for {2} you return a land from your graveyard to your hand. Moraug is a 6-drop."}, {"in": "Tilling Treefolk", "out": "Juri, Master of the Revue", "why": "Returns two lands from your graveyard to your hand when it enters, for more sacrifice fuel."}, {"in": "Turntimber Sower", "out": "God-Eternal Bontu", "why": "Makes a Plant whenever lands hit your graveyard (each Hearthhull activation), and can return a land by sacrificing three creatures."}, {"in": "Floral Evoker", "out": "Rampaging Baloths", "why": "Grows on landfall; discard a creature to put a land from your graveyard onto the battlefield."}, {"in": "Countryside Crusher", "out": "World Breaker", "why": "Mills lands off the top every upkeep (Loam fuel) and grows whenever a land hits your graveyard. A 3-drop instead of a 7-drop."}], "curve": {"buckets": {"0": 1, "1": 5, "2": 13, "3": 21, "4": 8, "5": 7, "6": 1, "7+": 2}, "average": 3.16, "nonland": 58}, "cost_usd": 23.27, "cost_eur": 22.6, "out_value_usd": 5.23, "out_value_eur": 5.36, "game_changers": []}], "recommendation": "Scorched Earth Drain uses Hearthhull's own text best: every free sacrifice outlet and every replayed land is another drain, and Geopede, Sabotender, Hagra and Ob Nixilis add damage on top. All three directions stay under $20 including the core package.", "commanders": ["Hearthhull, the Worldseed"], "stock_curve": {"buckets": {"0": 0, "1": 4, "2": 12, "3": 18, "4": 8, "5": 9, "6": 3, "7+": 3}, "average": 3.51, "nonland": 57}, "cards": {"world breaker": {"name": "World Breaker", "cmc": 7.0, "type_line": "Creature \u2014 Eldrazi", "mana_cost": "{6}{G}", "game_changer": false, "usd": 0.29, "eur": 0.3, "usd_set": "Edge of Eternities Commander", "eur_set": "Edge of Eternities Commander", "images": [{"normal": "https://cards.scryfall.io/normal/front/d/2/d25856c9-cb3d-44d9-905e-007f1af65c06.jpg?1783906029", "large": "https://cards.scryfall.io/large/front/d/2/d25856c9-cb3d-44d9-905e-007f1af65c06.jpg?1783906029"}], "scryfall_uri": "https://scryfall.com/card/eoc/112/world-breaker"}, "god-eternal bontu": {"name": "God-Eternal Bontu", "cmc": 5.0, "type_line": "Legendary Creature \u2014 Zombie God", "mana_cost": "{3}{B}{B}", "game_changer": false, "usd": 0.28, "eur": 0.39, "usd_set": "Foundations Commander", "eur_set": "Foundations Commander", "images": [{"normal": "https://cards.scryfall.io/normal/front/0/0/0070d335-d42d-4ccc-b828-405b7dd00868.jpg?1789752943", "large": "https://cards.scryfall.io/large/front/0/0/0070d335-d42d-4ccc-b828-405b7dd00868.jpg?1789752943"}], "scryfall_uri": "https://scryfall.com/card/fdc/101/god-eternal-bontu"}, "zuran orb": {"name": "Zuran Orb", "cmc": 0.0, "type_line": "Artifact", "mana_cost": "{0}", "game_changer": false, "usd": 3.0, "eur": 1.59, "usd_set": "Modern Horizons 2", "eur_set": "Pro Tour Collector Set", "images": [{"normal": "https://cards.scryfall.io/normal/front/6/1/618c8ecc-686d-41de-b9b1-1a7ee9cc7c14.jpg?1783926775", "large": "https://cards.scryfall.io/large/front/6/1/618c8ecc-686d-41de-b9b1-1a7ee9cc7c14.jpg?1783926775"}], "scryfall_uri": "https://scryfall.com/card/mh2/300/zuran-orb"}, "wastes": {"name": "Wastes", "cmc": 0.0, "type_line": "Basic Land", "mana_cost": "", "game_changer": false, "usd": 0.75, "eur": 0.29, "usd_set": "Oath of the Gatewatch", "eur_set": "Final Fantasy", "images": [{"normal": "https://cards.scryfall.io/normal/front/b/a/baf8f4f2-9f25-4cd2-8d78-1041e134aeac.jpg?1783906001", "large": "https://cards.scryfall.io/large/front/b/a/baf8f4f2-9f25-4cd2-8d78-1041e134aeac.jpg?1783906001"}], "scryfall_uri": "https://scryfall.com/card/eoc/191/wastes"}, "heroic intervention": {"name": "Heroic Intervention", "cmc": 2.0, "type_line": "Instant", "mana_cost": "{1}{G}", "game_changer": false, "usd": 9.1, "eur": 9.81, "usd_set": "Marvel Universe", "eur_set": "Marvel Universe", "images": [{"normal": "https://cards.scryfall.io/normal/front/0/b/0bdaecd3-fc71-4c86-a65e-27681e1ba41f.jpg?1783912355", "large": "https://cards.scryfall.io/large/front/0/b/0bdaecd3-fc71-4c86-a65e-27681e1ba41f.jpg?1783912355"}], "scryfall_uri": "https://scryfall.com/card/pip/202/heroic-intervention"}, "avenger of zendikar": {"name": "Avenger of Zendikar", "cmc": 7.0, "type_line": "Creature \u2014 Elemental", "mana_cost": "{5}{G}{G}", "game_changer": false, "usd": 0.49, "eur": 0.62, "usd_set": "Modern Horizons 3 Commander", "eur_set": "Lorwyn Eclipsed Commander", "images": [{"normal": "https://cards.scryfall.io/normal/front/c/6/c6f1e60f-a195-4590-80b0-86767de6c423.jpg?1783904552", "large": "https://cards.scryfall.io/large/front/c/6/c6f1e60f-a195-4590-80b0-86767de6c423.jpg?1783904552"}], "scryfall_uri": "https://scryfall.com/card/ecc/98/avenger-of-zendikar"}, "cultivate": {"name": "Cultivate", "cmc": 3.0, "type_line": "Sorcery", "mana_cost": "{2}{G}", "game_changer": false, "usd": 0.39, "eur": 0.23, "usd_set": "Starter Commander Decks", "eur_set": "Masters 25", "images": [{"normal": "https://cards.scryfall.io/normal/front/e/6/e60deb92-f7dd-4f4e-9036-e47dd586f985.jpg?1783903229", "large": "https://cards.scryfall.io/large/front/e/6/e60deb92-f7dd-4f4e-9036-e47dd586f985.jpg?1783903229"}], "scryfall_uri": "https://scryfall.com/card/msc/172/cultivate"}, "sporemound": {"name": "Sporemound", "cmc": 5.0, "type_line": "Creature \u2014 Fungus", "mana_cost": "{3}{G}{G}", "game_changer": false, "usd": 0.16, "eur": 0.14, "usd_set": "The List", "eur_set": "Starter Commander Decks", "images": [{"normal": "https://cards.scryfall.io/normal/front/9/0/90594c9c-95a5-4d3c-9005-863fa710cdbd.jpg?1783908620", "large": "https://cards.scryfall.io/large/front/9/0/90594c9c-95a5-4d3c-9005-863fa710cdbd.jpg?1783908620"}], "scryfall_uri": "https://scryfall.com/card/j25/719/sporemound"}, "satyr wayfinder": {"name": "Satyr Wayfinder", "cmc": 2.0, "type_line": "Creature \u2014 Satyr", "mana_cost": "{1}{G}", "game_changer": false, "usd": 0.11, "eur": 0.09, "usd_set": "Commander 2016", "eur_set": "Ultimate Masters", "images": [{"normal": "https://cards.scryfall.io/normal/front/8/b/8bbbe65d-7162-42fb-94ee-d835d6c3f02a.jpg?1783906031", "large": "https://cards.scryfall.io/large/front/8/b/8bbbe65d-7162-42fb-94ee-d835d6c3f02a.jpg?1783906031"}], "scryfall_uri": "https://scryfall.com/card/eoc/106/satyr-wayfinder"}, "tireless provisioner": {"name": "Tireless Provisioner", "cmc": 3.0, "type_line": "Creature \u2014 Elf Scout", "mana_cost": "{2}{G}", "game_changer": false, "usd": 2.39, "eur": 1.93, "usd_set": "Foundations Jumpstart", "eur_set": "Modern Horizons 2", "images": [{"normal": "https://cards.scryfall.io/normal/front/5/d/5dbc2162-238d-492b-b629-94f771230d92.jpg?1783908616", "large": "https://cards.scryfall.io/large/front/5/d/5dbc2162-238d-492b-b629-94f771230d92.jpg?1783908616"}], "scryfall_uri": "https://scryfall.com/card/j25/728/tireless-provisioner"}, "turntimber sower": {"name": "Turntimber Sower", "cmc": 3.0, "type_line": "Creature \u2014 Elf Druid", "mana_cost": "{2}{G}", "game_changer": false, "usd": 0.4, "eur": 0.27, "usd_set": "Outlaws of Thunder Junction Commander", "eur_set": "Outlaws of Thunder Junction Commander", "images": [{"normal": "https://cards.scryfall.io/normal/front/1/1/11bdff1d-4542-4c71-af00-731d6651b492.jpg?1783911905", "large": "https://cards.scryfall.io/large/front/1/1/11bdff1d-4542-4c71-af00-731d6651b492.jpg?1783911905"}], "scryfall_uri": "https://scryfall.com/card/otc/211/turntimber-sower"}, "moraug, fury of akoum": {"name": "Moraug, Fury of Akoum", "cmc": 6.0, "type_line": "Legendary Creature \u2014 Minotaur Warrior", "mana_cost": "{4}{R}{R}", "game_changer": false, "usd": 1.66, "eur": 2.46, "usd_set": "Edge of Eternities Commander", "eur_set": "Zendikar Rising Promos", "images": [{"normal": "https://cards.scryfall.io/normal/front/4/4/4481eab8-9e7d-4db8-b1f2-fdf5ee1919a2.jpg?1783906037", "large": "https://cards.scryfall.io/large/front/4/4/4481eab8-9e7d-4db8-b1f2-fdf5ee1919a2.jpg?1783906037"}], "scryfall_uri": "https://scryfall.com/card/eoc/89/moraug-fury-of-akoum"}, "ob nixilis, the fallen": {"name": "Ob Nixilis, the Fallen", "cmc": 5.0, "type_line": "Legendary Creature \u2014 Demon", "mana_cost": "{3}{B}{B}", "game_changer": false, "usd": 2.79, "eur": 2.44, "usd_set": "Tarkir: Dragonstorm Commander", "eur_set": "Tarkir: Dragonstorm Commander", "images": [{"normal": "https://cards.scryfall.io/normal/front/1/5/1515b0e0-ef8f-43c7-8097-ca7eba4fd44a.jpg?1783923464", "large": "https://cards.scryfall.io/large/front/1/5/1515b0e0-ef8f-43c7-8097-ca7eba4fd44a.jpg?1783923464"}], "scryfall_uri": "https://scryfall.com/card/plst/IMA-101/ob-nixilis-the-fallen"}, "rampaging baloths": {"name": "Rampaging Baloths", "cmc": 6.0, "type_line": "Creature \u2014 Beast", "mana_cost": "{4}{G}{G}", "game_changer": false, "usd": 0.31, "eur": 0.26, "usd_set": "Zendikar Rising Commander", "eur_set": "Foundations", "images": [{"normal": "https://cards.scryfall.io/normal/front/8/4/84aa18de-6acc-46cc-8e28-3046790a6751.jpg?1783906033", "large": "https://cards.scryfall.io/large/front/8/4/84aa18de-6acc-46cc-8e28-3046790a6751.jpg?1783906033"}], "scryfall_uri": "https://scryfall.com/card/eoc/104/rampaging-baloths"}, "life from the loam": {"name": "Life from the Loam", "cmc": 2.0, "type_line": "Sorcery", "mana_cost": "{1}{G}", "game_changer": false, "usd": 4.95, "eur": 4.69, "usd_set": "Duel Decks: Izzet vs. Golgari", "eur_set": "Duel Decks: Izzet vs. Golgari", "images": [{"normal": "https://cards.scryfall.io/normal/front/5/9/59927e3b-65bc-4ab6-ad7b-6f558ccca6a8.jpg?1783913303", "large": "https://cards.scryfall.io/large/front/5/9/59927e3b-65bc-4ab6-ad7b-6f558ccca6a8.jpg?1783913303"}], "scryfall_uri": "https://scryfall.com/card/rvr/148/life-from-the-loam"}, "tamiyo's safekeeping": {"name": "Tamiyo's Safekeeping", "cmc": 1.0, "type_line": "Instant", "mana_cost": "{G}", "game_changer": false, "usd": 3.08, "eur": 3.89, "usd_set": "Foundations Commander", "eur_set": "Foundations Commander", "images": [{"normal": "https://cards.scryfall.io/normal/front/1/d/1d167110-e5dd-409f-8744-016c26a14f1d.jpg?1789753298", "large": "https://cards.scryfall.io/large/front/1/d/1d167110-e5dd-409f-8744-016c26a14f1d.jpg?1789753298"}], "scryfall_uri": "https://scryfall.com/card/fdc/233/tamiyos-safekeeping"}, "conduit of worlds": {"name": "Conduit of Worlds", "cmc": 4.0, "type_line": "Artifact", "mana_cost": "{2}{G}{G}", "game_changer": false, "usd": 1.35, "eur": 1.36, "usd_set": "Marvel Super Heroes Commander", "eur_set": "Marvel Super Heroes Commander", "images": [{"normal": "https://cards.scryfall.io/normal/front/4/5/45ddd129-c975-4937-87cf-b6846e96a379.jpg?1783903154", "large": "https://cards.scryfall.io/large/front/4/5/45ddd129-c975-4937-87cf-b6846e96a379.jpg?1783903154"}], "scryfall_uri": "https://scryfall.com/card/msc/378/conduit-of-worlds"}, "lord windgrace": {"name": "Lord Windgrace", "cmc": 5.0, "type_line": "Legendary Planeswalker \u2014 Windgrace", "mana_cost": "{2}{B}{R}{G}", "game_changer": false, "usd": 6.34, "eur": 0.2, "usd_set": "Commander 2018 Oversized", "eur_set": "Commander 2018 Oversized", "images": [{"normal": "https://cards.scryfall.io/normal/front/2/1/213d6fb8-5624-4804-b263-51f339482754.jpg?1783934329", "large": "https://cards.scryfall.io/large/front/2/1/213d6fb8-5624-4804-b263-51f339482754.jpg?1783934329"}], "scryfall_uri": "https://scryfall.com/card/c18/43/lord-windgrace"}, "mina and denn, wildborn": {"name": "Mina and Denn, Wildborn", "cmc": 4.0, "type_line": "Legendary Creature \u2014 Elf Ally", "mana_cost": "{2}{R}{G}", "game_changer": false, "usd": 1.14, "eur": 0.85, "usd_set": "Zendikar Rising Commander", "eur_set": "The List", "images": [{"normal": "https://cards.scryfall.io/normal/front/5/7/57d64a72-d7fa-460e-a215-5a0fe6ca3598.jpg?1783916756", "large": "https://cards.scryfall.io/large/front/5/7/57d64a72-d7fa-460e-a215-5a0fe6ca3598.jpg?1783916756"}], "scryfall_uri": "https://scryfall.com/card/plst/OGW-156/mina-and-denn-wildborn"}, "ramunap excavator": {"name": "Ramunap Excavator", "cmc": 3.0, "type_line": "Creature \u2014 Snake Cleric", "mana_cost": "{2}{G}", "game_changer": false, "usd": 4.33, "eur": 2.54, "usd_set": "Hour of Devastation", "eur_set": "Hour of Devastation Promos", "images": [{"normal": "https://cards.scryfall.io/normal/front/7/e/7e098506-b69d-4ab0-8ee9-af0d8c7efb8d.jpg?1783911367", "large": "https://cards.scryfall.io/large/front/7/e/7e098506-b69d-4ab0-8ee9-af0d8c7efb8d.jpg?1783911367"}], "scryfall_uri": "https://scryfall.com/card/m3c/241/ramunap-excavator"}, "floral evoker": {"name": "Floral Evoker", "cmc": 3.0, "type_line": "Creature \u2014 Snake Druid", "mana_cost": "{2}{G}", "game_changer": false, "usd": 0.3, "eur": 0.27, "usd_set": "Tarkir: Dragonstorm Commander", "eur_set": "Tarkir: Dragonstorm Commander", "images": [{"normal": "https://cards.scryfall.io/normal/front/4/4/4452f54b-1b44-4ccf-be99-7d3c2614d89a.jpg?1783907165", "large": "https://cards.scryfall.io/large/front/4/4/4452f54b-1b44-4ccf-be99-7d3c2614d89a.jpg?1783907165"}], "scryfall_uri": "https://scryfall.com/card/tdc/46/floral-evoker"}, "marwyn, the preserver": {"name": "Marwyn, the Preserver", "cmc": 2.0, "type_line": "Legendary Creature \u2014 Elf Druid", "mana_cost": "{1}{G}", "game_changer": false, "usd": 0.35, "eur": 0.14, "usd_set": "Reality Fracture", "eur_set": "Reality Fracture", "images": [{"normal": "https://cards.scryfall.io/normal/front/4/4/447c324a-1e66-44fc-9d6e-5e1bbbd7cc03.jpg?1790135712", "large": "https://cards.scryfall.io/large/front/4/4/447c324a-1e66-44fc-9d6e-5e1bbbd7cc03.jpg?1790135712"}], "scryfall_uri": "https://scryfall.com/card/fra/315/marwyn-the-preserver"}, "centaur vinecrasher": {"name": "Centaur Vinecrasher", "cmc": 4.0, "type_line": "Creature \u2014 Plant Centaur", "mana_cost": "{3}{G}", "game_changer": false, "usd": 0.18, "eur": 0.1, "usd_set": "Commander 2015", "eur_set": "Edge of Eternities Commander", "images": [{"normal": "https://cards.scryfall.io/normal/front/c/f/cf8712ba-574b-4e53-9c7e-0a1465116320.jpg?1783906035", "large": "https://cards.scryfall.io/large/front/c/f/cf8712ba-574b-4e53-9c7e-0a1465116320.jpg?1783906035"}], "scryfall_uri": "https://scryfall.com/card/eoc/94/centaur-vinecrasher"}, "retreat to hagra": {"name": "Retreat to Hagra", "cmc": 3.0, "type_line": "Enchantment", "mana_cost": "{2}{B}", "game_changer": false, "usd": 0.54, "eur": 0.68, "usd_set": "Battle for Zendikar", "eur_set": "Commander 2018", "images": [{"normal": "https://cards.scryfall.io/normal/front/c/8/c80046c2-021f-448c-9f54-2a1a100ec0aa.jpg?1783934298", "large": "https://cards.scryfall.io/large/front/c/8/c80046c2-021f-448c-9f54-2a1a100ec0aa.jpg?1783934298"}], "scryfall_uri": "https://scryfall.com/card/c18/116/retreat-to-hagra"}, "juri, master of the revue": {"name": "Juri, Master of the Revue", "cmc": 2.0, "type_line": "Legendary Creature \u2014 Human Shaman", "mana_cost": "{B}{R}", "game_changer": false, "usd": 0.28, "eur": 0.13, "usd_set": "Edge of Eternities Commander", "eur_set": "Edge of Eternities Commander", "images": [{"normal": "https://cards.scryfall.io/normal/front/5/0/5006eae5-3b77-45ab-a907-f5094b2eaf1f.jpg?1783906029", "large": "https://cards.scryfall.io/large/front/5/0/5006eae5-3b77-45ab-a907-f5094b2eaf1f.jpg?1783906029"}], "scryfall_uri": "https://scryfall.com/card/eoc/119/juri-master-of-the-revue"}, "skyshroud claim": {"name": "Skyshroud Claim", "cmc": 4.0, "type_line": "Sorcery", "mana_cost": "{3}{G}", "game_changer": false, "usd": 0.91, "eur": 0.93, "usd_set": "The List", "eur_set": "The List", "images": [{"normal": "https://cards.scryfall.io/normal/front/8/6/860c0808-3ec1-4182-bf83-783720a02780.jpg?1783906031", "large": "https://cards.scryfall.io/large/front/8/6/860c0808-3ec1-4182-bf83-783720a02780.jpg?1783906031"}], "scryfall_uri": "https://scryfall.com/card/eoc/107/skyshroud-claim"}, "countryside crusher": {"name": "Countryside Crusher", "cmc": 3.0, "type_line": "Creature \u2014 Giant Warrior", "mana_cost": "{1}{R}{R}", "game_changer": false, "usd": 0.44, "eur": 0.32, "usd_set": "Modern Masters", "eur_set": "Morningtide", "images": [{"normal": "https://cards.scryfall.io/normal/front/5/4/54582b89-a152-4686-8172-82db740dfea2.jpg?1783939984", "large": "https://cards.scryfall.io/large/front/5/4/54582b89-a152-4686-8172-82db740dfea2.jpg?1783939984"}], "scryfall_uri": "https://scryfall.com/card/mma/108/countryside-crusher"}, "sylvan safekeeper": {"name": "Sylvan Safekeeper", "cmc": 1.0, "type_line": "Creature \u2014 Human Wizard", "mana_cost": "{G}", "game_changer": false, "usd": 6.5, "eur": 6.69, "usd_set": "Modern Horizons 3", "eur_set": "Modern Horizons 3", "images": [{"normal": "https://cards.scryfall.io/normal/front/8/3/83036e21-21ea-4324-aa07-11757f80c417.jpg?1783911211", "large": "https://cards.scryfall.io/large/front/8/3/83036e21-21ea-4324-aa07-11757f80c417.jpg?1783911211"}], "scryfall_uri": "https://scryfall.com/card/mh3/287/sylvan-safekeeper"}, "planetary annihilation": {"name": "Planetary Annihilation", "cmc": 5.0, "type_line": "Sorcery", "mana_cost": "{3}{R}{R}", "game_changer": false, "usd": 0.25, "eur": 0.28, "usd_set": "Edge of Eternities Commander", "eur_set": "Edge of Eternities Commander", "images": [{"normal": "https://cards.scryfall.io/normal/front/6/5/65a07be7-1967-4db6-8868-94e2dde10ad5.jpg?1783906057", "large": "https://cards.scryfall.io/large/front/6/5/65a07be7-1967-4db6-8868-94e2dde10ad5.jpg?1783906057"}], "scryfall_uri": "https://scryfall.com/card/eoc/32/planetary-annihilation"}, "hearthhull, the worldseed": {"name": "Hearthhull, the Worldseed", "cmc": 4.0, "type_line": "Legendary Artifact \u2014 Spacecraft", "mana_cost": "{1}{B}{R}{G}", "game_changer": false, "usd": 0.42, "eur": 0.58, "usd_set": "Edge of Eternities Commander", "eur_set": "Edge of Eternities Commander", "images": [{"normal": "https://cards.scryfall.io/normal/front/6/b/6b913e79-a9f6-44d4-bb37-c4f6f66b8151.jpg?1783906067", "large": "https://cards.scryfall.io/large/front/6/b/6b913e79-a9f6-44d4-bb37-c4f6f66b8151.jpg?1783906067"}], "scryfall_uri": "https://scryfall.com/card/eoc/1/hearthhull-the-worldseed"}, "phylath, world sculptor": {"name": "Phylath, World Sculptor", "cmc": 6.0, "type_line": "Legendary Creature \u2014 Elemental", "mana_cost": "{4}{R}{G}", "game_changer": false, "usd": 0.29, "eur": 0.21, "usd_set": "Zendikar Rising", "eur_set": "Zendikar Rising", "images": [{"normal": "https://cards.scryfall.io/normal/front/c/3/c344a3cd-43e0-4333-83ec-081f0e39530a.jpg?1783929282", "large": "https://cards.scryfall.io/large/front/c/3/c344a3cd-43e0-4333-83ec-081f0e39530a.jpg?1783929282"}], "scryfall_uri": "https://scryfall.com/card/znr/313/phylath-world-sculptor"}, "formless genesis": {"name": "Formless Genesis", "cmc": 3.0, "type_line": "Kindred Sorcery \u2014 Shapeshifter", "mana_cost": "{2}{G}", "game_changer": false, "usd": 0.25, "eur": 0.19, "usd_set": "Edge of Eternities Commander", "eur_set": "Edge of Eternities Commander", "images": [{"normal": "https://cards.scryfall.io/normal/front/b/2/b2222cae-2b12-4163-ab1b-7d315877ee8d.jpg?1783906034", "large": "https://cards.scryfall.io/large/front/b/2/b2222cae-2b12-4163-ab1b-7d315877ee8d.jpg?1783906034"}], "scryfall_uri": "https://scryfall.com/card/eoc/96/formless-genesis"}, "tilling treefolk": {"name": "Tilling Treefolk", "cmc": 3.0, "type_line": "Creature \u2014 Treefolk Druid", "mana_cost": "{2}{G}", "game_changer": false, "usd": 0.3, "eur": 0.26, "usd_set": "Eventide", "eur_set": "Eventide", "images": [{"normal": "https://cards.scryfall.io/normal/front/8/e/8e4a10d0-214d-4e7b-9683-c84034f8f6b7.jpg?1783942678", "large": "https://cards.scryfall.io/large/front/8/e/8e4a10d0-214d-4e7b-9683-c84034f8f6b7.jpg?1783942678"}], "scryfall_uri": "https://scryfall.com/card/eve/78/tilling-treefolk"}, "tunneling geopede": {"name": "Tunneling Geopede", "cmc": 3.0, "type_line": "Creature \u2014 Insect", "mana_cost": "{2}{R}", "game_changer": false, "usd": 0.31, "eur": 0.43, "usd_set": "Battle for Zendikar", "eur_set": "Battle for Zendikar", "images": [{"normal": "https://cards.scryfall.io/normal/front/d/4/d4071152-5e64-4133-88a2-8fa5cb0eeb6c.jpg?1783938191", "large": "https://cards.scryfall.io/large/front/d/4/d4071152-5e64-4133-88a2-8fa5cb0eeb6c.jpg?1783938191"}], "scryfall_uri": "https://scryfall.com/card/bfz/158/tunneling-geopede"}}, "prices": {"world breaker": {"usd": 0.29, "eur": 0.3, "usd_set": "Edge of Eternities Commander", "eur_set": "Edge of Eternities Commander"}, "god-eternal bontu": {"usd": 0.28, "eur": 0.39, "usd_set": "Foundations Commander", "eur_set": "Foundations Commander"}, "zuran orb": {"usd": 3.0, "eur": 1.59, "usd_set": "Modern Horizons 2", "eur_set": "Pro Tour Collector Set"}, "wastes": {"usd": 0.75, "eur": 0.29, "usd_set": "Oath of the Gatewatch", "eur_set": "Final Fantasy"}, "heroic intervention": {"usd": 9.1, "eur": 9.81, "usd_set": "Marvel Universe", "eur_set": "Marvel Universe"}, "avenger of zendikar": {"usd": 0.49, "eur": 0.62, "usd_set": "Modern Horizons 3 Commander", "eur_set": "Lorwyn Eclipsed Commander"}, "cultivate": {"usd": 0.39, "eur": 0.23, "usd_set": "Starter Commander Decks", "eur_set": "Masters 25"}, "sporemound": {"usd": 0.16, "eur": 0.14, "usd_set": "The List", "eur_set": "Starter Commander Decks"}, "satyr wayfinder": {"usd": 0.11, "eur": 0.09, "usd_set": "Commander 2016", "eur_set": "Ultimate Masters"}, "tireless provisioner": {"usd": 2.39, "eur": 1.93, "usd_set": "Foundations Jumpstart", "eur_set": "Modern Horizons 2"}, "turntimber sower": {"usd": 0.4, "eur": 0.27, "usd_set": "Outlaws of Thunder Junction Commander", "eur_set": "Outlaws of Thunder Junction Commander"}, "moraug, fury of akoum": {"usd": 1.66, "eur": 2.46, "usd_set": "Edge of Eternities Commander", "eur_set": "Zendikar Rising Promos"}, "ob nixilis, the fallen": {"usd": 2.79, "eur": 2.44, "usd_set": "Tarkir: Dragonstorm Commander", "eur_set": "Tarkir: Dragonstorm Commander"}, "rampaging baloths": {"usd": 0.31, "eur": 0.26, "usd_set": "Zendikar Rising Commander", "eur_set": "Foundations"}, "life from the loam": {"usd": 4.95, "eur": 4.69, "usd_set": "Duel Decks: Izzet vs. Golgari", "eur_set": "Duel Decks: Izzet vs. Golgari"}, "tamiyo's safekeeping": {"usd": 3.08, "eur": 3.89, "usd_set": "Foundations Commander", "eur_set": "Foundations Commander"}, "conduit of worlds": {"usd": 1.35, "eur": 1.36, "usd_set": "Marvel Super Heroes Commander", "eur_set": "Marvel Super Heroes Commander"}, "lord windgrace": {"usd": 6.34, "eur": 0.2, "usd_set": "Commander 2018 Oversized", "eur_set": "Commander 2018 Oversized"}, "mina and denn, wildborn": {"usd": 1.14, "eur": 0.85, "usd_set": "Zendikar Rising Commander", "eur_set": "The List"}, "ramunap excavator": {"usd": 4.33, "eur": 2.54, "usd_set": "Hour of Devastation", "eur_set": "Hour of Devastation Promos"}, "floral evoker": {"usd": 0.3, "eur": 0.27, "usd_set": "Tarkir: Dragonstorm Commander", "eur_set": "Tarkir: Dragonstorm Commander"}, "marwyn, the preserver": {"usd": 0.35, "eur": 0.14, "usd_set": "Reality Fracture", "eur_set": "Reality Fracture"}, "centaur vinecrasher": {"usd": 0.18, "eur": 0.1, "usd_set": "Commander 2015", "eur_set": "Edge of Eternities Commander"}, "retreat to hagra": {"usd": 0.54, "eur": 0.68, "usd_set": "Battle for Zendikar", "eur_set": "Commander 2018"}, "juri, master of the revue": {"usd": 0.28, "eur": 0.13, "usd_set": "Edge of Eternities Commander", "eur_set": "Edge of Eternities Commander"}, "skyshroud claim": {"usd": 0.91, "eur": 0.93, "usd_set": "The List", "eur_set": "The List"}, "countryside crusher": {"usd": 0.44, "eur": 0.32, "usd_set": "Modern Masters", "eur_set": "Morningtide"}, "sylvan safekeeper": {"usd": 6.5, "eur": 6.69, "usd_set": "Modern Horizons 3", "eur_set": "Modern Horizons 3"}, "planetary annihilation": {"usd": 0.25, "eur": 0.28, "usd_set": "Edge of Eternities Commander", "eur_set": "Edge of Eternities Commander"}, "hearthhull, the worldseed": {"usd": 0.42, "eur": 0.58, "usd_set": "Edge of Eternities Commander", "eur_set": "Edge of Eternities Commander"}, "phylath, world sculptor": {"usd": 0.29, "eur": 0.21, "usd_set": "Zendikar Rising", "eur_set": "Zendikar Rising"}, "formless genesis": {"usd": 0.25, "eur": 0.19, "usd_set": "Edge of Eternities Commander", "eur_set": "Edge of Eternities Commander"}, "tilling treefolk": {"usd": 0.3, "eur": 0.26, "usd_set": "Eventide", "eur_set": "Eventide"}, "tunneling geopede": {"usd": 0.31, "eur": 0.43, "usd_set": "Battle for Zendikar", "eur_set": "Battle for Zendikar"}}, "generated": "2026-10-16 14:09 UTC", "prices_as_of": "2026-10-16", "curve_buckets": ["0", "1", "2", "3", "4", "5", "6", "7+"]}</script>
+<script>
+(function () {
+  const D = JSON.parse(document.getElementById("data").textContent);
+  const k = n => n.trim().toLowerCase();
+  const card = n => D.cards[k(n)] || null;
+  const price = n => D.prices[k(n)] || {};
+  const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  const money = (v, sym) => v == null ? "—" : sym + v.toFixed(2);
+  const both = (u, e) => `${money(u, "$")} · ${money(e, "€")}`;
+  const slug = s => s.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+
+  document.title = D.title || "Deck Upgrade Comparison";
+
+  function cardHTML(name, role) {
+    const c = card(name), p = price(name);
+    const img = c && c.images[0] && c.images[0].normal
+      ? `<img loading="lazy" src="${esc(c.images[0].normal)}" alt="${esc(name)}" data-name="${esc(name)}">`
+      : `<div class="name-fallback">${esc(name)}</div>`;
+    const mv = c ? `MV ${c.cmc}` : "";
+    const link = c && c.scryfall_uri ? `<a href="${esc(c.scryfall_uri)}" target="_blank" rel="noopener">${mv || "Scryfall"}</a>` : mv;
+    const tip = [p.usd_set && `cheapest $: ${p.usd_set}`, p.eur_set && `cheapest €: ${p.eur_set}`].filter(Boolean).join(" | ");
+    return `<div class="card ${role}">${img}<span class="tag">${role.toUpperCase()}</span>
+      <div class="meta"><span class="muted">${link}</span><span class="price" title="${esc(tip)}">${both(p.usd, p.eur)}</span></div></div>`;
+  }
+
+  function curveHTML(buckets, ghost, max) {
+    return `<div class="curve">${D.curve_buckets.map(b => {
+      const v = buckets[b], g = ghost ? ghost[b] : null;
+      const h = x => (x / max * 100).toFixed(1) + "%";
+      const diff = g != null && g !== v ? ` <span class="muted">(${v > g ? "+" : ""}${v - g})</span>` : "";
+      return `<div class="col"><div class="bars">
+        ${g != null ? `<div class="ghost" style="height:${h(g)}"></div>` : ""}
+        <div class="fill" style="height:${h(v)}"></div>
+        <div class="val" style="bottom:calc(${h(Math.max(v, g ?? 0))} + 1px)">${v}${diff}</div>
+      </div><div class="lbl">${b}</div></div>`;
+    }).join("")}</div>`;
+  }
+
+  function swapsHTML(swaps) {
+    return `<div class="swaps">${swaps.map(s => `
+      <div class="swap"><div class="pair">${cardHTML(s.out, "out")}<div class="arrow">→</div>${cardHTML(s.in, "in")}</div>
+      ${s.why ? `<div class="why">${esc(s.why)}</div>` : ""}</div>`).join("")}</div>`;
+  }
+
+  // Buy list for one direction (core package + its own swaps), Cardmarket Wants format
+  function buyHTML(d) {
+    const core = (D.core && D.core.swaps) || [];
+    const items = [...core.map(s => ({ ...s, part: D.core.name })), ...d.swaps.map(s => ({ ...s, part: d.name }))]
+      .map(s => ({ ...s, p: price(s.in) }))
+      .sort((a, b) => (b.p.eur ?? 0) - (a.p.eur ?? 0));
+    const text = items.map(s => `1 ${s.in}`).join("\n");
+    const budget = D.budget_eur != null ? ` · budget €${D.budget_eur}` : D.budget_usd != null ? ` · budget $${D.budget_usd}` : "";
+    return `<details class="buy"${d.picked ? " open" : ""}>
+      <summary><span class="t">🛒 Buy list: ${items.length} cards</span><span>${both(d.cost_usd, d.cost_eur)}${budget}</span></summary>
+      <div class="body">
+        <div class="table-scroll"><table>
+          <tr><th>Card</th><th class="num">EUR</th><th class="num">USD</th><th>Replaces</th></tr>
+          ${items.map(s => `<tr><td>${esc(s.in)}${s.part !== d.name ? ` <span class="muted small">(core)</span>` : ""}</td>
+            <td class="num" title="${esc(s.p.eur_set || "")}">${money(s.p.eur, "€")}</td>
+            <td class="num" title="${esc(s.p.usd_set || "")}">${money(s.p.usd, "$")}</td>
+            <td class="small muted">${esc(s.out)}</td></tr>`).join("")}
+          <tr><td><b>Total</b></td><td class="num"><b>${money(d.cost_eur, "€")}</b></td><td class="num"><b>${money(d.cost_usd, "$")}</b></td><td></td></tr>
+        </table></div>
+        <div>
+          <div class="copy-row"><button class="copy" data-copy="buy-${slug(d.id || d.name)}">Copy list</button><span class="copied" hidden>Copied ✓</span></div>
+          <textarea id="buy-${slug(d.id || d.name)}" readonly>${esc(text)}</textarea>
+          <p class="small muted" style="margin-top:6px">Cardmarket: Wants → create a Magic list → <b>Add Deck List</b> → paste → <b>Add</b>, then run the <b>Shopping Wizard</b>. Also works for TCGplayer Mass Entry.</p>
+        </div>
+      </div></details>`;
+  }
+
+  const dirs = D.directions;
+  const stock = D.stock_curve;
+  const maxBar = Math.max(...[stock, ...dirs.map(d => d.curve)].flatMap(c => Object.values(c.buckets))) + 2;
+  const metricKeys = [...new Set(dirs.flatMap(d => Object.keys(d.metrics || {})))];
+  const stockMetrics = (D.analysis && D.analysis.stock_metrics) || {};
+  const cmd = D.commanders.map(card).filter(Boolean)[0];
+
+  let h = "";
+  h += `<header class="top">${cmd && cmd.images[0] ? `<img src="${esc(cmd.images[0].normal)}" alt="${esc(cmd.name)}" data-name="${esc(cmd.name)}">` : ""}
+    <div><div class="muted small">${esc(D.deck)} · ${esc(D.date || "")}</div><h1>${esc(D.title)}</h1>
+    ${D.summary ? `<p>${esc(D.summary)}</p>` : ""}
+    <p class="muted small">Prices: cheapest paper printing on Scryfall (USD from TCGplayer, EUR from Cardmarket), Scryfall bulk data of ${esc(D.prices_as_of || "?")}. Hover a price to see which printing.</p></div></header>`;
+
+  h += `<nav class="jump"><a href="#analysis">Stock analysis</a><a href="#compare">Comparison</a>
+    ${D.core && D.core.swaps.length ? `<a href="#core">${esc(D.core.name)}</a>` : ""}
+    ${dirs.map(d => `<a href="#${slug(d.id || d.name)}">${esc(d.name)}</a>`).join("")}</nav>`;
+
+  // Stock analysis
+  const A = D.analysis || {};
+  h += `<h2 id="analysis">Stock deck analysis</h2><div class="grid2">
+    <div class="panel"><h3>Mana curve <span class="muted small">· ${stock.nonland} nonland · avg MV ${stock.average}</span></h3>
+      ${curveHTML(stock.buckets, null, maxBar)}
+      ${A.notes ? `<ul class="notes" style="margin-top:12px">${A.notes.map(n => `<li>${esc(n)}</li>`).join("")}</ul>` : ""}</div>
+    <div class="panel"><h3>Interaction & key categories</h3><div class="table-scroll"><table>
+      <tr><th>Category</th><th class="num">Stock</th><th class="num">Target</th><th>Cards</th></tr>
+      ${(A.interaction || []).map(r => `<tr><td>${esc(r.category)}</td><td class="num ${r.low ? "bad" : ""}">${esc(r.stock)}</td>
+        <td class="num">${esc(r.target)}</td><td class="small muted">${esc((r.cards || []).join(", "))}</td></tr>`).join("")}
+    </table></div></div></div>`;
+
+  // Comparison
+  h += `<h2 id="compare">Direction comparison</h2><div class="panel table-scroll"><table>
+    <tr><th></th><th class="num">Stock</th>${dirs.map(d => `<th class="num">${esc(d.name)}${d.recommended ? ` <span class="rec">★</span>` : ""}${d.picked ? ` <span class="pill picked">✓ picked</span>` : ""}</th>`).join("")}</tr>
+    <tr><td>Average MV (nonland)</td><td class="num">${stock.average}</td>${dirs.map(d => `<td class="num">${d.curve.average}</td>`).join("")}</tr>
+    <tr><td>Cost of cards in</td><td class="num">—</td>${dirs.map(d => `<td class="num"><b>${both(d.cost_usd, d.cost_eur)}</b></td>`).join("")}</tr>
+    <tr><td>Value of cards out</td><td class="num">—</td>${dirs.map(d => `<td class="num muted">${both(d.out_value_usd, d.out_value_eur)}</td>`).join("")}</tr>
+    ${metricKeys.map(m => `<tr><td>${esc(m)}</td><td class="num">${esc(stockMetrics[m] ?? "")}</td>${dirs.map(d => `<td class="num">${esc((d.metrics || {})[m] ?? "")}</td>`).join("")}</tr>`).join("")}
+    <tr><td>Plays like</td><td></td>${dirs.map(d => `<td class="small">${esc(d.plays_like || "")}</td>`).join("")}</tr>
+    </table>${D.core && D.core.swaps.length ? `<p class="small muted" style="margin-top:8px">Costs include the ${esc(D.core.name)} (${both(D.core.cost_usd, D.core.cost_eur)}).</p>` : ""}</div>`;
+
+  h += `<div class="curves" style="margin-top:16px">${dirs.map(d => `<div class="panel"><h3>${esc(d.name)} <span class="muted small">avg ${d.curve.average}</span></h3>
+    ${curveHTML(d.curve.buckets, stock.buckets, maxBar)}</div>`).join("")}</div>
+    <div class="legend"><span class="l-fill">after swaps</span><span class="l-ghost">stock</span></div>`;
+  if (D.recommendation) h += `<div class="panel" style="margin-top:16px"><b class="rec">★ Recommendation.</b> ${esc(D.recommendation)}</div>`;
+
+  // Core package
+  if (D.core && D.core.swaps.length) {
+    h += `<section class="dir" id="core"><div class="dir-head"><h2 style="margin:0">${esc(D.core.name)}<span class="pill">all directions</span></h2>
+      <div class="totals">In: <b>${both(D.core.cost_usd, D.core.cost_eur)}</b></div></div>
+      ${D.core.description ? `<p class="muted">${esc(D.core.description)}</p>` : ""}${swapsHTML(D.core.swaps)}</section>`;
+  }
+
+  // Directions
+  for (const d of dirs) {
+    h += `<section class="dir" id="${slug(d.id || d.name)}"><div class="dir-head">
+      <h2 style="margin:0">${esc(d.name)}${d.picked ? `<span class="pill picked">✓ picked</span>` : ""}${d.recommended ? `<span class="pill rec">★ recommended</span>` : ""}</h2>
+      <div class="totals">Direction swaps + core: <b>${both(d.cost_usd, d.cost_eur)}</b> · avg MV ${d.curve.average}</div></div>
+      ${d.pitch ? `<p class="muted">${esc(d.pitch)}</p>` : ""}${buyHTML(d)}${swapsHTML(d.swaps)}</section>`;
+  }
+
+  h += `<footer>Card images and prices via <a href="https://scryfall.com" target="_blank" rel="noopener">Scryfall</a>. Generated ${esc(D.generated)}. Rebuild with <code>python3 tools/build_comparison.py &lt;spec&gt;.json</code>.</footer>`;
+  document.getElementById("app").innerHTML = h;
+
+  // Lightbox: click any card image for the large scan (both faces for DFCs)
+  const lb = document.getElementById("lightbox");
+  // Copy buttons for buy lists (clipboard API, with a select+execCommand fallback for file:// pages)
+  document.addEventListener("click", async e => {
+    const btn = e.target.closest("button.copy");
+    if (!btn) return;
+    const ta = document.getElementById(btn.dataset.copy);
+    try { await navigator.clipboard.writeText(ta.value); }
+    catch { ta.select(); document.execCommand("copy"); }
+    const ok = btn.parentElement.querySelector(".copied");
+    ok.hidden = false; setTimeout(() => { ok.hidden = true; }, 1800);
+  });
+
+  document.addEventListener("click", e => {
+    if (e.target.closest("#lightbox")) { lb.classList.remove("open"); lb.innerHTML = ""; return; }
+    const img = e.target.closest("img[data-name]");
+    if (!img) return;
+    const c = card(img.dataset.name);
+    lb.innerHTML = (c ? c.images : [{ large: img.src }]).map(i => `<img src="${esc(i.large || i.normal)}" alt="">`).join("");
+    lb.classList.add("open");
+  });
+  document.addEventListener("keydown", e => { if (e.key === "Escape") { lb.classList.remove("open"); lb.innerHTML = ""; } });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Deck Upgrade Comparison</title>
+<style>
+  :root {
+    --bg: #f6f5f2; --surface: #ffffff; --surface-2: #efede8; --text: #1d1c1a; --muted: #6b6862;
+    --border: #dcd8d0; --accent: #4f46e5; --in: #15803d; --in-bg: #dcfce7; --out: #b91c1c; --out-bg: #fee2e2;
+    --bar: #4f46e5; --bar-ghost: #c7c3ba; --star: #b45309;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #141413; --surface: #1e1d1b; --surface-2: #2a2926; --text: #ecebe7; --muted: #a29f97;
+      --border: #3a3834; --accent: #8b85ff; --in: #4ade80; --in-bg: #14321f; --out: #f87171; --out-bg: #3b1717;
+      --bar: #8b85ff; --bar-ghost: #4a4843; --star: #fbbf24;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #141413; --surface: #1e1d1b; --surface-2: #2a2926; --text: #ecebe7; --muted: #a29f97;
+    --border: #3a3834; --accent: #8b85ff; --in: #4ade80; --in-bg: #14321f; --out: #f87171; --out-bg: #3b1717;
+    --bar: #8b85ff; --bar-ghost: #4a4843; --star: #fbbf24;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text);
+    font: 15px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 24px 16px 80px; }
+  h1 { font-size: 28px; margin: 0 0 4px; }
+  h2 { font-size: 21px; margin: 40px 0 12px; }
+  h3 { font-size: 17px; margin: 0 0 6px; }
+  p { margin: 0 0 10px; }
+  .muted { color: var(--muted); }
+  .small { font-size: 13px; }
+  a { color: var(--accent); }
+
+  header.top { display: flex; gap: 20px; align-items: flex-start; }
+  header.top img { width: 150px; border-radius: 8px; flex: none; cursor: zoom-in; }
+  nav.jump { position: sticky; top: 0; z-index: 5; background: var(--bg); border-bottom: 1px solid var(--border);
+    display: flex; gap: 6px; flex-wrap: wrap; padding: 10px 0; margin-top: 20px; }
+  nav.jump a { text-decoration: none; padding: 4px 10px; border-radius: 999px; background: var(--surface-2);
+    color: var(--text); font-size: 13px; }
+  nav.jump a:hover { background: var(--accent); color: #fff; }
+
+  .panel { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 16px; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  ul.notes { margin: 0; padding-left: 18px; }
+  ul.notes li { margin-bottom: 4px; }
+
+  table { border-collapse: collapse; width: 100%; font-size: 14px; }
+  th, td { text-align: left; padding: 7px 10px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  th { color: var(--muted); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: .03em; }
+  td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .table-scroll { overflow-x: auto; }
+  .bad { color: var(--out); font-weight: 600; }
+  .rec { color: var(--star); font-weight: 600; }
+
+  .curve { display: flex; align-items: flex-end; gap: 4px; height: 110px; padding-top: 14px; }
+  .curve .col { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%; }
+  .curve .bars { position: relative; width: 100%; flex: 1; }
+  .curve .ghost, .curve .fill { position: absolute; bottom: 0; border-radius: 3px 3px 0 0; }
+  .curve .ghost { left: 0; right: 0; border: 1.5px dashed var(--bar-ghost); border-bottom: none; }
+  .curve .fill { left: 18%; right: 18%; background: var(--bar); }
+  .curve .val { font-size: 11px; font-variant-numeric: tabular-nums; position: absolute; left: 0; right: 0; text-align: center; }
+  .curve .lbl { font-size: 11px; color: var(--muted); margin-top: 3px; }
+  .legend { font-size: 12px; color: var(--muted); display: flex; gap: 14px; margin-top: 6px; }
+  .legend span::before { content: ""; display: inline-block; width: 10px; height: 10px; margin-right: 5px; vertical-align: -1px; border-radius: 2px; }
+  .legend .l-fill::before { background: var(--bar); }
+  .legend .l-ghost::before { border: 1.5px dashed var(--bar-ghost); }
+
+  .curves { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
+
+  section.dir { margin-top: 44px; }
+  .dir-head { display: flex; justify-content: space-between; gap: 16px; align-items: baseline; flex-wrap: wrap; }
+  .pill { display: inline-block; font-size: 12px; padding: 2px 8px; border-radius: 999px; background: var(--surface-2); margin-left: 6px; }
+  .pill.rec { background: var(--star); color: #fff; }
+
+  .swaps { display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 14px; margin-top: 14px; }
+  .swap { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 12px; }
+  .swap .pair { display: grid; grid-template-columns: 1fr 22px 1fr; align-items: center; gap: 6px; }
+  .swap .arrow { text-align: center; color: var(--muted); font-size: 18px; }
+  .swap .why { font-size: 13px; margin-top: 10px; color: var(--text); }
+  .card { position: relative; }
+  .card img { width: 100%; display: block; border-radius: 4.75% / 3.5%; cursor: zoom-in; background: var(--surface-2); aspect-ratio: 488/680; }
+  .card.out img { filter: grayscale(.55) brightness(.9); }
+  .card .tag { position: absolute; top: 6px; left: 6px; font-size: 11px; font-weight: 700; padding: 1px 7px; border-radius: 4px; letter-spacing: .04em; }
+  .card.in .tag { background: var(--in-bg); color: var(--in); }
+  .card.out .tag { background: var(--out-bg); color: var(--out); }
+  .card .meta { font-size: 12px; margin-top: 5px; display: flex; justify-content: space-between; gap: 6px; }
+  .card .meta .price { font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .card .name-fallback { aspect-ratio: 488/680; border: 1px dashed var(--border); border-radius: 8px; display: flex; align-items: center; justify-content: center; text-align: center; padding: 10px; font-weight: 600; }
+  .totals { font-size: 14px; margin-top: 10px; }
+  .pill.picked { background: var(--in-bg); color: var(--in); font-weight: 600; }
+  details.buy { margin-top: 16px; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; }
+  details.buy[open] { border-color: var(--accent); }
+  details.buy summary { cursor: pointer; padding: 12px 16px; font-weight: 600; list-style: none; display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+  details.buy summary::-webkit-details-marker { display: none; }
+  details.buy summary::before { content: "▸"; margin-right: 6px; color: var(--muted); }
+  details.buy[open] summary::before { content: "▾"; }
+  details.buy summary .t { flex: 1; }
+  details.buy .body { padding: 0 16px 16px; display: grid; grid-template-columns: 1.4fr 1fr; gap: 16px; }
+  details.buy textarea { width: 100%; min-height: 240px; font: 13px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace;
+    background: var(--surface-2); color: var(--text); border: 1px solid var(--border); border-radius: 8px; padding: 10px; resize: vertical; }
+  .copy-row { display: flex; gap: 8px; align-items: center; margin-bottom: 8px; flex-wrap: wrap; }
+  button.copy { font: inherit; font-size: 13px; font-weight: 600; padding: 6px 14px; border-radius: 8px; border: none; background: var(--accent); color: #fff; cursor: pointer; }
+  button.copy:hover { filter: brightness(1.1); }
+  .copied { font-size: 13px; color: var(--in); }
+  @media (max-width: 720px) { details.buy .body { grid-template-columns: 1fr; } }
+
+  #lightbox { position: fixed; inset: 0; background: rgba(0,0,0,.8); display: none; align-items: center; justify-content: center; gap: 12px; z-index: 50; padding: 16px; cursor: zoom-out; }
+  #lightbox.open { display: flex; }
+  #lightbox img { max-height: 90vh; max-width: min(46vw, 488px); border-radius: 18px; }
+  #lightbox img:only-child { max-width: 92vw; }
+
+  footer { margin-top: 50px; font-size: 12px; color: var(--muted); }
+  @media (max-width: 720px) {
+    header.top { flex-direction: column; }
+    header.top img { width: 120px; }
+    .grid2 { grid-template-columns: 1fr; }
+    .swaps { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap" id="app"></div>
+<div id="lightbox"></div>
+<script id="data" type="application/json">__COMPARISON_DATA__</script>
+<script>
+(function () {
+  const D = JSON.parse(document.getElementById("data").textContent);
+  const k = n => n.trim().toLowerCase();
+  const card = n => D.cards[k(n)] || null;
+  const price = n => D.prices[k(n)] || {};
+  const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  const money = (v, sym) => v == null ? "—" : sym + v.toFixed(2);
+  const both = (u, e) => `${money(u, "$")} · ${money(e, "€")}`;
+  const slug = s => s.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+
+  document.title = D.title || "Deck Upgrade Comparison";
+
+  function cardHTML(name, role) {
+    const c = card(name), p = price(name);
+    const img = c && c.images[0] && c.images[0].normal
+      ? `<img loading="lazy" src="${esc(c.images[0].normal)}" alt="${esc(name)}" data-name="${esc(name)}">`
+      : `<div class="name-fallback">${esc(name)}</div>`;
+    const mv = c ? `MV ${c.cmc}` : "";
+    const link = c && c.scryfall_uri ? `<a href="${esc(c.scryfall_uri)}" target="_blank" rel="noopener">${mv || "Scryfall"}</a>` : mv;
+    const tip = [p.usd_set && `cheapest $: ${p.usd_set}`, p.eur_set && `cheapest €: ${p.eur_set}`].filter(Boolean).join(" | ");
+    return `<div class="card ${role}">${img}<span class="tag">${role.toUpperCase()}</span>
+      <div class="meta"><span class="muted">${link}</span><span class="price" title="${esc(tip)}">${both(p.usd, p.eur)}</span></div></div>`;
+  }
+
+  function curveHTML(buckets, ghost, max) {
+    return `<div class="curve">${D.curve_buckets.map(b => {
+      const v = buckets[b], g = ghost ? ghost[b] : null;
+      const h = x => (x / max * 100).toFixed(1) + "%";
+      const diff = g != null && g !== v ? ` <span class="muted">(${v > g ? "+" : ""}${v - g})</span>` : "";
+      return `<div class="col"><div class="bars">
+        ${g != null ? `<div class="ghost" style="height:${h(g)}"></div>` : ""}
+        <div class="fill" style="height:${h(v)}"></div>
+        <div class="val" style="bottom:calc(${h(Math.max(v, g ?? 0))} + 1px)">${v}${diff}</div>
+      </div><div class="lbl">${b}</div></div>`;
+    }).join("")}</div>`;
+  }
+
+  function swapsHTML(swaps) {
+    return `<div class="swaps">${swaps.map(s => `
+      <div class="swap"><div class="pair">${cardHTML(s.out, "out")}<div class="arrow">→</div>${cardHTML(s.in, "in")}</div>
+      ${s.why ? `<div class="why">${esc(s.why)}</div>` : ""}</div>`).join("")}</div>`;
+  }
+
+  // Buy list for one direction (core package + its own swaps), Cardmarket Wants format
+  function buyHTML(d) {
+    const core = (D.core && D.core.swaps) || [];
+    const items = [...core.map(s => ({ ...s, part: D.core.name })), ...d.swaps.map(s => ({ ...s, part: d.name }))]
+      .map(s => ({ ...s, p: price(s.in) }))
+      .sort((a, b) => (b.p.eur ?? 0) - (a.p.eur ?? 0));
+    const text = items.map(s => `1 ${s.in}`).join("\n");
+    const budget = D.budget_eur != null ? ` · budget €${D.budget_eur}` : D.budget_usd != null ? ` · budget $${D.budget_usd}` : "";
+    return `<details class="buy"${d.picked ? " open" : ""}>
+      <summary><span class="t">🛒 Buy list: ${items.length} cards</span><span>${both(d.cost_usd, d.cost_eur)}${budget}</span></summary>
+      <div class="body">
+        <div class="table-scroll"><table>
+          <tr><th>Card</th><th class="num">EUR</th><th class="num">USD</th><th>Replaces</th></tr>
+          ${items.map(s => `<tr><td>${esc(s.in)}${s.part !== d.name ? ` <span class="muted small">(core)</span>` : ""}</td>
+            <td class="num" title="${esc(s.p.eur_set || "")}">${money(s.p.eur, "€")}</td>
+            <td class="num" title="${esc(s.p.usd_set || "")}">${money(s.p.usd, "$")}</td>
+            <td class="small muted">${esc(s.out)}</td></tr>`).join("")}
+          <tr><td><b>Total</b></td><td class="num"><b>${money(d.cost_eur, "€")}</b></td><td class="num"><b>${money(d.cost_usd, "$")}</b></td><td></td></tr>
+        </table></div>
+        <div>
+          <div class="copy-row"><button class="copy" data-copy="buy-${slug(d.id || d.name)}">Copy list</button><span class="copied" hidden>Copied ✓</span></div>
+          <textarea id="buy-${slug(d.id || d.name)}" readonly>${esc(text)}</textarea>
+          <p class="small muted" style="margin-top:6px">Cardmarket: Wants → create a Magic list → <b>Add Deck List</b> → paste → <b>Add</b>, then run the <b>Shopping Wizard</b>. Also works for TCGplayer Mass Entry.</p>
+        </div>
+      </div></details>`;
+  }
+
+  const dirs = D.directions;
+  const stock = D.stock_curve;
+  const maxBar = Math.max(...[stock, ...dirs.map(d => d.curve)].flatMap(c => Object.values(c.buckets))) + 2;
+  const metricKeys = [...new Set(dirs.flatMap(d => Object.keys(d.metrics || {})))];
+  const stockMetrics = (D.analysis && D.analysis.stock_metrics) || {};
+  const cmd = D.commanders.map(card).filter(Boolean)[0];
+
+  let h = "";
+  h += `<header class="top">${cmd && cmd.images[0] ? `<img src="${esc(cmd.images[0].normal)}" alt="${esc(cmd.name)}" data-name="${esc(cmd.name)}">` : ""}
+    <div><div class="muted small">${esc(D.deck)} · ${esc(D.date || "")}</div><h1>${esc(D.title)}</h1>
+    ${D.summary ? `<p>${esc(D.summary)}</p>` : ""}
+    <p class="muted small">Prices: cheapest paper printing on Scryfall (USD from TCGplayer, EUR from Cardmarket), Scryfall bulk data of ${esc(D.prices_as_of || "?")}. Hover a price to see which printing.</p></div></header>`;
+
+  h += `<nav class="jump"><a href="#analysis">Stock analysis</a><a href="#compare">Comparison</a>
+    ${D.core && D.core.swaps.length ? `<a href="#core">${esc(D.core.name)}</a>` : ""}
+    ${dirs.map(d => `<a href="#${slug(d.id || d.name)}">${esc(d.name)}</a>`).join("")}</nav>`;
+
+  // Stock analysis
+  const A = D.analysis || {};
+  h += `<h2 id="analysis">Stock deck analysis</h2><div class="grid2">
+    <div class="panel"><h3>Mana curve <span class="muted small">· ${stock.nonland} nonland · avg MV ${stock.average}</span></h3>
+      ${curveHTML(stock.buckets, null, maxBar)}
+      ${A.notes ? `<ul class="notes" style="margin-top:12px">${A.notes.map(n => `<li>${esc(n)}</li>`).join("")}</ul>` : ""}</div>
+    <div class="panel"><h3>Interaction & key categories</h3><div class="table-scroll"><table>
+      <tr><th>Category</th><th class="num">Stock</th><th class="num">Target</th><th>Cards</th></tr>
+      ${(A.interaction || []).map(r => `<tr><td>${esc(r.category)}</td><td class="num ${r.low ? "bad" : ""}">${esc(r.stock)}</td>
+        <td class="num">${esc(r.target)}</td><td class="small muted">${esc((r.cards || []).join(", "))}</td></tr>`).join("")}
+    </table></div></div></div>`;
+
+  // Comparison
+  h += `<h2 id="compare">Direction comparison</h2><div class="panel table-scroll"><table>
+    <tr><th></th><th class="num">Stock</th>${dirs.map(d => `<th class="num">${esc(d.name)}${d.recommended ? ` <span class="rec">★</span>` : ""}${d.picked ? ` <span class="pill picked">✓ picked</span>` : ""}</th>`).join("")}</tr>
+    <tr><td>Average MV (nonland)</td><td class="num">${stock.average}</td>${dirs.map(d => `<td class="num">${d.curve.average}</td>`).join("")}</tr>
+    <tr><td>Cost of cards in</td><td class="num">—</td>${dirs.map(d => `<td class="num"><b>${both(d.cost_usd, d.cost_eur)}</b></td>`).join("")}</tr>
+    <tr><td>Value of cards out</td><td class="num">—</td>${dirs.map(d => `<td class="num muted">${both(d.out_value_usd, d.out_value_eur)}</td>`).join("")}</tr>
+    ${metricKeys.map(m => `<tr><td>${esc(m)}</td><td class="num">${esc(stockMetrics[m] ?? "")}</td>${dirs.map(d => `<td class="num">${esc((d.metrics || {})[m] ?? "")}</td>`).join("")}</tr>`).join("")}
+    <tr><td>Plays like</td><td></td>${dirs.map(d => `<td class="small">${esc(d.plays_like || "")}</td>`).join("")}</tr>
+    </table>${D.core && D.core.swaps.length ? `<p class="small muted" style="margin-top:8px">Costs include the ${esc(D.core.name)} (${both(D.core.cost_usd, D.core.cost_eur)}).</p>` : ""}</div>`;
+
+  h += `<div class="curves" style="margin-top:16px">${dirs.map(d => `<div class="panel"><h3>${esc(d.name)} <span class="muted small">avg ${d.curve.average}</span></h3>
+    ${curveHTML(d.curve.buckets, stock.buckets, maxBar)}</div>`).join("")}</div>
+    <div class="legend"><span class="l-fill">after swaps</span><span class="l-ghost">stock</span></div>`;
+  if (D.recommendation) h += `<div class="panel" style="margin-top:16px"><b class="rec">★ Recommendation.</b> ${esc(D.recommendation)}</div>`;
+
+  // Core package
+  if (D.core && D.core.swaps.length) {
+    h += `<section class="dir" id="core"><div class="dir-head"><h2 style="margin:0">${esc(D.core.name)}<span class="pill">all directions</span></h2>
+      <div class="totals">In: <b>${both(D.core.cost_usd, D.core.cost_eur)}</b></div></div>
+      ${D.core.description ? `<p class="muted">${esc(D.core.description)}</p>` : ""}${swapsHTML(D.core.swaps)}</section>`;
+  }
+
+  // Directions
+  for (const d of dirs) {
+    h += `<section class="dir" id="${slug(d.id || d.name)}"><div class="dir-head">
+      <h2 style="margin:0">${esc(d.name)}${d.picked ? `<span class="pill picked">✓ picked</span>` : ""}${d.recommended ? `<span class="pill rec">★ recommended</span>` : ""}</h2>
+      <div class="totals">Direction swaps + core: <b>${both(d.cost_usd, d.cost_eur)}</b> · avg MV ${d.curve.average}</div></div>
+      ${d.pitch ? `<p class="muted">${esc(d.pitch)}</p>` : ""}${buyHTML(d)}${swapsHTML(d.swaps)}</section>`;
+  }
+
+  h += `<footer>Card images and prices via <a href="https://scryfall.com" target="_blank" rel="noopener">Scryfall</a>. Generated ${esc(D.generated)}. Rebuild with <code>python3 tools/build_comparison.py &lt;spec&gt;.json</code>.</footer>`;
+  document.getElementById("app").innerHTML = h;
+
+  // Lightbox: click any card image for the large scan (both faces for DFCs)
+  const lb = document.getElementById("lightbox");
+  // Copy buttons for buy lists (clipboard API, with a select+execCommand fallback for file:// pages)
+  document.addEventListener("click", async e => {
+    const btn = e.target.closest("button.copy");
+    if (!btn) return;
+    const ta = document.getElementById(btn.dataset.copy);
+    try { await navigator.clipboard.writeText(ta.value); }
+    catch { ta.select(); document.execCommand("copy"); }
+    const ok = btn.parentElement.querySelector(".copied");
+    ok.hidden = false; setTimeout(() => { ok.hidden = true; }, 1800);
+  });
+
+  document.addEventListener("click", e => {
+    if (e.target.closest("#lightbox")) { lb.classList.remove("open"); lb.innerHTML = ""; return; }
+    const img = e.target.closest("img[data-name]");
+    if (!img) return;
+    const c = card(img.dataset.name);
+    lb.innerHTML = (c ? c.images : [{ large: img.src }]).map(i => `<img src="${esc(i.large || i.normal)}" alt="">`).join("");
+    lb.classList.add("open");
+  });
+  document.addEventListener("keydown", e => { if (e.key === "Escape") { lb.classList.remove("open"); lb.innerHTML = ""; } });
+})();
+</script>
+</body>
+</html>

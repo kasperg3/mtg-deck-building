@@ -1,0 +1,310 @@
+{
+  "title": "Counter Blitz — Upgrade Options",
+  "deck": "decks/counter-blitz.md",
+  "date": "2026-10-16",
+  "budget_eur": 40,
+  "summary": "Tidus moves a counter between your creatures each combat, and when creatures with counters deal combat damage to a player you draw a card and proliferate (once a turn). The stock list is already well balanced, so no shared package is needed. Each direction spends all 10 swaps on a sharper plan, cutting the same weak, random or off-plan cards. Budget: up to €40 per deck (Cardmarket). The picked direction uses that budget; the other directions were sized for $20.",
+  "analysis": {
+    "notes": [
+      "Curve is low and healthy (avg MV about 3.0), with only three cards at 6+.",
+      "Interaction is fine: ~10 spot removal, 3 board wipes, plus a counterspell.",
+      "Protection is solid (5 pieces) and ramp is on target (~10 with 37 lands).",
+      "Weak spots: a few random or defensive cards (Summon: Magus Sisters, Lulu, Gatta and Luzzu, Promise of Loyalty), and too few cheap evasive creatures to set off Tidus's Cheer every turn.",
+      "Bracket: Farewell is a Game Changer, so the stock deck is bracket 3. Swap it for a non-Game Changer wipe if your table plays bracket 2."
+    ],
+    "interaction": [
+      {
+        "category": "Spot removal",
+        "stock": 10,
+        "target": "8–10",
+        "cards": [
+          "Path to Exile",
+          "Destroy Evil",
+          "Endless Detour",
+          "Walking Ballista",
+          "Auron, Venerated Guardian",
+          "Summon: Ixion",
+          "Summon: Yojimbo",
+          "Summon: Valefor",
+          "Collective Effort",
+          "Summon: Magus Sisters"
+        ]
+      },
+      {
+        "category": "Board wipes",
+        "stock": 3,
+        "target": "2–3",
+        "cards": [
+          "Damning Verdict",
+          "Promise of Loyalty",
+          "Farewell"
+        ]
+      },
+      {
+        "category": "Instant-speed answers",
+        "stock": 4,
+        "target": "5+",
+        "low": true,
+        "cards": [
+          "Path to Exile",
+          "Destroy Evil",
+          "Endless Detour",
+          "An Offer You Can't Refuse"
+        ]
+      },
+      {
+        "category": "Protection",
+        "stock": 5,
+        "target": "2–3",
+        "cards": [
+          "Together Forever",
+          "Protection Magic",
+          "Inspiring Call",
+          "Luminous Broodmoth",
+          "Gatta and Luzzu"
+        ]
+      },
+      {
+        "category": "Card draw",
+        "stock": 10,
+        "target": "8–10",
+        "cards": [
+          "Tidus (commander)",
+          "O'aka, Traveling Merchant",
+          "Generous Patron",
+          "Fathom Mage",
+          "Tireless Tracker",
+          "Pull from Tomorrow",
+          "Bred for the Hunt",
+          "Inspiring Call",
+          "Blitzball Stadium",
+          "Lord Jyscal Guado"
+        ]
+      },
+      {
+        "category": "Ramp",
+        "stock": 10,
+        "target": "8–10",
+        "cards": [
+          "Sol Ring",
+          "Arcane Signet",
+          "Everflowing Chalice",
+          "Farseek",
+          "Three Visits",
+          "Gyre Sage",
+          "Incubation Druid",
+          "Rampant Rejuvenator",
+          "Scholar of New Horizons",
+          "Yuna, Grand Summoner"
+        ]
+      }
+    ],
+    "stock_metrics": {
+      "Evasive counter creatures": 4,
+      "Proliferate sources": 4,
+      "Counter doublers": 1,
+      "Board wipes": 3,
+      "Game Changers": 1
+    }
+  },
+  "directions": [
+    {
+      "id": "cheer",
+      "name": "Cheer Every Turn",
+      "recommended": true,
+      "pitch": "Make Tidus's Cheer fire every turn: cheap evasive creatures, counters at the start of each combat, and unblockability for anything with a counter. A lower curve and constant card draw.",
+      "plays_like": "Fast, evasive pressure; draws every turn",
+      "metrics": {
+        "Evasive counter creatures": "10+",
+        "Proliferate sources": 5,
+        "Counter doublers": 4,
+        "Board wipes": 2,
+        "Game Changers": 1
+      },
+      "swaps": [
+        {
+          "in": "Luminarch Aspirant",
+          "out": "Gatta and Luzzu",
+          "why": "2 mana: a +1/+1 counter on a creature at the start of every combat, so Tidus always has counters to move. Gatta and Luzzu is a one-shot damage trick."
+        },
+        {
+          "in": "Silent Hallcreeper",
+          "out": "Summon: Magus Sisters",
+          "why": "Unblockable 2-drop that grows or draws on hit; with a counter it sets off Cheer reliably. Magus Sisters picks its modes at random."
+        },
+        {
+          "in": "Ray Fillet, Wave Warrior",
+          "out": "Sin, Unending Cataclysm",
+          "why": "A flyer that draws a card each time a creature with a counter hits a player. A second Cheer on a 3-drop. Sin costs 7."
+        },
+        {
+          "in": "Thrummingbird",
+          "out": "Promise of Loyalty",
+          "why": "2-mana flyer that proliferates on hit. Promise of Loyalty makes you sacrifice your own creatures too."
+        },
+        {
+          "in": "Ozolith, the Shattered Spire",
+          "out": "Yuna's Decision",
+          "why": "Every +1/+1 counter placement gets +1, so each counter source hits harder. It can also add a counter itself, or cycle. Yuna's Decision is a clunky 4-mana sorcery."
+        },
+        {
+          "in": "Rosa, Resolute White Mage",
+          "out": "Lulu, Stern Guardian",
+          "why": "A +1/+1 counter and lifelink on a creature each combat. Lulu is defensive; this deck wants to attack."
+        },
+        {
+          "in": "Herald of Secret Streams",
+          "out": "Shelinda, Yevon Acolyte",
+          "why": "Every creature you control with a +1/+1 counter can't be blocked, so Cheer triggers every combat."
+        },
+        {
+          "in": "Kami of Whispered Hopes",
+          "out": "Resourceful Defense",
+          "why": "Another +1 to every +1/+1 counter placement, and it taps for mana equal to its power. Resourceful Defense only moves counters around."
+        },
+        {
+          "in": "Ripples of Potential",
+          "out": "Forgotten Ancient",
+          "why": "Instant: proliferate, then phase out your creatures with counters. It saves your board from a wipe and grows it at the same time. Forgotten Ancient is slow."
+        },
+        {
+          "in": "Innkeeper's Talent",
+          "out": "Sunscorch Regent",
+          "why": "A +1/+1 counter every combat for 2 mana; level 2 gives ward to everything with counters; level 3 doubles every counter you put down. Sunscorch Regent is a 5-drop that mostly gains life."
+        }
+      ],
+      "picked": true
+    },
+    {
+      "id": "proliferate",
+      "name": "Proliferate Engine",
+      "pitch": "Every proliferate adds +1/+1, shield and lore counters together, and draws cards. Tidus's Cheer becomes one engine among many.",
+      "plays_like": "Value engine; grows everything at once",
+      "metrics": {
+        "Evasive counter creatures": 5,
+        "Proliferate sources": "11+",
+        "Counter doublers": 2,
+        "Board wipes": 2,
+        "Game Changers": 1
+      },
+      "swaps": [
+        {
+          "in": "Ezuri, Stalker of Spheres",
+          "out": "Sin, Unending Cataclysm",
+          "why": "Draws a card every time you proliferate, and can proliferate twice on entering."
+        },
+        {
+          "in": "Evolution Sage",
+          "out": "Gatta and Luzzu",
+          "why": "Proliferate on every land drop."
+        },
+        {
+          "in": "Flux Channeler",
+          "out": "Chasm Skulker",
+          "why": "Proliferate on every noncreature spell."
+        },
+        {
+          "in": "Metastatic Evangel",
+          "out": "Duskshell Crawler",
+          "why": "2-drop: proliferate whenever another nontoken creature enters under your control."
+        },
+        {
+          "in": "Zimone, Paradox Sculptor",
+          "out": "Altered Ego",
+          "why": "Two +1/+1 counters every combat; tap to double every kind of counter on two permanents."
+        },
+        {
+          "in": "Proud Pack-Rhino",
+          "out": "Summon: Magus Sisters",
+          "why": "3/3 that puts a shield counter on a creature or proliferates when it enters. Not random."
+        },
+        {
+          "in": "Thrummingbird",
+          "out": "Promise of Loyalty",
+          "why": "Evasive 2-drop that proliferates on hit."
+        },
+        {
+          "in": "Ripples of Potential",
+          "out": "Yuna's Decision",
+          "why": "Instant: proliferate, then phase out your creatures that have counters. Doubles as protection from a board wipe."
+        },
+        {
+          "in": "Experimental Augury",
+          "out": "Lulu, Stern Guardian",
+          "why": "Instant: look at three, take one, proliferate. Cheap selection that also grows your board."
+        },
+        {
+          "in": "Perrie, the Pulverizer",
+          "out": "Shelinda, Yevon Acolyte",
+          "why": "Gives a shield counter on entering, and pumps an attacker by its number of counter kinds."
+        }
+      ]
+    },
+    {
+      "id": "tall",
+      "name": "Go Tall Hydras",
+      "pitch": "Double your counters and attack with a few huge creatures. Tidus moves the counters to the creature that can connect, and Herald of Secret Streams makes them unblockable.",
+      "plays_like": "A few enormous threats; ends games fast",
+      "metrics": {
+        "Evasive counter creatures": 5,
+        "Proliferate sources": 4,
+        "Counter doublers": "6+",
+        "Board wipes": 2,
+        "Game Changers": 1
+      },
+      "swaps": [
+        {
+          "in": "Kalonian Hydra",
+          "out": "Sin, Unending Cataclysm",
+          "why": "Doubles the +1/+1 counters on every creature you control each time it attacks. A cheaper and stronger top end than Sin."
+        },
+        {
+          "in": "Primordial Hydra",
+          "out": "Summon: Magus Sisters",
+          "why": "Pay X; it doubles its own counters every upkeep and gains trample at 10."
+        },
+        {
+          "in": "Loading Zone",
+          "out": "Gatta and Luzzu",
+          "why": "Doubles every kind of counter put on your creatures, including shield counters. Warp lets you cast it for {G} early."
+        },
+        {
+          "in": "Conclave Mentor",
+          "out": "Grateful Apparition",
+          "why": "2-drop: +1 extra counter on every placement."
+        },
+        {
+          "in": "Yoshimaru, Beloved Companion",
+          "out": "Chasm Skulker",
+          "why": "Another +1 extra counter on every placement, and a mana sink that puts counters on legendary creatures (Tidus has lots of legendary support)."
+        },
+        {
+          "in": "Benevolent Hydra",
+          "out": "Lord Jyscal Guado",
+          "why": "Scales with X, adds +1 to counters on your other creatures, and can move its own counters."
+        },
+        {
+          "in": "Shang-Chi, Martial Mentor",
+          "out": "Promise of Loyalty",
+          "why": "A counter doubler on a 4/4 body; its power-up puts three counters on itself."
+        },
+        {
+          "in": "Managorger Hydra",
+          "out": "Yuna's Decision",
+          "why": "Trample, and gets a +1/+1 counter whenever any player casts a spell. Doublers make it huge fast."
+        },
+        {
+          "in": "Fangs of Kalonia",
+          "out": "Resourceful Defense",
+          "why": "Add a counter, then double it. Overload it to double the counters on every creature you control."
+        },
+        {
+          "in": "Herald of Secret Streams",
+          "out": "Lulu, Stern Guardian",
+          "why": "Creatures with +1/+1 counters can't be blocked, so the huge creatures connect."
+        }
+      ]
+    }
+  ],
+  "recommendation": "Cheer Every Turn fixes the deck's one real weakness, which is how reliably Cheer fires. It's also the cheapest direction and lowers the curve. Go Tall Hydras hits harder but leans on a few big creatures that are easier to answer. All three stay under $20."
+}

@@ -1,0 +1,289 @@
+{
+  "title": "World Shaper — Upgrade Options",
+  "deck": "decks/world-shaper.md",
+  "date": "2026-10-16",
+  "budget_eur": 40,
+  "summary": "Hearthhull, the Worldseed drains each opponent for 2 whenever you sacrifice a land, and once stationed it trades lands for cards. The stock list ramps far more than it needs to, is top-heavy, and has no way to protect its key pieces. Budget: up to €40 per deck (Cardmarket). The picked direction uses that budget; the other directions were sized for $20.",
+  "analysis": {
+    "notes": [
+      "Top-heavy: 15 nonland cards cost 5 or more (World Breaker 7, Omnath 7, three 6-drops, nine 5-drops).",
+      "Too much ramp: 42 lands plus ~15 ramp pieces. Some ramp spells can become engines.",
+      "No protection at all for the commander or the board.",
+      "Interaction is good: ~10 spot removal, 6 at instant speed, 4 board wipes.",
+      "Mana base: Wastes is a colourless basic in a three-colour deck and should go.",
+      "Commander check: the card search flags that Hearthhull has no 'can be your commander' text (it's an artifact, not a creature). It is the precon's face commander, so check with your playgroup. Lord Windgrace (in Scorched Earth Drain) and Szarel can legally be your commander."
+    ],
+    "interaction": [
+      {
+        "category": "Spot removal",
+        "stock": 10,
+        "target": "8–10",
+        "cards": [
+          "Infernal Grasp",
+          "Rakdos Charm",
+          "Tear Asunder",
+          "Beast Within",
+          "Putrefy",
+          "Windgrace's Judgment",
+          "Binding the Old Gods",
+          "Mayhem Devil",
+          "Omnath, Locus of Rage",
+          "World Breaker"
+        ]
+      },
+      {
+        "category": "Board wipes",
+        "stock": 4,
+        "target": "2–3",
+        "cards": [
+          "Blasphemous Act",
+          "Gaze of Granite",
+          "Planetary Annihilation",
+          "Pest Infestation"
+        ]
+      },
+      {
+        "category": "Instant-speed answers",
+        "stock": 6,
+        "target": "5+",
+        "cards": [
+          "Infernal Grasp",
+          "Rakdos Charm",
+          "Tear Asunder",
+          "Beast Within",
+          "Putrefy",
+          "Windgrace's Judgment"
+        ]
+      },
+      {
+        "category": "Protection",
+        "stock": 0,
+        "target": "2–3",
+        "low": true,
+        "cards": []
+      },
+      {
+        "category": "Card draw",
+        "stock": 9,
+        "target": "8–10",
+        "cards": [
+          "Night's Whisper",
+          "Tireless Tracker",
+          "Sprouting Goblin",
+          "Evendo Brushrazer",
+          "Korvold, Fae-Cursed King",
+          "The Gitrog Monster",
+          "Escape to the Wilds",
+          "Eumidian Wastewaker",
+          "Hearthhull (commander)"
+        ]
+      },
+      {
+        "category": "Ramp",
+        "stock": 15,
+        "target": "8–10",
+        "low": true,
+        "cards": [
+          "Sol Ring",
+          "Arcane Signet",
+          "Farseek",
+          "Nature's Lore",
+          "Cultivate",
+          "Harrow",
+          "Roiling Regrowth",
+          "Skyshroud Claim",
+          "Springbloom Druid",
+          "Oracle of Mul Daya",
+          "Worldsoul's Rage",
+          "Horizon Explorer",
+          "Aftermath Analyst",
+          "Exploration Broodship",
+          "Splendid Reclamation"
+        ]
+      }
+    ],
+    "stock_metrics": {
+      "Lands": 42,
+      "Ramp pieces": "~15",
+      "Protection": 0,
+      "Free land-sac outlets": 0,
+      "Game Changers": 0
+    }
+  },
+  "core": {
+    "name": "Core package",
+    "description": "Protection for your key permanents (Heroic Intervention stops a board wipe; Tamiyo's Safekeeping protects Hearthhull before it's a creature), plus a free outlet that turns any land into a 2-life drain with Hearthhull. It also removes the colourless Wastes.",
+    "swaps": [
+      {
+        "in": "Tamiyo's Safekeeping",
+        "out": "Satyr Wayfinder",
+        "why": "One mana: hexproof and indestructible on any permanent, including Hearthhull before it becomes a creature. Satyr Wayfinder is a weak 2-drop that only digs for a land."
+      },
+      {
+        "in": "Heroic Intervention",
+        "out": "Planetary Annihilation",
+        "why": "Instant: all your permanents gain hexproof and indestructible, which stops a board wipe or targeted removal. Planetary Annihilation makes every player sacrifice down to six lands; you're the land deck, so it hurts you most."
+      },
+      {
+        "in": "Zuran Orb",
+        "out": "Wastes",
+        "why": "0 mana: sacrifice a land and gain 2 life. With Hearthhull, each opponent also loses 2, so any spare land becomes a drain, at instant speed. Wastes produces colourless mana in a three-colour deck."
+      }
+    ]
+  },
+  "directions": [
+    {
+      "id": "drain",
+      "name": "Scorched Earth Drain",
+      "recommended": true,
+      "pitch": "Sacrifice lands every turn, replay them from the graveyard, and let Hearthhull drain the table 2 life at a time. Ramp spells become sacrifice outlets, graveyard-land engines and landfall damage.",
+      "plays_like": "Burns the table out with land sacrifices",
+      "metrics": {
+        "Lands": 41,
+        "Ramp pieces": "~13",
+        "Protection": 3,
+        "Free land-sac outlets": 3,
+        "Game Changers": 0
+      },
+      "swaps": [
+        {
+          "in": "Ramunap Excavator",
+          "out": "Skyshroud Claim",
+          "why": "Play lands from your graveyard, so every sacrificed land comes back. Skyshroud Claim is a fourth 4-mana ramp spell."
+        },
+        {
+          "in": "Conduit of Worlds",
+          "out": "Cultivate",
+          "why": "A second way to replay lands from your graveyard, and it can also recast a permanent from there. Cultivate is redundant ramp."
+        },
+        {
+          "in": "Sylvan Safekeeper",
+          "out": "Juri, Master of the Revue",
+          "why": "Sacrifice a land: a creature gains shroud. That's free protection and a free 2-point drain with Hearthhull. Juri only grows from creatures dying, not lands."
+        },
+        {
+          "in": "Tunneling Geopede",
+          "out": "Centaur Vinecrasher",
+          "why": "Every land that enters pings each opponent for 1, so replaying sacrificed lands means extra damage."
+        },
+        {
+          "in": "Retreat to Hagra",
+          "out": "Formless Genesis",
+          "why": "Each land that enters drains each opponent 1, or gives a creature deathtouch."
+        },
+        {
+          "in": "Lord Windgrace",
+          "out": "Moraug, Fury of Akoum",
+          "why": "Planeswalker: +2 draws extra cards from discarded lands, −3 returns two lands from the graveyard. It can also legally be your commander. Moraug is a 6-drop that only pays off if you attack."
+        },
+        {
+          "in": "Ob Nixilis, the Fallen",
+          "out": "World Breaker",
+          "why": "Every land that enters drains a player for 3 and grows Ob Nixilis. World Breaker costs 7."
+        }
+      ],
+      "picked": true
+    },
+    {
+      "id": "landfall",
+      "name": "Landfall Army",
+      "pitch": "Turn the deck's extra land drops into creature tokens, mana and damage. Hearthhull's extra land plays and the sacrifice-and-replay loop trigger landfall several times a turn.",
+      "plays_like": "Wide board of tokens; explosive turns",
+      "metrics": {
+        "Lands": 41,
+        "Ramp pieces": "~13 (+Treasure)",
+        "Protection": 2,
+        "Free land-sac outlets": 1,
+        "Game Changers": 0
+      },
+      "swaps": [
+        {
+          "in": "Tireless Provisioner",
+          "out": "Cultivate",
+          "why": "Every land that enters makes a Treasure or a Food. Ramp that keeps paying off, unlike a one-shot sorcery."
+        },
+        {
+          "in": "Mina and Denn, Wildborn",
+          "out": "Skyshroud Claim",
+          "why": "Play an extra land each turn, and return lands to your hand to replay them for more landfall."
+        },
+        {
+          "in": "Tunneling Geopede",
+          "out": "Juri, Master of the Revue",
+          "why": "Every land that enters pings each opponent for 1."
+        },
+        {
+          "in": "Ob Nixilis, the Fallen",
+          "out": "Centaur Vinecrasher",
+          "why": "Every land that enters drains a player for 3 and grows Ob Nixilis."
+        },
+        {
+          "in": "Sporemound",
+          "out": "Formless Genesis",
+          "why": "A 1/1 Saproling on every landfall; with extra land drops and replays, that's several tokens a turn."
+        },
+        {
+          "in": "Phylath, World Sculptor",
+          "out": "God-Eternal Bontu",
+          "why": "Makes a Plant per basic land when it enters, and every landfall puts four +1/+1 counters on a Plant."
+        },
+        {
+          "in": "Avenger of Zendikar",
+          "out": "World Breaker",
+          "why": "A same-cost 7-drop that wins games: a 0/1 Plant per land you control, and every landfall grows them all. It also fuels Phylath."
+        }
+      ]
+    },
+    {
+      "id": "loam",
+      "name": "Lands Recursion",
+      "pitch": "Treat your graveyard as a second hand of lands. Loop Life from the Loam, replay lands with Crucible effects, and draw cards off discarded lands. This direction grinds out the longest games.",
+      "plays_like": "Grindy value; never runs out of cards",
+      "metrics": {
+        "Lands": 41,
+        "Ramp pieces": "~13",
+        "Protection": 2,
+        "Free land-sac outlets": 1,
+        "Game Changers": 0
+      },
+      "swaps": [
+        {
+          "in": "Life from the Loam",
+          "out": "Cultivate",
+          "why": "Return three lands from your graveyard to your hand, and dredge it back instead of drawing to keep the loop going. Endless fuel for Hearthhull."
+        },
+        {
+          "in": "Conduit of Worlds",
+          "out": "Skyshroud Claim",
+          "why": "Play lands from your graveyard, and recast a permanent from there each turn."
+        },
+        {
+          "in": "Marwyn, the Preserver",
+          "out": "Moraug, Fury of Akoum",
+          "why": "2 mana: your lands have hexproof, and for {2} you return a land from your graveyard to your hand. Moraug is a 6-drop."
+        },
+        {
+          "in": "Tilling Treefolk",
+          "out": "Juri, Master of the Revue",
+          "why": "Returns two lands from your graveyard to your hand when it enters, for more sacrifice fuel."
+        },
+        {
+          "in": "Turntimber Sower",
+          "out": "God-Eternal Bontu",
+          "why": "Makes a Plant whenever lands hit your graveyard (each Hearthhull activation), and can return a land by sacrificing three creatures."
+        },
+        {
+          "in": "Floral Evoker",
+          "out": "Rampaging Baloths",
+          "why": "Grows on landfall; discard a creature to put a land from your graveyard onto the battlefield."
+        },
+        {
+          "in": "Countryside Crusher",
+          "out": "World Breaker",
+          "why": "Mills lands off the top every upkeep (Loam fuel) and grows whenever a land hits your graveyard. A 3-drop instead of a 7-drop."
+        }
+      ]
+    }
+  ],
+  "recommendation": "Scorched Earth Drain uses Hearthhull's own text best: every free sacrifice outlet and every replayed land is another drain, and Geopede, Sabotender, Hagra and Ob Nixilis add damage on top. All three directions stay under $20 including the core package."
+}
