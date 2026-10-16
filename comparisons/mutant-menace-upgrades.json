@@ -121,12 +121,12 @@
       "id": "counters",
       "name": "Counter Engine",
       "recommended": true,
-      "pitch": "Mill every opponent every turn and turn each mill into +1/+1 counters. Ruin Crab and Mindcrank make rad counters and combat damage mill again, Kami and Evolution Sage grow everything further, and Evolution Witness and Ezuri turn the counters into cards.",
+      "pitch": "Mill every opponent every turn and turn each mill into +1/+1 counters. Ruin Crab and Mindcrank make rad counters and combat damage mill again, Kami and Evolution Sage grow everything further, and Evolution Witness turns the counters into cards, and Radstorm stays as a proliferate finisher.",
       "plays_like": "Big creatures attacking; draws lots of cards",
       "metrics": {
         "Spot removal": 9,
         "Instant-speed answers": 6,
-        "Card draw": "good (Ezuri, Evolution Witness, Mirelurk Queen)",
+        "Card draw": "good (Evolution Witness, Mirelurk Queen, Marcus)",
         "Game Changers": 0
       },
       "swaps": [
@@ -154,11 +154,6 @@
           "in": "Mindcrank",
           "out": "Struggle for Project Purity",
           "why": "Whenever an opponent loses life, they mill that many cards. Rad-counter mills already cost life, so every rad mill and every combat hit mills again, and each mill is another Mothman trigger. Struggle draws cards for opponents too."
-        },
-        {
-          "in": "Ezuri, Stalker of Spheres",
-          "out": "Radstorm",
-          "why": "Can proliferate twice on entering, then draws a card on every proliferate. Radstorm is usually a single proliferate for 4 mana."
         },
         {
           "in": "Yavimaya Coast",

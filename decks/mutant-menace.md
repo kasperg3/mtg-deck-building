@@ -10,7 +10,7 @@
 ## Commander (1)
 1 The Wise Mothman
 
-## Creatures (31)
+## Creatures (30)
 1 Ruin Crab
 1 Piper Wright, Publick Reporter
 1 Vexing Radgull
@@ -31,7 +31,6 @@
 1 Watchful Radstag
 1 Bloatfly Swarm
 1 Corpsejack Menace
-1 Ezuri, Stalker of Spheres
 1 Lily Bowen, Raging Grandma
 1 Nightkin Ambusher
 1 The Master, Transcendent
@@ -43,7 +42,7 @@
 1 Strong, the Brutish Thespian
 1 Agent Frank Horrigan
 
-## Instants (9)
+## Instants (10)
 1 Assassin's Trophy
 1 Contaminated Drink
 1 Heartless Act
@@ -53,6 +52,7 @@
 1 Putrefy
 1 Sultai Charm
 1 Atomize
+1 Radstorm
 
 ## Sorceries (7)
 1 Farseek
@@ -111,7 +111,7 @@
 
 ## Changelog
 - 2026-10-16 — Added stock precon list.
-- 2026-10-16 — Applied **Counter Engine** from `mutant-menace-upgrades.json` (13 swaps):
+- 2026-10-16 — Applied **Counter Engine** from `mutant-menace-upgrades.json` (13 swaps, see below):
   - +Assassin's Trophy / −Lumbering Megasloth
   - +Heartless Act / −Biomass Mutation
   - +Beast Within / −Strength Bobblehead
@@ -125,3 +125,4 @@
   - +Yavimaya Coast / −Overflowing Basin
   - +Llanowar Wastes / −Viridescent Bog
   - +Underground River / −Temple of the False God
+- 2026-10-16 — Reverted +Ezuri, Stalker of Spheres / −Radstorm: kept Radstorm. Ezuri needs 7 mana for its enter ability and only draws when you proliferate. Ezuri is now loose.
