@@ -148,11 +148,20 @@ This writes `buylists/<deck>.md` (checklist, cheapest printing per currency,
 mass-entry text) and `buylists/README.md` (combined total). Apply the swaps to
 `decks/<deck>.md` only once the user has the cards.
 
-When the user says they bought the cards, append one row per card to
-`inventory.csv` (`Count,Name,Set,Source,Acquired,Notes`): Source is the shop
-(e.g. `Cardmarket`), Acquired the date, Notes which deck it's for and what it
-replaces. Never remove inventory rows for cards cut from a deck; they're still
-owned and become loose singles.
+When the user says they bought the cards:
+1. Append one row per card to `inventory.csv`
+   (`Count,Name,Set,Deck,Source,Acquired,Notes`): Source is the shop (e.g.
+   `Cardmarket`), Acquired the date, Notes `for <Deck> (<direction>), replaces
+   <card>`. Never remove rows for cut cards; they're still owned.
+2. Apply the swaps to the deck file:
+   `python3 tools/apply_direction.py comparisons/<deck>-upgrades.json <direction-id>`
+   (reads the spec's `deck`, normally the stock snapshot in `decks/precon/`,
+   and writes `decks/<deck>.md` with a changelog entry).
+3. `python3 tools/sync_inventory.py` to fill the Deck column (cut cards become
+   `Loose`). It must report no `warning:` lines.
+
+For a new comparison on an already-upgraded deck, point the spec's `deck` at
+`decks/<deck>.md` (the current list), not the precon snapshot.
 
 ## Spec schema
 
