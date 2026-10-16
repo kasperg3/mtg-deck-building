@@ -10,7 +10,7 @@
 ## Commander (1)
 1 Hearthhull, the Worldseed
 
-## Creatures (33)
+## Creatures (32)
 1 Aftermath Analyst
 1 Juri, Master of the Revue
 1 Sabotender
@@ -30,7 +30,6 @@
 1 Uurg, Spawn of Turg
 1 Baloth Prime
 1 Centaur Vinecrasher
-1 Eumidian Wastewaker
 1 Oracle of Mul Daya
 1 Soul of Windgrace
 1 God-Eternal Bontu
@@ -57,20 +56,21 @@
 1 Roiling Regrowth
 1 Windgrace's Judgment
 
-## Sorceries (7)
+## Sorceries (9)
 1 Pest Infestation
 1 Farseek
 1 Nature's Lore
 1 Worldsoul's Rage
+1 Formless Genesis
+1 Skyshroud Claim
 1 Splendid Reclamation
 1 Planetary Annihilation
 1 Blasphemous Act
 
-## Artifacts (6)
+## Artifacts (5)
 1 Zuran Orb
 1 Exploration Broodship
 1 Sol Ring
-1 Arcane Signet
 1 Hammer of Purphoros
 1 Conduit of Worlds
 
@@ -123,3 +123,4 @@
   - +Ob Nixilis, the Fallen / −World Breaker
   - +Lotus Field / −Viridescent Bog
   - +Jund Panorama / −Bojuka Bog
+- 2026-10-16 — Final review: brought back Skyshroud Claim (two untapped Forests = double landfall) and Formless Genesis (repeatable large deathtouch token via retrace). Ramunap Excavator now replaces Arcane Signet, Retreat to Hagra replaces Eumidian Wastewaker. Signet and Wastewaker are loose.

@@ -17,7 +17,7 @@ Count,Name,Set,Deck,Source,Acquired,Notes
 1,"Uurg, Spawn of Turg",EOC,World Shaper,World Shaper precon,,
 1,Baloth Prime,EOC,World Shaper,World Shaper precon,,
 1,Centaur Vinecrasher,EOC,World Shaper,World Shaper precon,,
-1,Eumidian Wastewaker,EOC,World Shaper,World Shaper precon,,
+1,Eumidian Wastewaker,EOC,Loose,World Shaper precon,,
 1,Oracle of Mul Daya,EOC,World Shaper,World Shaper precon,,
 1,Soul of Windgrace,EOC,World Shaper,World Shaper precon,,
 1,God-Eternal Bontu,EOC,World Shaper,World Shaper precon,,
@@ -45,16 +45,16 @@ Count,Name,Set,Deck,Source,Acquired,Notes
 1,Night's Whisper,EOC,Loose,World Shaper precon,,
 1,Worldsoul's Rage,EOC,World Shaper,World Shaper precon,,
 1,Cultivate,EOC,Loose,World Shaper precon,,
-1,Formless Genesis,EOC,Loose,World Shaper precon,,
+1,Formless Genesis,EOC,World Shaper,World Shaper precon,,
 1,Gaze of Granite,EOC,Loose,World Shaper precon,,
-1,Skyshroud Claim,EOC,Loose,World Shaper precon,,
+1,Skyshroud Claim,EOC,World Shaper,World Shaper precon,,
 1,Splendid Reclamation,EOC,World Shaper,World Shaper precon,,
 1,Escape to the Wilds,EOC,Loose,World Shaper precon,,
 1,Planetary Annihilation,EOC,World Shaper,World Shaper precon,,
 1,Blasphemous Act,EOC,World Shaper,World Shaper precon,,
 1,Exploration Broodship,EOC,World Shaper,World Shaper precon,,
 1,Sol Ring,EOC,World Shaper,World Shaper precon,,
-1,Arcane Signet,EOC,World Shaper,World Shaper precon,,
+1,Arcane Signet,EOC,Loose,World Shaper precon,,
 1,Hammer of Purphoros,EOC,World Shaper,World Shaper precon,,
 1,Binding the Old Gods,EOC,World Shaper,World Shaper precon,,
 1,Bojuka Bog,EOC,Loose,World Shaper precon,,
@@ -88,7 +88,7 @@ Count,Name,Set,Deck,Source,Acquired,Notes
 1,Wastes,EOC,Loose,World Shaper precon,,
 1,The Wise Mothman,PIP,Mutant Menace,Mutant Menace precon,,commander
 1,Cathedral Acolyte,PIP,Loose,Mutant Menace precon,,
-1,"Piper Wright, Publick Reporter",PIP,Mutant Menace,Mutant Menace precon,,
+1,"Piper Wright, Publick Reporter",PIP,Loose,Mutant Menace precon,,
 1,Vexing Radgull,PIP,Mutant Menace,Mutant Menace precon,,
 1,Winding Constrictor,PIP,Mutant Menace,Mutant Menace precon,,
 1,Feral Ghoul,PIP,Mutant Menace,Mutant Menace precon,,
@@ -101,7 +101,7 @@ Count,Name,Set,Deck,Source,Acquired,Notes
 1,"Raul, Trouble Shooter",PIP,Mutant Menace,Mutant Menace precon,,
 1,Tato Farmer,PIP,Mutant Menace,Mutant Menace precon,,
 1,Tireless Tracker,PIP,Mutant Menace,Mutant Menace precon,,
-1,Watchful Radstag,PIP,Mutant Menace,Mutant Menace precon,,
+1,Watchful Radstag,PIP,Loose,Mutant Menace precon,,
 1,Bloatfly Swarm,PIP,Mutant Menace,Mutant Menace precon,,
 1,Corpsejack Menace,PIP,Mutant Menace,Mutant Menace precon,,
 1,"Lily Bowen, Raging Grandma",PIP,Mutant Menace,Mutant Menace precon,,
@@ -141,9 +141,9 @@ Count,Name,Set,Deck,Source,Acquired,Notes
 1,Recon Craft Theta,PIP,Loose,Mutant Menace precon,,
 1,Hardened Scales,PIP,Mutant Menace,Mutant Menace precon,,
 1,Branching Evolution,PIP,Mutant Menace,Mutant Menace precon,,
-1,Fraying Sanity,PIP,Loose,Mutant Menace precon,,
+1,Fraying Sanity,PIP,Mutant Menace,Mutant Menace precon,,
 1,Guardian Project,PIP,Mutant Menace,Mutant Menace precon,,
-1,Struggle for Project Purity,PIP,Loose,Mutant Menace precon,,
+1,Struggle for Project Purity,PIP,Mutant Menace,Mutant Menace precon,,
 1,Inexorable Tide,PIP,Mutant Menace,Mutant Menace precon,,
 1,Vault 87: Forced Evolution,PIP,Mutant Menace,Mutant Menace precon,,
 1,Vault 12: The Necropolis,PIP,Mutant Menace,Mutant Menace precon,,
@@ -271,11 +271,11 @@ Count,Name,Set,Deck,Source,Acquired,Notes
 1,Tamiyo's Safekeeping,,World Shaper,Cardmarket,2026-10-16,"for World Shaper (Scorched Earth Drain), replaces Satyr Wayfinder"
 1,Snakeskin Veil,,World Shaper,Cardmarket,2026-10-16,"for World Shaper (Scorched Earth Drain), replaces Escape to the Wilds"
 1,Zuran Orb,,World Shaper,Cardmarket,2026-10-16,"for World Shaper (Scorched Earth Drain), replaces Wastes"
-1,Ramunap Excavator,,World Shaper,Cardmarket,2026-10-16,"for World Shaper (Scorched Earth Drain), replaces Skyshroud Claim"
+1,Ramunap Excavator,,World Shaper,Cardmarket,2026-10-16,"for World Shaper (Scorched Earth Drain), replaces Arcane Signet"
 1,Conduit of Worlds,,World Shaper,Cardmarket,2026-10-16,"for World Shaper (Scorched Earth Drain), replaces Cultivate"
 1,Sabotender,,World Shaper,Cardmarket,2026-10-16,"for World Shaper (Scorched Earth Drain), replaces Night's Whisper"
 1,"Tannuk, Memorial Ensign",,World Shaper,Cardmarket,2026-10-16,"for World Shaper (Scorched Earth Drain), replaces Groundskeeper"
-1,Retreat to Hagra,,World Shaper,Cardmarket,2026-10-16,"for World Shaper (Scorched Earth Drain), replaces Formless Genesis"
+1,Retreat to Hagra,,World Shaper,Cardmarket,2026-10-16,"for World Shaper (Scorched Earth Drain), replaces Eumidian Wastewaker"
 1,Countryside Crusher,,World Shaper,Cardmarket,2026-10-16,"for World Shaper (Scorched Earth Drain), replaces Gaze of Granite"
 1,"Ob Nixilis, the Fallen",,World Shaper,Cardmarket,2026-10-16,"for World Shaper (Scorched Earth Drain), replaces World Breaker"
 1,Lotus Field,,World Shaper,Cardmarket,2026-10-16,"for World Shaper (Scorched Earth Drain), replaces Viridescent Bog"
@@ -300,8 +300,8 @@ Count,Name,Set,Deck,Source,Acquired,Notes
 1,Ruin Crab,,Mutant Menace,Cardmarket,2026-10-16,"for Mutant Menace (Counter Engine), replaces Cathedral Acolyte"
 1,Kami of Whispered Hopes,,Mutant Menace,Cardmarket,2026-10-16,"for Mutant Menace (Counter Engine), replaces Power Fist"
 1,Evolution Witness,,Mutant Menace,Cardmarket,2026-10-16,"for Mutant Menace (Counter Engine), replaces Nuka-Nuke Launcher"
-1,Evolution Sage,,Mutant Menace,Cardmarket,2026-10-16,"for Mutant Menace (Counter Engine), replaces Fraying Sanity"
-1,Mindcrank,,Mutant Menace,Cardmarket,2026-10-16,"for Mutant Menace (Counter Engine), replaces Struggle for Project Purity"
+1,Evolution Sage,,Mutant Menace,Cardmarket,2026-10-16,"for Mutant Menace (Counter Engine), replaces Watchful Radstag"
+1,Mindcrank,,Mutant Menace,Cardmarket,2026-10-16,"for Mutant Menace (Counter Engine), replaces Piper Wright, Publick Reporter"
 1,"Ezuri, Stalker of Spheres",,Loose,Cardmarket,2026-10-16,"bought for Mutant Menace (Counter Engine); not used, kept Radstorm instead"
 1,Yavimaya Coast,,Mutant Menace,Cardmarket,2026-10-16,"for Mutant Menace (Counter Engine), replaces Overflowing Basin"
 1,Llanowar Wastes,,Mutant Menace,Cardmarket,2026-10-16,"for Mutant Menace (Counter Engine), replaces Viridescent Bog"

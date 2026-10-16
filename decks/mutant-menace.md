@@ -10,9 +10,8 @@
 ## Commander (1)
 1 The Wise Mothman
 
-## Creatures (30)
+## Creatures (28)
 1 Ruin Crab
-1 Piper Wright, Publick Reporter
 1 Vexing Radgull
 1 Winding Constrictor
 1 Evolution Sage
@@ -28,7 +27,6 @@
 1 Raul, Trouble Shooter
 1 Tato Farmer
 1 Tireless Tracker
-1 Watchful Radstag
 1 Bloatfly Swarm
 1 Corpsejack Menace
 1 Lily Bowen, Raging Grandma
@@ -72,10 +70,12 @@
 1 Talisman of Dominance
 1 Talisman of Resilience
 
-## Enchantments (6)
+## Enchantments (8)
 1 Hardened Scales
 1 Branching Evolution
+1 Fraying Sanity
 1 Guardian Project
+1 Struggle for Project Purity
 1 Inexorable Tide
 1 Vault 87: Forced Evolution
 1 Vault 12: The Necropolis
@@ -126,3 +126,4 @@
   - +Llanowar Wastes / −Viridescent Bog
   - +Underground River / −Temple of the False God
 - 2026-10-16 — Reverted +Ezuri, Stalker of Spheres / −Radstorm: kept Radstorm. Ezuri needs 7 mana for its enter ability and only draws when you proliferate. Ezuri is now loose.
+- 2026-10-16 — Final review: brought back Struggle for Project Purity (Brotherhood: ~3 cards per upkeep) and Fraying Sanity (end-step mill feeds Mothman). Mindcrank now replaces Piper Wright, Evolution Sage replaces Watchful Radstag. Piper and Radstag are loose.

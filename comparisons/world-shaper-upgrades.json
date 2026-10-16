@@ -149,8 +149,8 @@
       "swaps": [
         {
           "in": "Ramunap Excavator",
-          "out": "Skyshroud Claim",
-          "why": "Play lands from your graveyard, so every sacrificed land comes back. Skyshroud Claim is a fourth 4-mana ramp spell in a deck with too much ramp."
+          "out": "Arcane Signet",
+          "why": "Play lands from your graveyard, so every sacrificed land comes back. Arcane Signet is the only ramp piece that doesn't use lands; the deck still has about 13 others."
         },
         {
           "in": "Conduit of Worlds",
@@ -169,8 +169,8 @@
         },
         {
           "in": "Retreat to Hagra",
-          "out": "Formless Genesis",
-          "why": "Each land that enters drains each opponent 1, or gives a creature deathtouch."
+          "out": "Eumidian Wastewaker",
+          "why": "Each land that enters drains each opponent 1, or gives a creature deathtouch. Eumidian Wastewaker only works when it attacks, and its effect is symmetrical."
         },
         {
           "in": "Countryside Crusher",

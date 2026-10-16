@@ -8,9 +8,9 @@
 
 | ✓ | Card | MV | USD | cheapest USD printing | EUR | cheapest EUR printing | Replaces | Part of |
 |---|---|---|---|---|---|---|---|---|
-| ☐ | [Mindcrank](https://scryfall.com/card/plst/CLB-866/mindcrank) | 2 | $11.01 | Commander Legends: Battle for Baldur's Gate | €7.67 | New Phyrexia | Struggle for Project Purity | Counter Engine |
+| ☐ | [Mindcrank](https://scryfall.com/card/plst/CLB-866/mindcrank) | 2 | $11.01 | Commander Legends: Battle for Baldur's Gate | €7.67 | New Phyrexia | Piper Wright, Publick Reporter | Counter Engine |
 | ☐ | [Kami of Whispered Hopes](https://scryfall.com/card/soc/273/kami-of-whispered-hopes) | 3 | $4.51 | Secrets of Strixhaven Commander | €2.67 | March of the Machine | Power Fist | Counter Engine |
-| ☐ | [Evolution Sage](https://scryfall.com/card/ecc/105/evolution-sage) | 3 | $2.10 | The List | €2.13 | War of the Spark | Fraying Sanity | Counter Engine |
+| ☐ | [Evolution Sage](https://scryfall.com/card/ecc/105/evolution-sage) | 3 | $2.10 | The List | €2.13 | War of the Spark | Watchful Radstag | Counter Engine |
 | ☐ | [Ruin Crab](https://scryfall.com/card/plst/ZNR-75/ruin-crab) | 1 | $1.10 | The List | €1.13 | The List | Cathedral Acolyte | Counter Engine |
 | ☐ | [Assassin's Trophy](https://scryfall.com/card/soc/294/assassins-trophy) | 2 | $1.08 | Teenage Mutant Ninja Turtles Eternal | €1.09 | Teenage Mutant Ninja Turtles Eternal | Lumbering Megasloth | core |
 | ☐ | [Llanowar Wastes](https://scryfall.com/card/soc/383/llanowar-wastes) | 0 | $0.59 | The List | €1.09 | Magic Origins | Viridescent Bog | Counter Engine |
@@ -52,8 +52,8 @@ The same text also works for TCGplayer Mass Entry.
 - Cathedral Acolyte → Ruin Crab
 - Power Fist → Kami of Whispered Hopes
 - Nuka-Nuke Launcher → Evolution Witness
-- Fraying Sanity → Evolution Sage
-- Struggle for Project Purity → Mindcrank
+- Watchful Radstag → Evolution Sage
+- Piper Wright, Publick Reporter → Mindcrank
 - Overflowing Basin → Yavimaya Coast
 - Viridescent Bog → Llanowar Wastes
 - Temple of the False God → Underground River

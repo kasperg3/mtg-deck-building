@@ -147,13 +147,13 @@
         },
         {
           "in": "Evolution Sage",
-          "out": "Fraying Sanity",
-          "why": "Proliferates on every land drop: more counters on your creatures and more rad on opponents. Fraying Sanity only hits one opponent."
+          "out": "Watchful Radstag",
+          "why": "Proliferates on every land drop: more +1/+1 counters on your creatures and more rad counters on opponents. Watchful Radstag only copies itself when a bigger creature enters; Mothman's counters don't count."
         },
         {
           "in": "Mindcrank",
-          "out": "Struggle for Project Purity",
-          "why": "Whenever an opponent loses life, they mill that many cards. Rad-counter mills already cost life, so every rad mill and every combat hit mills again, and each mill is another Mothman trigger. Struggle draws cards for opponents too."
+          "out": "Piper Wright, Publick Reporter",
+          "why": "Whenever an opponent loses life, they mill that many cards. Rad-counter mills already cost life, so every rad mill and every combat hit mills again, and each mill is another Mothman trigger. Piper only does anything when she deals combat damage."
         },
         {
           "in": "Yavimaya Coast",
