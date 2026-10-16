@@ -159,6 +159,21 @@
           "in": "Ezuri, Stalker of Spheres",
           "out": "Radstorm",
           "why": "Can proliferate twice on entering, then draws a card on every proliferate. Radstorm is usually a single proliferate for 4 mana."
+        },
+        {
+          "in": "Yavimaya Coast",
+          "out": "Overflowing Basin",
+          "why": "Land swap. Untapped green or blue on its own. Overflowing Basin can't make mana by itself ({1},{T} only)."
+        },
+        {
+          "in": "Llanowar Wastes",
+          "out": "Viridescent Bog",
+          "why": "Land swap. Untapped black or green on its own. Viridescent Bog can't make mana by itself ({1},{T} only)."
+        },
+        {
+          "in": "Underground River",
+          "out": "Temple of the False God",
+          "why": "Land swap. Untapped blue or black. Temple of the False God only makes colourless mana, and only with five lands out."
         }
       ],
       "picked": true

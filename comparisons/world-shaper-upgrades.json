@@ -181,6 +181,16 @@
           "in": "Ob Nixilis, the Fallen",
           "out": "World Breaker",
           "why": "Every land that enters drains a player for 3 and puts three +1/+1 counters on Ob Nixilis, which makes it the best creature for stationing Hearthhull. World Breaker costs 7."
+        },
+        {
+          "in": "Lotus Field",
+          "out": "Viridescent Bog",
+          "why": "Land swap. When it enters you sacrifice two lands: with Hearthhull at 8+ that's 4 drain to each opponent, plus Juri counters, Mayhem Devil pings and two lands for Ramunap to replay. Then it taps for three mana of one colour. Viridescent Bog can't make mana on its own ({1},{T} only)."
+        },
+        {
+          "in": "Jund Panorama",
+          "out": "Bojuka Bog",
+          "why": "Land swap. Sacrifices itself for a basic: one drain trigger, then a second landfall, which makes Tannuk draw. Bojuka Bog enters tapped for a one-time graveyard exile."
         }
       ],
       "picked": true

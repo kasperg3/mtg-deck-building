@@ -171,6 +171,21 @@
           "in": "Kutzil, Malamet Exemplar",
           "out": "Altered Ego",
           "why": "Draws a card whenever creatures pumped by counters hit a player, and opponents can't cast spells during your turn, so no removal or tricks while your small evasive creatures attack. Altered Ego is a 4+ mana copy effect with no evasion."
+        },
+        {
+          "in": "Yavimaya Coast",
+          "out": "Overflowing Basin",
+          "why": "Land swap. Untapped green or blue on its own. Overflowing Basin can't make mana by itself ({1},{T} only)."
+        },
+        {
+          "in": "Adarkar Wastes",
+          "out": "Skycloud Expanse",
+          "why": "Land swap. Untapped white or blue on its own. Skycloud Expanse can't make mana by itself ({1},{T} only)."
+        },
+        {
+          "in": "Karn's Bastion",
+          "out": "Temple of the False God",
+          "why": "Land swap. {4},{T}: proliferate, doubled by Tekuthal. Replaces another colourless land that only works with five lands out."
         }
       ],
       "picked": true
