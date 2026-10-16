@@ -2,7 +2,7 @@
 
 - **Direction:** Scorched Earth Drain + Core package
 - **Cards to buy:** 10
-- **Total (cheapest printings):** $16.32 · €13.47 (budget €20)
+- **Total (cheapest printings):** $17.05 · €13.70 (budget €20)
 - **Prices:** Scryfall bulk data of 2026-10-16; USD = TCGplayer, EUR = Cardmarket. The cheapest USD and EUR printings can differ.
 - **Comparison page:** [`world-shaper-upgrades.html`](../comparisons/world-shaper-upgrades.html)
 
@@ -13,11 +13,11 @@
 | ☐ | [Zuran Orb](https://scryfall.com/card/mh2/300/zuran-orb) | 0 | $3.00 | Modern Horizons 2 | €1.59 | Pro Tour Collector Set | Wastes | core |
 | ☐ | [Ob Nixilis, the Fallen](https://scryfall.com/card/plst/IMA-101/ob-nixilis-the-fallen) | 5 | $2.79 | Tarkir: Dragonstorm Commander | €2.44 | Tarkir: Dragonstorm Commander | World Breaker | Scorched Earth Drain |
 | ☐ | [Conduit of Worlds](https://scryfall.com/card/msc/378/conduit-of-worlds) | 4 | $1.35 | Marvel Super Heroes Commander | €1.36 | Marvel Super Heroes Commander | Cultivate | Scorched Earth Drain |
+| ☐ | [Tannuk, Memorial Ensign](https://scryfall.com/card/eoe/233/tannuk-memorial-ensign) | 3 | $1.04 | Edge of Eternities | €0.66 | Edge of Eternities | Groundskeeper | Scorched Earth Drain |
 | ☐ | [Retreat to Hagra](https://scryfall.com/card/c18/116/retreat-to-hagra) | 3 | $0.54 | Battle for Zendikar | €0.68 | Commander 2018 | Formless Genesis | Scorched Earth Drain |
 | ☐ | [Countryside Crusher](https://scryfall.com/card/mma/108/countryside-crusher) | 3 | $0.44 | Modern Masters | €0.32 | Morningtide | Gaze of Granite | Scorched Earth Drain |
-| ☐ | [Tunneling Geopede](https://scryfall.com/card/bfz/158/tunneling-geopede) | 3 | $0.31 | Battle for Zendikar | €0.43 | Battle for Zendikar | Groundskeeper | Scorched Earth Drain |
 | ☐ | [Sabotender](https://scryfall.com/card/fin/153/sabotender) | 2 | $0.29 | Final Fantasy | €0.11 | Final Fantasy | Night's Whisper | Scorched Earth Drain |
-| ☐ | [Snakeskin Veil](https://scryfall.com/card/j25/713/snakeskin-veil) | 1 | $0.19 | Outlaws of Thunder Junction | €0.11 | Foundations | Planetary Annihilation | core |
+| ☐ | [Snakeskin Veil](https://scryfall.com/card/j25/713/snakeskin-veil) | 1 | $0.19 | Outlaws of Thunder Junction | €0.11 | Foundations | Escape to the Wilds | core |
 
 ## Import into Cardmarket
 1. On Cardmarket, create a Wants list (Wants → Create list → Magic) named e.g. "World Shaper upgrades".
@@ -32,9 +32,9 @@ The same text also works for TCGplayer Mass Entry.
 1 Zuran Orb
 1 Ob Nixilis, the Fallen
 1 Conduit of Worlds
+1 Tannuk, Memorial Ensign
 1 Retreat to Hagra
 1 Countryside Crusher
-1 Tunneling Geopede
 1 Sabotender
 1 Snakeskin Veil
 ```
@@ -42,12 +42,12 @@ The same text also works for TCGplayer Mass Entry.
 ## Cards coming out of the deck
 
 - Satyr Wayfinder → Tamiyo's Safekeeping
-- Planetary Annihilation → Snakeskin Veil
+- Escape to the Wilds → Snakeskin Veil
 - Wastes → Zuran Orb
 - Skyshroud Claim → Ramunap Excavator
 - Cultivate → Conduit of Worlds
 - Night's Whisper → Sabotender
-- Groundskeeper → Tunneling Geopede
+- Groundskeeper → Tannuk, Memorial Ensign
 - Formless Genesis → Retreat to Hagra
 - Gaze of Granite → Countryside Crusher
 - World Breaker → Ob Nixilis, the Fallen

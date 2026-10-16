@@ -121,29 +121,29 @@
       "id": "counters",
       "name": "Counter Engine",
       "recommended": true,
-      "pitch": "Make each Mothman trigger give more counters, copy them with proliferate, and draw cards off them. You win by attacking with large creatures.",
+      "pitch": "Mill every opponent every turn and turn each mill into +1/+1 counters. Ruin Crab and Mindcrank make rad counters and combat damage mill again, Kami and Evolution Sage grow everything further, and Evolution Witness and Ezuri turn the counters into cards.",
       "plays_like": "Big creatures attacking; draws lots of cards",
       "metrics": {
         "Spot removal": 9,
         "Instant-speed answers": 6,
-        "Card draw": "best (Ezuri, Terrasymbiosis)",
+        "Card draw": "good (Ezuri, Evolution Witness, Mirelurk Queen)",
         "Game Changers": 0
       },
       "swaps": [
         {
-          "in": "Hedron Crab",
+          "in": "Ruin Crab",
           "out": "Cathedral Acolyte",
-          "why": "Each land you play mills a target player 3, a steady Mothman trigger. Acolyte's ward 1 is a small effect."
+          "why": "Each land you play mills each opponent 3. Simultaneous mills trigger Mothman once, counting every nonland card milled, so that's counters on about 6 creatures per land drop. Acolyte's ward 1 is a small effect."
         },
         {
-          "in": "Benevolent Hydra",
+          "in": "Kami of Whispered Hopes",
           "out": "Power Fist",
-          "why": "Adds +1 whenever counters go on your other creatures, scales with X, and can move its own counters. A cheaper Ozolith on a creature body. Power Fist needs equip mana and a successful hit."
+          "why": "+1 extra counter on every placement, and it taps for mana equal to its power, so Mothman's counters turn it into a big mana source. Power Fist needs equip mana and a successful hit."
         },
         {
-          "in": "Stalwart Successor",
+          "in": "Evolution Witness",
           "out": "Nuka-Nuke Launcher",
-          "why": "Gives an extra counter whenever one of your creatures first gets counters each turn. The Launcher's equip 3 is too expensive."
+          "why": "Whenever it gets +1/+1 counters (Mothman does that constantly), return a permanent card from your graveyard to your hand. Repeatable card advantage. The Launcher's equip 3 is too expensive."
         },
         {
           "in": "Evolution Sage",
@@ -151,9 +151,9 @@
           "why": "Proliferates on every land drop: more counters on your creatures and more rad on opponents. Fraying Sanity only hits one opponent."
         },
         {
-          "in": "Terrasymbiosis",
+          "in": "Mindcrank",
           "out": "Struggle for Project Purity",
-          "why": "Once a turn, when you put +1/+1 counters on a creature, draw that many cards. Mothman gives counters on every mill, so this is a strong draw engine. Struggle draws cards for opponents too."
+          "why": "Whenever an opponent loses life, they mill that many cards. Rad-counter mills already cost life, so every rad mill and every combat hit mills again, and each mill is another Mothman trigger. Struggle draws cards for opponents too."
         },
         {
           "in": "Ezuri, Stalker of Spheres",

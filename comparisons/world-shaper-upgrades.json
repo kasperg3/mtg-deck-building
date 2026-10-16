@@ -113,7 +113,7 @@
   },
   "core": {
     "name": "Core package",
-    "description": "Cheap protection (Tamiyo's Safekeeping covers Hearthhull before it's a creature; Snakeskin Veil covers creatures), plus a free outlet that turns any land into a 2-life drain with Hearthhull. It also removes the colourless Wastes.",
+    "description": "Cheap protection (Tamiyo's Safekeeping covers Hearthhull before it's a creature; Snakeskin Veil covers creatures), plus a free outlet that turns any land into a 2-life drain with Hearthhull. It also removes the colourless Wastes. Planetary Annihilation stays: with Hearthhull at 8+, Mayhem Devil and Juri, a mass land sacrifice is a finisher.",
     "swaps": [
       {
         "in": "Tamiyo's Safekeeping",
@@ -122,8 +122,8 @@
       },
       {
         "in": "Snakeskin Veil",
-        "out": "Planetary Annihilation",
-        "why": "One mana: hexproof and a +1/+1 counter on a creature, which counters a removal spell. Planetary Annihilation makes every player sacrifice down to six lands; you're the land deck, so it hurts you most."
+        "out": "Escape to the Wilds",
+        "why": "One mana: hexproof and a +1/+1 counter on a creature, which counters a removal spell. Escape to the Wilds is a 5-mana card-draw spell; Tannuk and Hearthhull cover card draw."
       },
       {
         "in": "Zuran Orb",
@@ -137,7 +137,7 @@
       "id": "drain",
       "name": "Scorched Earth Drain",
       "recommended": true,
-      "pitch": "Sacrifice lands every turn and replay them from the graveyard. Landfall pingers (Geopede, Sabotender, Hagra, Ob Nixilis) deal damage from turn 2; once Hearthhull is stationed to 8, each sacrificed land also drains 2. Juri, Countryside Crusher and Ob Nixilis grow with every land played or sacrificed, so they station Hearthhull quickly.",
+      "pitch": "Sacrifice lands every turn and replay them from the graveyard. Landfall pingers (Tannuk, Sabotender, Hagra, Ob Nixilis) deal damage from turn 2; once Hearthhull is stationed to 8, each sacrificed land also drains 2, and Planetary Annihilation becomes a finisher. Juri, Countryside Crusher and Ob Nixilis grow with every land played or sacrificed, so they station Hearthhull quickly.",
       "plays_like": "Burns the table out with land sacrifices",
       "metrics": {
         "Lands": 41,
@@ -163,9 +163,9 @@
           "why": "Every land that enters pings each opponent for 1, from turn 2 on, before Hearthhull is stationed. Night's Whisper is generic draw; Hearthhull's own 2+ ability draws two cards per land."
         },
         {
-          "in": "Tunneling Geopede",
+          "in": "Tannuk, Memorial Ensign",
           "out": "Groundskeeper",
-          "why": "Another 1 damage to each opponent per land. Groundskeeper's 'return a basic land' is redundant now that Ramunap, Conduit and Szarel let you play lands straight from the graveyard."
+          "why": "Every land that enters pings each opponent for 1, and the second trigger each turn draws a card. With Hearthhull's extra land play and lands replayed from the graveyard, that happens most turns. Groundskeeper's 'return a basic land' is redundant now that Ramunap, Conduit and Szarel let you play lands straight from the graveyard."
         },
         {
           "in": "Retreat to Hagra",

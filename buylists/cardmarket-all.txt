@@ -3,13 +3,13 @@
 1 Zuran Orb
 1 Ob Nixilis, the Fallen
 1 Conduit of Worlds
+1 Tannuk, Memorial Ensign
 1 Retreat to Hagra
 1 Countryside Crusher
-1 Tunneling Geopede
 1 Sabotender
 1 Snakeskin Veil
 1 Herald of Secret Streams
-1 Kami of Whispered Hopes
+2 Kami of Whispered Hopes
 1 Kutzil, Malamet Exemplar
 1 Tekuthal, Inquiry Dominus
 1 Silent Hallcreeper
@@ -18,13 +18,12 @@
 1 Ray Fillet, Wave Warrior
 1 Thrummingbird
 1 Feat of Resistance
-1 Terrasymbiosis
-1 Hedron Crab
+1 Mindcrank
 1 Evolution Sage
+1 Ruin Crab
 1 Assassin's Trophy
-1 Benevolent Hydra
 1 Ezuri, Stalker of Spheres
 1 Beast Within
 1 Sultai Charm
-1 Stalwart Successor
+1 Evolution Witness
 1 Heartless Act
