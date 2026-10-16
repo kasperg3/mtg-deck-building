@@ -178,6 +178,9 @@ def main():
     ap.add_argument("--refresh", action="store_true", help="re-download Scryfall bulk data now")
     ap.add_argument("--max-age-days", type=float, default=7, help="re-download bulk data older than this")
     ap.add_argument("-o", "--output", help="output HTML (default: spec path with .html)")
+    ap.add_argument("--after", metavar="DIRECTION_ID",
+                    help="print the deck list after that direction's swaps (core included) instead of building; "
+                         "paste it into mcp__mtg-search__get_deck for a legality check")
     args = ap.parse_args()
     if not args.spec:
         if not args.refresh:
@@ -188,6 +191,17 @@ def main():
     spec_path = Path(args.spec)
     spec = json.loads(spec_path.read_text())
     commanders, stock = parse_deck(ROOT / spec["deck"])
+
+    if args.after:
+        d = next((x for x in spec["directions"] if x["id"] == args.after), None)
+        if d is None:
+            sys.exit(f"no direction '{args.after}' (have: {', '.join(x['id'] for x in spec['directions'])})")
+        deck_after, probs = apply_swaps(stock, (spec.get("core") or {"swaps": []})["swaps"] + d["swaps"])
+        for p in probs:
+            print(f"warning: {p}", file=sys.stderr)
+        print("Commander\n" + "".join(f"1 {c}\n" for c in commanders) + "\nDeck\n"
+              + "".join(f"{q} {n}\n" for q, n in sorted(deck_after, key=lambda x: x[1])), end="")
+        return
 
     core = spec.get("core") or {"swaps": []}
     swap_names = [n for s in core["swaps"] for n in (s["in"], s["out"])]

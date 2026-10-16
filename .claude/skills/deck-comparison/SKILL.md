@@ -55,11 +55,12 @@ file, reduced to `.cache/card-index.json`. The cache is **not in git**
      the deck's own plan.
 
 4. **Respect the budget.** The user buys on Cardmarket. The default is
-   **up to €40 per deck**, counting the core package. Set `budget_eur` in the
+   **up to €20 per deck**, counting the core package. Set `budget_eur` in the
    spec (`budget_usd` also works). To price candidates before choosing, look
    them up in `.cache/card-index.json` (fields `eur` and `usd`, cheapest paper
    printing). Real Cardmarket totals have come in below these estimates
-   (€26 actual against €35 estimated), so a list estimated near the cap is fine. Prefer cheap
+   (€26 actual against €35 estimated), but still keep about €1–2 of margin
+   because prices drift between the weekly refreshes. Prefer cheap
    functional reprints, e.g. Ramunap Excavator over Crucible of Worlds.
 
 5. **Find cards with the tools, not from memory.** Use `mcp__mtg-search__search_cards`
@@ -89,9 +90,54 @@ file, reduced to `.cache/card-index.json`. The cache is **not in git**
    Don't repeat the swap list in prose; the page shows it. Offer to apply the
    chosen direction to `decks/<deck>.md`, adding a changelog entry.
 
+## Review before the list is final
+
+Mandatory. Run it **after the user picks a direction and before writing buy
+lists, committing, or changing `decks/<deck>.md`**. Run it again whenever the
+picked list changes (budget change, swapped card). It exists because the first
+World Shaper list cut its own key creatures: Hearthhull's drain only works at
+8+ charge counters, and Juri grows from *any* sacrificed permanent, not just
+creatures.
+
+1. **Read the exact rules text, never from memory or role tags.** Use
+   `mcp__mtg-search__get_card` or the Scryfall API (`/cards/named?exact=`) for
+   the commander and for **every card going in and every card coming out**.
+   Watch for:
+   - Station or level boxes: lines printed under `N+ |` belong to that box
+     and only work at that level.
+   - "Permanent" vs "creature" vs "land", "you control" vs "any player",
+     once-per-turn limits, sorcery-speed restrictions.
+   - What the commander needs to work (creatures with power for Station,
+     counters already on creatures for Cheer, nonland mills for Mothman), and
+     whether any cut removes one of those enablers.
+2. **Check each cut against the plan.** For every card going out, ask: does it
+   trigger, enable or pay off the commander or the direction? If yes, cut a
+   different card. Record the reason in the swap's `why`.
+3. **Check each new card's interactions.** Confirm each claimed combo actually
+   works by its text (e.g. moving a counter is "putting" one, so +1 effects
+   apply). Drop any claim you can't confirm.
+4. **Validate the final 100.** Print the post-swap list and run it through
+   `mcp__mtg-search__get_deck` with `format="commander"`:
+   ```
+   python3 tools/build_comparison.py comparisons/<deck>-upgrades.json --after <direction-id>
+   ```
+   It must show 100 cards, no colour-identity or legality problems, and the
+   expected Game Changer count. Report known pre-existing issues (such as a
+   commander flag) separately.
+5. **Recount after the swaps:** spot removal, wipes, instant-speed answers,
+   protection, card draw, ramp and land count against the targets. Update the
+   direction's `metrics` so the page matches.
+6. **Check consistency.** No stale text in the spec (old budget figures, cards
+   no longer in the list, wrong claims in `why`/`pitch`/`notes`), the build
+   shows no `warning:` lines, and the cost is within budget with margin.
+7. **Report the review to the user:** what you changed and why, what passed,
+   and any card you're unsure about (e.g. an odd price). Get their OK before
+   writing buy lists, committing or editing deck files.
+
 ## After the user picks a direction
 
-Set `"picked": true` on that direction in the spec and rebuild the page.
+Set `"picked": true` on that direction in the spec and rebuild the page. Then
+run **Review before the list is final** (above) before anything below.
 
 Write the buy list (include every deck the user has picked so far, so the
 combined total stays correct):
@@ -109,7 +155,7 @@ mass-entry text) and `buylists/README.md` (combined total). Apply the swaps to
   "title": "Mutant Menace — Upgrade Options",
   "deck": "decks/mutant-menace.md",          // repo-relative path
   "date": "YYYY-MM-DD",
-  "budget_eur": 40,                          // optional (or budget_usd); build warns when a direction's cards-in cost exceeds it
+  "budget_eur": 20,                          // optional (or budget_usd); build warns when a direction's cards-in cost exceeds it
   "summary": "One paragraph: what the commander does and the overall plan.",
   "analysis": {
     "notes": ["Curve / mana / weakness observations, one line each"],

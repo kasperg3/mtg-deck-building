@@ -2,8 +2,8 @@
   "title": "Mutant Menace — Upgrade Options",
   "deck": "decks/mutant-menace.md",
   "date": "2026-10-16",
-  "budget_eur": 40,
-  "summary": "The Wise Mothman puts +1/+1 counters on creatures whenever nonland cards are milled from any library, and its rad counters make every player mill each turn. A shared removal package fixes the stock list's thin interaction; each direction then spends 6 more swaps on one plan. Budget: up to €40 per deck (Cardmarket). The picked direction uses that budget; the other directions were sized for $20.",
+  "budget_eur": 20,
+  "summary": "The Wise Mothman puts +1/+1 counters on creatures whenever nonland cards are milled from any library, and its rad counters make every player mill each turn. A shared removal package fixes the stock list's thin interaction; each direction then spends 6 more swaps on one plan. Budget: up to €20 per deck in total (Cardmarket prices).",
   "analysis": {
     "notes": [
       "Curve shape is fine for a 4-mana commander, but several 2-drops (Power Fist, Nuka-Nuke Launcher, Biomass Mutation) don't affect the board.",
@@ -136,14 +136,14 @@
           "why": "Each land you play mills a target player 3, a steady Mothman trigger. Acolyte's ward 1 is a small effect."
         },
         {
-          "in": "Ozolith, the Shattered Spire",
+          "in": "Benevolent Hydra",
           "out": "Power Fist",
-          "why": "A second Hardened Scales effect for 2 mana, and it can cycle. Power Fist needs equip mana and a successful hit."
+          "why": "Adds +1 whenever counters go on your other creatures, scales with X, and can move its own counters. A cheaper Ozolith on a creature body. Power Fist needs equip mana and a successful hit."
         },
         {
-          "in": "Mesmeric Orb",
+          "in": "Stalwart Successor",
           "out": "Nuka-Nuke Launcher",
-          "why": "Every permanent that untaps makes its controller mill a card, so every player mills each turn and Mothman puts counters on lots of creatures every turn. Nuka-Nuke Launcher's equip 3 is too expensive."
+          "why": "Gives an extra counter whenever one of your creatures first gets counters each turn. The Launcher's equip 3 is too expensive."
         },
         {
           "in": "Evolution Sage",
@@ -252,5 +252,5 @@
       ]
     }
   ],
-  "recommendation": "Counter Engine fits Mothman best: every mill trigger already gives counters, and these cards make each counter worth more. The removal package covers the deck's biggest weakness in every direction. All three directions stay under $20."
+  "recommendation": "Counter Engine fits Mothman best: every mill trigger already gives counters, and these cards make each counter worth more. The removal package covers the deck's biggest weakness in every direction. All three directions stay under €20."
 }

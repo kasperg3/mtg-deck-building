@@ -2,16 +2,17 @@
   "title": "World Shaper — Upgrade Options",
   "deck": "decks/world-shaper.md",
   "date": "2026-10-16",
-  "budget_eur": 40,
-  "summary": "Hearthhull, the Worldseed drains each opponent for 2 whenever you sacrifice a land, and once stationed it trades lands for cards. The stock list ramps far more than it needs to, is top-heavy, and has no way to protect its key pieces. Budget: up to €40 per deck (Cardmarket). The picked direction uses that budget; the other directions were sized for $20.",
+  "budget_eur": 20,
+  "summary": "Hearthhull, the Worldseed drains each opponent for 2 whenever you sacrifice a land, and once stationed it trades lands for cards. The stock list ramps far more than it needs to, is top-heavy, and has no way to protect its key pieces. Budget: up to €20 per deck in total (Cardmarket prices).",
   "analysis": {
     "notes": [
+      "Hearthhull's drain ('whenever you sacrifice a land, each opponent loses 2 life') is part of its 8+ station box, so it only works once Hearthhull has 8 charge counters. You station it by tapping creatures, adding counters equal to their power, so the deck needs creatures with high power (Juri, Uurg, Centaur Vinecrasher, Ob Nixilis, Moraug).",
       "Top-heavy: 15 nonland cards cost 5 or more (World Breaker 7, Omnath 7, three 6-drops, nine 5-drops).",
       "Too much ramp: 42 lands plus ~15 ramp pieces. Some ramp spells can become engines.",
       "No protection at all for the commander or the board.",
       "Interaction is good: ~10 spot removal, 6 at instant speed, 4 board wipes.",
       "Mana base: Wastes is a colourless basic in a three-colour deck and should go.",
-      "Commander check: the card search flags that Hearthhull has no 'can be your commander' text (it's an artifact, not a creature). It is the precon's face commander, so check with your playgroup. Lord Windgrace (in Scorched Earth Drain) and Szarel can legally be your commander."
+      "Commander check: the card search flags that Hearthhull has no 'can be your commander' text (it's an artifact, not a creature). It is the precon's face commander, so check with your playgroup. Szarel, Genesis Shepherd (already in the deck) can legally be your commander."
     ],
     "interaction": [
       {
@@ -112,7 +113,7 @@
   },
   "core": {
     "name": "Core package",
-    "description": "Protection for your key permanents (Heroic Intervention stops a board wipe; Tamiyo's Safekeeping protects Hearthhull before it's a creature), plus a free outlet that turns any land into a 2-life drain with Hearthhull. It also removes the colourless Wastes.",
+    "description": "Cheap protection (Tamiyo's Safekeeping covers Hearthhull before it's a creature; Snakeskin Veil covers creatures), plus a free outlet that turns any land into a 2-life drain with Hearthhull. It also removes the colourless Wastes.",
     "swaps": [
       {
         "in": "Tamiyo's Safekeeping",
@@ -120,9 +121,9 @@
         "why": "One mana: hexproof and indestructible on any permanent, including Hearthhull before it becomes a creature. Satyr Wayfinder is a weak 2-drop that only digs for a land."
       },
       {
-        "in": "Heroic Intervention",
+        "in": "Snakeskin Veil",
         "out": "Planetary Annihilation",
-        "why": "Instant: all your permanents gain hexproof and indestructible, which stops a board wipe or targeted removal. Planetary Annihilation makes every player sacrifice down to six lands; you're the land deck, so it hurts you most."
+        "why": "One mana: hexproof and a +1/+1 counter on a creature, which counters a removal spell. Planetary Annihilation makes every player sacrifice down to six lands; you're the land deck, so it hurts you most."
       },
       {
         "in": "Zuran Orb",
@@ -136,20 +137,20 @@
       "id": "drain",
       "name": "Scorched Earth Drain",
       "recommended": true,
-      "pitch": "Sacrifice lands every turn, replay them from the graveyard, and let Hearthhull drain the table 2 life at a time. Ramp spells become sacrifice outlets, graveyard-land engines and landfall damage.",
+      "pitch": "Sacrifice lands every turn and replay them from the graveyard. Landfall pingers (Geopede, Sabotender, Hagra, Ob Nixilis) deal damage from turn 2; once Hearthhull is stationed to 8, each sacrificed land also drains 2. Juri, Countryside Crusher and Ob Nixilis grow with every land played or sacrificed, so they station Hearthhull quickly.",
       "plays_like": "Burns the table out with land sacrifices",
       "metrics": {
         "Lands": 41,
         "Ramp pieces": "~13",
-        "Protection": 3,
-        "Free land-sac outlets": 3,
+        "Protection": 2,
+        "Free land-sac outlets": 1,
         "Game Changers": 0
       },
       "swaps": [
         {
           "in": "Ramunap Excavator",
           "out": "Skyshroud Claim",
-          "why": "Play lands from your graveyard, so every sacrificed land comes back. Skyshroud Claim is a fourth 4-mana ramp spell."
+          "why": "Play lands from your graveyard, so every sacrificed land comes back. Skyshroud Claim is a fourth 4-mana ramp spell in a deck with too much ramp."
         },
         {
           "in": "Conduit of Worlds",
@@ -157,14 +158,14 @@
           "why": "A second way to replay lands from your graveyard, and it can also recast a permanent from there. Cultivate is redundant ramp."
         },
         {
-          "in": "Sylvan Safekeeper",
-          "out": "Juri, Master of the Revue",
-          "why": "Sacrifice a land: a creature gains shroud. That's free protection and a free 2-point drain with Hearthhull. Juri only grows from creatures dying, not lands."
+          "in": "Sabotender",
+          "out": "Night's Whisper",
+          "why": "Every land that enters pings each opponent for 1, from turn 2 on, before Hearthhull is stationed. Night's Whisper is generic draw; Hearthhull's own 2+ ability draws two cards per land."
         },
         {
           "in": "Tunneling Geopede",
-          "out": "Centaur Vinecrasher",
-          "why": "Every land that enters pings each opponent for 1, so replaying sacrificed lands means extra damage."
+          "out": "Groundskeeper",
+          "why": "Another 1 damage to each opponent per land. Groundskeeper's 'return a basic land' is redundant now that Ramunap, Conduit and Szarel let you play lands straight from the graveyard."
         },
         {
           "in": "Retreat to Hagra",
@@ -172,14 +173,14 @@
           "why": "Each land that enters drains each opponent 1, or gives a creature deathtouch."
         },
         {
-          "in": "Lord Windgrace",
-          "out": "Moraug, Fury of Akoum",
-          "why": "Planeswalker: +2 draws extra cards from discarded lands, −3 returns two lands from the graveyard. It can also legally be your commander. Moraug is a 6-drop that only pays off if you attack."
+          "in": "Countryside Crusher",
+          "out": "Gaze of Granite",
+          "why": "Gets a +1/+1 counter every time a land goes to your graveyard (every Zuran Orb, Hearthhull or fetch-land sacrifice), so it grows fast and stations Hearthhull. Each upkeep it mills lands off your library, which Ramunap, Conduit and Szarel let you play. Gaze of Granite also destroys your own cheap permanents (Zuran Orb, Juri, Geopede); Blasphemous Act and Pest Infestation remain as wipes."
         },
         {
           "in": "Ob Nixilis, the Fallen",
           "out": "World Breaker",
-          "why": "Every land that enters drains a player for 3 and grows Ob Nixilis. World Breaker costs 7."
+          "why": "Every land that enters drains a player for 3 and puts three +1/+1 counters on Ob Nixilis, which makes it the best creature for stationing Hearthhull. World Breaker costs 7."
         }
       ],
       "picked": true
@@ -285,5 +286,5 @@
       ]
     }
   ],
-  "recommendation": "Scorched Earth Drain uses Hearthhull's own text best: every free sacrifice outlet and every replayed land is another drain, and Geopede, Sabotender, Hagra and Ob Nixilis add damage on top. All three directions stay under $20 including the core package."
+  "recommendation": "Scorched Earth Drain uses Hearthhull best: the landfall pingers deal damage from turn 2, and once Hearthhull is stationed to 8 every sacrifice and replay is another 2-point drain. All three directions stay under €20 including the core package."
 }
