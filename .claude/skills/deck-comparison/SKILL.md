@@ -193,6 +193,10 @@ For a new comparison on an already-upgraded deck, point the spec's `deck` at
       "pitch": "One or two sentences on the plan.",
       "plays_like": "Short phrase for the comparison table",
       "metrics": {"Spot removal": 9, "Game Changers": 0},   // same keys as stock_metrics
+      "how_to_play": {                        // collapsible guide under the direction (open when picked)
+        "summary": "One line: how this version wins.",
+        "sections": [{"title": "Turns 1–3", "points": ["Short, concrete play tips naming the deck's cards"]}]
+      },
       "swaps": [{"in": "Card In", "out": "Card Out", "why": "..."}]
     }
   ],
@@ -211,5 +215,5 @@ same sections: header with commander, stock analysis (curve and interaction
 table), comparison table (avg MV, cost in, value out, metrics), curve per
 direction against stock, core package, then each direction as OUT → IN card
 pairs, with an expandable buy list for each direction: a price table and a
-Cardmarket-ready text box with a Copy button. Clicking a card opens a large image, showing both faces for
+Cardmarket-ready text box with a Copy button, then a collapsible How to play guide. Clicking a card opens a large image, showing both faces for
 double-faced cards.

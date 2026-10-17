@@ -193,7 +193,53 @@
           "why": "Land swap. Sacrifices itself for a basic: one drain trigger, then a second landfall, which makes Tannuk draw. Bojuka Bog enters tapped for a one-time graveyard exile."
         }
       ],
-      "picked": true
+      "picked": true,
+      "how_to_play": {
+        "summary": "Make extra land drops, sacrifice lands, replay them from the graveyard, and drain the table a little each time.",
+        "sections": [
+          {
+            "title": "How Hearthhull works",
+            "points": [
+              "Station (sorcery speed): tap another creature to put charge counters equal to its power on Hearthhull.",
+              "2+: {1}, tap, sacrifice a land: draw 2 and you may play an extra land this turn. This is your card draw engine.",
+              "8+: it becomes a 6/7 flyer with vigilance and haste, and every land you sacrifice drains each opponent for 2. Before 8 counters nothing drains."
+            ]
+          },
+          {
+            "title": "Turns 1–4: set up",
+            "points": [
+              "Ramp: Farseek, Nature's Lore, Harrow, Skyshroud Claim (two untapped Forests = two landfalls).",
+              "Get a landfall pinger down: Sabotender, Tannuk, Retreat to Hagra. They deal damage before Hearthhull is stationed.",
+              "Get a replay engine early: Ramunap Excavator, Conduit of Worlds or Szarel. Without one, sacrificed lands are gone for good."
+            ]
+          },
+          {
+            "title": "Turns 4–7: build the engine",
+            "points": [
+              "Cast Hearthhull and station it with high-power creatures: Juri (grows on every sacrifice), Countryside Crusher (grows when lands hit your graveyard), Ob Nixilis (three counters per landfall), Uurg, Centaur Vinecrasher, Formless Genesis tokens and Titania's 5/3s.",
+              "Every turn: sacrifice lands with Zuran Orb, Hammer of Purphoros or Sprouting Goblin, then replay one from the graveyard."
+            ]
+          },
+          {
+            "title": "Big turns and finishers",
+            "points": [
+              "Worldsoul's Rage, Splendid Reclamation and Aftermath Analyst put many lands onto the battlefield at once: Tannuk, Sabotender, Hagra, Ob Nixilis (3 drain each) and Rampaging Baloths all trigger.",
+              "Moraug: a land played in your main phase gives an extra combat.",
+              "Planetary Annihilation with Hearthhull at 8+: every land you sacrifice drains 2, Mayhem Devil pings for every land any player sacrifices, Hearthhull (toughness 7) survives the 6 damage, and Titania's tokens are created after the damage, so they survive."
+            ]
+          },
+          {
+            "title": "Tips",
+            "points": [
+              "Zuran Orb works at instant speed: sacrifice in response to land destruction or a wipe.",
+              "Lotus Field sacrifices two lands when it enters; play it when Hearthhull is at 8+ or a replay engine is out.",
+              "Ramunap lets you play lands from the graveyard, not extra lands. Extra land plays come from Hearthhull, Exploration Broodship, Oracle of Mul Daya and Gitrog.",
+              "Stationing taps your creatures, so they can't block that turn. Keep Tamiyo's Safekeeping for Hearthhull.",
+              "Mulligan hands with fewer than 3 lands or with no ramp and no sacrifice outlet."
+            ]
+          }
+        ]
+      }
     },
     {
       "id": "landfall",
@@ -243,7 +289,28 @@
           "out": "World Breaker",
           "why": "A same-cost 7-drop that wins games: a 0/1 Plant per land you control, and every landfall grows them all. It also fuels Phylath."
         }
-      ]
+      ],
+      "how_to_play": {
+        "summary": "Turn every land drop into tokens, mana and damage, and win with a wide board.",
+        "sections": [
+          {
+            "title": "Game plan",
+            "points": [
+              "Early: Tireless Provisioner (Treasure or Food per land), Tunneling Geopede (ping per land), Mina and Denn (extra land play each turn).",
+              "Mid: Ob Nixilis (3 drain per land), Sporemound (Saproling per land), Phylath (a Plant per basic you control, then four counters on a Plant per landfall).",
+              "Late: Avenger of Zendikar: a Plant per land you control, then every landfall grows all of them. Rampaging Baloths and Omnath add 4/4s and 5/5s."
+            ]
+          },
+          {
+            "title": "Tips",
+            "points": [
+              "Mina and Denn can return a land to your hand to replay it: an extra landfall each turn.",
+              "Fetch lands and self-sacrificing lands (Evolving Wilds, the Courtyard cycle) are two landfalls each.",
+              "This version cuts Juri, so station Hearthhull with Ob Nixilis, Avenger's Plants and Baloth tokens."
+            ]
+          }
+        ]
+      }
     },
     {
       "id": "loam",
@@ -293,7 +360,28 @@
           "out": "World Breaker",
           "why": "Mills lands off the top every upkeep (Loam fuel) and grows whenever a land hits your graveyard. A 3-drop instead of a 7-drop."
         }
-      ]
+      ],
+      "how_to_play": {
+        "summary": "Treat your graveyard as a second hand of lands and grind long games with card advantage.",
+        "sections": [
+          {
+            "title": "Game plan",
+            "points": [
+              "Life from the Loam returns three lands from your graveyard to your hand, and dredge brings it back instead of drawing.",
+              "Conduit of Worlds and Szarel let you play lands from the graveyard; Marwyn ({2}) and Tilling Treefolk return lands to your hand.",
+              "Turntimber Sower makes a Plant whenever lands go to your graveyard, which happens on every Hearthhull activation."
+            ]
+          },
+          {
+            "title": "Tips",
+            "points": [
+              "Countryside Crusher mills lands off your library each upkeep (fuel) and grows; Floral Evoker puts lands from the graveyard onto the battlefield.",
+              "Hearthhull's 2+ ability (sacrifice a land: draw 2) is the engine; Loam keeps the lands coming back.",
+              "Watch for graveyard hate; spread your threats between graveyard and battlefield."
+            ]
+          }
+        ]
+      }
     }
   ],
   "recommendation": "Scorched Earth Drain uses Hearthhull best: the landfall pingers deal damage from turn 2, and once Hearthhull is stationed to 8 every sacrifice and replay is another 2-point drain. All three directions stay under €20 including the core package."

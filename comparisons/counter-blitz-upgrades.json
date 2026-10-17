@@ -188,7 +188,52 @@
           "why": "Land swap. {4},{T}: proliferate, doubled by Tekuthal. Replaces another colourless land that only works with five lands out."
         }
       ],
-      "picked": true
+      "picked": true,
+      "how_to_play": {
+        "summary": "Get one evasive creature with a counter through every turn: Cheer draws a card and proliferates, and the pressure snowballs.",
+        "sections": [
+          {
+            "title": "How Tidus works",
+            "points": [
+              "Beginning of combat: move a counter from one of your creatures onto another.",
+              "Cheer (once per turn): when your creatures with counters deal combat damage to a player, draw a card and proliferate."
+            ]
+          },
+          {
+            "title": "Turns 1–3: counters plus evasion",
+            "points": [
+              "Counter sources: Luminarch Aspirant, Shelinda, Conclave Mentor or Kami of Whispered Hopes (+1 on every placement), Hardened Scales.",
+              "Evasive creatures: Thrummingbird, Silent Hallcreeper (unblockable), Lord Jyscal Guado, Ray Fillet."
+            ]
+          },
+          {
+            "title": "Each combat, in this order",
+            "points": [
+              "Resolve the counter-placing triggers first (Luminarch, Fight Rigging, Maester Seymour).",
+              "Then use Tidus to move a counter onto your best evasive creature. Conclave Mentor, Kami and Hardened Scales boost moved counters too, so one move can be 2–3 counters.",
+              "Attack with everything that can't be blocked."
+            ]
+          },
+          {
+            "title": "Turns 4+: engines",
+            "points": [
+              "Herald of Secret Streams: every creature with a +1/+1 counter is unblockable. This is your most important card.",
+              "Kutzil: opponents can't cast spells during your turn, and you draw when pumped creatures connect.",
+              "Tekuthal doubles every proliferate (Cheer, Thrummingbird, Grateful Apparition, Karn's Bastion, Inexorable Tide, Tromell).",
+              "Ray Fillet, Bred for the Hunt and Blitzball Stadium draw on hits; Chocobo Knights gives your creatures with counters double strike when you attack."
+            ]
+          },
+          {
+            "title": "Wipes and tips",
+            "points": [
+              "Damning Verdict destroys only creatures without counters, so it's usually one-sided. Farewell is your reset when behind (and the deck's only Game Changer).",
+              "When you proliferate you choose what grows: skip opponents, grow your shield counters from Protection Magic.",
+              "Hold up protection (Feat of Resistance, Protection Magic, Inspiring Call, Gatta and Luzzu with flash). Two or three evasive threats plus Herald is enough; don't overextend into a wipe.",
+              "Mulligan hands without a 2-drop counter source or an evasive creature."
+            ]
+          }
+        ]
+      }
     },
     {
       "id": "proliferate",
@@ -253,7 +298,28 @@
           "out": "Shelinda, Yevon Acolyte",
           "why": "Gives a shield counter on entering, and pumps an attacker by its number of counter kinds."
         }
-      ]
+      ],
+      "how_to_play": {
+        "summary": "Proliferate as often as possible: every +1/+1, shield and lore counter grows together, and Ezuri turns each proliferate into a card.",
+        "sections": [
+          {
+            "title": "Game plan",
+            "points": [
+              "Proliferate sources: Evolution Sage (each land), Flux Channeler (each noncreature spell), Metastatic Evangel (each nontoken creature entering), Thrummingbird (on hit), Tidus's Cheer.",
+              "Ezuri draws a card every time you proliferate; Zimone puts counters out each combat and can double counters on two permanents.",
+              "Proud Pack-Rhino and Perrie add shield counters, which proliferate keeps growing."
+            ]
+          },
+          {
+            "title": "Tips",
+            "points": [
+              "Ripples of Potential proliferates and phases out your countered creatures: hold it for an opponent's board wipe.",
+              "Experimental Augury is a cheap instant: dig a card and proliferate at the end of an opponent's turn.",
+              "Sequence cheap noncreature spells after Flux Channeler is out to proliferate several times per turn."
+            ]
+          }
+        ]
+      }
     },
     {
       "id": "tall",
@@ -318,7 +384,27 @@
           "out": "Lulu, Stern Guardian",
           "why": "Creatures with +1/+1 counters can't be blocked, so the huge creatures connect."
         }
-      ]
+      ],
+      "how_to_play": {
+        "summary": "Double your counters, then attack with one or two enormous creatures that can't be blocked.",
+        "sections": [
+          {
+            "title": "Game plan",
+            "points": [
+              "Doublers and boosters: Loading Zone (doubles every kind of counter), Shang-Chi (doubler on a body), Conclave Mentor, Yoshimaru, Benevolent Hydra (+1 each).",
+              "Threats: Kalonian Hydra (doubles all your +1/+1 counters when it attacks), Primordial Hydra (doubles itself each upkeep), Managorger Hydra (grows whenever anyone casts a spell).",
+              "Herald of Secret Streams makes them unblockable; Fangs of Kalonia overloaded doubles every creature's counters."
+            ]
+          },
+          {
+            "title": "Tips",
+            "points": [
+              "Use Tidus to move counters onto the creature that can connect, or away from a creature about to be removed.",
+              "Spread threats across two creatures so one removal spell doesn't end your game."
+            ]
+          }
+        ]
+      }
     }
   ],
   "recommendation": "Cheer Every Turn fixes the deck's one real weakness, which is how reliably Cheer fires. It's also cheap and lowers the curve. Go Tall Hydras hits harder but leans on a few big creatures that are easier to answer. All three stay under €20."

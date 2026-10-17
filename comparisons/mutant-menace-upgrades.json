@@ -121,7 +121,7 @@
       "id": "counters",
       "name": "Counter Engine",
       "recommended": true,
-      "pitch": "Mill every opponent every turn and turn each mill into +1/+1 counters. Ruin Crab and Mindcrank make rad counters and combat damage mill again, Kami and Evolution Sage grow everything further, and Evolution Witness turns the counters into cards, and Radstorm stays as a proliferate finisher.",
+      "pitch": "Mill every opponent every turn and turn each mill into +1/+1 counters. Ruin Crab and Mindcrank make rad counters and combat damage mill again; Kami and Evolution Sage grow everything further; Evolution Witness and Struggle for Project Purity keep the cards coming; Radstorm stays as a proliferate finisher.",
       "plays_like": "Big creatures attacking; draws lots of cards",
       "metrics": {
         "Spot removal": 9,
@@ -171,7 +171,62 @@
           "why": "Land swap. Untapped blue or black. Temple of the False God only makes colourless mana, and only with five lands out."
         }
       ],
-      "picked": true
+      "picked": true,
+      "how_to_play": {
+        "summary": "Make every player mill every turn. Each mill puts +1/+1 counters on your creatures, so your board grows until you win in combat or by emptying their libraries.",
+        "sections": [
+          {
+            "title": "How Mothman and rad counters work",
+            "points": [
+              "Mothman: when it enters or attacks, each player gets a rad counter. Whenever nonland cards are milled, put a +1/+1 counter on each of up to X creatures (X = nonland cards milled). Several players milling at once triggers Mothman once, counting all of them.",
+              "Rad counters: at the start of each player's first main phase they mill one card per rad counter, lose 1 life per nonland card milled and remove one rad counter per nonland card. Milled lands don't remove counters."
+            ]
+          },
+          {
+            "title": "Turns 1–3: mill sources and ramp",
+            "points": [
+              "Ruin Crab: each land you play mills every opponent 3.",
+              "Mindcrank: whenever an opponent loses life, they mill that many, so rad life loss and combat damage mill again.",
+              "Ramp: Talismans, Farseek, Rampant Growth."
+            ]
+          },
+          {
+            "title": "Turn 4: Mothman",
+            "points": [
+              "Every player's rad mill now triggers Mothman, on every player's turn.",
+              "Spread counters, evasive creatures first: Mothman (flying), Nightkin Ambusher, Infesting Radroach."
+            ]
+          },
+          {
+            "title": "Keeping rad counters going",
+            "points": [
+              "Engines: Evolution Sage proliferates on every land drop and Inexorable Tide on every spell. Protect them.",
+              "Attack triggers: Mothman (each player +1) and Screeching Scorchbeast (each player +2) when they attack. Hitting a player: Glowing One (+4), Infesting Radroach (+damage dealt), Vexing Radgull (+2 or proliferate).",
+              "Bursts: Nightkin Ambusher (+4), The Master and Mirelurk Queen (+2), Vault 12 (each player +3), Nuclear Fallout (+X each), Feral Ghoul on death, Bloatfly Swarm when damaged.",
+              "When you proliferate, add to opponents and skip yourself unless you want the mill."
+            ]
+          },
+          {
+            "title": "Engines and card draw",
+            "points": [
+              "Boosters: Hardened Scales, Kami of Whispered Hopes, Winding Constrictor; doublers: Corpsejack Menace, Branching Evolution.",
+              "Struggle for Project Purity (choose Brotherhood): about 3 cards each upkeep. Opponents drawing is fine; you're milling them out anyway.",
+              "Mirelurk Queen, Marcus, Guardian Project; Evolution Witness returns a permanent from your graveyard each time it gets counters.",
+              "Fraying Sanity: curse the opponent who mills the most; they mill again at end of turn, which is another Mothman trigger."
+            ]
+          },
+          {
+            "title": "Your turn and tips",
+            "points": [
+              "Rad mills happen at the start of your first main phase, so counters arrive before combat. Play your land before combat (Ruin Crab, Evolution Sage), then attack with Mothman.",
+              "You get rad counters too: watch your library and life, especially with Harold and Bob, Tato Farmer and Contaminated Drink. Strong makes you gain life from radiation instead.",
+              "Nuclear Fallout gives each creature −2X/−2X; your counter-loaded creatures often survive.",
+              "Use the instant-speed removal (Assassin's Trophy, Beast Within, Sultai Charm) at the end of an opponent's turn or in response to a threat.",
+              "Mulligan hands without 3+ lands and some ramp; you want Mothman on turn 4."
+            ]
+          }
+        ]
+      }
     },
     {
       "id": "mill",
@@ -215,7 +270,28 @@
           "out": "Agent Frank Horrigan",
           "why": "{1}{B}: each player mills a card. Every creature card that hits a graveyard pings each opponent for 1. Mill and damage in one card. Frank is strong but costs 7."
         }
-      ]
+      ],
+      "how_to_play": {
+        "summary": "Empty opponents' libraries while their rad counters drain their life; Mothman's counters are the combat backup plan.",
+        "sections": [
+          {
+            "title": "Game plan",
+            "points": [
+              "Ruin Crab and Hedron Crab: each land you play mills 3 (every opponent and one player respectively).",
+              "Draw-to-mill: Sphinx's Tutelage (each card you draw mills an opponent 2, repeating on shared colours) and Psychic Corrosion (each card you draw mills each opponent 2).",
+              "The Water Crystal: every opponent mill becomes mill +4. Syr Konrad: {1}{B} makes each player mill a card and pings opponents when creature cards hit graveyards."
+            ]
+          },
+          {
+            "title": "Tips",
+            "points": [
+              "Prioritise card draw: every card you draw is a mill with the Tutelages.",
+              "Target the opponent with the smallest library first; one empty library means one player can't draw.",
+              "Keep enough blockers: this version wins slowly and doesn't race well."
+            ]
+          }
+        ]
+      }
     },
     {
       "id": "graveyard",
@@ -259,7 +335,27 @@
           "out": "Agent Frank Horrigan",
           "why": "Each turn, replay a land and one permanent of each type from your graveyard."
         }
-      ]
+      ],
+      "how_to_play": {
+        "summary": "Mill yourself on purpose, then replay creatures and permanents from the graveyard; your own mill still triggers Mothman.",
+        "sections": [
+          {
+            "title": "Game plan",
+            "points": [
+              "Self-mill: Stitcher's Supplier (3 on enter and on death), Undead Butler (3, then returns a creature when it dies), Sidisi (3 on enter and attack, plus a Zombie when creatures are milled).",
+              "Recursion: Muldrotha replays a permanent of each type from your graveyard every turn; Eternal Witness returns any card (including spent removal).",
+              "Teval's Judgment gives a card, a Treasure or a Zombie whenever cards leave your graveyard."
+            ]
+          },
+          {
+            "title": "Tips",
+            "points": [
+              "Mill yourself before casting Muldrotha or Eternal Witness so the best targets are there.",
+              "Watch for opponents' graveyard hate (e.g. Bojuka Bog): replay key pieces as soon as they hit your graveyard."
+            ]
+          }
+        ]
+      }
     }
   ],
   "recommendation": "Counter Engine fits Mothman best: every mill trigger already gives counters, and these cards make each counter worth more. The removal package covers the deck's biggest weakness in every direction. All three directions stay under €20."
