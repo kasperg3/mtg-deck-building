@@ -12,6 +12,8 @@ Pages:
                                    "Added", and cut precon cards are listed
     comparisons/<deck>.html        the upgrade comparison (rebuilt here, so
                                    prices are current)
+    inventory.html                 every owned card from inventory.csv, with
+                                   search, deck/source/type filters and prices
 
 Card data comes from the local Scryfall index (.cache/card-index.json),
 downloaded automatically when missing or older than a week. CI runs this on
@@ -117,6 +119,21 @@ ul.changelog { padding-left: 18px; font-size: 14px; }
 #lightbox.open { display: flex; }
 #lightbox img { max-height: 90vh; max-width: min(46vw, 488px); border-radius: 18px; }
 #lightbox img:only-child { max-width: 92vw; }
+/* inventory page */
+.filters { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin: 18px 0 10px; }
+.filters input, .filters select { font: inherit; font-size: 14px; padding: 6px 10px; border-radius: 8px; border: 1px solid var(--border); background: var(--surface); color: var(--text); }
+.filters input { flex: 1; min-width: 200px; }
+.table-scroll { overflow-x: auto; }
+table.inv { border-collapse: collapse; width: 100%; font-size: 14px; }
+table.inv th, table.inv td { text-align: left; padding: 6px 10px; border-bottom: 1px solid var(--border); vertical-align: top; }
+table.inv th { color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: .03em; cursor: pointer; user-select: none; white-space: nowrap; position: sticky; top: 0; background: var(--bg); }
+table.inv th[aria-sort="ascending"]::after { content: " ▲"; } table.inv th[aria-sort="descending"]::after { content: " ▼"; }
+table.inv td.num, table.inv th.num { text-align: right; font-variant-numeric: tabular-nums; }
+table.inv tr.loose td:nth-child(3) { color: var(--muted); }
+table.inv a.card { color: var(--text); text-decoration: none; border-bottom: 1px dotted var(--muted); }
+.tag { display: inline-block; font-size: 11px; font-weight: 600; padding: 1px 7px; border-radius: 4px; background: var(--surface-2); white-space: nowrap; }
+.tag.bought { background: var(--in-bg); color: var(--in); }
+#preview { position: fixed; width: 220px; pointer-events: none; z-index: 40; border-radius: 4.75% / 3.5%; display: none; box-shadow: 0 8px 24px rgba(0,0,0,.4); }
 footer { margin-top: 50px; font-size: 12px; color: var(--muted); }
 @media (max-width: 720px) {
   .deckhead { flex-direction: column; }
@@ -175,6 +192,8 @@ def nav(decks, base, current=None):
     for d in decks:
         cur = ' class="cur"' if current == d["slug"] else ""
         items.append(f'<a{cur} href="{base}decks/{d["slug"]}.html">{E(d["title"])}</a>')
+    cur = ' class="cur"' if current == "inventory" else ""
+    items.append(f'<a{cur} href="{base}inventory.html">Inventory</a>')
     return f'<nav class="site-nav"><div class="in">{"".join(items)}</div></nav>'
 
 
@@ -312,6 +331,91 @@ document.getElementById("copy").addEventListener("click", async () => {{
     return body, stats
 
 
+def build_inventory(cards):
+    """Inventory page from inventory.csv: every owned card, deck or Loose."""
+    import csv
+    rows = list(csv.DictReader((ROOT / "inventory.csv").open()))
+    data, totals = [], Counter()
+    for r in rows:
+        info = cards.get(key(r["Name"])) or {}
+        src, large = img_attrs(info)
+        q = int(r["Count"])
+        eur = info.get("eur")
+        totals[r["Deck"] or "Loose"] += q
+        data.append({"q": q, "n": r["Name"], "d": r["Deck"] or "Loose", "s": r["Source"], "set": r.get("Set", ""),
+                     "a": r.get("Acquired", ""), "no": r.get("Notes", ""), "t": section_for(info.get("type_line", "")),
+                     "e": eur, "img": src or "", "u": info.get("scryfall_uri") or ""})
+    value = sum((x["e"] or 0) * x["q"] for x in data)
+    loose_value = sum((x["e"] or 0) * x["q"] for x in data if x["d"] == "Loose")
+    decks_opts = "".join(f'<option value="{E(d)}">{E(d)} ({n})</option>' for d, n in sorted(totals.items()))
+    sources = sorted({x["s"] for x in data})
+    src_opts = "".join(f'<option value="{E(s)}">{E(s)}</option>' for s in sources)
+    types = [s for s in SECTIONS + ["Other"] if any(x["t"] == s for x in data)]
+    type_opts = "".join(f'<option value="{E(s)}">{E(s)}</option>' for s in types)
+    body = f"""
+<h1>Inventory</h1>
+<p class="muted">Every card I own: what's in each deck and what's loose, where it came from, and what it's worth (cheapest paper printing).</p>
+<div class="stats" style="margin-top:12px">
+  <div class="stat"><b>{sum(totals.values())}</b><span class="muted small">cards</span></div>
+  {"".join(f'<div class="stat"><b>{n}</b><span class="muted small">{E(d)}</span></div>' for d, n in sorted(totals.items()))}
+  <div class="stat"><b>≈ €{value:.0f}</b><span class="muted small">total value</span></div>
+  <div class="stat"><b>≈ €{loose_value:.0f}</b><span class="muted small">loose value</span></div>
+</div>
+<div class="filters">
+  <input id="q" type="search" placeholder="Search card, notes…" aria-label="Search">
+  <select id="fd" aria-label="Deck"><option value="">All decks + loose</option>{decks_opts}</select>
+  <select id="fs" aria-label="Source"><option value="">All sources</option>{src_opts}</select>
+  <select id="ft" aria-label="Type"><option value="">All types</option>{type_opts}</select>
+  <span id="count" class="muted small"></span>
+</div>
+<div class="table-scroll"><table class="inv">
+  <thead><tr><th class="num" data-k="q">Qty</th><th data-k="n">Card</th><th data-k="d">Deck</th><th data-k="t">Type</th>
+  <th data-k="s">Source</th><th data-k="set">Set</th><th data-k="a">Acquired</th><th class="num" data-k="e">Price</th><th data-k="no">Notes</th></tr></thead>
+  <tbody id="rows"></tbody>
+</table></div>
+<img id="preview" alt="">
+<script>
+const DATA = {json.dumps(data).replace("</", "<\\/")};
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}}[c]));
+let sortK = "d", sortDir = 1;
+function render() {{
+  const q = document.getElementById("q").value.toLowerCase(), fd = document.getElementById("fd").value,
+        fs = document.getElementById("fs").value, ft = document.getElementById("ft").value;
+  const rows = DATA.filter(r => (!fd || r.d === fd) && (!fs || r.s === fs) && (!ft || r.t === ft)
+      && (!q || (r.n + " " + r.no + " " + r.d).toLowerCase().includes(q)))
+    .sort((a, b) => {{ const x = a[sortK] ?? "", y = b[sortK] ?? "";
+      return (typeof x === "number" && typeof y === "number" ? x - y : String(x).localeCompare(String(y))) * sortDir || a.n.localeCompare(b.n); }});
+  document.getElementById("rows").innerHTML = rows.map(r => `<tr class="${{r.d === "Loose" ? "loose" : ""}}">
+    <td class="num">${{r.q}}</td>
+    <td><a class="card" href="${{esc(r.u)}}" target="_blank" rel="noopener" data-img="${{esc(r.img)}}">${{esc(r.n)}}</a></td>
+    <td>${{esc(r.d)}}</td><td>${{esc(r.t)}}</td>
+    <td><span class="tag ${{r.s.includes("precon") ? "" : "bought"}}">${{esc(r.s)}}</span></td>
+    <td>${{esc(r.set)}}</td><td style="white-space:nowrap">${{esc(r.a)}}</td>
+    <td class="num">${{r.e == null ? "—" : "€" + r.e.toFixed(2)}}</td><td class="small muted">${{esc(r.no)}}</td></tr>`).join("");
+  const n = rows.reduce((s, r) => s + r.q, 0), v = rows.reduce((s, r) => s + (r.e || 0) * r.q, 0);
+  document.getElementById("count").textContent = `${{n}} cards · ≈ €${{v.toFixed(0)}}`;
+  document.querySelectorAll("table.inv th").forEach(th => th.removeAttribute("aria-sort"));
+  document.querySelector(`th[data-k="${{sortK}}"]`).setAttribute("aria-sort", sortDir > 0 ? "ascending" : "descending");
+}}
+["q", "fd", "fs", "ft"].forEach(id => document.getElementById(id).addEventListener("input", render));
+document.querySelectorAll("table.inv th").forEach(th => th.addEventListener("click", () => {{
+  sortDir = sortK === th.dataset.k ? -sortDir : (th.dataset.k === "e" || th.dataset.k === "q" ? -1 : 1); sortK = th.dataset.k; render(); }}));
+const pv = document.getElementById("preview");
+document.addEventListener("mousemove", e => {{
+  const a = e.target.closest("a[data-img]");
+  if (!a || !a.dataset.img) {{ pv.style.display = "none"; return; }}
+  if (pv.src !== a.dataset.img) pv.src = a.dataset.img;
+  pv.style.display = "block";
+  pv.style.left = Math.min(e.clientX + 18, innerWidth - 236) + "px";
+  pv.style.top = Math.min(e.clientY + 12, innerHeight - 320) + "px";
+}});
+const deck = new URLSearchParams(location.search).get("deck");
+if (deck) document.getElementById("fd").value = deck;
+render();
+</script>"""
+    return body, sum(totals.values()), totals.get("Loose", 0)
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--out", default="_site")
@@ -348,6 +452,10 @@ def main():
             nav_html = f"<style>{NAV_CSS}</style>" + nav(decks, "../", d["slug"])
             target.write_text(target.read_text().replace("<!--SITE_NAV-->", nav_html, 1))
 
+    inv_body, inv_total, inv_loose = build_inventory(cards)
+    (out / "inventory.html").write_text(page("Inventory", inv_body, "", decks, "inventory",
+                                             "Every MTG card I own, by deck and source"))
+
     tiles = []
     for d in decks:
         s, m = d["stats"], d["meta"]
@@ -374,9 +482,11 @@ def main():
 <div class="decks">{"".join(tiles)}</div>
 <div class="stats"><div class="stat"><b>{len(decks)}</b><span class="muted small">decks</span></div>
 <div class="stat"><b>{total}</b><span class="muted small">cards in decks</span></div>
-<div class="stat"><b>{added}</b><span class="muted small">upgrades added</span></div></div>"""
+<div class="stat"><b>{added}</b><span class="muted small">upgrades added</span></div>
+<div class="stat"><b><a href="inventory.html">{inv_total}</a></b><span class="muted small">cards owned</span></div>
+<div class="stat"><b><a href="inventory.html?deck=Loose">{inv_loose}</a></b><span class="muted small">loose singles</span></div></div>"""
     (out / "index.html").write_text(page("MTG Decks", body, "", decks, "home", "Kasper's Commander decks and upgrades"))
-    print(f"built {out.relative_to(ROOT)}: index + {len(decks)} decks + {sum(1 for d in decks if d['comparison'])} comparisons")
+    print(f"built {out.relative_to(ROOT)}: index + inventory + {len(decks)} decks + {sum(1 for d in decks if d['comparison'])} comparisons")
 
 
 if __name__ == "__main__":
