@@ -5,6 +5,7 @@
 - **Colour identity:** White / Blue / Green (Bant)
 - **Format:** Commander · 100 cards
 - **Game Changers:** 1 (Farewell) — bracket 3+
+- **Bracket:** 3 (Farewell is a Game Changer; swap it out for bracket 2)
 - **Status:** Owned · upgraded: Cheer Every Turn (2026-10-16)
 
 ## Commander (1)

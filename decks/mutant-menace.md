@@ -5,6 +5,7 @@
 - **Colour identity:** Blue / Black / Green (Sultai)
 - **Format:** Commander · 100 cards
 - **Game Changers:** 0
+- **Bracket:** 2 (no Game Changers, no combos)
 - **Status:** Owned · upgraded: Counter Engine (2026-10-16)
 
 ## Commander (1)

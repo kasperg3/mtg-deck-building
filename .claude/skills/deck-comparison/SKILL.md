@@ -217,3 +217,12 @@ direction against stock, core package, then each direction as OUT → IN card
 pairs, with an expandable buy list for each direction: a price table and a
 Cardmarket-ready text box with a Copy button, then a collapsible How to play guide. Clicking a card opens a large image, showing both faces for
 double-faced cards.
+
+## Website
+
+The repo is published at https://mtg.grontved.xyz by GitHub Actions
+(`.github/workflows/pages.yml` runs `tools/build_site.py` on every push to
+`main`). Pushing a changed deck file, comparison spec or inventory is enough;
+there's nothing to deploy by hand. Deck pages mark cards that differ from
+`decks/precon/<deck>.md` as "Added" and list cut cards. To preview locally:
+`python3 tools/build_site.py && xdg-open _site/index.html`.

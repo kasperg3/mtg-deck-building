@@ -85,7 +85,7 @@ def build_index():
                     [f["image_uris"] for f in faces if "image_uris" in f]
                 if imgs:
                     best[k] = score
-                    entry["images"] = [{"normal": i.get("normal"), "large": i.get("large")} for i in imgs]
+                    entry["images"] = [{"normal": i.get("normal"), "large": i.get("large"), "art_crop": i.get("art_crop")} for i in imgs]
                     entry["scryfall_uri"] = card.get("scryfall_uri", "").split("?")[0]
             # Cheapest paper price in each currency, across all printings and finishes
             if "paper" in card.get("games", []):

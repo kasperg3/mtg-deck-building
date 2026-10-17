@@ -5,6 +5,7 @@
 - **Colour identity:** Black / Red / Green (Jund)
 - **Format:** Commander · 100 cards
 - **Game Changers:** 0
+- **Bracket:** 2–3 (no Game Changers; Planetary Annihilation is borderline mass land denial)
 - **Status:** Owned · upgraded: Scorched Earth Drain (2026-10-16)
 
 ## Commander (1)
