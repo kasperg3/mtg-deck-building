@@ -1,0 +1,6 @@
+{
+  "enabledMcpjsonServers": ["mtg-search"],
+  "env": {
+    "MCP_TIMEOUT": "60000"
+  }
+}
