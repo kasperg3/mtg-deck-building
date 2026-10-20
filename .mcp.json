@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "mtg-search": {
+      "type": "stdio",
+      "command": "uvx",
+      "args": [
+        "mtg-search-mcp"
+      ],
+      "env": {}
+    }
+  }
+}

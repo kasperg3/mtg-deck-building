@@ -23,3 +23,4 @@ Tracks the Magic: The Gathering decks and singles I own.
 - `tools/apply_direction.py` — applies a picked direction to `decks/<deck>.md` (regrouped list + changelog): `python3 tools/apply_direction.py comparisons/<deck>-upgrades.json <direction-id>`.
 - `tools/build_site.py` — builds the website into `_site/` (front page, `decks/<deck>.html`, `comparisons/<deck>.html`). Preview locally with `python3 tools/build_site.py && xdg-open _site/index.html`.
 - `.claude/skills/deck-comparison/` — the workflow Claude follows for upgrade comparisons, so they all share the same format.
+- `.mcp.json` — registers the [mtg-search](https://github.com/kasperg3/mtg-search) MCP server (card search, rules text, deck checks) that the skill uses. Needs [uv](https://docs.astral.sh/uv/); download its card index once (~1.9 GB, into `~/.cache/mtg-search`) with `uvx mtg-search-mcp --download` before starting Claude Code.
