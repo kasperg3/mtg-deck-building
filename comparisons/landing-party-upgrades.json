@@ -3,7 +3,7 @@
   "deck": "decks/precon/landing-party.md",
   "date": "2026-11-01",
   "budget_eur": 20,
-  "summary": "Commander Spock pays off land names: on every enter and attack it reveals the top card and lets you cast it for free when its mana value is at most the number of differently named lands you control, puts a land onto the battlefield tapped, and otherwise draws you the card. The stock list already ramps and lands 35 different names, but it only has three real answers, its top end is clunky, and eight basics collapse those 35 names into three. Every direction buys the same four cheap instants first, then spends six swaps on one plan: going wide with landfall, controlling the top of the library, or pushing the land count and name count higher.",
+  "summary": "Commander Spock pays off land names: on every enter and attack he reveals the top card and lets you cast it for free when its mana value is at most the number of differently named lands you control, puts a land onto the battlefield tapped, and otherwise draws you the card. The stock list already ramps and lands 35 different names, but it only has three real answers, it fires its ten landfall payoffs once a turn because Exploration is the only extra land drop, and it gives Spock no evasion, no protection and no way to choose the card on top. Each direction therefore buys four shared answers plus one engine of six cards, so the swaps read as a package rather than six independent one-for-ones.",
   "analysis": {
     "notes": [
       "Curve is high: 60 nonland cards at an average MV of 3.60, with ten at six mana or more (eight at six, Lt. Arex at seven, Planet Killer at eight).",
@@ -11,7 +11,9 @@
       "Only three cards answer a resolved creature (Path to Exile, Reality Shift, Beast Within), and those same three are the deck's entire instant-speed interaction.",
       "Sixteen lands enter tapped (thirteen outright, plus three fetch lands that bring one in tapped), and four more — Mutavault, Reliquary Tower, Temple of the False God, Shore Leave Planet — do less for the mana base than a plain dual, in a three-colour deck.",
       "The Spacecraft half of the list wants creatures tapped for Station charge counters (6+ for Galileo, 16+ for Enterprise) and rarely gets there; Kirk's +3/+3 is the only payoff that comes online early.",
-      "Ramp (ten cards) and card draw (eleven cards) are already at target, so the shell only needs the interaction fixed."
+      "The landfall shell is lopsided: ten cards pay off a land entering (Lotus Cobra, Scute Swarm, Tireless Tracker, Amanda Grayson, Chief Kyle, M'Ress, Syndicate Liquidators, Galileo, Enterprise, Farragut) and only Exploration adds a land drop, so those ten fire once a turn. The multiplier the list is missing is land drops, not more payoffs.",
+      "Spock is a 3/5 with no evasion and no protection, and his trigger is only as good as the top card: one card (Augur of Autumn) lets you look at the top, and nothing in the list puts a chosen card there. A sixth of the deck rewards attacking with him and the deck cannot guarantee he survives or connects.",
+      "Interaction and engine are separate problems, so they are costed separately here: the shared four fix removal in every direction, and the six direction cards are spent on one engine rather than six unrelated upgrades."
     ],
     "interaction": [
       {
@@ -106,6 +108,8 @@
       "Protection": 3,
       "Card draw": 11,
       "Ramp": 10,
+      "Extra land drops": 1,
+      "Landfall payoffs": 10,
       "Lands": 40,
       "Different land names": 35,
       "Game Changers": 0
@@ -140,77 +144,81 @@
   "directions": [
     {
       "id": "landfall",
-      "name": "Landfall Army",
+      "name": "Land Engine",
       "recommended": true,
-      "pitch": "Six landfall payoffs turn the ramp you were already doing into a board: a 2/2 Elemental from Zendikar's Roil and a 4/4 Beast from Rampaging Baloths on every land drop, with Felidar Retreat, Emeria Angel, Avenger of Zendikar and Tatyova on top. Spock's trigger becomes a bonus rather than the plan.",
-      "plays_like": "Go wide on every land drop",
+      "pitch": "The stock list has the payoffs and almost none of the enablers: ten cards trigger when a land enters and Exploration is the only card that lets you play an extra one. Loot, Azusa and Wayward Swordtooth turn one land drop into three or four, Mole Man replays lands from the graveyard, and Felidar Retreat and Rampaging Baloths are the two payoffs worth adding on top of the ten already there. Same six slots, four times the triggers.",
+      "plays_like": "Three or four land drops a turn",
       "metrics": {
         "Spot removal": 6,
         "Board wipes": 2,
         "Instant-speed answers": 6,
         "Protection": 2,
         "Card draw": 10,
-        "Ramp": 10,
+        "Ramp": 13,
+        "Extra land drops": 4,
+        "Landfall payoffs": 13,
         "Lands": 40,
         "Different land names": 35,
         "Game Changers": 0
       },
       "how_to_play": {
-        "summary": "Ramp to five, then land every turn and let landfall do the attacking.",
+        "summary": "Ramp to four, then land three or four times a turn and let thirteen payoffs convert every drop into bodies.",
         "sections": [
           {
             "title": "Turns 1–3",
             "points": [
-              "Land, Sol Ring or Arcane Signet, then a two-mana land fetch (Farseek, Nature's Lore, Rampant Growth) — 35 differently named lands means almost every fetch finds a new name.",
-              "Hold Swords to Plowshares and Generous Gift for the first real threat rather than spending them on a mana creature."
+              "Exploration or Loot on turn two is the strongest start in the deck: every land after it is a second trigger.",
+              "Spend Farseek, Nature's Lore and Rampant Growth on differently named lands — the ramp and Spock's ceiling are the same resource.",
+              "Do not cut a land drop for a four-drop; the engine wants lands on the battlefield, not more spells in hand."
             ]
           },
           {
             "title": "Turns 4–6",
             "points": [
-              "Felidar Retreat or Zendikar's Roil first, then land drops; Retreat's counter mode also gives vigilance for the crack back.",
-              "Tatyova, Benthic Druid turns each land into a card — play her before Avenger so the plants arrive with counters."
+              "With Azusa or Wayward Swordtooth online you are playing two to four lands a turn out of 40; empty your hand of lands before cracking fetches so nothing is stranded.",
+              "Mole Man, Moloid Master doubles a fetch: play it, then replay the land from the graveyard for a second trigger and a second Moloid.",
+              "Felidar Retreat is the flexible payoff — tokens when you are behind on board, counters when the ground is stable."
             ]
           },
           {
             "title": "Closing",
             "points": [
-              "Avenger of Zendikar makes a Plant per land and then grows them with each landfall; Rampaging Baloths adds 4/4s on top.",
-              "Keep one land in hand for the turn you attack so Spock's attack trigger and landfall both fire after blockers are declared."
+              "Rampaging Baloths plus two extra land drops is four 4/4 Beasts a round; the table has to answer the engine, not the individual Beasts.",
+              "Spock is still a fine curve-topper and a free card every attack, but this build no longer needs him to win."
             ]
           }
         ]
       },
       "swaps": [
         {
-          "in": "Felidar Retreat",
+          "in": "Loot, Exuberant Explorer",
           "out": "Fleet Captain Christopher Pike",
-          "why": "Every land gives either a 2/2 Cat Beast or a counter on the whole team. Pike is a 0/6 that only taps and untaps other creatures."
+          "why": "One extra land drop every turn, and once the land count catches up his second ability puts a creature from the top six straight onto the battlefield. Pike is a 0/6 that only taps and untaps other creatures."
+        },
+        {
+          "in": "Azusa, Lost but Seeking",
+          "out": "Tribble Cluster",
+          "why": "Two extra land drops turns every landfall trigger in the deck into three a turn. Tribble Cluster is a 1/1 that needs four combat steps before it is worth a card."
+        },
+        {
+          "in": "Wayward Swordtooth",
+          "out": "Sam Kirk, Xenoanthropologist",
+          "why": "A third extra land drop with a 5/5 body attached — the city's blessing only gates attacking, the land drops work from turn three. Sam Kirk only investigates when an opponent casts a creature spell, one Clue at a time."
+        },
+        {
+          "in": "Mole Man, Moloid Master",
+          "out": "Colossal Clone Master",
+          "why": "Enabler and payoff in one card: lands played from the graveyard bring fetches back for a second trigger, and every land still makes a Moloid. Colossal Clone Master is the deck's best name-count payoff, but at six mana it is a copy of something already on the battlefield and does nothing for the engine — the fairest cut once there are thirteen payoffs."
+        },
+        {
+          "in": "Felidar Retreat",
+          "out": "Temporal Tribulation",
+          "why": "With three extra land drops this makes a 2/2 per land, or grows the whole team when the board is stable. Temporal Tribulation was a two-permanent blink that doubled as protection — real value, but this build spends its safety budget on the engine."
         },
         {
           "in": "Rampaging Baloths",
-          "out": "Tribble Cluster",
-          "why": "A 6/6 trampler that makes a 4/4 on every land drop. Tribble Cluster is a 1/1 that needs four combat steps before it is worth a card."
-        },
-        {
-          "in": "Zendikar's Roil",
-          "out": "Sam Kirk, Xenoanthropologist",
-          "why": "The Roil makes a 2/2 Elemental for each land. Sam Kirk only investigates when an opponent casts a creature spell, which is one Clue at a time."
-        },
-        {
-          "in": "Emeria Angel",
-          "out": "Colossal Clone Master",
-          "why": "Four mana for a 3/3 flier that makes a 1/1 flier on every land drop. Colossal Clone Master costs six and is only as good as whatever is already on the battlefield."
-        },
-        {
-          "in": "Avenger of Zendikar",
-          "out": "Temporal Tribulation",
-          "why": "Seven Plants that grow with every land, immediately. Tribulation only blinks two of your own permanents and gives nothing back."
-        },
-        {
-          "in": "Tatyova, Benthic Druid",
           "out": "Balance of Terror",
-          "why": "A card and a life on every land drop, which is the engine this deck wants. Balance of Terror is a three-chapter Saga that blinks one permanent a turn."
+          "why": "A 6/6 trampler that makes a 4/4 on every land drop — four Beasts a round with this shell. Generous Gift covers the artifact/enchantment answer, and Balance of Terror only destroyed one at chapter I while chapters II and III blinked your own permanents."
         }
       ]
     },
@@ -218,75 +226,79 @@
       "id": "cheat",
       "name": "Strange New Worlds",
       "recommended": false,
-      "pitch": "Know and shape the top of your library, then let Spock cast it for free. Oracle, Courser and Nissa play lands off the top so the reveal is never a dud, and the fatties are there to be cast for nothing.",
-      "plays_like": "Control the top, cast it free",
+      "pitch": "Spock's trigger is only as good as the top card, and the stock list cannot choose it, protect him, or get him past a blocker. Penance puts a card from your hand on top for free at instant speed; Case of the Locked Hothouse gives permanent top-deck information and a second way to cast off the top; Aqueous Form makes him unblockable and scries before his own trigger resolves; Swiftfoot Boots answers the first removal spell. Terastodon and Hornet Queen are what you cast for free.",
+      "plays_like": "A chosen free cast every combat",
       "metrics": {
         "Spot removal": 6,
         "Board wipes": 2,
-        "Instant-speed answers": 6,
-        "Protection": 2,
-        "Card draw": 10,
-        "Ramp": 12,
+        "Instant-speed answers": 7,
+        "Protection": 3,
+        "Card draw": 9,
+        "Ramp": 11,
+        "Extra land drops": 2,
+        "Landfall payoffs": 10,
         "Lands": 40,
         "Different land names": 35,
         "Game Changers": 0
       },
       "how_to_play": {
-        "summary": "Fix the top card, then attack with Spock to cast it for free.",
+        "summary": "Choose the top card, keep Spock alive, attack, and cast something expensive for nothing.",
         "sections": [
           {
             "title": "Turns 1–3",
             "points": [
-              "Courser of Kruphix on three is the cheapest way to see your top card every turn; it also gains a life per land.",
-              "Nissa, Vastwood Seer fetches a Forest, then flips at seven lands into a planeswalker whose +1 puts the top land onto the battlefield or draws the card."
+              "Swiftfoot Boots on two, Spock on four, equip and attack the same turn — haste means the trigger happens before they have mana up.",
+              "Case of the Locked Hothouse on four is the quieter line: an extra land drop now, and from seven lands you cast creatures and enchantments off the top yourself.",
+              "Hold Swords to Plowshares and Generous Gift; this is the slowest of the three builds and it wants the long game."
             ]
           },
           {
             "title": "Turns 4–6",
             "points": [
-              "Oracle of Mul Daya gives the extra land drop and plays lands from the top, so the card under your reveal is yours to choose.",
-              "Attack with Spock every turn the top card is worth casting — the trigger happens on attack, not just enter."
+              "Before combat, put your best expensive card back on top with Penance — the ability is free, so do it every turn, not only when damage is coming.",
+              "Aqueous Form's scry is also an attack trigger: put Spock's trigger on the stack first and the scry resolves before it, so you fix the top you are about to reveal.",
+              "Hexproof from the Boots matters for the same reason — you can still enchant him afterwards, which shroud would not allow."
             ]
           },
           {
             "title": "Closing",
             "points": [
-              "Terastodon and Hornet Queen are the free-cast targets: at eight differently named lands Spock casts Terastodon at no mana.",
-              "Ulvenwald Hydra fetches a land and grows with the land count, so it doubles as a body and a name."
+              "Two triggers a round — enter and attack — is the plan; at seven or eight names Terastodon and Hornet Queen cost nothing.",
+              "Do not tap out for a six-drop you could have cast for free; hold mana for the counterspell you drew into."
             ]
           }
         ]
       },
       "swaps": [
         {
-          "in": "Oracle of Mul Daya",
+          "in": "Penance",
           "out": "Fleet Captain Christopher Pike",
-          "why": "An extra land drop plus playing lands from the top of your library, which is exactly the card Spock reveals. Pike taps and untaps creatures for no board effect."
+          "why": "The missing piece of the commander: putting a card from your hand on top of your library is the only way in the deck to decide what Spock reveals, and the ability costs nothing. Pike only untaps creatures."
         },
         {
-          "in": "Courser of Kruphix",
+          "in": "Case of the Locked Hothouse",
           "out": "Tribble Cluster",
-          "why": "Three mana for a 2/4 that reveals the top card, plays lands from it and gains a life per landfall. Tribble Cluster is a 1/1 that grows once per combat."
+          "why": "An extra land drop plus permanent top-deck information, and once solved at seven lands you cast creatures and enchantments from the top without Spock. Tribble Cluster needs four combat steps to be worth a card."
         },
         {
-          "in": "Nissa, Vastwood Seer",
+          "in": "Aqueous Form",
           "out": "Sam Kirk, Xenoanthropologist",
-          "why": "Fetches a Forest, then flips at seven lands into a walker that puts the top land into play or draws it — a second way to control Spock's reveal. Sam Kirk needs an opponent's creature spell to do anything."
+          "why": "Spock is a 3/5 with no evasion, so one blocker blanks the whole trigger. Unblockable plus scry 1 on attack fixes both halves of the problem for one mana. Sam Kirk only makes a Clue off an opponent's creature spell."
         },
         {
-          "in": "Ulvenwald Hydra",
+          "in": "Swiftfoot Boots",
           "out": "Colossal Clone Master",
-          "why": "Fetches any land (a new name) and is as big as your land count. Colossal Clone Master is a six-mana copy effect that adds nothing to the plan on its own."
+          "why": "Hexproof and haste for two mana: the first removal spell fizzles and he swings the turn he lands. Colossal Clone Master copies something already on the battlefield; Spock's package needs protection, not another copy."
         },
         {
           "in": "Terastodon",
           "out": "Temporal Tribulation",
-          "why": "Destroys up to three noncreature permanents on entry — a free-cast target that is also removal. Tribulation only blinks two of your permanents."
+          "why": "Eight mana, castable for free at eight names, and it answers three noncreature permanents while leaving 3/3s on the other side. Swiftfoot Boots takes over the protection role that Temporal Tribulation covered, permanently rather than once."
         },
         {
           "in": "Hornet Queen",
           "out": "Balance of Terror",
-          "why": "Five bodies with flying and deathtouch, and a fine free cast off Spock. Balance of Terror is a slow Saga that recycles one permanent."
+          "why": "Seven mana for five evasive deathtouchers, free off the top at seven names — the best rate in the deck for Spock's trigger. Generous Gift replaces Balance of Terror's single artifact/enchantment destruction, and this build does not want a saga that blinks its own permanents."
         }
       ]
     },
@@ -303,6 +315,8 @@
         "Protection": 3,
         "Card draw": 9,
         "Ramp": 10,
+        "Extra land drops": 1,
+        "Landfall payoffs": 10,
         "Lands": 43,
         "Different land names": 38,
         "Game Changers": 0
@@ -367,5 +381,5 @@
       ]
     }
   ],
-  "recommendation": "Take Landfall Army. It is the cheapest direction (about €5 including the shared answers), it turns the ramp the deck is already built around into a board, and it keeps the list at bracket 2 — no Game Changers, no combos. More Worlds is the better long-term pick if you want to lean into Spock himself, but it does not fix the missing interaction on its own."
+  "recommendation": "Take Land Engine. It fixes a structural problem rather than a weak card: ten payoffs were firing off a single extra land drop, and four enablers at about €16 all in (shared answers included) quadruple the triggers without depending on the commander, so a table that kills Spock twice does not turn the deck off. Strange New Worlds is the pick if you want Spock to be the win condition — it is the cheaper engine at about €7 and it is the only one that makes the commander reliable, but it folds if he is answered twice. More Worlds stays the safest long-term mana base, and it is the only direction that adds no new payoffs."
 }
