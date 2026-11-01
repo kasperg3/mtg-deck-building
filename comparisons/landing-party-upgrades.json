@@ -9,9 +9,9 @@
       "Curve is high: 60 nonland cards at an average MV of 3.60, with ten at six mana or more (eight at six, Lt. Arex at seven, Planet Killer at eight).",
       "Spock's free-cast ceiling is the number of differently named lands on the battlefield — 35 names across 40 lands, but 4 Forest, 2 Island and 2 Plains mean those 40 cards only ever count as 35, and the ceiling creeps up one name at a time.",
       "Only three cards answer a resolved creature (Path to Exile, Reality Shift, Beast Within), and those same three are the deck's entire instant-speed interaction.",
-      "Six lands are colourless or nearly so (Temple of the False God, Mutavault, Reliquary Tower, Shore Leave Planet, Earth, Risa) in a three-colour deck, and ten lands enter tapped.",
+      "Sixteen lands enter tapped (thirteen outright, plus three fetch lands that bring one in tapped), and four more — Mutavault, Reliquary Tower, Temple of the False God, Shore Leave Planet — do less for the mana base than a plain dual, in a three-colour deck.",
       "The Spacecraft half of the list wants creatures tapped for Station charge counters (6+ for Galileo, 16+ for Enterprise) and rarely gets there; Kirk's +3/+3 is the only payoff that comes online early.",
-      "Ramp (ten cards) and card draw (ten cards) are already at target, so the shell only needs the interaction fixed."
+      "Ramp (ten cards) and card draw (eleven cards) are already at target, so the shell only needs the interaction fixed."
     ],
     "interaction": [
       {
@@ -113,12 +113,12 @@
   },
   "core": {
     "name": "Shared answers",
-    "description": "Four cheap instants that go in every direction. Spot removal goes from three to six — all of it instant speed — and three of the four answer a permanent type the list could not touch before.",
+    "description": "Four cheap instants that go in every direction. Spot removal goes from three to six — all of it instant speed — and Counterspell stops a spell on the stack, which nothing in the list could do before.",
     "swaps": [
       {
         "in": "Swords to Plowshares",
         "out": "Planet Killer",
-        "why": "One mana exiles any creature at instant speed, which is the cheapest answer in the deck. Planet Killer costs eight, has to attack every combat if able, and only dies to a sweeper."
+        "why": "One mana exiles any creature at instant speed, which is the cheapest answer in the deck. Planet Killer costs eight, must attack every combat if able, and does nothing the turn it lands."
       },
       {
         "in": "Generous Gift",
@@ -128,7 +128,7 @@
       {
         "in": "Krosan Grip",
         "out": "Giant Space Amoeba",
-        "why": "Split second kills an artifact or enchantment with no response, which matters against Equipment and Rhystic-style pieces. The Amoeba is a five-mana 3/3 flier that shrinks one attacker."
+        "why": "Split second kills an artifact or enchantment with no response, which matters against Equipment and Rhystic-style pieces. Giant Space Amoeba is a five-mana 3/3 flier whose attack trigger gives one blocker -3/-0 and copies itself."
       },
       {
         "in": "Counterspell",
@@ -337,12 +337,12 @@
         {
           "in": "Brushland",
           "out": "Temple of the False God",
-          "why": "An untapped green-white source with a new name for one life per coloured use. Temple of the False God is colourless, needs five other lands before it taps at all, and fixes nothing in a three-colour deck."
+          "why": "An untapped green-white source with a new name for one life per coloured use. Temple of the False God is colourless and only taps once you control five lands."
         },
         {
           "in": "Adarkar Wastes",
           "out": "Mutavault",
-          "why": "Untapped white-blue fixing and a brand-new name. Mutavault is a colourless 2/2 that neither casts your spells nor raises the name count."
+          "why": "Untapped white-blue fixing and a brand-new name. Mutavault is a colourless 2/2 that does not help you cast anything; this direction trades it up."
         },
         {
           "in": "Yavimaya Coast",
