@@ -24,7 +24,6 @@ import re
 import sys
 import time
 import urllib.request
-from datetime import datetime, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -250,7 +249,7 @@ def main():
         "stock_curve": curve(stock, cards),
         "cards": page_cards,
         "prices": {k: {f: v.get(f) for f in ("usd", "eur", "usd_set", "eur_set")} for k, v in page_cards.items()},
-        "generated": datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC"),
+        "generated": spec.get("date") or (index.get("bulk_updated") or "")[:10],
         "prices_as_of": (index.get("bulk_updated") or "")[:10],
         "curve_buckets": CURVE_BUCKETS,
     }

@@ -28,7 +28,6 @@ import shutil
 import subprocess
 import sys
 from collections import Counter
-from datetime import datetime, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -38,6 +37,9 @@ from build_comparison import key, load_index, parse_deck  # noqa: E402
 
 E = html.escape
 COLOUR_ORDER = "WUBRG"
+# Date of the Scryfall bulk snapshot the pages were built from. Kept out of the
+# build clock so rebuilding an unchanged tree produces byte-identical pages.
+PRICES_AS_OF = ""
 COLOUR_NAMES = {"White": "W", "Blue": "U", "Black": "B", "Red": "R", "Green": "G"}
 
 CSS = r"""
@@ -208,7 +210,7 @@ def page(title, body, base, decks, current, description=""):
 {nav(decks, base, current)}
 <div class="wrap">
 {body}
-<footer>Card images and prices from <a href="https://scryfall.com" target="_blank" rel="noopener">Scryfall</a> (cheapest paper printing). Built {datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")} from <a href="https://github.com/kasperg3/mtg-deck-building">kasperg3/mtg-deck-building</a>.</footer>
+<footer>Card images and prices from <a href="https://scryfall.com" target="_blank" rel="noopener">Scryfall</a> (cheapest paper printing). Prices as of {E(PRICES_AS_OF) or "?"} from <a href="https://github.com/kasperg3/mtg-deck-building">kasperg3/mtg-deck-building</a>.</footer>
 </div>
 <div id="lightbox"></div>
 <script>{LIGHTBOX_JS}</script>
@@ -432,7 +434,10 @@ def main():
         (out / "CNAME").write_text(args.cname + "\n")
     (out / ".nojekyll").write_text("")
 
-    cards = load_index(refresh=False, max_age_days=7)["cards"]
+    cards = load_index(refresh=False, max_age_days=7)
+    global PRICES_AS_OF
+    PRICES_AS_OF = (cards.get("bulk_updated") or "")[:10]
+    cards = cards["cards"]
     decks = []
     for path in sorted((ROOT / "decks").glob("*.md")):
         title, meta, changelog = deck_meta(path)

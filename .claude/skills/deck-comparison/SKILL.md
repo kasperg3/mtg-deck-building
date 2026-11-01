@@ -9,6 +9,61 @@ Produces `comparisons/<deck>-upgrades.json` (the spec, written by you) and
 `comparisons/<deck>-upgrades.html` (generated, self-contained viewer). The page
 shows card faces for every swap instead of rules text, so keep prose short.
 
+## Every direction is an engine, not a list of swaps
+
+Ten defensible one-for-ones can still be a bad deck. Judge a direction by what
+it does once all ten cards are on the table, not by whether each cut is fair.
+
+Keep a ledger for the stock list **before** choosing cards, and again after the
+swaps. Every direction needs all three columns:
+
+- **Enablers** — cards that make the engine fire: extra land drops for a
+  landfall deck, sacrifice outlets for a death-trigger deck, top-deck control
+  for a "cast from the top" commander, mana accelerants, recursion.
+- **Payoffs** — cards that convert those triggers into advantage.
+- **Support** — what keeps the engine alive: protection, evasion, card
+  selection, graveyard hate for your own plan.
+
+Rules that came out of getting this wrong:
+
+1. **Buy the thin column.** Landing Party had ten landfall payoffs and one card
+   that plays an extra land (Exploration), so the payoffs fired once a turn.
+   Adding five *more* payoffs changed nothing; the direction had to buy land
+   drops. If one column is at 8+ and the other at 1, more of the fat column is
+   win-more, however good the individual cards are.
+2. **Ask what the commander needs and whether the direction supplies it.**
+   Spock needs the top card to be known, needs to survive, and needs to connect
+   — the stock list gave him none of the three. A direction whose plan dies to
+   one removal spell or one blocker is not a plan.
+3. **Cards that fill two columns are the best slots.** Mole Man, Moloid Master
+   is a land-drop enabler *and* a landfall payoff; Penance is top-deck control
+   *and* a free cast.
+4. **Check the package against itself.** Whispersilk Cloak grants shroud, which
+   locks out your own Aqueous Form — Swiftfoot Boots (hexproof) was correct. A
+   second "cast from the top" effect competes with the commander for the same
+   card rather than supporting him.
+5. **Say how it loses.** If a direction folds when the commander is answered
+   twice, put that in the `pitch` and only recommend it to a user who wants a
+   commander-centric build.
+
+### Search by role, never by memory
+
+Name the role you need, then search for it. Card names recalled from memory
+skew to famous cards that don't fit the curve or the budget.
+
+- `mcp__mtg-search__search_cards` when it is running; otherwise Scryfall search
+  with `order=edhrec`, filtered to the commander's identity and your budget:
+  - extra land drops: `f:commander id<=WUG o:"additional land" -t:land`
+  - land recursion: `f:commander id<=WUG o:"play lands from your graveyard"`
+  - top control: `f:commander id<=WUG o:"top card of your library" -t:instant -t:sorcery`
+  - protection: `f:commander id<=WUG t:artifact (o:"hexproof" or o:"shroud") cmc<=3`
+  - evasion: `f:commander id<=WUG o:"can't be blocked" cmc<=3`
+  - putting a card back on top: `o:"on top of your library" owner:"its owner's library"`
+    — then read the **cost**: Penance's is free, Conch Horn's sacrifices itself.
+- Price every candidate from `.cache/card-index.json` before it goes in a spec.
+- Say in the review which search produced a non-obvious pick, so the reasoning
+  is checkable later.
+
 ## Scryfall data (local only)
 
 Card images, mana values and prices come from Scryfall's `default_cards` bulk
@@ -22,6 +77,8 @@ file, reduced to `.cache/card-index.json`. The cache is **not in git**
 - Both build scripts also download it automatically when it's missing or
   stale, so `--refresh` is only needed up front or to force fresh prices.
 - Never commit `.cache/`.
+- `tools/verify_comparison.py` caches the rules text it fetches in
+  `.cache/oracle.json` (also ignored), so repeated review runs work offline.
 
 ## Steps
 
@@ -51,6 +108,10 @@ file, reduced to `.cache/card-index.json`. The cache is **not in git**
      direction then gets `10 − len(core)` swaps of its own.
    - Cut the weakest cards first: cards that cost too much for their effect,
      do nothing on the board, or work against the direction.
+   - Design each direction as one engine first (see **Every direction is an
+     engine** above): write down the enablers, the payoffs and the support it
+     needs, then choose cards that fill the gaps in the stock ledger. If the
+     six direction cards don't reference each other, it's still a card list.
    - Lower or hold the average mana value. Never add a board wipe that hurts
      the deck's own plan.
 
@@ -63,9 +124,11 @@ file, reduced to `.cache/card-index.json`. The cache is **not in git**
    because prices drift between the weekly refreshes. Prefer cheap
    functional reprints, e.g. Ramunap Excavator over Crucible of Worlds.
 
-5. **Find cards with the tools, not from memory.** Use `mcp__mtg-search__search_cards`
-   with `color_identity` and `format="commander"` set, and send 2–4 queries worded
-   like rules text. Check any card you name from memory with `mcp__mtg-search__get_card`.
+5. **Find cards with the tools, not from memory.** Search by role (see **Search
+   by role** above). With `mcp__mtg-search__search_cards`, set `color_identity`
+   and `format="commander"` and send 2–4 queries worded like rules text; without
+   it, use Scryfall search syntax. Check any card you name from memory against
+   Scryfall before it reaches the spec.
    Don't add Game Changers unless the user wants a higher bracket. Avoid cards
    already in the deck. The build script warns about both problems.
 
@@ -116,17 +179,29 @@ creatures.
 3. **Check each new card's interactions.** Confirm each claimed combo actually
    works by its text (e.g. moving a counter is "putting" one, so +1 effects
    apply). Drop any claim you can't confirm.
-4. **Validate the final 100.** Print the post-swap list and run it through
-   `mcp__mtg-search__get_deck` with `format="commander"`:
+4. **Validate the final 100 — mechanically, not by eye.**
    ```
-   python3 tools/build_comparison.py comparisons/<deck>-upgrades.json --after <direction-id>
+   python3 tools/verify_comparison.py comparisons/<deck>-upgrades.json
    ```
-   It must show 100 cards, no colour-identity or legality problems, and the
-   expected Game Changer count. Report known pre-existing issues (such as a
-   commander flag) separately.
-5. **Recount after the swaps:** spot removal, wipes, instant-speed answers,
-   protection, card draw, ramp and land count against the targets. Update the
-   direction's `metrics` so the page matches.
+   It re-applies the core plus each direction's swaps and checks: every cut is
+   in the deck and every addition isn't, no card twice or both ways, 100 cards
+   after the swaps, no land cut for a nonland, colour identity and Commander
+   legality from Scryfall, Game Changers from the cached index, `budget_eur`,
+   and the metrics it can derive from rules text (`Lands`, `Different land
+   names`, `Extra land drops`, `Landfall payoffs`) so hand-counted numbers can't
+   drift. Exit code 1 blocks the commit. Add `--offline` when Scryfall is
+   unreachable; it works from `.cache/oracle.json`.
+   For a per-direction card list, `python3 tools/build_comparison.py
+   comparisons/<deck>-upgrades.json --after <direction-id>` still prints it.
+   **Release gate:** a card from a set that hasn't released yet reports
+   `not_legal` on Scryfall. That is not a deck problem — note the release date
+   and carry on (the Landing Party precon releases 2026-11-13, so every TRC/TRK
+   card read as illegal for the fortnight before it).
+5. **Recount after the swaps** — the tool does the derivable ones; you still
+   count spot removal, wipes, instant-speed answers, protection, card draw and
+   ramp by hand, and update each direction's `metrics` so the page matches. Then
+   re-check the ledger: does the direction still hold up as one engine, or did
+   the swaps quietly remove an enabler or a payoff you counted on?
 6. **Check consistency.** No stale text in the spec (old budget figures, cards
    no longer in the list, wrong claims in `why`/`pitch`/`notes`), the build
    shows no `warning:` lines, and the cost is within budget with margin.
@@ -210,7 +285,13 @@ put those numbers in the spec.
 ## Viewer
 
 `tools/comparison_template.html` is the single template for every comparison.
-Change the look there; don't edit generated `.html` files. Every page has the
+Change the look there; don't edit generated `.html` files.
+
+Builds are deterministic: `generated` in the page data comes from the spec's
+`date`, and the site footer prints the date of the price snapshot instead of the
+build clock. Rebuilding an unchanged tree therefore produces byte-identical
+files — if a rebuild dirties generated HTML, prices actually moved and the diff
+should be committed deliberately. Every page has the
 same sections: header with commander, stock analysis (curve and interaction
 table), comparison table (avg MV, cost in, value out, metrics), curve per
 direction against stock, core package, then each direction as OUT → IN card
