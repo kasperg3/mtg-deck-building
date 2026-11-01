@@ -199,9 +199,13 @@ creatures.
    card read as illegal for the fortnight before it).
 5. **Recount after the swaps** — the tool does the derivable ones; you still
    count spot removal, wipes, instant-speed answers, protection, card draw and
-   ramp by hand, and update each direction's `metrics` so the page matches. Then
-   re-check the ledger: does the direction still hold up as one engine, or did
-   the swaps quietly remove an enabler or a payoff you counted on?
+   ramp by hand, and update each direction's `metrics` so the page matches.
+   Cross-check the directions against each other: categories the core supplies
+   (spot removal, instant-speed answers, wipes) must come out *identical* in
+   every direction unless that direction adds interaction of its own — if one
+   number differs, you missed a count. Then re-check the ledger: does the
+   direction still hold up as one engine, or did the swaps quietly remove an
+   enabler or a payoff you counted on?
 6. **Check consistency.** No stale text in the spec (old budget figures, cards
    no longer in the list, wrong claims in `why`/`pitch`/`notes`), the build
    shows no `warning:` lines, and the cost is within budget with margin.
