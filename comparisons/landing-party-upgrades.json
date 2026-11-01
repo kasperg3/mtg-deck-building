@@ -1,0 +1,371 @@
+{
+  "title": "Landing Party — Upgrade Options",
+  "deck": "decks/precon/landing-party.md",
+  "date": "2026-11-01",
+  "budget_eur": 20,
+  "summary": "Commander Spock pays off land names: on every enter and attack it reveals the top card and lets you cast it for free when its mana value is at most the number of differently named lands you control, puts a land onto the battlefield tapped, and otherwise draws you the card. The stock list already ramps and lands 35 different names, but it only has three real answers, its top end is clunky, and eight basics collapse those 35 names into three. Every direction buys the same four cheap instants first, then spends six swaps on one plan: going wide with landfall, controlling the top of the library, or pushing the land count and name count higher.",
+  "analysis": {
+    "notes": [
+      "Curve is high: 60 nonland cards at an average MV of 3.60, with ten at six mana or more (eight at six, Lt. Arex at seven, Planet Killer at eight).",
+      "Spock's free-cast ceiling is the number of differently named lands on the battlefield — 35 names across 40 lands, but 4 Forest, 2 Island and 2 Plains mean those 40 cards only ever count as 35, and the ceiling creeps up one name at a time.",
+      "Only three cards answer a resolved creature (Path to Exile, Reality Shift, Beast Within), and those same three are the deck's entire instant-speed interaction.",
+      "Six lands are colourless or nearly so (Temple of the False God, Mutavault, Reliquary Tower, Shore Leave Planet, Earth, Risa) in a three-colour deck, and ten lands enter tapped.",
+      "The Spacecraft half of the list wants creatures tapped for Station charge counters (6+ for Galileo, 16+ for Enterprise) and rarely gets there; Kirk's +3/+3 is the only payoff that comes online early.",
+      "Ramp (ten cards) and card draw (ten cards) are already at target, so the shell only needs the interaction fixed."
+    ],
+    "interaction": [
+      {
+        "category": "Spot removal",
+        "stock": 3,
+        "target": "8–10",
+        "low": true,
+        "cards": [
+          "Path to Exile",
+          "Reality Shift",
+          "Beast Within"
+        ]
+      },
+      {
+        "category": "Board wipes",
+        "stock": 2,
+        "target": "2–3",
+        "cards": [
+          "Wrath of God",
+          "Austere Command"
+        ]
+      },
+      {
+        "category": "Instant-speed answers",
+        "stock": 3,
+        "target": "5+",
+        "low": true,
+        "cards": [
+          "Path to Exile",
+          "Reality Shift",
+          "Beast Within"
+        ]
+      },
+      {
+        "category": "Protection",
+        "stock": 3,
+        "target": "2–3",
+        "cards": [
+          "Heroic Intervention",
+          "U.S.S. Defiant, Mirror Migrant",
+          "Temporal Tribulation"
+        ]
+      },
+      {
+        "category": "Card draw",
+        "stock": 11,
+        "target": "8–10",
+        "cards": [
+          "Brainstorm",
+          "Ponder",
+          "Harmonize",
+          "Echo of Eons",
+          "Guardian Project",
+          "Tireless Tracker",
+          "Sam Kirk, Xenoanthropologist",
+          "Pavel Chekov, First Posting",
+          "Jefferies Tube",
+          "Starfleet Communicator",
+          "Lt. Arex, Ever-Adapting"
+        ]
+      },
+      {
+        "category": "Ramp",
+        "stock": 10,
+        "target": "8–10",
+        "cards": [
+          "Sol Ring",
+          "Arcane Signet",
+          "Lotus Cobra",
+          "Farseek",
+          "Nature's Lore",
+          "Rampant Growth",
+          "Cultivate",
+          "Growth Spiral",
+          "Exploration",
+          "Satyr Wayfinder"
+        ]
+      },
+      {
+        "category": "Lands",
+        "stock": 40,
+        "target": "40+ (lands deck)",
+        "cards": [
+          "35 differently named"
+        ]
+      }
+    ],
+    "stock_metrics": {
+      "Spot removal": 3,
+      "Board wipes": 2,
+      "Instant-speed answers": 3,
+      "Protection": 3,
+      "Card draw": 11,
+      "Ramp": 10,
+      "Lands": 40,
+      "Different land names": 35,
+      "Game Changers": 0
+    }
+  },
+  "core": {
+    "name": "Shared answers",
+    "description": "Four cheap instants that go in every direction. Spot removal goes from three to six — all of it instant speed — and three of the four answer a permanent type the list could not touch before.",
+    "swaps": [
+      {
+        "in": "Swords to Plowshares",
+        "out": "Planet Killer",
+        "why": "One mana exiles any creature at instant speed, which is the cheapest answer in the deck. Planet Killer costs eight, has to attack every combat if able, and only dies to a sweeper."
+      },
+      {
+        "in": "Generous Gift",
+        "out": "Command Chair",
+        "why": "Three mana destroys any permanent type, including the lands and enchantments the list otherwise cannot touch. Command Chair is six mana, enters tapped and only ever ramps."
+      },
+      {
+        "in": "Krosan Grip",
+        "out": "Giant Space Amoeba",
+        "why": "Split second kills an artifact or enchantment with no response, which matters against Equipment and Rhystic-style pieces. The Amoeba is a five-mana 3/3 flier that shrinks one attacker."
+      },
+      {
+        "in": "Counterspell",
+        "out": "Echo of Eons",
+        "why": "Two mana stops the sweeper or the combo piece outright. Echo of Eons is a six-mana wheel that refills every opponent's hand too."
+      }
+    ]
+  },
+  "directions": [
+    {
+      "id": "landfall",
+      "name": "Landfall Army",
+      "recommended": true,
+      "pitch": "Six landfall payoffs turn the ramp you were already doing into a board: a 2/2 Elemental from Zendikar's Roil and a 4/4 Beast from Rampaging Baloths on every land drop, with Felidar Retreat, Emeria Angel, Avenger of Zendikar and Tatyova on top. Spock's trigger becomes a bonus rather than the plan.",
+      "plays_like": "Go wide on every land drop",
+      "metrics": {
+        "Spot removal": 6,
+        "Board wipes": 2,
+        "Instant-speed answers": 6,
+        "Protection": 2,
+        "Card draw": 10,
+        "Ramp": 10,
+        "Lands": 40,
+        "Different land names": 35,
+        "Game Changers": 0
+      },
+      "how_to_play": {
+        "summary": "Ramp to five, then land every turn and let landfall do the attacking.",
+        "sections": [
+          {
+            "title": "Turns 1–3",
+            "points": [
+              "Land, Sol Ring or Arcane Signet, then a two-mana land fetch (Farseek, Nature's Lore, Rampant Growth) — 35 differently named lands means almost every fetch finds a new name.",
+              "Hold Swords to Plowshares and Generous Gift for the first real threat rather than spending them on a mana creature."
+            ]
+          },
+          {
+            "title": "Turns 4–6",
+            "points": [
+              "Felidar Retreat or Zendikar's Roil first, then land drops; Retreat's counter mode also gives vigilance for the crack back.",
+              "Tatyova, Benthic Druid turns each land into a card — play her before Avenger so the plants arrive with counters."
+            ]
+          },
+          {
+            "title": "Closing",
+            "points": [
+              "Avenger of Zendikar makes a Plant per land and then grows them with each landfall; Rampaging Baloths adds 4/4s on top.",
+              "Keep one land in hand for the turn you attack so Spock's attack trigger and landfall both fire after blockers are declared."
+            ]
+          }
+        ]
+      },
+      "swaps": [
+        {
+          "in": "Felidar Retreat",
+          "out": "Fleet Captain Christopher Pike",
+          "why": "Every land gives either a 2/2 Cat Beast or a counter on the whole team. Pike is a 0/6 that only taps and untaps other creatures."
+        },
+        {
+          "in": "Rampaging Baloths",
+          "out": "Tribble Cluster",
+          "why": "A 6/6 trampler that makes a 4/4 on every land drop. Tribble Cluster is a 1/1 that needs four combat steps before it is worth a card."
+        },
+        {
+          "in": "Zendikar's Roil",
+          "out": "Sam Kirk, Xenoanthropologist",
+          "why": "The Roil makes a 2/2 Elemental for each land. Sam Kirk only investigates when an opponent casts a creature spell, which is one Clue at a time."
+        },
+        {
+          "in": "Emeria Angel",
+          "out": "Colossal Clone Master",
+          "why": "Four mana for a 3/3 flier that makes a 1/1 flier on every land drop. Colossal Clone Master costs six and is only as good as whatever is already on the battlefield."
+        },
+        {
+          "in": "Avenger of Zendikar",
+          "out": "Temporal Tribulation",
+          "why": "Seven Plants that grow with every land, immediately. Tribulation only blinks two of your own permanents and gives nothing back."
+        },
+        {
+          "in": "Tatyova, Benthic Druid",
+          "out": "Balance of Terror",
+          "why": "A card and a life on every land drop, which is the engine this deck wants. Balance of Terror is a three-chapter Saga that blinks one permanent a turn."
+        }
+      ]
+    },
+    {
+      "id": "cheat",
+      "name": "Strange New Worlds",
+      "recommended": false,
+      "pitch": "Know and shape the top of your library, then let Spock cast it for free. Oracle, Courser and Nissa play lands off the top so the reveal is never a dud, and the fatties are there to be cast for nothing.",
+      "plays_like": "Control the top, cast it free",
+      "metrics": {
+        "Spot removal": 6,
+        "Board wipes": 2,
+        "Instant-speed answers": 6,
+        "Protection": 2,
+        "Card draw": 10,
+        "Ramp": 12,
+        "Lands": 40,
+        "Different land names": 35,
+        "Game Changers": 0
+      },
+      "how_to_play": {
+        "summary": "Fix the top card, then attack with Spock to cast it for free.",
+        "sections": [
+          {
+            "title": "Turns 1–3",
+            "points": [
+              "Courser of Kruphix on three is the cheapest way to see your top card every turn; it also gains a life per land.",
+              "Nissa, Vastwood Seer fetches a Forest, then flips at seven lands into a planeswalker whose +1 puts the top land onto the battlefield or draws the card."
+            ]
+          },
+          {
+            "title": "Turns 4–6",
+            "points": [
+              "Oracle of Mul Daya gives the extra land drop and plays lands from the top, so the card under your reveal is yours to choose.",
+              "Attack with Spock every turn the top card is worth casting — the trigger happens on attack, not just enter."
+            ]
+          },
+          {
+            "title": "Closing",
+            "points": [
+              "Terastodon and Hornet Queen are the free-cast targets: at eight differently named lands Spock casts Terastodon at no mana.",
+              "Ulvenwald Hydra fetches a land and grows with the land count, so it doubles as a body and a name."
+            ]
+          }
+        ]
+      },
+      "swaps": [
+        {
+          "in": "Oracle of Mul Daya",
+          "out": "Fleet Captain Christopher Pike",
+          "why": "An extra land drop plus playing lands from the top of your library, which is exactly the card Spock reveals. Pike taps and untaps creatures for no board effect."
+        },
+        {
+          "in": "Courser of Kruphix",
+          "out": "Tribble Cluster",
+          "why": "Three mana for a 2/4 that reveals the top card, plays lands from it and gains a life per landfall. Tribble Cluster is a 1/1 that grows once per combat."
+        },
+        {
+          "in": "Nissa, Vastwood Seer",
+          "out": "Sam Kirk, Xenoanthropologist",
+          "why": "Fetches a Forest, then flips at seven lands into a walker that puts the top land into play or draws it — a second way to control Spock's reveal. Sam Kirk needs an opponent's creature spell to do anything."
+        },
+        {
+          "in": "Ulvenwald Hydra",
+          "out": "Colossal Clone Master",
+          "why": "Fetches any land (a new name) and is as big as your land count. Colossal Clone Master is a six-mana copy effect that adds nothing to the plan on its own."
+        },
+        {
+          "in": "Terastodon",
+          "out": "Temporal Tribulation",
+          "why": "Destroys up to three noncreature permanents on entry — a free-cast target that is also removal. Tribulation only blinks two of your permanents."
+        },
+        {
+          "in": "Hornet Queen",
+          "out": "Balance of Terror",
+          "why": "Five bodies with flying and deathtouch, and a fine free cast off Spock. Balance of Terror is a slow Saga that recycles one permanent."
+        }
+      ]
+    },
+    {
+      "id": "worlds",
+      "name": "More Worlds",
+      "recommended": false,
+      "pitch": "Push the resource Spock actually counts: 43 lands and 38 different names, cutting the colourless lands that were doing nothing in a three-colour deck. Cheapest direction and the most direct upgrade to the commander.",
+      "plays_like": "43 lands, 38 names",
+      "metrics": {
+        "Spot removal": 6,
+        "Board wipes": 2,
+        "Instant-speed answers": 7,
+        "Protection": 3,
+        "Card draw": 9,
+        "Ramp": 10,
+        "Lands": 43,
+        "Different land names": 38,
+        "Game Changers": 0
+      },
+      "how_to_play": {
+        "summary": "Trade clunky permanents for lands, then let the name count carry Spock.",
+        "sections": [
+          {
+            "title": "Turns 1–3",
+            "points": [
+              "Play the untapped duals first (Brushland, Adarkar Wastes, Yavimaya Coast) so the name count grows without costing tempo; the pain is one life per coloured use.",
+              "Keep the four Forest, two Island, two Plains for Rampant Growth, Cultivate and Kirk to find."
+            ]
+          },
+          {
+            "title": "Turns 4–6",
+            "points": [
+              "Every new name raises Spock's free-cast ceiling, so a six-drop on top becomes castable at six lands rather than eight.",
+              "Exploration plus 43 lands means two drops a turn is normal; do not be shy about playing lands you do not immediately need."
+            ]
+          },
+          {
+            "title": "Closing",
+            "points": [
+              "At 38 names Spock casts almost anything on top for free; attack with him every turn to trigger it twice per round.",
+              "You are at 43 lands with eight basics — keep two spare lands in hand for Exploration turns, and check your remaining basics before cracking Evolving Wilds."
+            ]
+          }
+        ]
+      },
+      "swaps": [
+        {
+          "in": "Brushland",
+          "out": "Temple of the False God",
+          "why": "An untapped green-white source with a new name for one life per coloured use. Temple of the False God is colourless, needs five other lands before it taps at all, and fixes nothing in a three-colour deck."
+        },
+        {
+          "in": "Adarkar Wastes",
+          "out": "Mutavault",
+          "why": "Untapped white-blue fixing and a brand-new name. Mutavault is a colourless 2/2 that neither casts your spells nor raises the name count."
+        },
+        {
+          "in": "Yavimaya Coast",
+          "out": "Shore Leave Planet",
+          "why": "Untapped green-blue fixing for a land that only made blue and charged four mana to copy a creature."
+        },
+        {
+          "in": "Razorverge Thicket",
+          "out": "Fleet Captain Christopher Pike",
+          "why": "Trades a 0/6 that only taps creatures for a land that enters untapped early and adds a name. The deck goes to 43 lands, so every drop matters."
+        },
+        {
+          "in": "Seachrome Coast",
+          "out": "Tribble Cluster",
+          "why": "A white-blue fast land with a new name instead of a 1/1 that needs four combat steps before it is a real threat."
+        },
+        {
+          "in": "Radiant Grove",
+          "out": "Sam Kirk, Xenoanthropologist",
+          "why": "Green-white fixing and a new name for a 3/3 that only investigates when an opponent casts a creature spell."
+        }
+      ]
+    }
+  ],
+  "recommendation": "Take Landfall Army. It is the cheapest direction (about €5 including the shared answers), it turns the ramp the deck is already built around into a board, and it keeps the list at bracket 2 — no Game Changers, no combos. More Worlds is the better long-term pick if you want to lean into Spock himself, but it does not fix the missing interaction on its own."
+}
