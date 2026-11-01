@@ -11,6 +11,7 @@ Tracks the Magic: The Gathering decks and singles I own.
 | [World Shaper](decks/world-shaper.md) | Hearthhull, the Worldseed | BRG | Edge of Eternities precon (2025) |
 | [Mutant Menace](decks/mutant-menace.md) | The Wise Mothman | UBG | Fallout precon (2024) |
 | [Counter Blitz](decks/counter-blitz.md) | Tidus, Yuna's Guardian | WUG | Final Fantasy X precon (2025) |
+| [Landing Party](decks/landing-party.md) | Commander Spock | WUG | Star Trek Commander precon (2026) |
 
 ## Layout
 
