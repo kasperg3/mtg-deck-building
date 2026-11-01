@@ -1,0 +1,385 @@
+{
+  "title": "Landing Party — Upgrade Options",
+  "deck": "decks/precon/landing-party.md",
+  "date": "2026-11-01",
+  "budget_eur": 20,
+  "summary": "Commander Spock pays off land names: on every enter and attack he reveals the top card and lets you cast it for free when its mana value is at most the number of differently named lands you control, puts a land onto the battlefield tapped, and otherwise draws you the card. The stock list already ramps and lands 35 different names, but it only has three real answers, it fires its ten landfall payoffs once a turn because Exploration is the only extra land drop, and it gives Spock no evasion, no protection and no way to choose the card on top. Each direction therefore buys four shared answers plus one engine of six cards, so the swaps read as a package rather than six independent one-for-ones.",
+  "analysis": {
+    "notes": [
+      "Curve is high: 60 nonland cards at an average MV of 3.60, with ten at six mana or more (eight at six, Lt. Arex at seven, Planet Killer at eight).",
+      "Spock's free-cast ceiling is the number of differently named lands on the battlefield — 35 names across 40 lands, but 4 Forest, 2 Island and 2 Plains mean those 40 cards only ever count as 35, and the ceiling creeps up one name at a time.",
+      "Only three cards answer a resolved creature (Path to Exile, Reality Shift, Beast Within), and those same three are the deck's entire instant-speed interaction.",
+      "Sixteen lands enter tapped (thirteen outright, plus three fetch lands that bring one in tapped), and four more — Mutavault, Reliquary Tower, Temple of the False God, Shore Leave Planet — do less for the mana base than a plain dual, in a three-colour deck.",
+      "The Spacecraft half of the list wants creatures tapped for Station charge counters (6+ for Galileo, 16+ for Enterprise) and rarely gets there; Kirk's +3/+3 is the only payoff that comes online early.",
+      "The landfall shell is lopsided: ten cards pay off a land entering (Lotus Cobra, Scute Swarm, Tireless Tracker, Amanda Grayson, Chief Kyle, M'Ress, Syndicate Liquidators, Galileo, Enterprise, Farragut) and only Exploration adds a land drop, so those ten fire once a turn. The multiplier the list is missing is land drops, not more payoffs.",
+      "Spock is a 3/5 with no evasion and no protection, and his trigger is only as good as the top card: one card (Augur of Autumn) lets you look at the top, and nothing in the list puts a chosen card there. A sixth of the deck rewards attacking with him and the deck cannot guarantee he survives or connects.",
+      "Interaction and engine are separate problems, so they are costed separately here: the shared four fix removal in every direction, and the six direction cards are spent on one engine rather than six unrelated upgrades."
+    ],
+    "interaction": [
+      {
+        "category": "Spot removal",
+        "stock": 3,
+        "target": "8–10",
+        "low": true,
+        "cards": [
+          "Path to Exile",
+          "Reality Shift",
+          "Beast Within"
+        ]
+      },
+      {
+        "category": "Board wipes",
+        "stock": 2,
+        "target": "2–3",
+        "cards": [
+          "Wrath of God",
+          "Austere Command"
+        ]
+      },
+      {
+        "category": "Instant-speed answers",
+        "stock": 3,
+        "target": "5+",
+        "low": true,
+        "cards": [
+          "Path to Exile",
+          "Reality Shift",
+          "Beast Within"
+        ]
+      },
+      {
+        "category": "Protection",
+        "stock": 3,
+        "target": "2–3",
+        "cards": [
+          "Heroic Intervention",
+          "U.S.S. Defiant, Mirror Migrant",
+          "Temporal Tribulation"
+        ]
+      },
+      {
+        "category": "Card draw",
+        "stock": 11,
+        "target": "8–10",
+        "cards": [
+          "Brainstorm",
+          "Ponder",
+          "Harmonize",
+          "Echo of Eons",
+          "Guardian Project",
+          "Tireless Tracker",
+          "Sam Kirk, Xenoanthropologist",
+          "Pavel Chekov, First Posting",
+          "Jefferies Tube",
+          "Starfleet Communicator",
+          "Lt. Arex, Ever-Adapting"
+        ]
+      },
+      {
+        "category": "Ramp",
+        "stock": 10,
+        "target": "8–10",
+        "cards": [
+          "Sol Ring",
+          "Arcane Signet",
+          "Lotus Cobra",
+          "Farseek",
+          "Nature's Lore",
+          "Rampant Growth",
+          "Cultivate",
+          "Growth Spiral",
+          "Exploration",
+          "Satyr Wayfinder"
+        ]
+      },
+      {
+        "category": "Lands",
+        "stock": 40,
+        "target": "40+ (lands deck)",
+        "cards": [
+          "35 differently named"
+        ]
+      }
+    ],
+    "stock_metrics": {
+      "Spot removal": 3,
+      "Board wipes": 2,
+      "Instant-speed answers": 3,
+      "Protection": 3,
+      "Card draw": 11,
+      "Ramp": 10,
+      "Extra land drops": 1,
+      "Landfall payoffs": 10,
+      "Lands": 40,
+      "Different land names": 35,
+      "Game Changers": 0
+    }
+  },
+  "core": {
+    "name": "Shared answers",
+    "description": "Four cheap instants that go in every direction. Spot removal goes from three to six — all of it instant speed — and Counterspell stops a spell on the stack, which nothing in the list could do before.",
+    "swaps": [
+      {
+        "in": "Swords to Plowshares",
+        "out": "Planet Killer",
+        "why": "One mana exiles any creature at instant speed, which is the cheapest answer in the deck. Planet Killer costs eight, must attack every combat if able, and does nothing the turn it lands."
+      },
+      {
+        "in": "Generous Gift",
+        "out": "Command Chair",
+        "why": "Three mana destroys any permanent type, including the lands and enchantments the list otherwise cannot touch. Command Chair is six mana, enters tapped and only ever ramps."
+      },
+      {
+        "in": "Krosan Grip",
+        "out": "Giant Space Amoeba",
+        "why": "Split second kills an artifact or enchantment with no response, which matters against Equipment and Rhystic-style pieces. Giant Space Amoeba is a five-mana 3/3 flier whose attack trigger gives one blocker -3/-0 and copies itself."
+      },
+      {
+        "in": "Counterspell",
+        "out": "Echo of Eons",
+        "why": "Two mana stops the sweeper or the combo piece outright. Echo of Eons is a six-mana wheel that refills every opponent's hand too."
+      }
+    ]
+  },
+  "directions": [
+    {
+      "id": "landfall",
+      "name": "Land Engine",
+      "recommended": true,
+      "pitch": "The stock list has the payoffs and almost none of the enablers: ten cards trigger when a land enters and Exploration is the only card that lets you play an extra one. Loot, Azusa and Wayward Swordtooth turn one land drop into three or four, Mole Man replays lands from the graveyard, and Felidar Retreat and Rampaging Baloths are the two payoffs worth adding on top of the ten already there. Same six slots, four times the triggers.",
+      "plays_like": "Three or four land drops a turn",
+      "metrics": {
+        "Spot removal": 6,
+        "Board wipes": 2,
+        "Instant-speed answers": 7,
+        "Protection": 2,
+        "Card draw": 10,
+        "Ramp": 13,
+        "Extra land drops": 4,
+        "Landfall payoffs": 13,
+        "Lands": 40,
+        "Different land names": 35,
+        "Game Changers": 0
+      },
+      "how_to_play": {
+        "summary": "Ramp to four, then land three or four times a turn and let thirteen payoffs convert every drop into bodies.",
+        "sections": [
+          {
+            "title": "Turns 1–3",
+            "points": [
+              "Exploration or Loot on turn two is the strongest start in the deck: every land after it is a second trigger.",
+              "Spend Farseek, Nature's Lore and Rampant Growth on differently named lands — the ramp and Spock's ceiling are the same resource.",
+              "Do not cut a land drop for a four-drop; the engine wants lands on the battlefield, not more spells in hand."
+            ]
+          },
+          {
+            "title": "Turns 4–6",
+            "points": [
+              "With Azusa or Wayward Swordtooth online you are playing two to four lands a turn out of 40; empty your hand of lands before cracking fetches so nothing is stranded.",
+              "Mole Man, Moloid Master doubles a fetch: play it, then replay the land from the graveyard for a second trigger and a second Moloid.",
+              "Felidar Retreat is the flexible payoff — tokens when you are behind on board, counters when the ground is stable."
+            ]
+          },
+          {
+            "title": "Closing",
+            "points": [
+              "Rampaging Baloths plus two extra land drops is four 4/4 Beasts a round; the table has to answer the engine, not the individual Beasts.",
+              "Spock is still a fine curve-topper and a free card every attack, but this build no longer needs him to win."
+            ]
+          }
+        ]
+      },
+      "swaps": [
+        {
+          "in": "Loot, Exuberant Explorer",
+          "out": "Fleet Captain Christopher Pike",
+          "why": "One extra land drop every turn, and once the land count catches up his second ability puts a creature from the top six straight onto the battlefield. Pike is a 0/6 that only taps and untaps other creatures."
+        },
+        {
+          "in": "Azusa, Lost but Seeking",
+          "out": "Tribble Cluster",
+          "why": "Two extra land drops turns every landfall trigger in the deck into three a turn. Tribble Cluster is a 1/1 that needs four combat steps before it is worth a card."
+        },
+        {
+          "in": "Wayward Swordtooth",
+          "out": "Sam Kirk, Xenoanthropologist",
+          "why": "A third extra land drop with a 5/5 body attached — the city's blessing only gates attacking, the land drops work from turn three. Sam Kirk only investigates when an opponent casts a creature spell, one Clue at a time."
+        },
+        {
+          "in": "Mole Man, Moloid Master",
+          "out": "Colossal Clone Master",
+          "why": "Enabler and payoff in one card: lands played from the graveyard bring fetches back for a second trigger, and every land still makes a Moloid. Colossal Clone Master is the deck's best name-count payoff, but at six mana it is a copy of something already on the battlefield and does nothing for the engine — the fairest cut once there are thirteen payoffs."
+        },
+        {
+          "in": "Felidar Retreat",
+          "out": "Temporal Tribulation",
+          "why": "With three extra land drops this makes a 2/2 per land, or grows the whole team when the board is stable. Temporal Tribulation was a two-permanent blink that doubled as protection — real value, but this build spends its safety budget on the engine."
+        },
+        {
+          "in": "Rampaging Baloths",
+          "out": "Balance of Terror",
+          "why": "A 6/6 trampler that makes a 4/4 on every land drop — four Beasts a round with this shell. Generous Gift covers the artifact/enchantment answer, and Balance of Terror only destroyed one at chapter I while chapters II and III blinked your own permanents."
+        }
+      ]
+    },
+    {
+      "id": "cheat",
+      "name": "Strange New Worlds",
+      "recommended": false,
+      "pitch": "Spock's trigger is only as good as the top card, and the stock list cannot choose it, protect him, or get him past a blocker. Penance puts a card from your hand on top for free at instant speed; Case of the Locked Hothouse gives permanent top-deck information and a second way to cast off the top; Aqueous Form makes him unblockable and scries before his own trigger resolves; Swiftfoot Boots answers the first removal spell. Terastodon and Hornet Queen are what you cast for free.",
+      "plays_like": "A chosen free cast every combat",
+      "metrics": {
+        "Spot removal": 6,
+        "Board wipes": 2,
+        "Instant-speed answers": 7,
+        "Protection": 3,
+        "Card draw": 10,
+        "Ramp": 11,
+        "Extra land drops": 2,
+        "Landfall payoffs": 10,
+        "Lands": 40,
+        "Different land names": 35,
+        "Game Changers": 0
+      },
+      "how_to_play": {
+        "summary": "Choose the top card, keep Spock alive, attack, and cast something expensive for nothing.",
+        "sections": [
+          {
+            "title": "Turns 1–3",
+            "points": [
+              "Swiftfoot Boots on two, Spock on four, equip and attack the same turn — haste means the trigger happens before they have mana up.",
+              "Case of the Locked Hothouse on four is the quieter line: an extra land drop now, and from seven lands you cast creatures and enchantments off the top yourself.",
+              "Hold Swords to Plowshares and Generous Gift; this is the slowest of the three builds and it wants the long game."
+            ]
+          },
+          {
+            "title": "Turns 4–6",
+            "points": [
+              "Before combat, put your best expensive card back on top with Penance — the ability is free, so do it every turn, not only when damage is coming.",
+              "Aqueous Form's scry is also an attack trigger: put Spock's trigger on the stack first and the scry resolves before it, so you fix the top you are about to reveal.",
+              "Hexproof from the Boots matters for the same reason — you can still enchant him afterwards, which shroud would not allow."
+            ]
+          },
+          {
+            "title": "Closing",
+            "points": [
+              "Two triggers a round — enter and attack — is the plan; at seven or eight names Terastodon and Hornet Queen cost nothing.",
+              "Do not tap out for a six-drop you could have cast for free; hold mana for the counterspell you drew into."
+            ]
+          }
+        ]
+      },
+      "swaps": [
+        {
+          "in": "Penance",
+          "out": "Fleet Captain Christopher Pike",
+          "why": "The missing piece of the commander: putting a card from your hand on top of your library is the only way in the deck to decide what Spock reveals, and the ability costs nothing. Pike only untaps creatures."
+        },
+        {
+          "in": "Case of the Locked Hothouse",
+          "out": "Tribble Cluster",
+          "why": "An extra land drop plus permanent top-deck information, and once solved at seven lands you cast creatures and enchantments from the top without Spock. Tribble Cluster needs four combat steps to be worth a card."
+        },
+        {
+          "in": "Aqueous Form",
+          "out": "Sam Kirk, Xenoanthropologist",
+          "why": "Spock is a 3/5 with no evasion, so one blocker blanks the whole trigger. Unblockable plus scry 1 on attack fixes both halves of the problem for one mana. Sam Kirk only makes a Clue off an opponent's creature spell."
+        },
+        {
+          "in": "Swiftfoot Boots",
+          "out": "Colossal Clone Master",
+          "why": "Hexproof and haste for two mana: the first removal spell fizzles and he swings the turn he lands. Colossal Clone Master copies something already on the battlefield; Spock's package needs protection, not another copy."
+        },
+        {
+          "in": "Terastodon",
+          "out": "Temporal Tribulation",
+          "why": "Eight mana, castable for free at eight names, and it answers three noncreature permanents while leaving 3/3s on the other side. Swiftfoot Boots takes over the protection role that Temporal Tribulation covered, permanently rather than once."
+        },
+        {
+          "in": "Hornet Queen",
+          "out": "Balance of Terror",
+          "why": "Seven mana for five evasive deathtouchers, free off the top at seven names — the best rate in the deck for Spock's trigger. Generous Gift replaces Balance of Terror's single artifact/enchantment destruction, and this build does not want a saga that blinks its own permanents."
+        }
+      ]
+    },
+    {
+      "id": "worlds",
+      "name": "More Worlds",
+      "recommended": false,
+      "pitch": "Push the resource Spock actually counts: 43 lands and 38 different names, cutting the colourless lands that were doing nothing in a three-colour deck. Cheapest direction and the most direct upgrade to the commander.",
+      "plays_like": "43 lands, 38 names",
+      "metrics": {
+        "Spot removal": 6,
+        "Board wipes": 2,
+        "Instant-speed answers": 7,
+        "Protection": 3,
+        "Card draw": 10,
+        "Ramp": 10,
+        "Extra land drops": 1,
+        "Landfall payoffs": 10,
+        "Lands": 43,
+        "Different land names": 38,
+        "Game Changers": 0
+      },
+      "how_to_play": {
+        "summary": "Trade clunky permanents for lands, then let the name count carry Spock.",
+        "sections": [
+          {
+            "title": "Turns 1–3",
+            "points": [
+              "Play the untapped duals first (Brushland, Adarkar Wastes, Yavimaya Coast) so the name count grows without costing tempo; the pain is one life per coloured use.",
+              "Keep the four Forest, two Island, two Plains for Rampant Growth, Cultivate and Kirk to find."
+            ]
+          },
+          {
+            "title": "Turns 4–6",
+            "points": [
+              "Every new name raises Spock's free-cast ceiling, so a six-drop on top becomes castable at six lands rather than eight.",
+              "Exploration plus 43 lands means two drops a turn is normal; do not be shy about playing lands you do not immediately need."
+            ]
+          },
+          {
+            "title": "Closing",
+            "points": [
+              "At 38 names Spock casts almost anything on top for free; attack with him every turn to trigger it twice per round.",
+              "You are at 43 lands with eight basics — keep two spare lands in hand for Exploration turns, and check your remaining basics before cracking Evolving Wilds."
+            ]
+          }
+        ]
+      },
+      "swaps": [
+        {
+          "in": "Brushland",
+          "out": "Temple of the False God",
+          "why": "An untapped green-white source with a new name for one life per coloured use. Temple of the False God is colourless and only taps once you control five lands."
+        },
+        {
+          "in": "Adarkar Wastes",
+          "out": "Mutavault",
+          "why": "Untapped white-blue fixing and a brand-new name. Mutavault is a colourless 2/2 that does not help you cast anything; this direction trades it up."
+        },
+        {
+          "in": "Yavimaya Coast",
+          "out": "Shore Leave Planet",
+          "why": "Untapped green-blue fixing for a land that only made blue and charged four mana to copy a creature."
+        },
+        {
+          "in": "Razorverge Thicket",
+          "out": "Fleet Captain Christopher Pike",
+          "why": "Trades a 0/6 that only taps creatures for a land that enters untapped early and adds a name. The deck goes to 43 lands, so every drop matters."
+        },
+        {
+          "in": "Seachrome Coast",
+          "out": "Tribble Cluster",
+          "why": "A white-blue fast land with a new name instead of a 1/1 that needs four combat steps before it is a real threat."
+        },
+        {
+          "in": "Radiant Grove",
+          "out": "Sam Kirk, Xenoanthropologist",
+          "why": "Green-white fixing and a new name for a 3/3 that only investigates when an opponent casts a creature spell."
+        }
+      ]
+    }
+  ],
+  "recommendation": "Take Land Engine. It fixes a structural problem rather than a weak card: ten payoffs were firing off a single extra land drop, and four enablers at about €16 all in (shared answers included) quadruple the triggers without depending on the commander, so a table that kills Spock twice does not turn the deck off. Strange New Worlds is the pick if you want Spock to be the win condition — it is the cheaper engine at about €7 and it is the only one that makes the commander reliable, but it folds if he is answered twice. More Worlds stays the safest long-term mana base, and it is the only direction that adds no new payoffs."
+}
