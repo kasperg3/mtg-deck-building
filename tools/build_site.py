@@ -486,7 +486,11 @@ def main():
 <div class="stat"><b><a href="inventory.html">{inv_total}</a></b><span class="muted small">cards owned</span></div>
 <div class="stat"><b><a href="inventory.html?deck=Loose">{inv_loose}</a></b><span class="muted small">loose singles</span></div></div>"""
     (out / "index.html").write_text(page("MTG Decks", body, "", decks, "home", "Kasper's Commander decks and upgrades"))
-    print(f"built {out.relative_to(ROOT)}: index + inventory + {len(decks)} decks + {sum(1 for d in decks if d['comparison'])} comparisons")
+    try:
+        shown = out.relative_to(ROOT)
+    except ValueError:          # --out outside the repo
+        shown = out
+    print(f"built {shown}: index + inventory + {len(decks)} decks + {sum(1 for d in decks if d['comparison'])} comparisons")
 
 
 if __name__ == "__main__":
