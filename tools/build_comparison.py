@@ -23,6 +23,7 @@ import json
 import re
 import sys
 import time
+import urllib.error
 import urllib.request
 from pathlib import Path
 
@@ -30,6 +31,7 @@ ROOT = Path(__file__).resolve().parent.parent
 TEMPLATE = ROOT / "tools" / "comparison_template.html"
 INDEX_FILE = ROOT / ".cache" / "card-index.json"
 BULK_META = "https://api.scryfall.com/bulk-data/default_cards"
+CARD_COLLECTION = "https://api.scryfall.com/cards/collection"
 HEADERS = {"User-Agent": "mtg-deck-building/0.1", "Accept": "application/json"}
 CURVE_BUCKETS = ["0", "1", "2", "3", "4", "5", "6", "7+"]
 SKIP_LAYOUTS = {"token", "double_faced_token", "art_series", "emblem", "vanguard", "scheme", "planar"}
@@ -109,6 +111,67 @@ def load_index(refresh, max_age_days):
     if refresh or stale:
         build_index()
     return json.loads(INDEX_FILE.read_text())
+
+
+def api_entry(card):
+    """Turn one Scryfall API card into the same shape as a bulk-index entry."""
+    faces = card.get("card_faces") or []
+    imgs = [card["image_uris"]] if "image_uris" in card else \
+        [f["image_uris"] for f in faces if "image_uris" in f]
+    prices = card.get("prices") or {}
+
+    def cheapest(fields):
+        vals = [float(prices[f]) for f in fields if prices.get(f)]
+        return min(vals) if vals else None
+
+    usd, eur = cheapest(("usd", "usd_foil", "usd_etched")), cheapest(("eur", "eur_foil"))
+    return {
+        "name": card["name"],
+        "cmc": card.get("cmc", 0),
+        "type_line": card.get("type_line") or (faces[0].get("type_line", "") if faces else ""),
+        "mana_cost": card.get("mana_cost") or (faces[0].get("mana_cost", "") if faces else ""),
+        "game_changer": bool(card.get("game_changer", False)),
+        "usd": usd, "eur": eur,
+        "usd_set": card.get("set_name") if usd is not None else None,
+        "eur_set": card.get("set_name") if eur is not None else None,
+        "images": [{"normal": i.get("normal"), "large": i.get("large"),
+                    "art_crop": i.get("art_crop")} for i in imgs] or None,
+        "scryfall_uri": (card.get("scryfall_uri") or "").split("?")[0],
+    }
+
+
+def fetch_cards(names, cards):
+    """Look up cards the cached bulk index does not know, and add them to `cards`.
+
+    The weekly CI cache can be days behind Scryfall, which used to mean a card
+    spoiled since the last bulk refresh rendered as an empty slot. Ask the API
+    for just those names instead. Returns the names still missing afterwards.
+    """
+    want = [n for n in dict.fromkeys(names) if key(n) not in cards]
+    if not want:
+        return []
+    for i in range(0, len(want), 75):
+        batch = want[i:i + 75]
+        body = json.dumps({"identifiers": [{"name": n} for n in batch]}).encode()
+        req = urllib.request.Request(CARD_COLLECTION, data=body, headers={**HEADERS,
+                                                                        "Content-Type": "application/json"})
+        try:
+            with urllib.request.urlopen(req, timeout=90) as r:
+                data = json.load(r)
+        except (urllib.error.URLError, urllib.error.HTTPError, TimeoutError) as e:
+            print(f"warning: Scryfall card lookup failed ({e}); "
+                  f"{len(want)} card(s) missing from the index stay blank", file=sys.stderr)
+            break
+        for card in data.get("data", []):
+            entry = api_entry(card)
+            cards[key(card["name"])] = entry
+            for face in card.get("card_faces") or []:
+                cards.setdefault(key(face.get("name", "")), entry)
+        got = len(want) - len(data.get("not_found", []))
+        if got:
+            print(f"fetched {got} card(s) missing from the bulk index via the Scryfall API "
+                  f"(cache is behind)", file=sys.stderr)
+    return [n for n in want if key(n) not in cards]
 
 
 # ---------------------------------------------------------------- deck
@@ -209,6 +272,7 @@ def main():
 
     index = load_index(args.refresh, args.max_age_days)
     cards = index["cards"]
+    fetch_cards(commanders + [n for _, n in stock] + swap_names, cards)
     problems = [f"card not found on Scryfall: {n}" for n in
                 dict.fromkeys(commanders + [n for _, n in stock] + swap_names) if key(n) not in cards]
 

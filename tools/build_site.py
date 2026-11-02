@@ -33,7 +33,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "tools"))
 from apply_direction import SECTIONS, section_for  # noqa: E402
-from build_comparison import key, load_index, parse_deck  # noqa: E402
+from build_comparison import fetch_cards, key, load_index, parse_deck  # noqa: E402
 
 E = html.escape
 COLOUR_ORDER = "WUBRG"
@@ -444,6 +444,20 @@ def main():
         spec = ROOT / "comparisons" / f"{path.stem}-upgrades.json"
         decks.append({"slug": path.stem, "path": path, "title": title, "meta": meta,
                       "changelog": changelog, "comparison": spec if spec.exists() else None})
+
+    needed = []
+    for d in decks:
+        cmdr, dcards = parse_deck(d["path"])
+        needed += cmdr + [n for _, n in dcards]
+        if d["comparison"]:
+            cspec = json.loads(d["comparison"].read_text())
+            for s in (cspec.get("core") or {}).get("swaps") or []:
+                needed.append(s["in"])
+            for dr in cspec.get("directions") or []:
+                needed += [s["in"] for s in dr.get("swaps") or []]
+    gaps = fetch_cards(needed, cards)
+    if gaps:
+        print(f"warning: {len(gaps)} card(s) not on Scryfall: {', '.join(gaps[:5])}", file=sys.stderr)
 
     for d in decks:
         body, d["stats"] = build_deck(d, cards)
