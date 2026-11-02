@@ -12,7 +12,9 @@
       "No protection at all for the commander or the board.",
       "Interaction is good: ~10 spot removal, 6 at instant speed, 4 board wipes.",
       "Mana base: Wastes is a colourless basic in a three-colour deck and should go.",
-      "Commander check: the card search flags that Hearthhull has no 'can be your commander' text (it's an artifact, not a creature). It is the precon's face commander, so check with your playgroup. Szarel, Genesis Shepherd (already in the deck) can legally be your commander."
+      "Commander check: the card search flags that Hearthhull has no 'can be your commander' text (it's an artifact, not a creature). It is the precon's face commander, so check with your playgroup. Szarel, Genesis Shepherd (already in the deck) can legally be your commander.",
+      "Engine ledger — enablers: Zuran Orb (free), Hearthhull's own 2+ ability and Lotus Field sacrifice lands; Ramunap Excavator and Conduit of Worlds replay them from the graveyard; payoffs: Sabotender, Tannuk, Retreat to Hagra and Ob Nixilis drain on every land that enters, and Hearthhull's 8+ clause adds two more per sacrifice. Support: Tamiyo's Safekeeping and Snakeskin Veil protect the pieces, Countryside Crusher fills the graveyard with lands to replay. This is the most coherent of the three decks — every card references another.",
+      "Timing note: the drain only starts once Hearthhull is stationed to eight charge counters, which is a turn five-plus payoff. Before that the plan is the 2+ ability (sacrifice a land, draw two, play an extra land), so the early game is card advantage rather than damage."
     ],
     "interaction": [
       {
@@ -108,7 +110,10 @@
       "Ramp pieces": "~15",
       "Protection": 0,
       "Free land-sac outlets": 0,
-      "Game Changers": 0
+      "Game Changers": 0,
+      "Different land names": 29,
+      "Extra land drops": 5,
+      "Landfall payoffs": 4
     }
   },
   "core": {
@@ -128,7 +133,8 @@
       {
         "in": "Zuran Orb",
         "out": "Wastes",
-        "why": "0 mana: sacrifice a land and gain 2 life. With Hearthhull, each opponent also loses 2, so any spare land becomes a drain, at instant speed. Wastes produces colourless mana in a three-colour deck."
+        "why": "0 mana: sacrifice a land and gain 2 life. With Hearthhull, each opponent also loses 2, so any spare land becomes a drain, at instant speed. Wastes produces colourless mana in a three-colour deck. Cutting one Wastes is deliberate: the deck is 42 lands, Wastes is the only colourless basic, and Zuran Orb is the free sacrifice outlet the whole direction is built on.",
+        "allow_land_cut": true
       }
     ]
   },
@@ -144,7 +150,10 @@
         "Ramp pieces": "~13",
         "Protection": 2,
         "Free land-sac outlets": 1,
-        "Game Changers": 0
+        "Game Changers": 0,
+        "Different land names": 28,
+        "Extra land drops": 4,
+        "Landfall payoffs": 8
       },
       "swaps": [
         {
@@ -251,7 +260,10 @@
         "Ramp pieces": "~13 (+Treasure)",
         "Protection": 2,
         "Free land-sac outlets": 1,
-        "Game Changers": 0
+        "Game Changers": 0,
+        "Different land names": 28,
+        "Extra land drops": 5,
+        "Landfall payoffs": 10
       },
       "swaps": [
         {
@@ -322,7 +334,10 @@
         "Ramp pieces": "~13",
         "Protection": 2,
         "Free land-sac outlets": 1,
-        "Game Changers": 0
+        "Game Changers": 0,
+        "Different land names": 28,
+        "Extra land drops": 4,
+        "Landfall payoffs": 3
       },
       "swaps": [
         {

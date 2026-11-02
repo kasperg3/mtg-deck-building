@@ -146,8 +146,9 @@ def main():
         for s in core + d["swaps"]:
             for i, (q, n) in enumerate(pool):
                 if n == s["out"]:
-                    if is_land(s["out"]) and not is_land(s["in"]):
-                        fails.append(f"{d['name']}: cuts land {s['out']} for nonland {s['in']}")
+                    if is_land(s["out"]) and not is_land(s["in"]) and not s.get("allow_land_cut"):
+                        fails.append(f"{d['name']}: cuts land {s['out']} for nonland {s['in']}"
+                                     " (set \"allow_land_cut\": true on the swap if that is deliberate)")
                     pool[i] = (q, s["in"])
                     applied += 1
                     break
