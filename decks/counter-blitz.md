@@ -4,14 +4,14 @@
 - **Commander:** Tidus, Yuna's Guardian
 - **Colour identity:** White / Blue / Green (Bant)
 - **Format:** Commander · 100 cards
-- **Game Changers:** 1 (Farewell) — bracket 3+
-- **Bracket:** 3 (Farewell is a Game Changer; swap it out for bracket 2)
+- **Game Changers:** 0
+- **Bracket:** 2 (no Game Changers, no combos)
 - **Status:** Owned · upgraded: Cheer Every Turn (2026-10-16)
 
 ## Commander (1)
 1 Tidus, Yuna's Guardian
 
-## Creatures (36)
+## Creatures (37)
 1 Walking Ballista
 1 Conclave Mentor
 1 Duskshell Crawler
@@ -37,6 +37,7 @@
 1 Auron, Venerated Guardian
 1 Chocobo Knights
 1 Fathom Mage
+1 Forgotten Ancient
 1 Herald of Secret Streams
 1 Kimahri, Valiant Guardian
 1 Luminous Broodmoth
@@ -60,12 +61,11 @@
 1 Inspiring Call
 1 Yuna's Whistle
 
-## Sorceries (5)
+## Sorceries (4)
 1 Farseek
 1 Three Visits
 1 Collective Effort
 1 Damning Verdict
-1 Farewell
 
 ## Artifacts (4)
 1 Everflowing Chalice
@@ -117,6 +117,7 @@
 3 Plains
 
 ## Changelog
+- 2026-11-02 — Replaced Farewell with Forgotten Ancient (owned). Farewell was the only Game Changer, so the deck is bracket 2 again, and it exiled our own board in a deck that wins by going wide; Damning Verdict does the asymmetric version. Forgotten Ancient grows on every spell cast and moves counters, which is Tidus's own ability.
 - 2026-10-16 — Added stock precon list.
 - 2026-10-16 — Applied **Cheer Every Turn** from `counter-blitz-upgrades.json` (13 swaps):
   - +Luminarch Aspirant / −Generous Patron
