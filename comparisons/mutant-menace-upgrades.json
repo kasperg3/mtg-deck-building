@@ -9,7 +9,9 @@
       "Curve shape is fine for a 4-mana commander, but several 2-drops (Power Fist, Nuka-Nuke Launcher, Biomass Mutation) don't affect the board.",
       "Lumbering Megasloth (MV 12) and Agent Frank Horrigan (MV 7) are the clunkiest cards at the top.",
       "Mana is fine: 39 lands + ~8 ramp. Many lands enter tapped (Temples, Opulent Palace, Tainted lands); improving them is a separate project.",
-      "Biggest weakness: only 5 spot removal and just 2 instant-speed answers."
+      "Biggest weakness: only 5 spot removal and just 2 instant-speed answers.",
+      "Engine ledger — enablers: Ruin Crab, Mindcrank and the rad counters Mothman hands out all mill; payoffs: Mothman turns each nonland mill into +1/+1 counters, Kami of Whispered Hopes doubles them, Evolution Sage proliferates on landfall and Evolution Witness buys permanents back. Support: the four removal instants. The mill half is genuinely self-feeding — rad's life loss feeds Mindcrank, which mills again.",
+      "The throttled half: Ruin Crab and Evolution Sage are landfall triggers and the deck plays exactly zero extra land drops, so each fires once a turn. Two extra-drop enablers (Loot, Exuberant Explorer €1.47 and Oracle of Mul Daya €2.58) would roughly double both cards for about €4 — the only purchase worth making in this deck."
     ],
     "interaction": [
       {
@@ -87,7 +89,11 @@
       "Spot removal": 5,
       "Instant-speed answers": 2,
       "Card draw": "~9",
-      "Game Changers": 0
+      "Game Changers": 0,
+      "Lands": 39,
+      "Different land names": 27,
+      "Extra land drops": 0,
+      "Landfall payoffs": 2
     }
   },
   "core": {
@@ -127,7 +133,11 @@
         "Spot removal": 9,
         "Instant-speed answers": 6,
         "Card draw": "good (Evolution Witness, Mirelurk Queen, Marcus)",
-        "Game Changers": 0
+        "Game Changers": 0,
+        "Lands": 39,
+        "Different land names": 27,
+        "Extra land drops": 0,
+        "Landfall payoffs": 4
       },
       "swaps": [
         {
@@ -237,7 +247,11 @@
         "Spot removal": 9,
         "Instant-speed answers": 6,
         "Card draw": "good (draws trigger mill)",
-        "Game Changers": 0
+        "Game Changers": 0,
+        "Lands": 39,
+        "Different land names": 27,
+        "Extra land drops": 0,
+        "Landfall payoffs": 4
       },
       "swaps": [
         {
@@ -302,7 +316,11 @@
         "Spot removal": "9 (recurrable)",
         "Instant-speed answers": 6,
         "Card draw": "good",
-        "Game Changers": 0
+        "Game Changers": 0,
+        "Lands": 39,
+        "Different land names": 27,
+        "Extra land drops": 0,
+        "Landfall payoffs": 2
       },
       "swaps": [
         {

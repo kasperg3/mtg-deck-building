@@ -191,6 +191,10 @@ creatures.
    names`, `Extra land drops`, `Landfall payoffs`) so hand-counted numbers can't
    drift. Exit code 1 blocks the commit. Add `--offline` when Scryfall is
    unreachable; it works from `.cache/oracle.json`.
+   A swap that cuts a land for a nonland fails unless it says so: add
+   `"allow_land_cut": true` to that swap (World Shaper's Wastes → Zuran Orb is
+   the worked example) and say why in its `why`. Never set it to silence a real
+   mistake — the flag is a statement that you counted the lands.
    For a per-direction card list, `python3 tools/build_comparison.py
    comparisons/<deck>-upgrades.json --after <direction-id>` still prints it.
    **Release gate:** a card from a set that hasn't released yet reports
