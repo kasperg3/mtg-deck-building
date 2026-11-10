@@ -27,9 +27,9 @@
 1 Amanda Grayson, Logic's Link
 1 Captain Kirk, Boldly Going
 1 Chief Kyle, Transporter Tech
+1 Chief Montgomery Scott
 1 Janice Rand, Essential Aide
 1 Pavel Chekov, First Posting
-1 Giant Space Amoeba
 1 M'Ress, Crew Coordinator
 1 McCoy, Not a Bricklayer
 1 Syndicate Liquidators
@@ -122,7 +122,7 @@
 - 2026-11-10 — Applied **Land Engine** from `landing-party-upgrades.json` (10 swaps):
   - +Swords to Plowshares / −Planet Killer
   - +Generous Gift / −Command Chair
-  - +Krosan Grip / −Chief Montgomery Scott
+  - +Krosan Grip / −Giant Space Amoeba
   - +Counterspell / −Echo of Eons
   - +Loot, Exuberant Explorer / −Fleet Captain Christopher Pike
   - +Azusa, Lost but Seeking / −Tribble Cluster

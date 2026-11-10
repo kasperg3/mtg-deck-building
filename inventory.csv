@@ -385,9 +385,9 @@ Count,Name,Set,Deck,Source,Acquired,Notes
 1,Lieutenant Nyota Uhura,TRC,Landing Party,Landing Party precon,,
 1,Lieutenant Hikaru Sulu,TRC,Landing Party,Landing Party precon,,
 1,"Janice Rand, Essential Aide",TRC,Landing Party,Landing Party precon,,
-1,Giant Space Amoeba,TRC,Landing Party,Landing Party precon,,
+1,Giant Space Amoeba,TRC,Loose,Landing Party precon,,
 1,Fleet Captain Christopher Pike,TRC,Loose,Landing Party precon,,
-1,Chief Montgomery Scott,TRC,Loose,Landing Party precon,,
+1,Chief Montgomery Scott,TRC,Landing Party,Landing Party precon,,
 1,Colossal Clone Master,TRC,Landing Party,Landing Party precon,,
 1,"Chief Kyle, Transporter Tech",TRC,Landing Party,Landing Party precon,,
 1,"Amanda Grayson, Logic's Link",TRC,Landing Party,Landing Party precon,,
@@ -403,7 +403,7 @@ Count,Name,Set,Deck,Source,Acquired,Notes
 1,Jefferies Tube,TRC,Landing Party,Landing Party precon,,
 1,Swords to Plowshares,,Landing Party,CardTrader,2026-11-09,"for Landing Party (Land Engine), replaces Planet Killer"
 1,Generous Gift,,Landing Party,CardTrader,2026-11-09,"for Landing Party (Land Engine), replaces Command Chair"
-1,Krosan Grip,,Landing Party,CardTrader,2026-11-09,"for Landing Party (Land Engine), replaces Chief Montgomery Scott"
+1,Krosan Grip,,Landing Party,CardTrader,2026-11-09,"for Landing Party (Land Engine), replaces Giant Space Amoeba"
 1,Counterspell,,Landing Party,CardTrader,2026-11-09,"for Landing Party (Land Engine), replaces Echo of Eons"
 1,"Loot, Exuberant Explorer",,Landing Party,CardTrader,2026-11-09,"for Landing Party (Land Engine), replaces Fleet Captain Christopher Pike"
 1,"Azusa, Lost but Seeking",,Landing Party,CardTrader,2026-11-09,"for Landing Party (Land Engine), replaces Tribble Cluster"

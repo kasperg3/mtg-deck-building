@@ -147,8 +147,8 @@
       },
       {
         "in": "Krosan Grip",
-        "out": "Chief Montgomery Scott",
-        "why": "Split second kills an artifact or enchantment with no response, which matters against Equipment and Rhystic-style pieces. Chief Montgomery Scott spends {6} and a tap to put one creature from your hand onto the battlefield. Giant Space Amoeba stays instead: it copies itself every time it attacks, so one flying 3/3 becomes two, then four."
+        "out": "Giant Space Amoeba",
+        "why": "Split second kills an artifact or enchantment with no response, which matters against Equipment and Rhystic-style pieces. Giant Space Amoeba copies itself every time it attacks, but it never triggers Spock or landfall. Chief Montgomery Scott stays instead: his {6} ability puts Colossal Clone Master in as another Spock, or Lt. Arex for three cards and three lands."
       },
       {
         "in": "Counterspell",
@@ -292,7 +292,8 @@
               "Before Far Traveler, play your extra lands after combat: Spock attacks first, then Chief Kyle blinks him on the next land and he re-enters at the end step. Once Far Traveler is out, point Kyle at other creatures — a Spock exiled until the end step misses his own end-step blink.",
               "When Spock enters or attacks with Janice Rand out, let Spock's reveal resolve first: Janice moves the cards above her land to the bottom, so the top card you set up would be gone.",
               "Starfield Vocalist makes each of those enter triggers, and every landfall trigger, happen twice; warp it for {1}{U} on the turn that matters most.",
-              "Momentary Blink, The Guardian of Forever and Temporal Tribulation blink at instant speed, so hold them for the removal spell aimed at Spock."
+              "Momentary Blink, The Guardian of Forever and Temporal Tribulation blink at instant speed, so hold them for the removal spell aimed at Spock.",
+              "Chief Montgomery Scott's {6} ability has no timing limit: at the end of an opponent's turn, put Colossal Clone Master in as another Spock, or Lt. Arex for three cards and three lands."
             ]
           },
           {
