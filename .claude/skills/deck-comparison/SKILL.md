@@ -185,7 +185,7 @@ creatures.
    ```
    It re-applies the core plus each direction's swaps and checks: every cut is
    in the deck and every addition isn't, no card twice or both ways, 100 cards
-   after the swaps, no land cut for a nonland, colour identity and Commander
+   after the swaps, colour identity and Commander
    legality from Scryfall, Game Changers from the cached index, `budget_eur`,
    and the metrics it can derive from rules text (`Lands`, `Different land
    names`, `Extra land drops`, `Landfall payoffs`) so hand-counted numbers can't

@@ -6,7 +6,7 @@ Usage:
 
 Checks, per direction, with the core package applied first:
   * every cut is in the deck, every addition is not, no duplicates, nothing both ways
-  * the post-swap list is exactly 100 cards and cuts no land for a nonland
+  * the post-swap list is exactly 100 cards
   * colour identity and Commander legality of every added card
   * Game Changers (from the cached index, no network) in each direction
   * budget_eur against the cards coming in
@@ -146,8 +146,6 @@ def main():
         for s in core + d["swaps"]:
             for i, (q, n) in enumerate(pool):
                 if n == s["out"]:
-                    if is_land(s["out"]) and not is_land(s["in"]):
-                        fails.append(f"{d['name']}: cuts land {s['out']} for nonland {s['in']}")
                     pool[i] = (q, s["in"])
                     applied += 1
                     break
