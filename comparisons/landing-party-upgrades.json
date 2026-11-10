@@ -246,7 +246,7 @@
       "name": "Land Engine",
       "recommended": true,
       "picked": true,
-      "pitch": "The stock list has the payoffs and almost none of the enablers: ten cards trigger when a land enters and Exploration is the only card that lets you play an extra one. Loot, Azusa and Wayward Swordtooth turn one land drop into three or four, Mole Man replays lands from the graveyard, and Felidar Retreat and Rampaging Baloths are the two payoffs worth adding on top of the ten already there. Every blink piece stays, so Spock's enter trigger still works on top: Colossal Clone Master copies Azusa or Spock without the legend rule, Chief Kyle blinks on each of the extra land drops, and Temporal Tribulation and Balance of Terror blink lands or Lt. Arex for more landfall triggers. The last five swaps came after the first ten were bought: Far Traveler and Momentary Blink make Spock (or Lt. Arex) enter again, Starfield Vocalist doubles every landfall and enter trigger, and two bounce lands keep the extra land drops fed.",
+      "pitch": "The stock list has the payoffs and almost none of the enablers: ten cards trigger when a land enters and Exploration is the only card that lets you play an extra one. Loot, Azusa and Wayward Swordtooth turn one land drop into three or four, Mole Man replays lands from the graveyard, and Felidar Retreat and Rampaging Baloths are the two payoffs worth adding on top of the ten already there. Every blink piece stays, so Spock's enter trigger still works on top: Colossal Clone Master copies Azusa or Spock without the legend rule, Chief Kyle blinks on each of the extra land drops, and Temporal Tribulation and Balance of Terror blink lands or Lt. Arex for more landfall triggers. The last three swaps came after the first ten were bought: Far Traveler and Momentary Blink make Spock (or Lt. Arex) enter again, and Starfield Vocalist doubles every landfall and enter trigger.",
       "plays_like": "Three or four land drops a turn, Spock blinking at every end step",
       "metrics": {
         "Spot removal": 6,
@@ -277,7 +277,6 @@
             "title": "Turns 4–6",
             "points": [
               "With Azusa or Wayward Swordtooth online you are playing two to four lands a turn out of 40; empty your hand of lands before cracking fetches so nothing is stranded.",
-              "Simic Growth Chamber and Selesnya Sanctuary return a land to your hand: with an extra land drop left, replay it the same turn for a second trigger — a cracked fetch or a Temple (scry 1 before Spock's next reveal) is the best one to pick up.",
               "Mole Man, Moloid Master doubles a fetch: play it, then replay the land from the graveyard for a second trigger and a second Moloid.",
               "Colossal Clone Master copying Azusa is two more land drops — the copy isn't legendary, so both stay.",
               "Tap two lands for mana, then cast Temporal Tribulation on them: they come back at your end step as two more landfall triggers, and flashback does it again.",
@@ -351,16 +350,6 @@
           "in": "Momentary Blink",
           "out": "McCoy, Not a Bricklayer",
           "why": "Two instant-speed blinks from one card, from hand and again with flashback: each is a Spock reveal and a Janice Rand land, and each answers a removal spell aimed at him. McCoy is a five-mana 0/4 whose team-wide counter happens once."
-        },
-        {
-          "in": "Simic Growth Chamber",
-          "out": "Reliquary Tower",
-          "why": "Taps for two coloured mana and returns a land to your hand, so Azusa and Loot always have a land to replay for another trigger. Reliquary Tower is colourless and only lifts the hand-size limit."
-        },
-        {
-          "in": "Selesnya Sanctuary",
-          "out": "Mutavault",
-          "why": "A second bounce land: green and white instead of colourless, and another land back in hand for the extra drops. Mutavault is a colourless 2/2 the deck rarely has spare mana to animate."
         }
       ]
     },
@@ -445,5 +434,5 @@
       ]
     }
   ],
-  "recommendation": "Take Land Engine (picked). After the review it cuts only cards that do nothing for either engine, so it keeps every piece that makes Spock enter again — Chief Kyle, Temporal Tribulation, The Guardian of Forever, Balance of Terror and Colossal Clone Master — and adds four land-drop enablers that keep working when Spock is answered. The five extra swaps cost under €2 and tie the two engines together: Far Traveler and Momentary Blink turn Spock's enter trigger into extra lands through Janice Rand, and Starfield Vocalist doubles both. Transporter Room is the stronger Spock-only build at about €9 if you want to push the blink side later; More Worlds is the cheapest and the safest mana base, but it adds no engine."
+  "recommendation": "Take Land Engine (picked). After the review it cuts only cards that do nothing for either engine, so it keeps every piece that makes Spock enter again — Chief Kyle, Temporal Tribulation, The Guardian of Forever, Balance of Terror and Colossal Clone Master — and adds four land-drop enablers that keep working when Spock is answered. The three extra swaps cost about €1.50 and tie the two engines together: Far Traveler and Momentary Blink turn Spock's enter trigger into extra lands through Janice Rand, and Starfield Vocalist doubles both. Transporter Room is the stronger Spock-only build at about €9 if you want to push the blink side later; More Worlds is the cheapest and the safest mana base, but it adds no engine."
 }
