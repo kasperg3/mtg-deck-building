@@ -350,7 +350,7 @@ Count,Name,Set,Deck,Source,Acquired,Notes
 1,Sunpetal Grove,TRC,Landing Party,Landing Party precon,,
 1,Mutavault,TRC,Landing Party,Landing Party precon,,
 1,Lotus Cobra,TRC,Landing Party,Landing Party precon,,
-1,Echo of Eons,TRC,Landing Party,Landing Party precon,,
+1,Echo of Eons,TRC,Loose,Landing Party precon,,
 1,Irrigated Farmland,TRC,Landing Party,Landing Party precon,,
 1,Scattered Groves,TRC,Landing Party,Landing Party precon,,
 1,Austere Command,TRC,Landing Party,Landing Party precon,,
@@ -367,27 +367,27 @@ Count,Name,Set,Deck,Source,Acquired,Notes
 1,"Captain Kirk, Boldly Going",TRC,Landing Party,Landing Party precon,,
 1,Cold-Blooded Crew,TRK,Landing Party,Landing Party precon,,
 1,Syndicate Liquidators,TRK,Landing Party,Landing Party precon,,
-1,"Christine Chapel, Combat Medic",TRC,Landing Party,Landing Party precon,,
+1,"Christine Chapel, Combat Medic",TRC,Loose,Landing Party precon,,
 1,Starship Enterprise,TRC,Landing Party,Landing Party precon,,
-1,Command Chair,TRC,Landing Party,Landing Party precon,,
+1,Command Chair,TRC,Loose,Landing Party precon,,
 1,Starfleet Communicator,TRC,Landing Party,Landing Party precon,,
 1,"Earth, Sector 001",TRK,Landing Party,Landing Party precon,,
 1,Risa,TRK,Landing Party,Landing Party precon,,
 1,Vulcan,TRK,Landing Party,Landing Party precon,,
 1,Shore Leave Planet,TRC,Landing Party,Landing Party precon,,
 1,Temporal Tribulation,TRC,Landing Party,Landing Party precon,,
-1,Merciful Mandate,TRC,Landing Party,Landing Party precon,,
+1,Merciful Mandate,TRC,Loose,Landing Party precon,,
 1,"M'Ress, Crew Coordinator",TRC,Landing Party,Landing Party precon,,
 1,Shuttlecraft Galileo,TRC,Landing Party,Landing Party precon,,
 1,Balance of Terror,TRC,Landing Party,Landing Party precon,,
-1,Tribble Cluster,TRC,Landing Party,Landing Party precon,,
-1,"Sam Kirk, Xenoanthropologist",TRC,Landing Party,Landing Party precon,,
+1,Tribble Cluster,TRC,Loose,Landing Party precon,,
+1,"Sam Kirk, Xenoanthropologist",TRC,Loose,Landing Party precon,,
 1,Lieutenant Nyota Uhura,TRC,Landing Party,Landing Party precon,,
 1,Lieutenant Hikaru Sulu,TRC,Landing Party,Landing Party precon,,
 1,"Janice Rand, Essential Aide",TRC,Landing Party,Landing Party precon,,
 1,Giant Space Amoeba,TRC,Landing Party,Landing Party precon,,
-1,Fleet Captain Christopher Pike,TRC,Landing Party,Landing Party precon,,
-1,Chief Montgomery Scott,TRC,Landing Party,Landing Party precon,,
+1,Fleet Captain Christopher Pike,TRC,Loose,Landing Party precon,,
+1,Chief Montgomery Scott,TRC,Loose,Landing Party precon,,
 1,Colossal Clone Master,TRC,Landing Party,Landing Party precon,,
 1,"Chief Kyle, Transporter Tech",TRC,Landing Party,Landing Party precon,,
 1,"Amanda Grayson, Logic's Link",TRC,Landing Party,Landing Party precon,,
@@ -395,9 +395,19 @@ Count,Name,Set,Deck,Source,Acquired,Notes
 1,"U.S.S. Farragut, Bold Explorer",TRC,Landing Party,Landing Party precon,,
 1,"T'Pring, Never Parted",TRC,Landing Party,Landing Party precon,,
 1,The Guardian of Forever,TRC,Landing Party,Landing Party precon,,
-1,S.S. Botany Bay,TRC,Landing Party,Landing Party precon,,
-1,Planet Killer,TRC,Landing Party,Landing Party precon,,
+1,S.S. Botany Bay,TRC,Loose,Landing Party precon,,
+1,Planet Killer,TRC,Loose,Landing Party precon,,
 1,"Pavel Chekov, First Posting",TRC,Landing Party,Landing Party precon,,
 1,"McCoy, Not a Bricklayer",TRC,Landing Party,Landing Party precon,,
 1,"Lt. Arex, Ever-Adapting",TRC,Landing Party,Landing Party precon,,
 1,Jefferies Tube,TRC,Landing Party,Landing Party precon,,
+1,Swords to Plowshares,,Landing Party,CardTrader,2026-11-09,"for Landing Party (Land Engine), replaces Planet Killer"
+1,Generous Gift,,Landing Party,CardTrader,2026-11-09,"for Landing Party (Land Engine), replaces Command Chair"
+1,Krosan Grip,,Landing Party,CardTrader,2026-11-09,"for Landing Party (Land Engine), replaces Chief Montgomery Scott"
+1,Counterspell,,Landing Party,CardTrader,2026-11-09,"for Landing Party (Land Engine), replaces Echo of Eons"
+1,"Loot, Exuberant Explorer",,Landing Party,CardTrader,2026-11-09,"for Landing Party (Land Engine), replaces Fleet Captain Christopher Pike"
+1,"Azusa, Lost but Seeking",,Landing Party,CardTrader,2026-11-09,"for Landing Party (Land Engine), replaces Tribble Cluster"
+1,Wayward Swordtooth,,Landing Party,CardTrader,2026-11-09,"for Landing Party (Land Engine), replaces Sam Kirk, Xenoanthropologist"
+1,"Mole Man, Moloid Master",,Landing Party,CardTrader,2026-11-09,"for Landing Party (Land Engine), replaces S.S. Botany Bay"
+1,Felidar Retreat,,Landing Party,CardTrader,2026-11-09,"for Landing Party (Land Engine), replaces Merciful Mandate"
+1,Rampaging Baloths,,Landing Party,CardTrader,2026-11-09,"for Landing Party (Land Engine), replaces Christine Chapel, Combat Medic"

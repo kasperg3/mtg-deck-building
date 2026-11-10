@@ -3,7 +3,7 @@
   "deck": "decks/precon/landing-party.md",
   "date": "2026-11-10",
   "budget_eur": 20,
-  "summary": "Commander Spock pays off land names: whenever he enters or attacks he reveals the top card, lets you cast it for free if its mana value is at most the number of differently named lands you control, puts it onto the battlefield if it's a land, and otherwise draws it. The stock list ramps, lands 35 different names and already carries six blink and copy effects that make Spock enter again (Chief Kyle, Temporal Tribulation, The Guardian of Forever, Balance of Terror, Colossal Clone Master, Shore Leave Planet), but it has only three real answers and fires its ten landfall payoffs off a single extra land drop. Each direction buys four shared answers plus one engine of six cards, and keeps the blink pieces the precon built around Spock; only Land Engine trades away Balance of Terror.",
+  "summary": "Commander Spock pays off land names: whenever he enters or attacks he reveals the top card, lets you cast it for free if its mana value is at most the number of differently named lands you control, puts it onto the battlefield if it's a land, and otherwise draws it. The stock list ramps, lands 35 different names and already carries six blink and copy effects that make Spock enter again (Chief Kyle, Temporal Tribulation, The Guardian of Forever, Balance of Terror, Colossal Clone Master, Shore Leave Planet), but it has only three real answers and fires its ten landfall payoffs off a single extra land drop. Each direction buys four shared answers plus one engine of six cards, and every direction keeps the blink pieces the precon built around Spock.",
   "analysis": {
     "notes": [
       "Curve is high: 59 nonland cards besides Spock at an average MV of 3.58, with ten at six mana or more (eight at six, Lt. Arex at seven, Planet Killer at eight).",
@@ -147,8 +147,8 @@
       },
       {
         "in": "Krosan Grip",
-        "out": "Giant Space Amoeba",
-        "why": "Split second kills an artifact or enchantment with no response, which matters against Equipment and Rhystic-style pieces. Giant Space Amoeba is a five-mana 3/3 flier whose attack trigger gives one blocker -3/-0 and copies itself."
+        "out": "Chief Montgomery Scott",
+        "why": "Split second kills an artifact or enchantment with no response, which matters against Equipment and Rhystic-style pieces. Chief Montgomery Scott spends {6} and a tap to put one creature from your hand onto the battlefield. Giant Space Amoeba stays instead: it copies itself every time it attacks, so one flying 3/3 becomes two, then four."
       },
       {
         "in": "Counterspell",
@@ -161,7 +161,7 @@
     {
       "id": "transporter",
       "name": "Transporter Room",
-      "recommended": true,
+      "recommended": false,
       "pitch": "The precon already makes Spock enter again — Chief Kyle, Temporal Tribulation, The Guardian of Forever and Colossal Clone Master — but each needs a land drop, mana or a card. Far Traveler gives him a free blink at every end step after he attacks, Starfield Vocalist makes every enter trigger happen twice, Gilraen and Momentary Blink blink at instant speed (which is also how this build protects him), Penance picks the card he reveals, and Hornet Queen is the free cast that gets better every time it re-enters. It folds if Spock is exiled while you're tapped out, and to effects that stop enter triggers.",
       "plays_like": "Two to four Spock reveals a turn",
       "metrics": {
@@ -244,19 +244,20 @@
     {
       "id": "landfall",
       "name": "Land Engine",
-      "recommended": false,
-      "pitch": "The stock list has the payoffs and almost none of the enablers: ten cards trigger when a land enters and Exploration is the only card that lets you play an extra one. Loot, Azusa and Wayward Swordtooth turn one land drop into three or four, Mole Man replays lands from the graveyard, and Felidar Retreat and Rampaging Baloths are the two payoffs worth adding on top of the ten already there. Colossal Clone Master and Temporal Tribulation stay: the clone copies Azusa without the legend rule, and Tribulation turns two tapped lands into two more landfall triggers.",
-      "plays_like": "Three or four land drops a turn",
+      "recommended": true,
+      "picked": true,
+      "pitch": "The stock list has the payoffs and almost none of the enablers: ten cards trigger when a land enters and Exploration is the only card that lets you play an extra one. Loot, Azusa and Wayward Swordtooth turn one land drop into three or four, Mole Man replays lands from the graveyard, and Felidar Retreat and Rampaging Baloths are the two payoffs worth adding on top of the ten already there. Every blink piece stays, so Spock's enter trigger still works on top: Colossal Clone Master copies Azusa or Spock without the legend rule, Chief Kyle blinks on each of the extra land drops, and Temporal Tribulation and Balance of Terror blink lands or Lt. Arex for more landfall triggers. The last five swaps came after the first ten were bought: Far Traveler and Momentary Blink make Spock (or Lt. Arex) enter again, Starfield Vocalist doubles every landfall and enter trigger, and two bounce lands keep the extra land drops fed.",
+      "plays_like": "Three or four land drops a turn, Spock blinking at every end step",
       "metrics": {
         "Spot removal": 6,
         "Board wipes": 2,
         "Instant-speed answers": 7,
-        "Protection": 4,
+        "Protection": 5,
         "Card draw": 10,
         "Ramp": 13,
-        "Blink & copy effects": 5,
+        "Blink & copy effects": 8,
         "Extra land drops": 4,
-        "Landfall payoffs": 13,
+        "Landfall payoffs": 12,
         "Lands": 40,
         "Different land names": 35,
         "Game Changers": 0
@@ -276,9 +277,22 @@
             "title": "Turns 4–6",
             "points": [
               "With Azusa or Wayward Swordtooth online you are playing two to four lands a turn out of 40; empty your hand of lands before cracking fetches so nothing is stranded.",
+              "Simic Growth Chamber and Selesnya Sanctuary return a land to your hand: with an extra land drop left, replay it the same turn for a second trigger — a cracked fetch or a Temple (scry 1 before Spock's next reveal) is the best one to pick up.",
               "Mole Man, Moloid Master doubles a fetch: play it, then replay the land from the graveyard for a second trigger and a second Moloid.",
               "Colossal Clone Master copying Azusa is two more land drops — the copy isn't legendary, so both stay.",
-              "Tap two lands for mana, then cast Temporal Tribulation on them: they come back at your end step as two more landfall triggers, and flashback does it again."
+              "Tap two lands for mana, then cast Temporal Tribulation on them: they come back at your end step as two more landfall triggers, and flashback does it again.",
+              "Balance of Terror's chapters II and III come before combat, so blink Lt. Arex (three cards and three lands), Sun Titan or a land with them, not Spock."
+            ]
+          },
+          {
+            "title": "Spock's enter trigger",
+            "points": [
+              "Spock is a landfall enabler too: a land he reveals goes onto the battlefield, and Janice Rand puts another one in every time he enters or attacks.",
+              "Far Traveler gives Spock an end-step blink of a tapped creature: after he attacks, blink him for a second reveal and another Janice Rand land, or blink Lt. Arex after he attacks for three more cards and three more lands.",
+              "Before Far Traveler, play your extra lands after combat: Spock attacks first, then Chief Kyle blinks him on the next land and he re-enters at the end step. Once Far Traveler is out, point Kyle at other creatures — a Spock exiled until the end step misses his own end-step blink.",
+              "When Spock enters or attacks with Janice Rand out, let Spock's reveal resolve first: Janice moves the cards above her land to the bottom, so the top card you set up would be gone.",
+              "Starfield Vocalist makes each of those enter triggers, and every landfall trigger, happen twice; warp it for {1}{U} on the turn that matters most.",
+              "Momentary Blink, The Guardian of Forever and Temporal Tribulation blink at instant speed, so hold them for the removal spell aimed at Spock."
             ]
           },
           {
@@ -319,8 +333,33 @@
         },
         {
           "in": "Rampaging Baloths",
-          "out": "Balance of Terror",
-          "why": "A 6/6 trampler that makes a 4/4 on every land drop — four Beasts a round with this shell. Balance of Terror can blink a land on chapters II and III for a delayed landfall trigger, but that is two triggers over two turns, and Generous Gift covers its chapter I answer."
+          "out": "Christine Chapel, Combat Medic",
+          "why": "A 6/6 trampler that makes a 4/4 on every land drop — four Beasts a round with this shell. Christine Chapel is a four-mana 2/2 that only grows when you gain life. Balance of Terror stays: its chapters II and III blink Lt. Arex, Sun Titan or a land for more landfall."
+        },
+        {
+          "in": "Far Traveler",
+          "out": "Lieutenant Nyota Uhura",
+          "why": "Spock gains 'at the beginning of your end step, blink a tapped creature you control': every attack is followed by a second Spock trigger and another land from Janice Rand, for no mana. It's a Background, but in the 99 it is a plain enchantment. Uhura spends {4} and a tap every turn on a random instant or sorcery from an opponent's library."
+        },
+        {
+          "in": "Starfield Vocalist",
+          "out": "Syndicate Liquidators",
+          "why": "Every trigger caused by a permanent entering happens twice: all twelve landfall payoffs, Chief Kyle, Spock's reveal and Janice Rand's land. Doubling the payoffs beats adding one more, and Syndicate Liquidators is a five-mana copy of what Amanda Grayson does for four."
+        },
+        {
+          "in": "Momentary Blink",
+          "out": "McCoy, Not a Bricklayer",
+          "why": "Two instant-speed blinks from one card, from hand and again with flashback: each is a Spock reveal and a Janice Rand land, and each answers a removal spell aimed at him. McCoy is a five-mana 0/4 whose team-wide counter happens once."
+        },
+        {
+          "in": "Simic Growth Chamber",
+          "out": "Reliquary Tower",
+          "why": "Taps for two coloured mana and returns a land to your hand, so Azusa and Loot always have a land to replay for another trigger. Reliquary Tower is colourless and only lifts the hand-size limit."
+        },
+        {
+          "in": "Selesnya Sanctuary",
+          "out": "Mutavault",
+          "why": "A second bounce land: green and white instead of colourless, and another land back in hand for the extra drops. Mutavault is a colourless 2/2 the deck rarely has spare mana to animate."
         }
       ]
     },
@@ -405,5 +444,5 @@
       ]
     }
   ],
-  "recommendation": "Take Transporter Room. The precon already built a blink deck around Spock — Chief Kyle, Temporal Tribulation, The Guardian of Forever, Colossal Clone Master, Janice Rand and Guardian Project are all in it — and six cheap cards finish it: Far Traveler and Starfield Vocalist add triggers every turn for no mana, and the instant-speed blinks double as Spock's protection. It is commander-centric, so Land Engine is the pick if your table kills commanders on sight: it keeps working without him. More Worlds is the cheapest and the safest mana base, but it adds no engine."
+  "recommendation": "Take Land Engine (picked). After the review it cuts only cards that do nothing for either engine, so it keeps every piece that makes Spock enter again — Chief Kyle, Temporal Tribulation, The Guardian of Forever, Balance of Terror and Colossal Clone Master — and adds four land-drop enablers that keep working when Spock is answered. The five extra swaps cost under €2 and tie the two engines together: Far Traveler and Momentary Blink turn Spock's enter trigger into extra lands through Janice Rand, and Starfield Vocalist doubles both. Transporter Room is the stronger Spock-only build at about €9 if you want to push the blink side later; More Worlds is the cheapest and the safest mana base, but it adds no engine."
 }
