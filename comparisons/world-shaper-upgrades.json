@@ -14,9 +14,34 @@
       "Mana base: Wastes is a colourless basic in a three-colour deck and should go.",
       "Commander check: the card search flags that Hearthhull has no 'can be your commander' text (it's an artifact, not a creature). It is the precon's face commander, so check with your playgroup. Szarel, Genesis Shepherd (already in the deck) can legally be your commander.",
       "Engine ledger — enablers: Zuran Orb (free), Hearthhull's own 2+ ability and Lotus Field sacrifice lands; Ramunap Excavator and Conduit of Worlds replay them from the graveyard; payoffs: Sabotender, Tannuk, Retreat to Hagra and Ob Nixilis drain on every land that enters, and Hearthhull's 8+ clause adds two more per sacrifice. Support: Tamiyo's Safekeeping and Snakeskin Veil protect the pieces, Countryside Crusher fills the graveyard with lands to replay. This is the most coherent of the three decks — every card references another.",
-      "Timing note: the drain only starts once Hearthhull is stationed to eight charge counters, which is a turn five-plus payoff. Before that the plan is the 2+ ability (sacrifice a land, draw two, play an extra land), so the early game is card advantage rather than damage."
+      "Timing note: the drain only starts once Hearthhull is stationed to eight charge counters, which is a turn five-plus payoff. Before that the plan is the 2+ ability (sacrifice a land, draw two, play an extra land), so the early game is card advantage rather than damage.",
+      "Win conditions (finishers in the 99, counted by the deck-comparison skill's rule): big threats — Baloth Prime, Multani, Yavimaya's Avatar, Korvold, Fae-Cursed King, God-Eternal Bontu, Soul of Windgrace, Uurg, Spawn of Turg, World Breaker, Formless Genesis; armies and extra combats — Rampaging Baloths, Omnath, Locus of Rage, Titania, Protector of Argoth, Moraug, Fury of Akoum, Mazirek, Kraul Death Priest, Scouring Swarm; drain and burn — Mayhem Devil, Braids, Arisen Nightmare, Worldsoul's Rage."
     ],
     "interaction": [
+      {
+        "category": "Win conditions",
+        "stock": 17,
+        "target": "5–8, across 2+ routes",
+        "cards": [
+          "Braids, Arisen Nightmare",
+          "Mayhem Devil",
+          "Scouring Swarm",
+          "Uurg, Spawn of Turg",
+          "Baloth Prime",
+          "Soul of Windgrace",
+          "God-Eternal Bontu",
+          "Korvold, Fae-Cursed King",
+          "Mazirek, Kraul Death Priest",
+          "Titania, Protector of Argoth",
+          "Moraug, Fury of Akoum",
+          "Multani, Yavimaya's Avatar",
+          "Rampaging Baloths",
+          "Omnath, Locus of Rage",
+          "World Breaker",
+          "Worldsoul's Rage",
+          "Formless Genesis"
+        ]
+      },
       {
         "category": "Spot removal",
         "stock": 10,
@@ -106,6 +131,7 @@
       }
     ],
     "stock_metrics": {
+      "Win conditions": 17,
       "Lands": 42,
       "Ramp pieces": "~15",
       "Protection": 0,
@@ -145,6 +171,7 @@
       "pitch": "Sacrifice lands every turn and replay them from the graveyard. Landfall pingers (Tannuk, Sabotender, Hagra, Ob Nixilis) deal damage from turn 2; once Hearthhull is stationed to 8, each sacrificed land also drains 2, and Planetary Annihilation becomes a finisher. Juri, Countryside Crusher and Ob Nixilis grow with every land played or sacrificed, so they station Hearthhull quickly.",
       "plays_like": "Burns the table out with land sacrifices",
       "metrics": {
+        "Win conditions": 20,
         "Lands": 41,
         "Ramp pieces": "~13",
         "Protection": 2,
@@ -255,6 +282,7 @@
       "pitch": "Turn the deck's extra land drops into creature tokens, mana and damage. Hearthhull's extra land plays and the sacrifice-and-replay loop trigger landfall several times a turn.",
       "plays_like": "Wide board of tokens; explosive turns",
       "metrics": {
+        "Win conditions": 18,
         "Lands": 41,
         "Ramp pieces": "~13 (+Treasure)",
         "Protection": 2,
@@ -329,6 +357,7 @@
       "pitch": "Treat your graveyard as a second hand of lands. Loop Life from the Loam, replay lands with Crucible effects, and draw cards off discarded lands. This direction grinds out the longest games.",
       "plays_like": "Grindy value; never runs out of cards",
       "metrics": {
+        "Win conditions": 13,
         "Lands": 41,
         "Ramp pieces": "~13",
         "Protection": 2,
@@ -395,7 +424,8 @@
             ]
           }
         ]
-      }
+      },
+      "win_conditions_note": "Trades Moraug, Bontu, Rampaging Baloths and World Breaker for land recursion; it still wins through Hearthhull's drain, Braids, Mayhem Devil and 13 finishers, well above the 5–8 target."
     }
   ],
   "recommendation": "Scorched Earth Drain uses Hearthhull best: the landfall pingers deal damage from turn 2, and once Hearthhull is stationed to 8 every sacrifice and replay is another 2-point drain. All three directions stay under €20 including the core package."

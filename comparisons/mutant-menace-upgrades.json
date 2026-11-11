@@ -11,9 +11,28 @@
       "Mana is fine: 39 lands + ~8 ramp. Many lands enter tapped (Temples, Opulent Palace, Tainted lands); improving them is a separate project.",
       "Biggest weakness: only 5 spot removal and just 2 instant-speed answers.",
       "Engine ledger — enablers: Ruin Crab, Mindcrank and the rad counters Mothman hands out all mill; payoffs: Mothman turns each nonland mill into +1/+1 counters, Kami of Whispered Hopes adds one to each, Evolution Sage proliferates on landfall and Evolution Witness buys permanents back. Support: the four removal instants. The mill half is genuinely self-feeding — rad's life loss feeds Mindcrank, which mills again.",
-      "The throttled half: Ruin Crab and Evolution Sage are landfall triggers and the deck plays exactly zero extra land drops, so each fires once a turn. Two extra-drop enablers (Loot, Exuberant Explorer €1.47 and Oracle of Mul Daya €2.58) would roughly double both cards for about €4 — the only purchase worth making in this deck."
+      "The throttled half: Ruin Crab and Evolution Sage are landfall triggers and the deck plays exactly zero extra land drops, so each fires once a turn. Two extra-drop enablers (Loot, Exuberant Explorer €1.47 and Oracle of Mul Daya €2.58) would roughly double both cards for about €4 — the only purchase worth making in this deck.",
+      "Win conditions (finishers in the 99, counted by the deck-comparison skill's rule): big threats — Alpha Deathclaw, Screeching Scorchbeast, Strong, the Brutish Thespian, Agent Frank Horrigan, Lumbering Megasloth, Lily Bowen, Raging Grandma, Bloatfly Swarm, Rampaging Yao Guai; team closers — Biomass Mutation, Vault 12: The Necropolis; mill — Fraying Sanity."
     ],
     "interaction": [
+      {
+        "category": "Win conditions",
+        "stock": 11,
+        "target": "5–8, across 2+ routes",
+        "cards": [
+          "Rampaging Yao Guai",
+          "Bloatfly Swarm",
+          "Lily Bowen, Raging Grandma",
+          "Alpha Deathclaw",
+          "Screeching Scorchbeast",
+          "Strong, the Brutish Thespian",
+          "Agent Frank Horrigan",
+          "Lumbering Megasloth",
+          "Biomass Mutation",
+          "Fraying Sanity",
+          "Vault 12: The Necropolis"
+        ]
+      },
       {
         "category": "Spot removal",
         "stock": 5,
@@ -86,6 +105,7 @@
       }
     ],
     "stock_metrics": {
+      "Win conditions": 11,
       "Spot removal": 5,
       "Instant-speed answers": 2,
       "Card draw": "~9",
@@ -130,6 +150,7 @@
       "pitch": "Mill every opponent every turn and turn each mill into +1/+1 counters. Ruin Crab and Mindcrank make rad counters and combat damage mill again; Kami and Evolution Sage grow everything further; Evolution Witness and Struggle for Project Purity keep the cards coming; Radstorm stays as a proliferate finisher.",
       "plays_like": "Big creatures attacking; draws lots of cards",
       "metrics": {
+        "Win conditions": 11,
         "Spot removal": 9,
         "Instant-speed answers": 6,
         "Card draw": "good (Evolution Witness, Mirelurk Queen, Marcus)",
@@ -244,6 +265,7 @@
       "pitch": "Empty opponents' libraries while their rad counters drain their life. Mothman's counters give you a combat plan as backup.",
       "plays_like": "Quiet early, then decks the table",
       "metrics": {
+        "Win conditions": 13,
         "Spot removal": 9,
         "Instant-speed answers": 6,
         "Card draw": "good (draws trigger mill)",
@@ -313,6 +335,7 @@
       "pitch": "Mill yourself on purpose, then replay what's in your graveyard. Your own mill still gives Mothman counters, and you can get back removal you've already used.",
       "plays_like": "Grinds out long games; hard to stop",
       "metrics": {
+        "Win conditions": 7,
         "Spot removal": "9 (recurrable)",
         "Instant-speed answers": 6,
         "Card draw": "good",
@@ -373,7 +396,8 @@
             ]
           }
         ]
-      }
+      },
+      "win_conditions_note": "Cuts Fraying Sanity and Agent Frank Horrigan for recursion; Muldrotha replays the remaining threats from the graveyard, but that is fewer finishers than stock. Add one back if you pick it."
     }
   ],
   "recommendation": "Counter Engine fits Mothman best: every mill trigger already gives counters, and these cards make each counter worth more. The removal package covers the deck's biggest weakness in every direction. All three directions stay under €20."

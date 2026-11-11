@@ -11,9 +11,23 @@
       "Protection is solid (5 pieces) and ramp is on target (~10 with 37 lands).",
       "Weak spots: a few random or defensive cards (Summon: Magus Sisters, Lulu, Gatta and Luzzu, Promise of Loyalty), and too few cheap evasive creatures to set off Tidus's Cheer every turn.",
       "Bracket: Farewell is a Game Changer, so the stock deck is bracket 3. Swap it for a non-Game Changer wipe if your table plays bracket 2.",
-      "Engine ledger — enablers: Luminarch Aspirant (a counter in every combat), Conclave Mentor and Kami of Whispered Hopes (each counter arrives one larger, so every proliferate is worth two), Herald of Secret Streams and Silent Hallcreeper (get the counters through blockers), Karn's Bastion, Thrummingbird and Tekuthal (proliferate, doubled). Payoff: Cheer itself, once per turn. Support: Feat of Resistance and Kutzil, Malamet Exemplar (opponents cannot cast on your turn). Both columns are stocked — the weakest slots are Ray Fillet, which does nothing for counters, and the redundancy between Herald and Tekuthal at four mana."
+      "Engine ledger — enablers: Luminarch Aspirant (a counter in every combat), Conclave Mentor and Kami of Whispered Hopes (each counter arrives one larger, so every proliferate is worth two), Herald of Secret Streams and Silent Hallcreeper (get the counters through blockers), Karn's Bastion, Thrummingbird and Tekuthal (proliferate, doubled). Payoff: Cheer itself, once per turn. Support: Feat of Resistance and Kutzil, Malamet Exemplar (opponents cannot cast on your turn). Both columns are stocked — the weakest slots are Ray Fillet, which does nothing for counters, and the redundancy between Herald and Tekuthal at four mana.",
+      "Win conditions (finishers in the 99, counted by the deck-comparison skill's rule): big threats — Sin, Unending Cataclysm, Sunscorch Regent, Forgotten Ancient; team closers — Chocobo Knights, Wakka, Devoted Guardian; direct damage — Walking Ballista."
     ],
     "interaction": [
+      {
+        "category": "Win conditions",
+        "stock": 6,
+        "target": "5–8, across 2+ routes",
+        "cards": [
+          "Walking Ballista",
+          "Chocobo Knights",
+          "Forgotten Ancient",
+          "Wakka, Devoted Guardian",
+          "Sunscorch Regent",
+          "Sin, Unending Cataclysm"
+        ]
+      },
       {
         "category": "Spot removal",
         "stock": 10,
@@ -101,6 +115,7 @@
       }
     ],
     "stock_metrics": {
+      "Win conditions": 6,
       "Evasive counter creatures": 4,
       "Proliferate sources": 4,
       "Board wipes": 3,
@@ -120,6 +135,7 @@
       "pitch": "Make Tidus's Cheer fire every turn: cheap evasive creatures, counters at the start of each combat, and unblockability for anything with a counter. Tekuthal doubles each Cheer's proliferate, and Kutzil stops opponents from responding while you attack.",
       "plays_like": "Fast, evasive pressure; draws every turn",
       "metrics": {
+        "Win conditions": 5,
         "Evasive counter creatures": "10+",
         "Proliferate sources": "5 (×2 with Tekuthal)",
         "Board wipes": 2,
@@ -242,7 +258,8 @@
             ]
           }
         ]
-      }
+      },
+      "win_conditions_note": "Cuts Sin and Forgotten Ancient for cheap evasive creatures and adds only Herald of Secret Streams, so it closes through Herald, Chocobo Knights and Wakka. The deck brought Forgotten Ancient back on 2026-11-11 (for Summoner's Sending), so decks/counter-blitz.md has 6."
     },
     {
       "id": "proliferate",
@@ -250,6 +267,7 @@
       "pitch": "Every proliferate adds +1/+1, shield and lore counters together, and draws cards. Tidus's Cheer becomes one engine among many.",
       "plays_like": "Value engine; grows everything at once",
       "metrics": {
+        "Win conditions": 5,
         "Evasive counter creatures": 5,
         "Proliferate sources": "11+",
         "Board wipes": 2,
@@ -332,7 +350,8 @@
             ]
           }
         ]
-      }
+      },
+      "win_conditions_note": "Cuts Sin for proliferate payoffs; it closes through Chocobo Knights, Wakka and Sunscorch Regent. Add a finisher back if you pick it."
     },
     {
       "id": "tall",
@@ -340,6 +359,7 @@
       "pitch": "Double your counters and attack with a few huge creatures. Tidus moves the counters to the creature that can connect, and Herald of Secret Streams makes them unblockable.",
       "plays_like": "A few enormous threats; ends games fast",
       "metrics": {
+        "Win conditions": 10,
         "Evasive counter creatures": 5,
         "Proliferate sources": 4,
         "Board wipes": 2,

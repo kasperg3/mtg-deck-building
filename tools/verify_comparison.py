@@ -13,7 +13,8 @@ Checks, per direction, with the core package applied first:
   * recomputes the metrics that can be derived from rules text and flags drift:
     Lands, Different land names, Extra land drops, Landfall payoffs
   * win conditions: a direction may not end with fewer than stock (the hand-counted
-    "Win conditions" metric); warns when the spec doesn't count them at all
+    "Win conditions" metric) unless it sets "win_conditions_note" saying why;
+    warns when the spec doesn't count them at all
 
 Rules text comes from one Scryfall /cards/collection call (<=75 names) and is
 cached in .cache/oracle.json, so repeat runs are offline. --offline uses only
@@ -182,9 +183,12 @@ def main():
         if stock_wins is not None:
             if wins is None:
                 fails.append(f"{d['name']}: no '{WIN_KEY}' metric")
-            elif wins < stock_wins:
+            elif wins < stock_wins and not d.get("win_conditions_note"):
                 fails.append(f"{d['name']}: {WIN_KEY} drop from {stock_wins} to {wins}; "
-                             "add a finisher back or cut a different card")
+                             "add a finisher back, cut a different card, or explain it "
+                             "in \"win_conditions_note\"")
+            elif wins < stock_wins:
+                warns.append(f"{d['name']}: {WIN_KEY} {stock_wins} -> {wins} (explained in win_conditions_note)")
 
     print()
     print(f"=== {len(fails)} problem(s) ===")
