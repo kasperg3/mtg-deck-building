@@ -11,7 +11,7 @@
 ## Commander (1)
 1 Tidus, Yuna's Guardian
 
-## Creatures (35)
+## Creatures (36)
 1 Walking Ballista
 1 Conclave Mentor
 1 Duskshell Crawler
@@ -47,6 +47,7 @@
 1 Yuna, Grand Summoner
 1 Summon: Valefor
 1 Sunscorch Regent
+1 Forgotten Ancient
 
 ## Instants (9)
 1 An Offer You Can't Refuse
@@ -72,10 +73,9 @@
 1 Sol Ring
 1 Arcane Signet
 
-## Enchantments (9)
+## Enchantments (8)
 1 Hardened Scales
 1 Sphere Grid
-1 Summoner's Sending
 1 Together Forever
 1 Bred for the Hunt
 1 Fight Rigging
@@ -133,3 +133,4 @@
   - +Adarkar Wastes / −Skycloud Expanse
   - +Karn's Bastion / −Temple of the False God
 - 2026-11-11 — +Loading Zone / −Bane of Progress (Loading Zone from the Bulk pile; Bane of Progress destroyed the deck's own enchantments, sagas and mana rocks).
+- 2026-11-11 — +Forgotten Ancient / −Summoner's Sending (back from the precon: grows on every spell and hands its counters out each upkeep, feeding Herald of Secret Streams and Chocobo Knights; in ~70% of Tidus decks on EDHREC).
