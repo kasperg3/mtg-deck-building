@@ -268,7 +268,7 @@
     h += `<section class="dir" id="${slug(d.id || d.name)}"><div class="dir-head">
       <h2 style="margin:0">${esc(d.name)}${d.picked ? `<span class="pill picked">✓ picked</span>` : ""}${d.recommended ? `<span class="pill rec">★ recommended</span>` : ""}</h2>
       <div class="totals">Direction swaps + core: <b>${both(d.cost_usd, d.cost_eur)}</b> · avg MV ${d.curve.average}</div></div>
-      ${d.pitch ? `<p class="muted">${esc(d.pitch)}</p>` : ""}${buyHTML(d)}${htpHTML(d)}${swapsHTML(d.swaps)}</section>`;
+      ${d.pitch ? `<p class="muted">${esc(d.pitch)}</p>` : ""}${d.win_conditions_note ? `<p class="small"><b>Win conditions:</b> ${esc(d.win_conditions_note)}</p>` : ""}${buyHTML(d)}${htpHTML(d)}${swapsHTML(d.swaps)}</section>`;
   }
 
   h += `<footer>Card images and prices via <a href="https://scryfall.com" target="_blank" rel="noopener">Scryfall</a>. Generated ${esc(D.generated)}. Rebuild with <code>python3 tools/build_comparison.py &lt;spec&gt;.json</code>.</footer>`;

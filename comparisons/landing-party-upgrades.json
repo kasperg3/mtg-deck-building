@@ -14,9 +14,26 @@
       "The landfall shell is lopsided: ten cards pay off a land entering (Lotus Cobra, Scute Swarm, Tireless Tracker, Amanda Grayson, Chief Kyle, M'Ress, Syndicate Liquidators, Galileo, Enterprise, Farragut) and only Exploration adds a land drop, so those ten fire once a turn. The multiplier the list is missing is land drops, not more payoffs.",
       "Spock triggers on entering as well as attacking, and the attack trigger happens before blockers, so he does not need to connect. The precon already blinks him: Chief Kyle on landfall, Temporal Tribulation and The Guardian of Forever at instant speed (which also protects him), Balance of Terror on chapters II and III, and Colossal Clone Master enters as a non-legendary second Spock whose power is your land-name count. Janice Rand and Guardian Project pay off each re-entry, and Brainstorm, Ponder and Augur of Autumn set or show the top card. What the list lacks is a blink that needs no land drop, mana or card.",
       "Balance of Terror's chapters trigger before combat, so blinking Spock with it trades that turn's attack trigger for an end-step enter trigger. It's a real gain on Lt. Arex, Hornet Queen, T'Pring or a land, not on Spock himself.",
-      "Interaction and engine are separate problems, so they are costed separately here: the shared four fix removal in every direction, and the six direction cards are spent on one engine rather than six unrelated upgrades."
+      "Interaction and engine are separate problems, so they are costed separately here: the shared four fix removal in every direction, and the six direction cards are spent on one engine rather than six unrelated upgrades.",
+      "Win conditions (finishers in the 99, counted by the deck-comparison skill's rule): big threats — Planet Killer, Lt. Arex, Ever-Adapting, Colossal Clone Master, U.S.S. Defiant, Mirror Migrant, Syndicate Liquidators; armies and team evasion — Shuttlecraft Galileo, Scute Swarm, M'Ress, Crew Coordinator, Giant Space Amoeba."
     ],
     "interaction": [
+      {
+        "category": "Win conditions",
+        "stock": 9,
+        "target": "5–8, across 2+ routes",
+        "cards": [
+          "Scute Swarm",
+          "Giant Space Amoeba",
+          "M'Ress, Crew Coordinator",
+          "Syndicate Liquidators",
+          "Colossal Clone Master",
+          "Lt. Arex, Ever-Adapting",
+          "Planet Killer",
+          "U.S.S. Defiant, Mirror Migrant",
+          "Shuttlecraft Galileo"
+        ]
+      },
       {
         "category": "Spot removal",
         "stock": 3,
@@ -117,6 +134,7 @@
       }
     ],
     "stock_metrics": {
+      "Win conditions": 9,
       "Spot removal": 3,
       "Board wipes": 2,
       "Instant-speed answers": 3,
@@ -165,6 +183,7 @@
       "pitch": "The precon already makes Spock enter again — Chief Kyle, Temporal Tribulation, The Guardian of Forever and Colossal Clone Master — but each needs a land drop, mana or a card. Far Traveler gives him a free blink at every end step after he attacks, Starfield Vocalist makes every enter trigger happen twice, Gilraen and Momentary Blink blink at instant speed (which is also how this build protects him), Penance picks the card he reveals, and Hornet Queen is the free cast that gets better every time it re-enters. It folds if Spock is exiled while you're tapped out, and to effects that stop enter triggers.",
       "plays_like": "Two to four Spock reveals a turn",
       "metrics": {
+        "Win conditions": 7,
         "Spot removal": 6,
         "Board wipes": 2,
         "Instant-speed answers": 7,
@@ -239,7 +258,8 @@
           "out": "Scute Swarm",
           "why": "Free off Spock's trigger at seven land names, and every blink after that makes four more flying deathtouch Insects — eight with Starfield Vocalist. Scute Swarm only pays off land drops, which this direction doesn't add."
         }
-      ]
+      ],
+      "win_conditions_note": "The core trades Planet Killer and Giant Space Amoeba for interaction and this direction swaps Scute Swarm for Hornet Queen, leaving 7: within the 5–8 target."
     },
     {
       "id": "landfall",
@@ -249,6 +269,7 @@
       "pitch": "The stock list has the payoffs and almost none of the enablers: ten cards trigger when a land enters and Exploration is the only card that lets you play an extra one. Loot, Azusa and Wayward Swordtooth turn one land drop into three or four, Mole Man replays lands from the graveyard, and Felidar Retreat and Rampaging Baloths are the two payoffs worth adding on top of the ten already there. Every blink piece stays, so Spock's enter trigger still works on top: Colossal Clone Master copies Azusa or Spock without the legend rule, Chief Kyle blinks on each of the extra land drops, and Temporal Tribulation and Balance of Terror blink lands or Lt. Arex for more landfall triggers. The last three swaps came after the first ten were bought: Far Traveler and Momentary Blink make Spock (or Lt. Arex) enter again, and Starfield Vocalist doubles every landfall and enter trigger.",
       "plays_like": "Three or four land drops a turn, Spock blinking at every end step",
       "metrics": {
+        "Win conditions": 8,
         "Spot removal": 6,
         "Board wipes": 2,
         "Instant-speed answers": 7,
@@ -351,7 +372,8 @@
           "out": "McCoy, Not a Bricklayer",
           "why": "Two instant-speed blinks from one card, from hand and again with flashback: each is a Spock reveal and a Janice Rand land, and each answers a removal spell aimed at him. McCoy is a five-mana 0/4 whose team-wide counter happens once."
         }
-      ]
+      ],
+      "win_conditions_note": "The core trades Planet Killer and Giant Space Amoeba for interaction; Felidar Retreat and Rampaging Baloths turn land drops into an army instead. The deck kept Syndicate Liquidators, so decks/landing-party.md has 9."
     },
     {
       "id": "worlds",
@@ -360,6 +382,7 @@
       "pitch": "Push the resource Spock actually counts: 43 lands and 38 different names, cutting the three colourless lands that were doing nothing in a three-colour deck. Shore Leave Planet stays, because for {4}{U} it attacks as a second Spock. Cheapest direction and the most direct upgrade to the commander, but it adds no engine.",
       "plays_like": "43 lands, 38 names",
       "metrics": {
+        "Win conditions": 7,
         "Spot removal": 6,
         "Board wipes": 2,
         "Instant-speed answers": 7,
@@ -431,7 +454,8 @@
           "out": "Sam Kirk, Xenoanthropologist",
           "why": "Green-white fixing and a new name for a 3/3 that only investigates when an opponent casts a creature spell."
         }
-      ]
+      ],
+      "win_conditions_note": "Only lands and cheap utility change after the core trades Planet Killer and Giant Space Amoeba for interaction, leaving 7: within the 5–8 target."
     }
   ],
   "recommendation": "Take Land Engine (picked). After the review it cuts only cards that do nothing for either engine, so it keeps every piece that makes Spock enter again — Chief Kyle, Temporal Tribulation, The Guardian of Forever, Balance of Terror and Colossal Clone Master — and adds four land-drop enablers that keep working when Spock is answered. The three extra swaps cost about €1.50 and tie the two engines together: Far Traveler and Momentary Blink turn Spock's enter trigger into extra lands through Janice Rand, and Starfield Vocalist doubles both. Transporter Room is the stronger Spock-only build at about €9 if you want to push the blink side later; More Worlds is the cheapest and the safest mana base, but it adds no engine."

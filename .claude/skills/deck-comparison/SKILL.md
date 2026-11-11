@@ -44,10 +44,35 @@ It took a later review to bring Forgotten Ancient back. Rules:
 
 1. **Count finishers in the stock list and in every direction.** Target
    **5–8 finishers across at least 2 routes** (see the analysis table). A
-   direction may not end with fewer finishers than stock unless its `pitch`
-   says why (e.g. a stronger single route replaces two weak ones). Record the
-   count as the `Win conditions` metric; `verify_comparison.py` fails when a
-   direction drops below stock.
+   direction may not end with fewer finishers than stock unless its
+   `win_conditions_note` says why (e.g. a stronger single route replaces two
+   weak ones, or the core package trades a finisher for interaction). Record
+   the count as the `Win conditions` metric; `verify_comparison.py` fails when
+   a direction drops below stock without that note.
+
+   **What counts as a finisher** — use this rule so counts are comparable
+   between decks. Count nonland cards in the 99 (not the commander) that can
+   end a game on their own:
+   - **Threat:** a creature with 5+ power, or one that grows there by itself
+     (Lily Bowen, Managorger Hydra, Forgotten Ancient), that also has evasion
+     (flying, trample, menace, can't be blocked) or is hard to answer
+     (indestructible, ward, returns when it dies). Any creature with 7+ power
+     counts regardless. Self-sacrificing Saga creatures (Summon: Magus
+     Sisters) don't count.
+   - **Team closer:** team-wide evasion or double strike (Herald of Secret
+     Streams, Chocobo Knights, Shuttlecraft Galileo), repeated team pumps
+     (Wakka, Mazirek, Felidar Retreat), extra combats (Moraug), a scaling
+     one-shot team pump (Biomass Mutation, Fangs of Kalonia overloaded), or an
+     army maker that makes two or more bodies, or a 4+ power body, per trigger
+     (Rampaging Baloths, M'Ress, Scute Swarm). One 1/1 per trigger doesn't count.
+   - **Drain or burn:** repeatable damage or life loss to each opponent
+     (Sabotender, Mayhem Devil, Braids) or scaling X damage (Worldsoul's
+     Rage, Walking Ballista).
+   - **Mill:** a repeatable mill engine, in a deck whose plan mills.
+   Support that only makes another card a finisher (a counter doubler, a
+   single-target pump, one-creature evasion like Rikku) doesn't count. List
+   the finishers in the analysis note and the `Win conditions` interaction row
+   so the count can be checked.
 2. **A cut finisher needs a replacement finisher.** If a card going out is in
    the Finishers column, the same direction must add a finisher, or the count
    must stay at target. "It's slow" or "it's expensive" is not enough on its own
@@ -354,6 +379,7 @@ For a new comparison on an already-upgraded deck, point the spec's `deck` at
       "pitch": "One or two sentences on the plan.",
       "plays_like": "Short phrase for the comparison table",
       "metrics": {"Win conditions": 6, "Spot removal": 9, "Game Changers": 0},   // same keys as stock_metrics
+      "win_conditions_note": "Only when Win conditions drops below stock: why that is acceptable.",
       "how_to_play": {                        // collapsible guide under the direction (open when picked)
         "summary": "One line: how this version wins, naming the finishers.",
         "sections": [{"title": "Turns 1–3", "points": ["Short, concrete play tips naming the deck's cards"]}]
