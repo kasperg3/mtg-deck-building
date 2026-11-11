@@ -12,6 +12,8 @@ Checks, per direction, with the core package applied first:
   * budget_eur against the cards coming in
   * recomputes the metrics that can be derived from rules text and flags drift:
     Lands, Different land names, Extra land drops, Landfall payoffs
+  * win conditions: a direction may not end with fewer than stock (the hand-counted
+    "Win conditions" metric); warns when the spec doesn't count them at all
 
 Rules text comes from one Scryfall /cards/collection call (<=75 names) and is
 cached in .cache/oracle.json, so repeat runs are offline. --offline uses only
@@ -33,6 +35,9 @@ from build_comparison import key, parse_deck  # noqa: E402
 CACHE = ROOT / ".cache" / "oracle.json"
 UA = {"User-Agent": "mtg-deck-building/1.0", "Accept": "application/json",
       "Content-Type": "application/json"}
+
+# Hand-counted finishers; a direction may not end below the stock count.
+WIN_KEY = "Win conditions"
 
 # Metrics derived from rules text: key -> predicate over the lowercased text.
 TEXT_METRICS = {
@@ -138,6 +143,9 @@ def main():
     for k in ("Lands", "Different land names", *TEXT_METRICS, "Game Changers"):
         if k in sm and sm[k] != base[k]:
             fails.append(f"stock_metrics['{k}'] = {sm[k]}, rules text says {base[k]}")
+    stock_wins = sm.get(WIN_KEY)
+    if stock_wins is None:
+        warns.append(f"stock_metrics has no '{WIN_KEY}': count the finishers (see the skill)")
 
     print()
     for d in spec["directions"]:
@@ -170,6 +178,13 @@ def main():
                 fails.append(f"{d['name']}: metric '{k}' = {v}, rules text says {m[k]}")
         if gc:
             warns.append(f"{d['name']} adds Game Changers: {', '.join(sorted(set(gc)))}")
+        wins = d.get("metrics", {}).get(WIN_KEY)
+        if stock_wins is not None:
+            if wins is None:
+                fails.append(f"{d['name']}: no '{WIN_KEY}' metric")
+            elif wins < stock_wins:
+                fails.append(f"{d['name']}: {WIN_KEY} drop from {stock_wins} to {wins}; "
+                             "add a finisher back or cut a different card")
 
     print()
     print(f"=== {len(fails)} problem(s) ===")
