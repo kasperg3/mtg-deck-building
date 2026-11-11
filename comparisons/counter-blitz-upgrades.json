@@ -2,7 +2,7 @@
   "title": "Counter Blitz — Upgrade Options",
   "deck": "decks/precon/counter-blitz.md",
   "date": "2026-10-16",
-  "budget_eur": 20,
+  "budget_eur": 21,
   "summary": "Tidus moves a counter between your creatures each combat, and when creatures with counters deal combat damage to a player you draw a card and proliferate (once a turn). The stock list is already well balanced, so no shared package is needed. Each direction spends all 10 swaps on a sharper plan, cutting the same weak, random or off-plan cards. Budget: up to €20 per deck in total (Cardmarket prices).",
   "analysis": {
     "notes": [
@@ -424,5 +424,5 @@
       }
     }
   ],
-  "recommendation": "Cheer Every Turn fixes the deck's one real weakness, which is how reliably Cheer fires. It's also cheap and lowers the curve. Go Tall Hydras hits harder but leans on a few big creatures that are easier to answer. All three stay under €20."
+  "recommendation": "Cheer Every Turn fixes the deck's one real weakness, which is how reliably Cheer fires. It's also cheap and lowers the curve. Go Tall Hydras hits harder but leans on a few big creatures that are easier to answer. All three stay around €20."
 }
