@@ -422,6 +422,8 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--out", default="_site")
     ap.add_argument("--cname", default="mtg.grontved.xyz")
+    ap.add_argument("--max-age-days", type=float, default=7,
+                    help="re-download Scryfall bulk data older than this (default 7)")
     args = ap.parse_args()
     out = ROOT / args.out
     if out.exists():
@@ -434,7 +436,7 @@ def main():
         (out / "CNAME").write_text(args.cname + "\n")
     (out / ".nojekyll").write_text("")
 
-    cards = load_index(refresh=False, max_age_days=7)
+    cards = load_index(refresh=False, max_age_days=args.max_age_days)
     global PRICES_AS_OF
     PRICES_AS_OF = (cards.get("bulk_updated") or "")[:10]
     cards = cards["cards"]
