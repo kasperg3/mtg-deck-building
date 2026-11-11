@@ -34,7 +34,7 @@ jobs:
           path: .cache
           key: scryfall-${{ steps.week.outputs.week }}
       - name: Build site
-        run: python3 tools/build_site.py --out _site
+        run: python3 tools/build_site.py --out _site --max-age-days 2
       - uses: actions/upload-pages-artifact@v3
         with:
           path: _site
