@@ -1,6 +1,6 @@
 ---
 name: deck-comparison
-description: Analyse one of the user's decks (mana curve, removal and other interaction, card draw, ramp) and propose upgrade directions as card swaps, rendered as a reusable HTML comparison page with Scryfall card images and prices. Use when the user asks to upgrade, improve, compare directions for, or find swaps for a deck in decks/.
+description: Analyse one of the user's decks (mana curve, win conditions, removal and other interaction, card draw, ramp) and propose upgrade directions as card swaps, rendered as a reusable HTML comparison page with Scryfall card images and prices. Use when the user asks to upgrade, improve, compare directions for, or find swaps for a deck in decks/.
 ---
 
 # Deck upgrade comparison
@@ -9,13 +9,17 @@ Produces `comparisons/<deck>-upgrades.json` (the spec, written by you) and
 `comparisons/<deck>-upgrades.html` (generated, self-contained viewer). The page
 shows card faces for every swap instead of rules text, so keep prose short.
 
-## Every direction is an engine, not a list of swaps
+## Every direction is a plan: an engine *and* a way to win
 
 Ten defensible one-for-ones can still be a bad deck. Judge a direction by what
 it does once all ten cards are on the table, not by whether each cut is fair.
+An engine produces advantage; it doesn't end the game. A direction that only
+makes the engine run better can still lose to a deck that just has bigger
+threats, so judge every direction on both: does the engine run, and how does
+the game end?
 
 Keep a ledger for the stock list **before** choosing cards, and again after the
-swaps. Every direction needs all three columns:
+swaps. Every direction needs all four columns:
 
 - **Enablers** — cards that make the engine fire: extra land drops for a
   landfall deck, sacrifice outlets for a death-trigger deck, top-deck control
@@ -23,6 +27,42 @@ swaps. Every direction needs all three columns:
 - **Payoffs** — cards that convert those triggers into advantage.
 - **Support** — what keeps the engine alive: protection, evasion, card
   selection, graveyard hate for your own plan.
+- **Finishers (win conditions)** — cards that turn the advantage into a won
+  game: big or evasive threats that can kill on their own, team-wide pumps or
+  evasion granters (Herald of Secret Streams, Chocobo Knights, Felidar
+  Retreat), drain and burn that scales (Hearthhull, Ob Nixilis, the Fallen),
+  and alternative routes such as mill or rad counters. Group them into
+  **routes** (combat, drain, mill, …).
+
+### Win conditions are a column, not an afterthought
+
+Counter Blitz's Cheer Every Turn upgrade fixed the engine (Cheer fired every
+turn) but cut Sin, Summon: Magus Sisters and Forgotten Ancient for cheap
+evasive 1/1s. The deck then depended on Herald of Secret Streams, Chocobo Knights and
+Wakka to close, so two removal spells left it attacking with small creatures.
+It took a later review to bring Forgotten Ancient back. Rules:
+
+1. **Count finishers in the stock list and in every direction.** Target
+   **5–8 finishers across at least 2 routes** (see the analysis table). A
+   direction may not end with fewer finishers than stock unless its `pitch`
+   says why (e.g. a stronger single route replaces two weak ones). Record the
+   count as the `Win conditions` metric; `verify_comparison.py` fails when a
+   direction drops below stock.
+2. **A cut finisher needs a replacement finisher.** If a card going out is in
+   the Finishers column, the same direction must add a finisher, or the count
+   must stay at target. "It's slow" or "it's expensive" is not enough on its own
+   to cut the deck's top end; cut a durdly utility card instead.
+3. **The finisher must use the engine, not compete with it.** Sin, Unending
+   Cataclysm grows by removing counters from your own creatures, which turns
+   off Herald (unblockable only with +1/+1 counters) and Cheer. Forgotten
+   Ancient grows from every spell cast and *hands out* counters, so it feeds
+   the same finishers. Prefer the second kind.
+4. **Don't stack one finisher type.** Three team-evasion enchantments are one
+   route that dies to one enchantment wipe. Mix a resilient single threat, a
+   team-wide closer, and (where the colours allow) a non-combat route.
+5. **Write how it wins in `how_to_play.summary`** naming the actual finishers,
+   and name the board state you need ("Herald plus three creatures with
+   counters"). If you can't write that sentence, the direction has no plan.
 
 Rules that came out of getting this wrong:
 
@@ -43,8 +83,11 @@ Rules that came out of getting this wrong:
    second "cast from the top" effect competes with the commander for the same
    card rather than supporting him.
 5. **Say how it loses.** If a direction folds when the commander is answered
-   twice, put that in the `pitch` and only recommend it to a user who wants a
-   commander-centric build.
+   twice, or when its one or two finishers are removed, put that in the `pitch`
+   and only recommend it to a user who wants that build.
+6. **Engine cards don't outrank finishers.** When choosing between another
+   payoff for an engine that already works and keeping a finisher, keep the
+   finisher. More engine on top of a working engine is win-more.
 
 ### Search by role, never by memory
 
@@ -58,11 +101,33 @@ skew to famous cards that don't fit the curve or the budget.
   - top control: `f:commander id<=WUG o:"top card of your library" -t:instant -t:sorcery`
   - protection: `f:commander id<=WUG t:artifact (o:"hexproof" or o:"shroud") cmc<=3`
   - evasion: `f:commander id<=WUG o:"can't be blocked" cmc<=3`
+  - team finishers: `f:commander id<=WUG (o:"creatures you control get" or o:"creatures you control gain" or o:"double strike")`
+  - drain finishers: `f:commander id<=BRG o:"each opponent loses"`
   - putting a card back on top: `o:"on top of your library" owner:"its owner's library"`
     — then read the **cost**: Penance's is free, Conch Horn's sacrifices itself.
 - Price every candidate from `.cache/card-index.json` before it goes in a spec.
 - Say in the review which search produced a non-obvious pick, so the reasoning
   is checkable later.
+
+### Check cuts against EDHREC
+
+Before cutting a card, check how often decks with the same commander play it:
+`https://json.edhrec.com/pages/commanders/<slug>.json` (slug: lowercase name,
+punctuation dropped, spaces as hyphens, e.g. `tidus-yunas-guardian`). For each
+card in `container.json_dict.cardlists[].cardviews[]`, `num_decks /
+potential_decks` is its inclusion rate and `synergy` how much more it shows up
+here than in other decks of those colours. Read it as a sanity check, not a
+ranking: most lists for a precon commander are near-stock, so every precon card
+looks popular.
+
+- Cutting a card that is in **≥ 60%** of that commander's decks needs a reason
+  in its `why` that EDHREC can't see (it works against this direction, a
+  strictly better card replaces it).
+- When two cards are equally weak on paper, cut the one with the lower
+  inclusion rate. That's how Counter Blitz kept Gatta and Luzzu (60%) and cut
+  Summoner's Sending (25%) instead.
+- Don't treat a low rate as a reason to cut on its own: new cards (Loading Zone,
+  12%) haven't been picked up yet.
 
 ## Scryfall data (local only)
 
@@ -88,10 +153,14 @@ file, reduced to `.cache/card-index.json`. The cache is **not in git**
 2. **Analyse the stock list.** The build script computes the curve; you supply
    the judgement:
    - Curve: count nonland cards by mana value, note dead or clunky slots and the top end.
+   - Win conditions: list the finishers by route (see **Win conditions are a
+     column**). Put them in `analysis.interaction` as the first row,
+     `"category": "Win conditions"`, and in `stock_metrics["Win conditions"]`.
    - Interaction, counted against these targets for a casual or upgraded-precon table:
 
      | Category | Target |
      |---|---|
+     | Win conditions | 5–8, across 2+ routes |
      | Spot removal | 8–10 |
      | Board wipes | 2–3 (fewer for go-wide decks) |
      | Instant-speed answers | 5+ |
@@ -107,11 +176,15 @@ file, reduced to `.cache/card-index.json`. The cache is **not in git**
      (usually 3–5 cheap removal spells, preferably instants) in `core`. Each
      direction then gets `10 − len(core)` swaps of its own.
    - Cut the weakest cards first: cards that cost too much for their effect,
-     do nothing on the board, or work against the direction.
-   - Design each direction as one engine first (see **Every direction is an
-     engine** above): write down the enablers, the payoffs and the support it
-     needs, then choose cards that fill the gaps in the stock ledger. If the
-     six direction cards don't reference each other, it's still a card list.
+     do nothing on the board, or work against the direction. Finishers are not
+     "weakest" just because they're expensive; see rule 2 under **Win
+     conditions are a column**.
+   - Design each direction as one plan (see **Every direction is a plan**
+     above): write down the enablers, the payoffs, the support and the
+     finishers it needs, then choose cards that fill the gaps in the stock
+     ledger. If the six direction cards don't reference each other, it's still
+     a card list; if none of them is or feeds a finisher, it's an engine with no
+     way to win.
    - Lower or hold the average mana value. Never add a board wipe that hurts
      the deck's own plan.
 
@@ -149,7 +222,8 @@ file, reduced to `.cache/card-index.json`. The cache is **not in git**
      in for each direction.
 
 8. **Report** in chat: a short table per direction with average MV, cost
-   (USD/EUR) and plan, your recommendation, and the path to the HTML file.
+   (USD/EUR), win conditions (count and routes) and plan, your recommendation,
+   and the path to the HTML file.
    Don't repeat the swap list in prose; the page shows it. Offer to apply the
    chosen direction to `decks/<deck>.md`, adding a changelog entry.
 
@@ -174,8 +248,11 @@ creatures.
      counters already on creatures for Cheer, nonland mills for Mothman), and
      whether any cut removes one of those enablers.
 2. **Check each cut against the plan.** For every card going out, ask: does it
-   trigger, enable or pay off the commander or the direction? If yes, cut a
-   different card. Record the reason in the swap's `why`.
+   trigger, enable or pay off the commander or the direction? Is it one of the
+   deck's finishers? If either is yes, cut a different card, or (for a
+   finisher) make sure the direction adds one back. Check its EDHREC inclusion
+   rate (see **Check cuts against EDHREC**). Record the reason in the swap's
+   `why`.
 3. **Check each new card's interactions.** Confirm each claimed combo actually
    works by its text (e.g. moving a counter is "putting" one, so +1 effects
    apply). Drop any claim you can't confirm.
@@ -189,7 +266,9 @@ creatures.
    legality from Scryfall, Game Changers from the cached index, `budget_eur`,
    and the metrics it can derive from rules text (`Lands`, `Different land
    names`, `Extra land drops`, `Landfall payoffs`) so hand-counted numbers can't
-   drift. Exit code 1 blocks the commit. Add `--offline` when Scryfall is
+   drift. It also fails a direction whose `Win conditions` metric is below
+   the stock count, and warns when the spec doesn't count win conditions at
+   all. Exit code 1 blocks the commit. Add `--offline` when Scryfall is
    unreachable; it works from `.cache/oracle.json`.
    For a per-direction card list, `python3 tools/build_comparison.py
    comparisons/<deck>-upgrades.json --after <direction-id>` still prints it.
@@ -198,8 +277,11 @@ creatures.
    and carry on (the Landing Party precon releases 2026-11-13, so every TRC/TRK
    card read as illegal for the fortnight before it).
 5. **Recount after the swaps** — the tool does the derivable ones; you still
-   count spot removal, wipes, instant-speed answers, protection, card draw and
-   ramp by hand, and update each direction's `metrics` so the page matches.
+   count win conditions, spot removal, wipes, instant-speed answers,
+   protection, card draw and ramp by hand, and update each direction's
+   `metrics` so the page matches. Then ask the win-condition question out
+   loud: if the opponents remove the two best finishers, what does this
+   direction still attack or drain with?
    Cross-check the directions against each other: categories the core supplies
    (spot removal, instant-speed answers, wipes) must come out *identical* in
    every direction unless that direction adds interaction of its own — if one
@@ -256,7 +338,7 @@ For a new comparison on an already-upgraded deck, point the spec's `deck` at
     "interaction": [
       {"category": "Spot removal", "stock": 5, "target": "8–10", "low": true, "cards": ["Putrefy", "..."]}
     ],
-    "stock_metrics": {"Spot removal": 5, "Game Changers": 0}   // the "Stock" column of the comparison table
+    "stock_metrics": {"Win conditions": 6, "Spot removal": 5, "Game Changers": 0}   // the "Stock" column of the comparison table
   },
   "core": {                                   // optional; omit or empty swaps if not needed
     "name": "Core interaction package",
@@ -271,9 +353,9 @@ For a new comparison on an already-upgraded deck, point the spec's `deck` at
       "picked": true,                         // set once the user chooses it: green badge, buy list opens by default
       "pitch": "One or two sentences on the plan.",
       "plays_like": "Short phrase for the comparison table",
-      "metrics": {"Spot removal": 9, "Game Changers": 0},   // same keys as stock_metrics
+      "metrics": {"Win conditions": 6, "Spot removal": 9, "Game Changers": 0},   // same keys as stock_metrics
       "how_to_play": {                        // collapsible guide under the direction (open when picked)
-        "summary": "One line: how this version wins.",
+        "summary": "One line: how this version wins, naming the finishers.",
         "sections": [{"title": "Turns 1–3", "points": ["Short, concrete play tips naming the deck's cards"]}]
       },
       "swaps": [{"in": "Card In", "out": "Card Out", "why": "..."}]
