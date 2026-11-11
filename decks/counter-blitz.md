@@ -11,7 +11,7 @@
 ## Commander (1)
 1 Tidus, Yuna's Guardian
 
-## Creatures (36)
+## Creatures (35)
 1 Walking Ballista
 1 Conclave Mentor
 1 Duskshell Crawler
@@ -47,7 +47,6 @@
 1 Yuna, Grand Summoner
 1 Summon: Valefor
 1 Sunscorch Regent
-1 Bane of Progress
 
 ## Instants (9)
 1 An Offer You Can't Refuse
@@ -73,7 +72,7 @@
 1 Sol Ring
 1 Arcane Signet
 
-## Enchantments (8)
+## Enchantments (9)
 1 Hardened Scales
 1 Sphere Grid
 1 Summoner's Sending
@@ -82,6 +81,7 @@
 1 Fight Rigging
 1 Path of Discovery
 1 Inexorable Tide
+1 Loading Zone
 
 ## Lands (37)
 1 Adarkar Wastes
@@ -132,3 +132,4 @@
   - +Yavimaya Coast / −Overflowing Basin
   - +Adarkar Wastes / −Skycloud Expanse
   - +Karn's Bastion / −Temple of the False God
+- 2026-11-11 — +Loading Zone / −Bane of Progress (Loading Zone from the Bulk pile; Bane of Progress destroyed the deck's own enchantments, sagas and mana rocks).
