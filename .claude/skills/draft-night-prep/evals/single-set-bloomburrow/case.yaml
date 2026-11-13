@@ -1,0 +1,7 @@
+schema_version: "1.1"
+name: single-set-bloomburrow
+expected_outcome: |
+  A single-set Bloomburrow cheat sheet (no set switch) from 17lands BLB Premier Draft data with a
+  "Going green" panel, top 10s for green pairs, bombs, search, keywords written from oracle text
+  (Offspring, Gift, Forage, Valiant, Expend, Threshold) and booster facts that are verified; the
+  reply says green is a solid start and names the best and weakest green pairings with numbers.

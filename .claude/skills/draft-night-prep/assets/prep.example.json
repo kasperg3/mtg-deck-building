@@ -1,0 +1,57 @@
+{
+  "title": "Draft Night Cheat Sheet",
+  "lede": "Duskmourn and Crimson Vow, mixed. Search any card, or switch sets when the packs change.",
+  "anchor": "R",
+  "featured_pairs": ["WR", "BR", "WU"],
+  "highlight_pair": "WR",
+  "pair_names": {"BR": ["Red–Black", "R/B"]},
+  "deck_note": "is fine for a low-curve W/R deck",
+  "sets": [
+    {
+      "code": "DSK",
+      "name": "Duskmourn",
+      "full": "Duskmourn: House of Horror",
+      "color": "#A898E8",
+      "booster": {
+        "name": "Play Booster",
+        "cards": 14,
+        "facts": [
+          "7 commons, 3 uncommons, 1 rare or mythic, 1 land, 2 wildcards of any rarity (one is foil).",
+          "The land slot is often a common dual land. Raucous Carnival is the W/R one."
+        ]
+      },
+      "keywords": [
+        ["Rooms", "An enchantment with two doors. Cast one door now; pay to unlock the other later."],
+        ["Eerie", "Triggers when an enchantment enters under your control or you fully unlock a Room."],
+        ["Manifest dread", "Look at your top 2 cards: one becomes a face-down 2/2 creature, the other goes to your graveyard. If the face-down card is a creature, you can flip it up any time for its mana cost."],
+        ["Delirium", "A bonus once your graveyard holds 4+ card types (creature, land, instant, enchantment…)."],
+        ["Survival", "A bonus at the start of your second main phase if the creature is tapped, usually because it attacked."],
+        ["Impending", "Cast an Overlord cheaply. It enters with time counters and isn't a creature until the last one comes off (one per end step), but its \"enters\" ability fires right away."]
+      ]
+    },
+    {
+      "code": "VOW",
+      "name": "Crimson Vow",
+      "full": "Innistrad: Crimson Vow",
+      "color": "#E2685C",
+      "booster": {
+        "name": "Draft Booster",
+        "cards": 15,
+        "facts": [
+          "10 commons, 3 uncommons, 1 rare or mythic, 1 basic land.",
+          "At least 2 cards are double-faced. Read both sides.",
+          "About 1 pack in 3 swaps a common for a foil of any rarity."
+        ]
+      },
+      "keywords": [
+        ["Blood token", "Pay 1, tap, discard a card and sacrifice it: draw a card."],
+        ["Disturb", "From your graveyard, cast the back side for the disturb cost. If it would die again, it's exiled."],
+        ["Training", "Gets a +1/+1 counter when it attacks alongside a creature with greater power."],
+        ["Exploit", "When it enters, you may sacrifice a creature. If you do, you get the card's bonus."],
+        ["Day / Night", "Starts once a day/night card appears. Night falls after a turn where the active player cast no spells; a turn with 2+ spells brings back day."],
+        ["Decayed", "Can't block, and is sacrificed at end of combat after it attacks."],
+        ["Cleave", "Pay the higher cleave cost to delete the words in [brackets], which removes a limit on the spell."]
+      ]
+    }
+  ]
+}

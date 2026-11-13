@@ -1,0 +1,8 @@
+schema_version: "1.1"
+name: mixed-draft-red-plan
+expected_outcome: |
+  A local cheat-sheet HTML page for a mixed DSK + VOW draft built from 17lands public game data,
+  with collapsible sections (color pairs, bombs, W/R, R/B and W/U top 10s, keywords), a red
+  second-color panel, card search and Scryfall images; plus a reply that corrects the plan:
+  the second color matters in Duskmourn (W/R best at 56.9%, U/R weak at 52.1%) but much less in
+  Crimson Vow (every red pair above the 54.7% average, R/B best at 56.3%).

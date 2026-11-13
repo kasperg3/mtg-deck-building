@@ -1,0 +1,7 @@
+schema_version: "1.1"
+name: replaces-stale-article-numbers
+expected_outcome: |
+  The reply checks each claim against 17lands VOW Premier Draft game data (11 Nov - 10 Dec 2021,
+  494,031 games): R/B is still the best pair but at 56.3%, Lantern Flare (#86 of 259) and
+  Piercing Light (#189) are not top picks, Savior of Ollenbock is mediocre overall (#76, 56.4%).
+  The page uses only dataset numbers, with no Draftsim grades.
