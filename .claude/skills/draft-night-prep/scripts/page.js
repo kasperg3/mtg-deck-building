@@ -22,7 +22,7 @@
   var input = document.getElementById('card-search');
   var list = document.getElementById('search-results');
   var clear = document.querySelector('.search .clear');
-  var norm = function (s) { return s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9 ]/g, ''); };
+  var norm = function (s) { return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9 ]/g, ''); };
   DATA.cards.forEach(function (c) { c._n = norm(c.n); c._b = norm(c.b || ''); });
   var RAR = { C: 'Common', U: 'Uncommon', R: 'Rare', M: 'Mythic' };
   function esc(s) { return String(s).replace(/[&<>"]/g, function (ch) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[ch]; }); }
