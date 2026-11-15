@@ -428,5 +428,90 @@
       "win_conditions_note": "Trades Moraug, Bontu, Rampaging Baloths and World Breaker for land recursion; it still wins through Hearthhull's drain, Braids, Mayhem Devil and 13 finishers, well above the 5–8 target."
     }
   ],
-  "recommendation": "Scorched Earth Drain uses Hearthhull best: the landfall pingers deal damage from turn 2, and once Hearthhull is stationed to 8 every sacrifice and replay is another 2-point drain. All three directions stay under €20 including the core package."
+  "recommendation": "Scorched Earth Drain uses Hearthhull best: the landfall pingers deal damage from turn 2, and once Hearthhull is stationed to 8 every sacrifice and replay is another 2-point drain. All three directions stay under €20 including the core package.",
+  "played_deck": "decks/world-shaper.md",
+  "bracket3": {
+    "name": "Bracket 3 package",
+    "date": "2026-11-15",
+    "rule": "Bracket 3 (Upgraded) allows up to three Game Changers, no mass land denial, no chained extra turns, and game-ending two-card combos only late in the game.",
+    "budget_eur": 30,
+    "description": "The deck already drains hard. What bracket 3 asks for is speed and consistency, so this package adds a second free sacrifice outlet, three ways to make more land drops and mana, a tutor for your best land, cheaper removal and two one-card bursts of sacrifice triggers.",
+    "notes": [
+      "Planetary Annihilation: bracket 3 does not allow mass land denial. The card leaves every player six lands, so most tables accept it, but ask yours. Toxic Deluge (about €4) is the replacement if they don't.",
+      "How it wins faster: with Hearthhull at 8+ charge counters, Sylvan Safekeeper or Zuran Orb turns every land into 2 life from each opponent for no mana. Nahiri's Lithoforming and Planar Engineering do it in one card and put lands back."
+    ],
+    "win_conditions": {
+      "now": 20,
+      "after": 20
+    },
+    "swaps": [
+      {
+        "in": "Crop Rotation",
+        "out": "Centaur Vinecrasher",
+        "why": "Game Changer. One green mana at instant speed: sacrifice a land (a Hearthhull trigger) and put any land from your library onto the battlefield, such as Lotus Field or Dakmor Salvage, or Field of the Dead if you add it. Centaur Vinecrasher is only a body; 12% of Hearthhull decks keep it."
+      },
+      {
+        "in": "Sylvan Safekeeper",
+        "out": "Loamcrafter Faun",
+        "why": "A second Zuran Orb on a one-mana creature: sacrifice a land for free, at any time, as often as you like, and the target creature gains shroud. In 61% of Hearthhull decks. Loamcrafter Faun (17%) returns a few cards once."
+      },
+      {
+        "in": "Lotus Cobra",
+        "out": "Sprouting Goblin",
+        "why": "One mana of any colour for every land that enters, so replayed and fetched lands pay for the rest of the turn. In 63% of Hearthhull decks. Sprouting Goblin's ability costs {R} and a tap for one card; Safekeeper and Zuran Orb sacrifice for free."
+      },
+      {
+        "in": "Azusa, Lost but Seeking",
+        "out": "Juri, Master of the Revue",
+        "why": "Two extra land drops every turn. With Ramunap Excavator, Conduit of Worlds or Szarel you replay the lands you sacrificed, and each one drains again. Juri only grows; it doesn't move the plan forward."
+      },
+      {
+        "in": "Tireless Provisioner",
+        "out": "Hammer of Purphoros",
+        "why": "A Treasure or Food for every land that enters: real ramp in a deck that puts three or four lands onto the battlefield in a turn. Hammer of Purphoros costs {2}{R} and a land for one 3/3, and Hearthhull already has haste at 8+ counters."
+      },
+      {
+        "in": "Valakut Exploration",
+        "out": "Pest Infestation",
+        "why": "Every land that enters exiles the top card of your library and lets you play it. Cards you don't play become damage to each opponent at your end step. Pest Infestation only hits artifacts and enchantments, at two mana per target."
+      },
+      {
+        "in": "Assassin's Trophy",
+        "out": "Binding the Old Gods",
+        "why": "Two mana at instant speed destroys any permanent an opponent controls. Binding the Old Gods does the same for four mana at sorcery speed."
+      },
+      {
+        "in": "Nahiri's Lithoforming",
+        "out": "Tireless Tracker",
+        "why": "Sacrifice X lands, draw X cards and play X extra lands this turn. With Hearthhull at 8+ counters that is 2X life from each opponent, and Ramunap Excavator or Conduit of Worlds lets you replay the same lands. Tireless Tracker draws one card for two mana."
+      },
+      {
+        "in": "Planar Engineering",
+        "out": "Uurg, Spawn of Turg",
+        "why": "Sacrifice two lands and put four basic lands onto the battlefield: two sacrifice triggers and four landfall triggers from one card. Ob Nixilis alone takes 12 life with it. Uurg is a sacrifice outlet that costs {B}{G} each time."
+      },
+      {
+        "in": "Avenger of Zendikar",
+        "out": "Multani, Yavimaya's Avatar",
+        "why": "A 0/1 Plant for every land you control, and every land after that puts a +1/+1 counter on each Plant: an army that grows with each land drop. Multani is one large creature that a single removal spell answers."
+      }
+    ],
+    "premium": [
+      {
+        "in": "Field of the Dead",
+        "out": "Forest",
+        "why": "Game Changer. The deck plays 28 differently named lands, so once seven are out, every land that enters also makes a 2/2 Zombie, including lands you replay from the graveyard. Crop Rotation fetches it. It replaces one of the eight Forests."
+      },
+      {
+        "in": "Seedborn Muse",
+        "out": "Windgrace's Judgment",
+        "why": "Game Changer. It untaps everything you control on each opponent's turn, so Hearthhull's ability (sacrifice a land: draw two cards) works four times a round instead of once, and at 8+ counters every use drains the table."
+      },
+      {
+        "in": "Scapeshift",
+        "out": "Countryside Crusher",
+        "why": "Not a Game Changer, but the strongest single card for this commander: sacrifice any number of lands and fetch that many. With Hearthhull at 8+ counters and eight lands, that is 16 life from each opponent before the landfall triggers."
+      }
+    ]
+  }
 }

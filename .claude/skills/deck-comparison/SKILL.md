@@ -69,6 +69,8 @@ It took a later review to bring Forgotten Ancient back. Rules:
      (Sabotender, Mayhem Devil, Braids) or scaling X damage (Worldsoul's
      Rage, Walking Ballista).
    - **Mill:** a repeatable mill engine, in a deck whose plan mills.
+   - **Alternative win:** a card that wins the game outright on a condition
+     the deck meets in normal play (Simic Ascendancy in a +1/+1 counter deck).
    Support that only makes another card a finisher (a counter doubler, a
    single-target pump, one-creature evasion like Rikku) doesn't count. List
    the finishers in the analysis note and the `Win conditions` interaction row
@@ -346,6 +348,65 @@ When the user says they bought the cards:
 3. `python3 tools/sync_inventory.py` to fill the Deck column (cut cards become
    `Loose`). It must report no `warning:` lines.
 
+## Every deck change goes in the comparison
+
+The comparison page is where the user reads what their deck is and why. A swap
+made only in `decks/<deck>.md` (a card from a booster, a review fix, a card
+brought back from the precon) is invisible there, which is how Counter Blitz
+ended up two swaps ahead of its own comparison. Whenever you change a deck
+file, in the same commit:
+
+1. Record the swap in the spec's `deck_changes` (`date`, `in`, `out`, `why`).
+   The page shows these under **Later changes**.
+2. If a swap in the picked direction was recommended but isn't bought or
+   applied yet, mark it `"pending": true` instead of leaving it looking done.
+3. Keep `played_deck` pointing at `decks/<deck>.md`.
+4. Rebuild the page and run `verify_comparison.py`. It fails unless the stock
+   list plus the core, the picked direction (minus pending swaps) and
+   `deck_changes` reproduces the played deck card for card.
+
+This also applies to one-off swaps that never went through the three-direction
+workflow. The changelog in the deck file and `deck_changes` in the spec say the
+same thing; write both.
+
+## Bracket 3 package (bottom of the page)
+
+`bracket3` in the spec is a set of swaps against the deck **as played**
+(`played_deck`), shown as the last section of the page. Use it when the user
+wants a deck moved up to bracket 3.
+
+- **The rule (check it is current before relying on it):** bracket 3
+  (Upgraded) allows up to three Game Changers, no mass land denial, no chained
+  extra turns, and game-ending two-card combos only late in the game. Get the
+  Game Changers list from Scryfall (`is:gamechanger f:commander id<=<colours>`),
+  never from memory; it changes.
+- **What bracket 3 needs is not Game Changers.** It is a faster, more
+  consistent version of the same plan: more enablers for the engine, premium
+  cheap interaction (the stock lists are short on counterspells and one-mana
+  removal), finisher redundancy, and card flow. Add a Game Changer only when it
+  does something for this commander (Crop Rotation in a land deck), not because
+  a slot is free.
+- **Source candidates from EDHREC first:** the commander page's most-played
+  cards that the deck doesn't run, with their inclusion rates, then role
+  searches for gaps. Read every card's text before it goes in.
+- **Budget:** `bracket3.budget_eur` (€30 was used for the first four) covers
+  the ten `swaps`. Cards worth more than the whole budget (Field of the Dead,
+  Cyclonic Rift) go in `premium`, each with its own cut, so the user can see
+  the price and choose. Mark a card the user already owns loose `"owned": true`;
+  it costs nothing and stays out of the buy list.
+- **Don't add what bracket 3 forbids.** Leave out two-card infinite combos that
+  come together early (Bloodchief Ascension with Mindcrank) and say so in
+  `notes`. Flag a borderline card already in the deck (Planetary Annihilation)
+  with its replacement.
+- **Cuts follow the same rules as any direction:** check the EDHREC rate, don't
+  cut a finisher without replacing it, don't cut a card the user deliberately
+  brought back, and don't reuse the cut of a pending swap. Count win conditions
+  before and after in `win_conditions`.
+- `verify_comparison.py` checks the package: every cut is in the played deck,
+  100 cards with and without the premium options, colour identity, legality, at
+  most three Game Changers with every option taken, the budget, and win
+  conditions not below the current count.
+
 For a new comparison on an already-upgraded deck, point the spec's `deck` at
 `decks/<deck>.md` (the current list), not the precon snapshot.
 
@@ -384,10 +445,23 @@ For a new comparison on an already-upgraded deck, point the spec's `deck` at
         "summary": "One line: how this version wins, naming the finishers.",
         "sections": [{"title": "Turns 1–3", "points": ["Short, concrete play tips naming the deck's cards"]}]
       },
-      "swaps": [{"in": "Card In", "out": "Card Out", "why": "..."}]
+      "swaps": [{"in": "Card In", "out": "Card Out", "why": "...", "pending": true}]   // pending: optional, recommended but not bought or applied yet
     }
   ],
-  "recommendation": "Which direction and why, in one or two sentences."
+  "recommendation": "Which direction and why, in one or two sentences.",
+  "played_deck": "decks/mutant-menace.md",    // the deck as played; deck_changes and bracket3 are checked against it
+  "deck_changes": [                           // swaps made in the deck file after the picked direction
+    {"date": "YYYY-MM-DD", "in": "Card In", "out": "Card Out", "why": "..."}
+  ],
+  "bracket3": {                               // optional; swaps against played_deck, last section of the page
+    "name": "Bracket 3 package", "date": "YYYY-MM-DD", "budget_eur": 30,
+    "rule": "One sentence stating the bracket rule.",
+    "description": "What the package does for this deck.",
+    "notes": ["Caveats: borderline cards, combos left out, what to buy first"],
+    "win_conditions": {"now": 6, "after": 10},
+    "swaps": [{"in": "Card In", "out": "Card Out", "why": "...", "owned": true}],   // owned: optional
+    "premium": [{"in": "Expensive Card", "out": "Card Out", "why": "..."}]
+  }
 }
 ```
 
@@ -408,7 +482,7 @@ same sections: header with commander, stock analysis (curve and interaction
 table), comparison table (avg MV, cost in, value out, metrics), curve per
 direction against stock, core package, then each direction as OUT → IN card
 pairs, with an expandable buy list for each direction: a price table and a
-Cardmarket-ready text box with a Copy button, then a collapsible How to play guide. Clicking a card opens a large image, showing both faces for
+Cardmarket-ready text box with a Copy button, then a collapsible How to play guide. After the directions come **Later changes** (`deck_changes`) and, last, the **Bracket 3 package** (`bracket3`) with its Game Changer count, buy list, swaps and premium options. Clicking a card opens a large image, showing both faces for
 double-faced cards.
 
 ## Website

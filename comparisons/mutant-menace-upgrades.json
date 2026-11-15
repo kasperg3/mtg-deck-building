@@ -400,5 +400,82 @@
       "win_conditions_note": "Cuts Fraying Sanity and Agent Frank Horrigan for recursion; Muldrotha replays the remaining threats from the graveyard, but that is fewer finishers than stock. Add one back if you pick it."
     }
   ],
-  "recommendation": "Counter Engine fits Mothman best: every mill trigger already gives counters, and these cards make each counter worth more. The removal package covers the deck's biggest weakness in every direction. All three directions stay under €20."
+  "recommendation": "Counter Engine fits Mothman best: every mill trigger already gives counters, and these cards make each counter worth more. The removal package covers the deck's biggest weakness in every direction. All three directions stay under €20.",
+  "played_deck": "decks/mutant-menace.md",
+  "bracket3": {
+    "name": "Bracket 3 package",
+    "date": "2026-11-15",
+    "rule": "Bracket 3 (Upgraded) allows up to three Game Changers, no mass land denial, no chained extra turns, and game-ending two-card combos only late in the game.",
+    "budget_eur": 30,
+    "description": "Mothman gets a trigger every time nonland cards are milled, by any player. This package makes mill happen constantly, turns milled creatures into damage, doubles your proliferate, adds a fourth way to win and gives the deck the counterspells it lacked.",
+    "notes": [
+      "Mesmeric Orb mills you too, about one card for each of your permanents that untaps. Play it when you can win within a few turns. Raul and The Master, Transcendent let you use what you mill.",
+      "Syr Konrad with Mindcrank or The Master of Lake-town can chain: damage makes opponents mill, and milled creatures make Konrad deal damage again. It often ends the game. Bracket 3 allows a late-game combo like this (Konrad costs five), but tell your table.",
+      "Left out on purpose: Bloodchief Ascension. With Mindcrank it is a two-card infinite combo that can be ready on turn three or four. That is bracket 4 play."
+    ],
+    "win_conditions": {
+      "now": 11,
+      "after": 16
+    },
+    "swaps": [
+      {
+        "in": "Mesmeric Orb",
+        "out": "Contagion Clasp",
+        "why": "Whenever a permanent untaps, its controller mills a card. Each one is a separate mill, so Mothman triggers many times a turn, on every player's turn. In 62% of Mothman decks, the most-played card your list is missing. Contagion Clasp needs four mana for each proliferate."
+      },
+      {
+        "in": "The Master of Lake-town",
+        "out": "Young Deathclaws",
+        "why": "You already own it (Bulk pile). A second Mindcrank on a deathtouch body: any player who loses life mills that many cards, so every rad trigger and every attack feeds Mothman. Young Deathclaws is in 15% of Mothman decks.",
+        "owned": true
+      },
+      {
+        "in": "Syr Konrad, the Grim",
+        "out": "Jason Bright, Glowing Prophet",
+        "why": "Deals 1 damage to each opponent for every creature card that is milled, by anyone. With four players milling every turn that is steady damage. In 51% of Mothman decks. Jason Bright (19%) needs your Mutants to die."
+      },
+      {
+        "in": "Tekuthal, Inquiry Dominus",
+        "out": "Harold and Bob, First Numens",
+        "why": "Every proliferate happens twice: rad counters on opponents and +1/+1 counters on your creatures both go up by two. A 3/5 flier for four. Harold and Bob is a 3/3 that turns into slow ramp when it dies."
+      },
+      {
+        "in": "The Water Crystal",
+        "out": "Tireless Tracker",
+        "why": "Whenever an opponent would mill, they mill four more cards. Rad counters, Ruin Crab, Mindcrank and Mesmeric Orb all get the bonus, which makes running the table out of cards a real way to win. Tireless Tracker is in 10% of Mothman decks."
+      },
+      {
+        "in": "Counterspell",
+        "out": "Hancock, Ghoulish Mayor",
+        "why": "The deck had no counterspell. Two mana stops a board wipe or a combo, and bracket 3 tables play both. Hancock (32%) only pumps Zombies and Mutants, and only once it has counters."
+      },
+      {
+        "in": "Drown in the Loch",
+        "out": "Casualties of War",
+        "why": "Two mana at instant speed: counter a spell or destroy a creature whose mana value is no more than the number of cards in its controller's graveyard. In this deck graveyards fill within a few turns. Casualties of War costs six at sorcery speed."
+      },
+      {
+        "in": "Hollowmurk Siege",
+        "out": "Harmonize",
+        "why": "Choose Sultai: draw a card the first time each turn a counter is put on one of your creatures. That includes opponents' turns, when Mothman triggers off their mills, so it is up to four cards a round for two mana. Harmonize is three cards once."
+      },
+      {
+        "in": "Simic Ascendancy",
+        "out": "Contaminated Drink",
+        "why": "A fourth way to win. It gets a growth counter for every +1/+1 counter put on your creatures and wins the game at your upkeep with twenty. Hardened Scales, Branching Evolution and Corpsejack Menace speed it up, and proliferate adds to it. Contaminated Drink draws X cards but gives you rad counters."
+      },
+      {
+        "in": "Karn's Bastion",
+        "out": "Temple of Deceit",
+        "why": "A land that proliferates for four mana at instant speed. It replaces a land that enters tapped."
+      }
+    ],
+    "premium": [
+      {
+        "in": "Cyclonic Rift",
+        "out": "Find // Finality",
+        "why": "Game Changer. Overloaded for seven mana it returns every nonland permanent your opponents control to their hands, at instant speed. Your creatures then attack into empty boards. Finality's wipe also shrinks your own creatures."
+      }
+    ]
+  }
 }
