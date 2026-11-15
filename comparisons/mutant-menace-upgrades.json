@@ -410,6 +410,7 @@
     "description": "Mothman gets a trigger every time nonland cards are milled, by any player. This package makes mill happen constantly, turns milled creatures into damage, doubles your proliferate, adds a fourth way to win and gives the deck the counterspells it lacked.",
     "notes": [
       "Mesmeric Orb mills you too, about one card for each of your permanents that untaps. Play it when you can win within a few turns. Raul and The Master, Transcendent let you use what you mill.",
+      "Mesmeric Orb and The Water Crystal together make each opponent mill five cards for every permanent they untap, which empties a library in two or three turns. That is the top end of bracket 3. Tell your table, and leave one of the two out if it is too much.",
       "Syr Konrad with Mindcrank or The Master of Lake-town can chain: damage makes opponents mill, and milled creatures make Konrad deal damage again. It often ends the game. Bracket 3 allows a late-game combo like this (Konrad costs five), but tell your table.",
       "Left out on purpose: Bloodchief Ascension. With Mindcrank it is a two-card infinite combo that can be ready on turn three or four. That is bracket 4 play."
     ],
