@@ -6,18 +6,16 @@
 - **Format:** Commander · 100 cards
 - **Game Changers:** 0
 - **Bracket:** 2 (no Game Changers, no combos)
-- **Status:** Owned · upgraded: Land Engine (2026-11-10)
+- **Status:** Owned · upgraded: Land Engine (2026-11-10, completed 2026-11-15)
 
 ## Commander (1)
 1 Commander Spock
 
-## Creatures (28)
+## Creatures (24)
 1 Lotus Cobra
-1 Satyr Wayfinder
 1 Augur of Autumn
 1 Azusa, Lost but Seeking
 1 Lieutenant Hikaru Sulu
-1 Lieutenant Nyota Uhura
 1 Loot, Exuberant Explorer
 1 Mole Man, Moloid Master
 1 Scute Swarm
@@ -31,17 +29,15 @@
 1 Janice Rand, Essential Aide
 1 Pavel Chekov, First Posting
 1 M'Ress, Crew Coordinator
-1 McCoy, Not a Bricklayer
-1 Syndicate Liquidators
 1 T'Pring, Never Parted
 1 Ancient Greenwarden
-1 Cold-Blooded Crew
 1 Colossal Clone Master
 1 Rampaging Baloths
 1 Sun Titan
 1 Lt. Arex, Ever-Adapting
+1 Starfield Vocalist
 
-## Instants (11)
+## Instants (12)
 1 Brainstorm
 1 Path to Exile
 1 Swords to Plowshares
@@ -53,6 +49,7 @@
 1 Generous Gift
 1 Krosan Grip
 1 Temporal Tribulation
+1 Momentary Blink
 
 ## Sorceries (8)
 1 Ponder
@@ -74,16 +71,20 @@
 1 Starship Enterprise
 1 U.S.S. Farragut, Bold Explorer
 
-## Enchantments (4)
+## Enchantments (7)
 1 Exploration
 1 Balance of Terror
 1 Felidar Retreat
 1 Guardian Project
+1 Far Traveler
+1 Warp Speed
+1 Stable Wormhole
 
 ## Lands (40)
 1 Canopy Vista
 1 Command Tower
-1 Earth, Sector 001
+1 Deserted Beach
+1 Dreamroot Cascade
 1 Evolving Wilds
 1 Exotic Orchard
 1 Fabled Passage
@@ -93,12 +94,12 @@
 1 Irrigated Farmland
 1 Mosswort Bridge
 1 Mutavault
+1 Overgrown Farmland
 1 Path of Ancestry
 1 Port Town
 1 Prairie Stream
 1 Rain-Slicked Copse
 1 Reliquary Tower
-1 Risa
 1 Scattered Groves
 1 Sea of Clouds
 1 Seaside Citadel
@@ -112,7 +113,6 @@
 1 Terramorphic Expanse
 1 Tranquil Landscape
 1 Vineglimmer Snarl
-1 Vulcan
 4 Forest
 2 Island
 2 Plains
@@ -130,3 +130,12 @@
   - +Mole Man, Moloid Master / −S.S. Botany Bay
   - +Felidar Retreat / −Merciful Mandate
   - +Rampaging Baloths / −Christine Chapel, Combat Medic
+- 2026-11-15 — CardTrader order: the rest of **Land Engine** from `landing-party-upgrades.json` (7 swaps) and one extra card:
+  - +Far Traveler / −Lieutenant Nyota Uhura
+  - +Starfield Vocalist / −Syndicate Liquidators
+  - +Momentary Blink / −McCoy, Not a Bricklayer
+  - +Warp Speed / −Cold-Blooded Crew
+  - +Dreamroot Cascade / −Earth, Sector 001
+  - +Overgrown Farmland / −Risa
+  - +Deserted Beach / −Vulcan
+  - +Stable Wormhole / −Satyr Wayfinder (not part of Land Engine: a Planet land token on every attack)

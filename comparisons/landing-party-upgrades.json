@@ -2,7 +2,7 @@
   "title": "Landing Party — Upgrade Options",
   "deck": "decks/precon/landing-party.md",
   "date": "2026-11-10",
-  "budget_eur": 20,
+  "budget_eur": 25,
   "summary": "Commander Spock pays off land names: whenever he enters or attacks he reveals the top card, lets you cast it for free if its mana value is at most the number of differently named lands you control, puts it onto the battlefield if it's a land, and otherwise draws it. The stock list ramps, lands 35 different names and already carries six blink and copy effects that make Spock enter again (Chief Kyle, Temporal Tribulation, The Guardian of Forever, Balance of Terror, Colossal Clone Master, Shore Leave Planet), but it has only three real answers and fires its ten landfall payoffs off a single extra land drop. Each direction buys four shared answers plus one engine of six cards, and every direction keeps the blink pieces the precon built around Spock.",
   "analysis": {
     "notes": [
@@ -266,7 +266,7 @@
       "name": "Land Engine",
       "recommended": true,
       "picked": true,
-      "pitch": "The stock list has the payoffs and almost none of the enablers: ten cards trigger when a land enters and Exploration is the only card that lets you play an extra one. Loot, Azusa and Wayward Swordtooth turn one land drop into three or four, Mole Man replays lands from the graveyard, and Felidar Retreat and Rampaging Baloths are the two payoffs worth adding on top of the ten already there. Every blink piece stays, so Spock's enter trigger still works on top: Colossal Clone Master copies Azusa or Spock without the legend rule, Chief Kyle blinks on each of the extra land drops, and Temporal Tribulation and Balance of Terror blink lands or Lt. Arex for more landfall triggers. The last three swaps came after the first ten were bought: Far Traveler and Momentary Blink make Spock (or Lt. Arex) enter again, and Starfield Vocalist doubles every landfall and enter trigger.",
+      "pitch": "The stock list has the payoffs and almost none of the enablers: ten cards trigger when a land enters and Exploration is the only card that lets you play an extra one. Loot, Azusa and Wayward Swordtooth turn one land drop into three or four, Mole Man replays lands from the graveyard, and Felidar Retreat and Rampaging Baloths are the two payoffs worth adding on top of the ten already there. Every blink piece stays, so Spock's enter trigger still works on top: Colossal Clone Master copies Azusa or Spock without the legend rule, Chief Kyle blinks on each of the extra land drops, and Temporal Tribulation and Balance of Terror blink lands or Lt. Arex for more landfall triggers. The last seven swaps came after the first ten were bought: Far Traveler and Momentary Blink make Spock (or Lt. Arex) enter again, Starfield Vocalist doubles every landfall and enter trigger, and Warp Speed plus three slow lands replacing the tapped Planet duals mean the extra land drops are usable mana the turn they land.",
       "plays_like": "Three or four land drops a turn, Spock blinking at every end step",
       "metrics": {
         "Win conditions": 8,
@@ -274,7 +274,7 @@
         "Board wipes": 2,
         "Instant-speed answers": 7,
         "Protection": 5,
-        "Card draw": 10,
+        "Card draw": 11,
         "Ramp": 13,
         "Blink & copy effects": 8,
         "Extra land drops": 4,
@@ -291,7 +291,8 @@
             "points": [
               "Exploration or Loot on turn two is the strongest start in the deck: every land after it is a second trigger.",
               "Spend Farseek, Nature's Lore and Rampant Growth on differently named lands — the ramp and Spock's ceiling are the same resource.",
-              "Do not cut a land drop for a four-drop; the engine wants lands on the battlefield, not more spells in hand."
+              "Do not cut a land drop for a four-drop; the engine wants lands on the battlefield, not more spells in hand.",
+              "Warp Speed on turn three makes every later land enter untapped; its search can take Shore Leave Planet instead of a basic. Dreamroot Cascade, Overgrown Farmland and Deserted Beach enter untapped from your third land anyway, so play them after your first two."
             ]
           },
           {
@@ -321,6 +322,7 @@
             "points": [
               "Rampaging Baloths plus two extra land drops is four 4/4 Beasts a round; the table has to answer the engine, not the individual Beasts.",
               "Felidar Retreat is the flexible payoff — tokens when you are behind on board, counters when the ground is stable.",
+              "Late on, Warp Speed's draw-two costs {X} less where X is your land names, so at seven or more names it is {U}{U} and a sacrifice.",
               "Spock is still a fine curve-topper and a free card every attack, but this build no longer needs him to win."
             ]
           }
@@ -360,23 +362,40 @@
         {
           "in": "Far Traveler",
           "out": "Lieutenant Nyota Uhura",
-          "why": "Spock gains 'at the beginning of your end step, blink a tapped creature you control': every attack is followed by a second Spock trigger and another land from Janice Rand, for no mana. It's a Background, but in the 99 it is a plain enchantment. Uhura spends {4} and a tap every turn on a random instant or sorcery from an opponent's library.",
-          "pending": true
+          "why": "Spock gains 'at the beginning of your end step, blink a tapped creature you control': every attack is followed by a second Spock trigger and another land from Janice Rand, for no mana. It's a Background, but in the 99 it is a plain enchantment. Uhura spends {4} and a tap every turn on a random instant or sorcery from an opponent's library."
         },
         {
           "in": "Starfield Vocalist",
           "out": "Syndicate Liquidators",
-          "why": "Every trigger caused by a permanent entering happens twice: all twelve landfall payoffs, Chief Kyle, Spock's reveal and Janice Rand's land. Doubling the payoffs beats adding one more, and Syndicate Liquidators is a five-mana copy of what Amanda Grayson does for four.",
-          "pending": true
+          "why": "Every trigger caused by a permanent entering happens twice: all twelve landfall payoffs, Chief Kyle, Spock's reveal and Janice Rand's land. Doubling the payoffs beats adding one more, and Syndicate Liquidators is a five-mana copy of what Amanda Grayson does for four."
         },
         {
           "in": "Momentary Blink",
           "out": "McCoy, Not a Bricklayer",
-          "why": "Two instant-speed blinks from one card, from hand and again with flashback: each is a Spock reveal and a Janice Rand land, and each answers a removal spell aimed at him. McCoy is a five-mana 0/4 whose team-wide counter happens once.",
-          "pending": true
+          "why": "Two instant-speed blinks from one card, from hand and again with flashback: each is a Spock reveal and a Janice Rand land, and each answers a removal spell aimed at him. McCoy is a five-mana 0/4 whose team-wide counter happens once."
+        },
+        {
+          "in": "Warp Speed",
+          "out": "Cold-Blooded Crew",
+          "why": "Every land enters untapped — the thirteen tapped lands, and every land Spock, Janice Rand, Lt. Arex, the ramp spells and the fetch lands put in tapped — so each extra land drop is mana the same turn. It also finds a basic or Shore Leave Planet, which was Cold-Blooded Crew's main job through landcycling; otherwise the Crew is a six-mana 4/4."
+        },
+        {
+          "in": "Dreamroot Cascade",
+          "out": "Earth, Sector 001",
+          "why": "Green-blue that enters untapped once you control two other lands. Earth always enters tapped and only gains 1 life; nothing in the deck cares that it's a Planet."
+        },
+        {
+          "in": "Overgrown Farmland",
+          "out": "Risa",
+          "why": "Green-white that enters untapped once you control two other lands. Risa always enters tapped and only gains 1 life."
+        },
+        {
+          "in": "Deserted Beach",
+          "out": "Vulcan",
+          "why": "White-blue that enters untapped once you control two other lands. Vulcan always enters tapped and only gains 1 life."
         }
       ],
-      "win_conditions_note": "The core trades Planet Killer and Giant Space Amoeba for interaction; Felidar Retreat and Rampaging Baloths turn land drops into an army instead. The deck kept Syndicate Liquidators, so decks/landing-party.md has 9."
+      "win_conditions_note": "The core trades Planet Killer and Giant Space Amoeba for interaction, and Starfield Vocalist replaces Syndicate Liquidators; Felidar Retreat and Rampaging Baloths turn land drops into an army instead. decks/landing-party.md now matches this count of 8."
     },
     {
       "id": "worlds",
@@ -461,7 +480,7 @@
       "win_conditions_note": "Only lands and cheap utility change after the core trades Planet Killer and Giant Space Amoeba for interaction, leaving 7: within the 5–8 target."
     }
   ],
-  "recommendation": "Take Land Engine (picked). After the review it cuts only cards that do nothing for either engine, so it keeps every piece that makes Spock enter again — Chief Kyle, Temporal Tribulation, The Guardian of Forever, Balance of Terror and Colossal Clone Master — and adds four land-drop enablers that keep working when Spock is answered. The three extra swaps cost about €1.50 and tie the two engines together: Far Traveler and Momentary Blink turn Spock's enter trigger into extra lands through Janice Rand, and Starfield Vocalist doubles both. Transporter Room is the stronger Spock-only build at about €9 if you want to push the blink side later; More Worlds is the cheapest and the safest mana base, but it adds no engine.",
+  "recommendation": "Take Land Engine (picked). After the review it cuts only cards that do nothing for either engine, so it keeps every piece that makes Spock enter again — Chief Kyle, Temporal Tribulation, The Guardian of Forever, Balance of Terror and Colossal Clone Master — and adds four land-drop enablers that keep working when Spock is answered. The seven extra swaps cost about €4.60: Far Traveler and Momentary Blink turn Spock's enter trigger into extra lands through Janice Rand, Starfield Vocalist doubles both, and Warp Speed with three slow lands makes those lands usable mana the turn they enter. Transporter Room is the stronger Spock-only build at about €9 if you want to push the blink side later; More Worlds is the cheapest and the safest mana base, but it adds no engine.",
   "played_deck": "decks/landing-party.md",
   "bracket3": {
     "name": "Bracket 3 package",
@@ -470,20 +489,19 @@
     "budget_eur": 30,
     "description": "Landing Party at bracket 3 means more land drops, a card for every land, a known top card for Spock's free casts, and a way to end the game with the army the lands make.",
     "notes": [
-      "Buy the three Land Engine extras first (Far Traveler, Starfield Vocalist, Momentary Blink, about €1.50 together). This package comes on top of them and doesn't reuse their cuts.",
       "Spock casts the top card for free when its mana value is no more than your number of differently named lands. By the mid-game Avenger of Zendikar and Overwhelming Stampede are free off the top, and Captain Pike and Oracle of Mul Daya show you the top card first.",
       "Wrath of God comes out, which leaves Austere Command as the only board wipe. That suits a deck that wins with its own army, but it is one fewer reset if you fall behind.",
-      "Changed on 2026-11-15: Genesis Device replaced Springheart Nantuko in the package."
+      "Changed on 2026-11-15: Genesis Device replaced Springheart Nantuko. After your CardTrader order (Warp Speed, three slow lands, Stable Wormhole and the three Land Engine extras) went into the deck, two cuts changed: Crop Rotation now replaces Sulu and Avenger of Zendikar replaces Captain Kirk."
     ],
     "win_conditions": {
-      "now": 9,
-      "after": 12
+      "now": 8,
+      "after": 11
     },
     "swaps": [
       {
         "in": "Crop Rotation",
-        "out": "Satyr Wayfinder",
-        "why": "Game Changer. One mana at instant speed trades a land for any land in your library. It is a landfall trigger on an opponent's turn and a new land name for Spock, and it fetches Field of the Dead if you add it. Satyr Wayfinder (17% of Spock decks) is a 1/1 that finds one land."
+        "out": "Lieutenant Hikaru Sulu",
+        "why": "Game Changer. One mana at instant speed trades a land for any land in your library. It is a landfall trigger on an opponent's turn and a new land name for Spock, and it fetches Field of the Dead if you add it. Sulu is a 3/3 that explores when it taps; the deck now has better three-drops."
       },
       {
         "in": "Tatyova, Benthic Druid",
@@ -513,12 +531,12 @@
       {
         "in": "Genesis Device",
         "out": "U.S.S. Farragut, Bold Explorer",
-        "why": "Three mana: it enters and puts a basic land or a Planet (Vulcan, Risa, Earth, Shore Leave Planet) onto the battlefield, which is a landfall trigger and often a new land name for Spock. Later, for {3}{G}{G} at sorcery speed, you sacrifice it and any number of lands and fetch that many lands: every landfall card you control triggers once per land, and you can fetch all different names. U.S.S. Farragut costs six and the creature it puts out goes back to your library."
+        "why": "Three mana: it enters and puts a basic land or Shore Leave Planet onto the battlefield, which is a landfall trigger. Later, for {3}{G}{G} at sorcery speed, you sacrifice it and any number of lands and fetch that many lands: every landfall card you control triggers once per land, and you can fetch all different names. U.S.S. Farragut costs six and the creature it puts out goes back to your library."
       },
       {
         "in": "Avenger of Zendikar",
-        "out": "Cold-Blooded Crew",
-        "why": "A 0/1 Plant for each land you control, then every land puts a +1/+1 counter on every Plant. Seven mana, or free off the top with Spock. Cold-Blooded Crew is in 8% of Spock decks."
+        "out": "Captain Kirk, Boldly Going",
+        "why": "A 0/1 Plant for each land you control, then every land puts a +1/+1 counter on every Plant. Seven mana, or free off the top with Spock. Captain Kirk finds one basic land each time he attacks, which Tatyova and the extra land drops now do better."
       },
       {
         "in": "Overwhelming Stampede",
@@ -538,5 +556,13 @@
         "why": "Game Changer. Once you control seven differently named lands, every land that enters also makes a 2/2 Zombie. This deck is built on different land names, so it turns land drops into an army with no other card needed. Crop Rotation fetches it."
       }
     ]
-  }
+  },
+  "deck_changes": [
+    {
+      "date": "2026-11-15",
+      "in": "Stable Wormhole",
+      "out": "Satyr Wayfinder",
+      "why": "Bought with the same order. Whenever you attack it creates a tapped Planet land token that taps for any colour: a landfall trigger every combat, a new land name for Spock, and ramp. Satyr Wayfinder is a 1/1 that finds one land, in 17% of Spock decks."
+    }
+  ]
 }
