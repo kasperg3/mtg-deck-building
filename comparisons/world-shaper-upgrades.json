@@ -435,10 +435,11 @@
     "date": "2026-11-15",
     "rule": "Bracket 3 (Upgraded) allows up to three Game Changers, no mass land denial, no chained extra turns, and game-ending two-card combos only late in the game.",
     "budget_eur": 30,
-    "description": "The deck already drains hard. What bracket 3 asks for is speed and consistency, so this package adds a second free sacrifice outlet, three ways to make more land drops and mana, a tutor for your best land, cheaper removal and two one-card bursts of sacrifice triggers.",
+    "description": "The deck already drains hard. What bracket 3 asks for is speed and consistency, so this package adds a second free sacrifice outlet, more land drops and mana, a tutor for your best land, cheaper removal and three cards that each turn a pile of lands into sacrifice triggers at once.",
     "notes": [
       "Planetary Annihilation: bracket 3 does not allow mass land denial. The card leaves every player six lands, so most tables accept it, but ask yours. Toxic Deluge (about €4) is the replacement if they don't.",
-      "How it wins faster: with Hearthhull at 8+ charge counters, Sylvan Safekeeper or Zuran Orb turns every land into 2 life from each opponent for no mana. Nahiri's Lithoforming and Planar Engineering do it in one card and put lands back."
+      "How it wins faster: with Hearthhull at 8+ charge counters, Sylvan Safekeeper or Zuran Orb turns every land into 2 life from each opponent for no mana. Genesis Device, Nahiri's Lithoforming and Planar Engineering do it in one card and put lands back.",
+      "Changed on 2026-11-15: Genesis Device replaced Lotus Cobra in the package, and Scapeshift (about €31) is no longer a premium option because Genesis Device does the same thing."
     ],
     "win_conditions": {
       "now": 20,
@@ -456,9 +457,9 @@
         "why": "A second Zuran Orb on a one-mana creature: sacrifice a land for free, at any time, as often as you like, and the target creature gains shroud. In 61% of Hearthhull decks. Loamcrafter Faun (17%) returns a few cards once."
       },
       {
-        "in": "Lotus Cobra",
+        "in": "Genesis Device",
         "out": "Sprouting Goblin",
-        "why": "One mana of any colour for every land that enters, so replayed and fetched lands pay for the rest of the turn. In 63% of Hearthhull decks. Sprouting Goblin's ability costs {R} and a tap for one card; Safekeeper and Zuran Orb sacrifice for free."
+        "why": "Three mana: it enters and puts a basic land onto the battlefield. Later, for {3}{G}{G} at sorcery speed, you sacrifice it and any number of lands and fetch that many lands. With Hearthhull at 8+ counters and eight lands, that is 16 life from each opponent before the landfall triggers. It is Scapeshift's effect for about a tenth of the price. Sprouting Goblin's sacrifice ability costs {R} and a tap for one card."
       },
       {
         "in": "Azusa, Lost but Seeking",
@@ -506,11 +507,6 @@
         "in": "Seedborn Muse",
         "out": "Windgrace's Judgment",
         "why": "Game Changer. It untaps everything you control on each opponent's turn, so Hearthhull's ability (sacrifice a land: draw two cards) works four times a round instead of once, and at 8+ counters every use drains the table."
-      },
-      {
-        "in": "Scapeshift",
-        "out": "Countryside Crusher",
-        "why": "Not a Game Changer, but the strongest single card for this commander: sacrifice any number of lands and fetch that many. With Hearthhull at 8+ counters and eight lands, that is 16 life from each opponent before the landfall triggers."
       }
     ]
   }
