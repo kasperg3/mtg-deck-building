@@ -343,7 +343,7 @@ Count,Name,Set,Deck,Source,Acquired,Notes
 1,Canopy Vista,TRC,Landing Party,Landing Party precon,,
 1,Fortified Village,TRC,Landing Party,Landing Party precon,,
 1,Port Town,TRC,Landing Party,Landing Party precon,,
-1,Satyr Wayfinder,TRC,Landing Party,Landing Party precon,,
+1,Satyr Wayfinder,TRC,Loose,Landing Party precon,,
 1,Growth Spiral,TRC,Landing Party,Landing Party precon,,
 1,Guardian Project,TRC,Landing Party,Landing Party precon,,
 1,Glacial Fortress,TRC,Landing Party,Landing Party precon,,
@@ -365,15 +365,15 @@ Count,Name,Set,Deck,Source,Acquired,Notes
 1,Sodden Verdure,TRC,Landing Party,Landing Party precon,,
 1,Rain-Slicked Copse,TRC,Landing Party,Landing Party precon,,
 1,"Captain Kirk, Boldly Going",TRC,Landing Party,Landing Party precon,,
-1,Cold-Blooded Crew,TRK,Landing Party,Landing Party precon,,
-1,Syndicate Liquidators,TRK,Landing Party,Landing Party precon,,
+1,Cold-Blooded Crew,TRK,Loose,Landing Party precon,,
+1,Syndicate Liquidators,TRK,Loose,Landing Party precon,,
 1,"Christine Chapel, Combat Medic",TRC,Loose,Landing Party precon,,
 1,Starship Enterprise,TRC,Landing Party,Landing Party precon,,
 1,Command Chair,TRC,Loose,Landing Party precon,,
 1,Starfleet Communicator,TRC,Landing Party,Landing Party precon,,
-1,"Earth, Sector 001",TRK,Landing Party,Landing Party precon,,
-1,Risa,TRK,Landing Party,Landing Party precon,,
-1,Vulcan,TRK,Landing Party,Landing Party precon,,
+1,"Earth, Sector 001",TRK,Loose,Landing Party precon,,
+1,Risa,TRK,Loose,Landing Party precon,,
+1,Vulcan,TRK,Loose,Landing Party precon,,
 1,Shore Leave Planet,TRC,Landing Party,Landing Party precon,,
 1,Temporal Tribulation,TRC,Landing Party,Landing Party precon,,
 1,Merciful Mandate,TRC,Loose,Landing Party precon,,
@@ -382,7 +382,7 @@ Count,Name,Set,Deck,Source,Acquired,Notes
 1,Balance of Terror,TRC,Landing Party,Landing Party precon,,
 1,Tribble Cluster,TRC,Loose,Landing Party precon,,
 1,"Sam Kirk, Xenoanthropologist",TRC,Loose,Landing Party precon,,
-1,Lieutenant Nyota Uhura,TRC,Landing Party,Landing Party precon,,
+1,Lieutenant Nyota Uhura,TRC,Loose,Landing Party precon,,
 1,Lieutenant Hikaru Sulu,TRC,Landing Party,Landing Party precon,,
 1,"Janice Rand, Essential Aide",TRC,Landing Party,Landing Party precon,,
 1,Giant Space Amoeba,TRC,Loose,Landing Party precon,,
@@ -398,7 +398,7 @@ Count,Name,Set,Deck,Source,Acquired,Notes
 1,S.S. Botany Bay,TRC,Loose,Landing Party precon,,
 1,Planet Killer,TRC,Loose,Landing Party precon,,
 1,"Pavel Chekov, First Posting",TRC,Landing Party,Landing Party precon,,
-1,"McCoy, Not a Bricklayer",TRC,Landing Party,Landing Party precon,,
+1,"McCoy, Not a Bricklayer",TRC,Loose,Landing Party precon,,
 1,"Lt. Arex, Ever-Adapting",TRC,Landing Party,Landing Party precon,,
 1,Jefferies Tube,TRC,Landing Party,Landing Party precon,,
 1,Swords to Plowshares,,Landing Party,CardTrader,2026-11-09,"for Landing Party (Land Engine), replaces Planet Killer"
@@ -667,3 +667,11 @@ Count,Name,Set,Deck,Source,Acquired,Notes
 1,"Wonder Man, Hollywood Hero",MSH,Loose,Bulk,2026-11-11,
 2,Wood Elves,HOB,Loose,Bulk,2026-11-11,
 1,Woodland Weavemaster,HOB,Loose,Bulk,2026-11-11,
+1,Far Traveler,,Landing Party,CardTrader,2026-11-15,"for Landing Party (Land Engine), replaces Lieutenant Nyota Uhura"
+1,Starfield Vocalist,,Landing Party,CardTrader,2026-11-15,"for Landing Party (Land Engine), replaces Syndicate Liquidators"
+1,Momentary Blink,,Landing Party,CardTrader,2026-11-15,"for Landing Party (Land Engine), replaces McCoy, Not a Bricklayer"
+1,Warp Speed,,Landing Party,CardTrader,2026-11-15,"for Landing Party (Land Engine), replaces Cold-Blooded Crew"
+1,Dreamroot Cascade,,Landing Party,CardTrader,2026-11-15,"for Landing Party (Land Engine), replaces Earth, Sector 001"
+1,Overgrown Farmland,,Landing Party,CardTrader,2026-11-15,"for Landing Party (Land Engine), replaces Risa"
+1,Deserted Beach,,Landing Party,CardTrader,2026-11-15,"for Landing Party (Land Engine), replaces Vulcan"
+1,Stable Wormhole,,Landing Party,CardTrader,2026-11-15,"for Landing Party, replaces Satyr Wayfinder"
