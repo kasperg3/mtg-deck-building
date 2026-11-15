@@ -472,7 +472,8 @@
     "notes": [
       "Buy the three Land Engine extras first (Far Traveler, Starfield Vocalist, Momentary Blink, about €1.50 together). This package comes on top of them and doesn't reuse their cuts.",
       "Spock casts the top card for free when its mana value is no more than your number of differently named lands. By the mid-game Avenger of Zendikar and Overwhelming Stampede are free off the top, and Captain Pike and Oracle of Mul Daya show you the top card first.",
-      "Wrath of God comes out, which leaves Austere Command as the only board wipe. That suits a deck that wins with its own army, but it is one fewer reset if you fall behind."
+      "Wrath of God comes out, which leaves Austere Command as the only board wipe. That suits a deck that wins with its own army, but it is one fewer reset if you fall behind.",
+      "Changed on 2026-11-15: Genesis Device replaced Springheart Nantuko in the package."
     ],
     "win_conditions": {
       "now": 9,
@@ -510,9 +511,9 @@
         "why": "Spock's free cast comes from your library, not your hand, so it triggers Kellan: cast a permanent from your hand with the same or lower mana value for free, or put a land from your hand onto the battlefield. A 3/3 flier with lifelink for three mana."
       },
       {
-        "in": "Springheart Nantuko",
+        "in": "Genesis Device",
         "out": "U.S.S. Farragut, Bold Explorer",
-        "why": "Bestow it on a creature for two mana. After that, every land that enters lets you pay {1}{G} for a token copy of that creature, or gives you a 1/1 Insect if you don't pay. On Scute Swarm, Rampaging Baloths or M'Ress it snowballs. U.S.S. Farragut costs six and the creature it puts out goes back to your library."
+        "why": "Three mana: it enters and puts a basic land or a Planet (Vulcan, Risa, Earth, Shore Leave Planet) onto the battlefield, which is a landfall trigger and often a new land name for Spock. Later, for {3}{G}{G} at sorcery speed, you sacrifice it and any number of lands and fetch that many lands: every landfall card you control triggers once per land, and you can fetch all different names. U.S.S. Farragut costs six and the creature it puts out goes back to your library."
       },
       {
         "in": "Avenger of Zendikar",
