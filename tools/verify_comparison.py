@@ -15,6 +15,12 @@ Checks, per direction, with the core package applied first:
   * win conditions: a direction may not end with fewer than stock (the hand-counted
     "Win conditions" metric) unless it sets "win_conditions_note" saying why;
     warns when the spec doesn't count them at all
+  * played deck: the stock list plus the core, the picked direction (minus swaps
+    marked "pending") and "deck_changes" must reproduce "played_deck" exactly, so a
+    swap made in the deck file can't be left out of the comparison
+  * bracket3 package (swaps against the played deck): cuts in the deck, additions
+    not, 100 cards, colour identity, legality, at most three Game Changers with
+    every premium option, budget, and win conditions not below the current count
 
 Rules text comes from one Scryfall /cards/collection call (<=75 names) and is
 cached in .cache/oracle.json, so repeat runs are offline. --offline uses only
@@ -88,8 +94,14 @@ def main():
 
     core = (spec.get("core") or {}).get("swaps") or []
     swaps = core + [s for d in spec["directions"] for s in d["swaps"]]
-    oracle = load_oracle([s["in"] for s in swaps] + [s["out"] for s in swaps]
-                         + commanders + [n for _, n in cards], offline=args.offline)
+    b3 = spec.get("bracket3") or {}
+    b3_swaps = b3.get("swaps", []) + b3.get("premium", [])
+    changes = spec.get("deck_changes") or []
+    played = parse_deck(ROOT / spec["played_deck"])[1] if spec.get("played_deck") else None
+    extra = b3_swaps + changes
+    oracle = load_oracle([s["in"] for s in swaps + extra] + [s["out"] for s in swaps + extra]
+                         + commanders + [n for _, n in cards] + [n for _, n in played or []],
+                         offline=args.offline)
     index = json.loads((ROOT / ".cache" / "card-index.json").read_text())["cards"]
 
     def info(n):
@@ -189,6 +201,80 @@ def main():
                              "in \"win_conditions_note\"")
             elif wins < stock_wins:
                 warns.append(f"{d['name']}: {WIN_KEY} {stock_wins} -> {wins} (explained in win_conditions_note)")
+
+    # --- the deck as played ------------------------------------------------
+    def counts(pool):
+        out = {}
+        for q, n in pool:
+            out[n] = out.get(n, 0) + q
+        return out
+
+    def swap(pool, s, label):
+        if pool.get(s["out"], 0) < 1:
+            fails.append(f"{label}: cut card not in the deck: {s['out']}")
+        else:
+            pool[s["out"]] -= 1
+        if pool.get(s["in"], 0) > 0 and not is_land(s["in"]):
+            fails.append(f"{label}: card already in the deck: {s['in']}")
+        pool[s["in"]] = pool.get(s["in"], 0) + 1
+
+    if played is None:
+        warns.append("no 'played_deck': cannot check that deck changes are in the comparison")
+    else:
+        picked = [d for d in spec["directions"] if d.get("picked")]
+        want = counts(cards)
+        applied = core + [s for d in picked for s in d["swaps"] if not s.get("pending")] if picked else []
+        for s in applied + (changes if picked else []):
+            swap(want, s, "played deck")
+        have = counts(played)
+        missing = sorted(n for n in have if have[n] > want.get(n, 0))
+        surplus = sorted(n for n in want if want[n] > have.get(n, 0))
+        if missing or surplus:
+            fails.append(f"{spec['played_deck']} differs from the picked direction plus deck_changes: "
+                         f"deck has {missing or 'nothing extra'}, comparison has {surplus or 'nothing extra'}. "
+                         "Add the swap to \"deck_changes\" (or mark an unbought swap \"pending\").")
+        pend = [s["in"] for d in picked for s in d["swaps"] if s.get("pending")]
+        print(f"played deck: {spec['played_deck']} = stock + {len(applied)} swaps + {len(changes)} later change(s)"
+              + (f" · {len(pend)} pending" if pend else ""))
+
+    # --- bracket 3 package -------------------------------------------------
+    if b3 and played is not None:
+        def gcs(pool):
+            return sorted(n for n, q in pool.items() if q > 0 and (index.get(key(n)) or {}).get("game_changer"))
+
+        pool = counts(played)
+        for s in b3.get("swaps", []):
+            swap(pool, s, b3["name"])
+        after_core = dict(pool)
+        for s in b3.get("premium", []):
+            swap(pool, s, f"{b3['name']} (premium)")
+        for label, pl in (("package", after_core), ("package + premium", pool)):
+            n = sum(pl.values()) + len(commanders)
+            if n != 100:
+                fails.append(f"{b3['name']}: {n} cards after the {label}")
+        for s in b3_swaps:
+            card = info(s["in"])
+            if not card:
+                fails.append(f"cannot read rules text for '{s['in']}'")
+                continue
+            if set(card["color_identity"]) - allowed:
+                fails.append(f"{s['in']} is outside the deck's colour identity ({''.join(card['color_identity'])})")
+            if card["commander"] not in ("legal", "not_legal"):
+                fails.append(f"{s['in']} is '{card['commander']}' in Commander")
+        if len(gcs(pool)) > 3:
+            fails.append(f"{b3['name']}: {len(gcs(pool))} Game Changers with every option ({', '.join(gcs(pool))}); bracket 3 allows 3")
+        cost = sum((index.get(key(s["in"])) or {}).get("eur") or 0 for s in b3.get("swaps", []) if not s.get("owned"))
+        prem = sum((index.get(key(s["in"])) or {}).get("eur") or 0 for s in b3.get("premium", []) if not s.get("owned"))
+        if b3.get("budget_eur") is not None and cost > b3["budget_eur"]:
+            fails.append(f"{b3['name']}: €{cost:.2f} over budget €{b3['budget_eur']}")
+        wc = b3.get("win_conditions") or {}
+        if "now" not in wc or "after" not in wc:
+            warns.append(f"{b3['name']}: no win_conditions now/after count")
+        elif wc["after"] < wc["now"]:
+            fails.append(f"{b3['name']}: win conditions drop from {wc['now']} to {wc['after']}")
+        print(f"{b3['name']:<22} {sum(after_core.values()) + len(commanders):>3} cards · {len(b3.get('swaps', []))} swaps "
+              f"+ {len(b3.get('premium', []))} premium · Game Changers {len(gcs(counts(played)))} -> "
+              f"{len(gcs(after_core))} -> {len(gcs(pool))} · €{cost:.2f} (+€{prem:.2f} premium)")
 
     print()
     print(f"=== {len(fails)} problem(s) ===")

@@ -269,12 +269,16 @@ def main():
     swap_names = [n for s in core["swaps"] for n in (s["in"], s["out"])]
     for d in spec["directions"]:
         swap_names += [n for s in d["swaps"] for n in (s["in"], s["out"])]
+    b3 = spec.get("bracket3")
+    b3_swaps = (b3 or {}).get("swaps", []) + (b3 or {}).get("premium", [])
+    swap_names += [n for s in b3_swaps + spec.get("deck_changes", []) for n in (s["in"], s["out"])]
+    played = parse_deck(ROOT / spec["played_deck"])[1] if spec.get("played_deck") else stock
 
     index = load_index(args.refresh, args.max_age_days)
     cards = index["cards"]
-    fetch_cards(commanders + [n for _, n in stock] + swap_names, cards)
+    fetch_cards(commanders + [n for _, n in stock + played] + swap_names, cards)
     problems = [f"card not found on Scryfall: {n}" for n in
-                dict.fromkeys(commanders + [n for _, n in stock] + swap_names) if key(n) not in cards]
+                dict.fromkeys(commanders + [n for _, n in stock + played] + swap_names) if key(n) not in cards]
 
     directions = []
     for d in spec["directions"]:
@@ -300,6 +304,33 @@ def main():
             problems += [f"{d['name']}: cards in cost {sym}{d['cost_' + cur]:.2f}, over the {sym}{budget} budget"
                          for d in directions if d["cost_" + cur] > budget]
 
+    # Bracket 3 package: swaps against the deck as played, shown at the bottom of the page
+    if b3:
+        def is_gc(n):
+            return bool((cards.get(key(n)) or {}).get("game_changer"))
+
+        def cost(swaps, cur):
+            return total([s["in"] for s in swaps if not s.get("owned")], cards, cur)
+
+        after, probs = apply_swaps(played, b3["swaps"])
+        _, probs_all = apply_swaps(played, b3_swaps)
+        problems += [f"{b3['name']}: {p}" for p in dict.fromkeys(probs + probs_all)]
+        gc_now = [n for _, n in played if is_gc(n)]
+        b3 = {**b3,
+              "cost_usd": cost(b3["swaps"], "usd"), "cost_eur": cost(b3["swaps"], "eur"),
+              "premium_cost_usd": cost(b3.get("premium", []), "usd"),
+              "premium_cost_eur": cost(b3.get("premium", []), "eur"),
+              "gc_now": gc_now,
+              "gc_core": [s["in"] for s in b3["swaps"] if is_gc(s["in"])],
+              "gc_premium": [s["in"] for s in b3.get("premium", []) if is_gc(s["in"])],
+              "gc_out": [s["out"] for s in b3_swaps if is_gc(s["out"])],
+              "avg_now": curve(played, cards)["average"], "avg_after": curve(after, cards)["average"]}
+        gc_total = len(gc_now) + len(b3["gc_core"]) + len(b3["gc_premium"]) - len(b3["gc_out"])
+        if gc_total > 3:
+            problems.append(f"{b3['name']}: {gc_total} Game Changers with every option, bracket 3 allows 3")
+        if b3.get("budget_eur") is not None and b3["cost_eur"] > b3["budget_eur"]:
+            problems.append(f"{b3['name']}: cards in cost €{b3['cost_eur']:.2f}, over the €{b3['budget_eur']} budget")
+
     for p in dict.fromkeys(problems):
         print(f"warning: {p}", file=sys.stderr)
 
@@ -309,6 +340,7 @@ def main():
         **spec,
         "core": core,
         "directions": directions,
+        "bracket3": b3,
         "commanders": commanders,
         "stock_curve": curve(stock, cards),
         "cards": page_cards,
@@ -326,6 +358,10 @@ def main():
         gc = f" · Game Changers in: {', '.join(d['game_changers'])}" if d["game_changers"] else ""
         print(f"  {d['name']}: avg MV {d['curve']['average']} · "
               f"cards in ${d['cost_usd']:.2f} / €{d['cost_eur']:.2f}{gc}")
+    if b3:
+        print(f"  {b3['name']}: avg MV {b3['avg_after']} · cards in ${b3['cost_usd']:.2f} / €{b3['cost_eur']:.2f} · "
+              f"premium options ${b3['premium_cost_usd']:.2f} / €{b3['premium_cost_eur']:.2f} · "
+              f"Game Changers {len(b3['gc_now'])} now, +{len(b3['gc_core'])} package, +{len(b3['gc_premium'])} premium")
 
 
 if __name__ == "__main__":

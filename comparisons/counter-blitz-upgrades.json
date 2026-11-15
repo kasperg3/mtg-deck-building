@@ -444,5 +444,98 @@
       }
     }
   ],
-  "recommendation": "Cheer Every Turn fixes the deck's one real weakness, which is how reliably Cheer fires. It's also cheap and lowers the curve. Go Tall Hydras hits harder but leans on a few big creatures that are easier to answer. All three stay around €20."
+  "recommendation": "Cheer Every Turn fixes the deck's one real weakness, which is how reliably Cheer fires. It's also cheap and lowers the curve. Go Tall Hydras hits harder but leans on a few big creatures that are easier to answer. All three stay around €20.",
+  "played_deck": "decks/counter-blitz.md",
+  "deck_changes": [
+    {
+      "date": "2026-11-11",
+      "in": "Loading Zone",
+      "out": "Bane of Progress",
+      "why": "Loading Zone doubles every kind of counter put on your creatures and came from the Bulk pile. Bane of Progress destroyed about 17 of the deck's own artifacts and enchantments."
+    },
+    {
+      "date": "2026-11-11",
+      "in": "Forgotten Ancient",
+      "out": "Summoner's Sending",
+      "why": "Back from the precon after the win-condition review: it grows on every spell and hands its counters to the creatures that finish games. Summoner's Sending was the lowest-impact card left."
+    }
+  ],
+  "bracket3": {
+    "name": "Bracket 3 package",
+    "date": "2026-11-15",
+    "rule": "Bracket 3 (Upgraded) allows up to three Game Changers, no mass land denial, no chained extra turns, and game-ending two-card combos only late in the game.",
+    "budget_eur": 30,
+    "description": "Counter Blitz is already bracket 3 on paper, because Farewell is a Game Changer. This package makes it play like one: four more cards that make the whole team evasive or bigger, a card-draw engine, and cheap removal, counterspells and protection.",
+    "notes": [
+      "The deck leaned on Herald of Secret Streams and Chocobo Knights to finish. With Abzan Falconer, Champion of Lambholt, Cathars' Crusade and Brokers Ascendancy, one removal spell no longer stops the attack."
+    ],
+    "win_conditions": {
+      "now": 6,
+      "after": 10
+    },
+    "swaps": [
+      {
+        "in": "Abzan Falconer",
+        "out": "Lord Jyscal Guado",
+        "why": "Every creature you control with a +1/+1 counter has flying: a second Herald of Secret Streams for three mana. Lord Jyscal Guado (18% of Tidus decks) is a 2/1 flier that makes a Clue."
+      },
+      {
+        "in": "Champion of Lambholt",
+        "out": "Scholar of New Horizons",
+        "why": "It grows whenever another creature enters, and creatures with less power than it can't block your creatures. With your counter boosters it is soon the biggest creature at the table, so your team is unblockable in practice. Scholar of New Horizons can only find five lands in this deck."
+      },
+      {
+        "in": "Cathars' Crusade",
+        "out": "Summon: Valefor",
+        "why": "Every creature that enters puts a +1/+1 counter on each creature you control. Hardened Scales, Conclave Mentor, Kami of Whispered Hopes and Loading Zone add to every one of those counters. Summon: Valefor is five mana for a temporary tempo play."
+      },
+      {
+        "in": "Brokers Ascendancy",
+        "out": "Path of Discovery",
+        "why": "A +1/+1 counter on each of your creatures at every one of your end steps. That alone switches on Herald, Falconer, Chocobo Knights and Cheer for the whole team. Path of Discovery (20%) costs four and sometimes gives a land instead of a counter."
+      },
+      {
+        "in": "Innkeeper's Talent",
+        "out": "Fight Rigging",
+        "why": "Level 1 puts a counter on a creature each combat, as Fight Rigging does. Level 2 gives everything of yours with counters ward {1}, and level 3 doubles every counter you put on anything. Two mana to start."
+      },
+      {
+        "in": "Toski, Bearer of Secrets",
+        "out": "Pull from Tomorrow",
+        "why": "Draw a card whenever a creature you control deals combat damage to a player: once per creature, not once a turn like Cheer. Indestructible and can't be countered. Pull from Tomorrow (20%) draws once."
+      },
+      {
+        "in": "Arwen, Mortal Queen",
+        "out": "Tireless Tracker",
+        "why": "She enters with an indestructible counter. For {1} she spends it: another creature is indestructible this turn and both get a +1/+1 and a lifelink counter. Tidus can also move her indestructible counter onto the creature you most need to keep. In 45% of Tidus decks; Tireless Tracker is in 16%."
+      },
+      {
+        "in": "Unbreakable Formation",
+        "out": "Gatta and Luzzu",
+        "why": "Your whole team is indestructible until end of turn. Cast in your main phase it also puts a +1/+1 counter on each creature and gives vigilance. Gatta and Luzzu protects one creature, from damage only."
+      },
+      {
+        "in": "Swords to Plowshares",
+        "out": "Destroy Evil",
+        "why": "One mana exiles any creature. Destroy Evil can't touch small utility creatures. In 45% of Tidus decks."
+      },
+      {
+        "in": "Counterspell",
+        "out": "Endless Detour",
+        "why": "Two mana counters anything. Endless Detour costs three colours and the card comes back within a turn or two."
+      }
+    ],
+    "premium": [
+      {
+        "in": "Cyclonic Rift",
+        "out": "Yuna's Whistle",
+        "why": "Game Changer. Overloaded at the end of the turn before yours, it returns every nonland permanent your opponents control, and your creatures attack with nothing in the way."
+      },
+      {
+        "in": "Akroma's Will",
+        "out": "Rampant Rejuvenator",
+        "why": "Not a Game Changer. With Tidus on the battlefield you choose both modes: flying, vigilance and double strike, plus lifelink, indestructible and protection from each colour until end of turn. It wins the game on your turn or saves the board on theirs."
+      }
+    ]
+  }
 }

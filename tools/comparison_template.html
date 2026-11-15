@@ -91,6 +91,9 @@
   .card .name-fallback { aspect-ratio: 488/680; border: 1px dashed var(--border); border-radius: 8px; display: flex; align-items: center; justify-content: center; text-align: center; padding: 10px; font-weight: 600; }
   .totals { font-size: 14px; margin-top: 10px; }
   .pill.picked { background: var(--in-bg); color: var(--in); font-weight: 600; }
+  .pill.gc { background: var(--star); color: #fff; font-weight: 600; }
+  .swap .flags { margin-top: 8px; display: flex; flex-wrap: wrap; gap: 6px; }
+  .swap .flags .pill { margin-left: 0; }
   details.buy { margin-top: 16px; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; }
   details.buy[open] { border-color: var(--accent); }
   details.buy summary { cursor: pointer; padding: 12px 16px; font-weight: 600; list-style: none; display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
@@ -170,9 +173,37 @@
   }
 
   function swapsHTML(swaps) {
+    const flags = s => [(card(s.in) || {}).game_changer && `<span class="pill gc">Game Changer</span>`,
+      s.owned && `<span class="pill picked">already owned</span>`,
+      s.pending && `<span class="pill">not bought yet</span>`,
+      s.date && `<span class="pill">${esc(s.date)}</span>`].filter(Boolean).join("");
     return `<div class="swaps">${swaps.map(s => `
       <div class="swap"><div class="pair">${cardHTML(s.out, "out")}<div class="arrow">→</div>${cardHTML(s.in, "in")}</div>
+      ${flags(s) ? `<div class="flags">${flags(s)}</div>` : ""}
       ${s.why ? `<div class="why">${esc(s.why)}</div>` : ""}</div>`).join("")}</div>`;
+  }
+
+  // Plain buy list (used by the bracket 3 package): price table + copyable text
+  function listHTML(id, title, swaps, open) {
+    const items = swaps.filter(s => !s.owned).map(s => ({ ...s, p: price(s.in) })).sort((a, b) => (b.p.eur ?? 0) - (a.p.eur ?? 0));
+    const sum = cur => items.reduce((t, s) => t + (s.p[cur] ?? 0), 0);
+    return `<details class="buy"${open ? " open" : ""}>
+      <summary><span class="t">🛒 ${esc(title)}: ${items.length} cards</span><span>${both(sum("usd"), sum("eur"))}</span></summary>
+      <div class="body">
+        <div class="table-scroll"><table>
+          <tr><th>Card</th><th class="num">EUR</th><th class="num">USD</th><th>Replaces</th></tr>
+          ${items.map(s => `<tr><td>${esc(s.in)}${(card(s.in) || {}).game_changer ? ` <span class="muted small">(Game Changer)</span>` : ""}</td>
+            <td class="num" title="${esc(s.p.eur_set || "")}">${money(s.p.eur, "€")}</td>
+            <td class="num" title="${esc(s.p.usd_set || "")}">${money(s.p.usd, "$")}</td>
+            <td class="small muted">${esc(s.out)}</td></tr>`).join("")}
+          <tr><td><b>Total</b></td><td class="num"><b>${money(sum("eur"), "€")}</b></td><td class="num"><b>${money(sum("usd"), "$")}</b></td><td></td></tr>
+        </table></div>
+        <div>
+          <div class="copy-row"><button class="copy" data-copy="${id}">Copy list</button><span class="copied" hidden>Copied ✓</span></div>
+          <textarea id="${id}" readonly>${esc(items.map(s => `1 ${s.in}`).join("\n"))}</textarea>
+          <p class="small muted" style="margin-top:6px">Cardmarket: Wants → create a Magic list → <b>Add Deck List</b> → paste → <b>Add</b>, then run the <b>Shopping Wizard</b>.</p>
+        </div>
+      </div></details>`;
   }
 
   // Buy list for one direction (core package + its own swaps), Cardmarket Wants format
@@ -227,7 +258,9 @@
 
   h += `<nav class="jump"><a href="#analysis">Stock analysis</a><a href="#compare">Comparison</a>
     ${D.core && D.core.swaps.length ? `<a href="#core">${esc(D.core.name)}</a>` : ""}
-    ${dirs.map(d => `<a href="#${slug(d.id || d.name)}">${esc(d.name)}</a>`).join("")}</nav>`;
+    ${dirs.map(d => `<a href="#${slug(d.id || d.name)}">${esc(d.name)}</a>`).join("")}
+    ${(D.deck_changes || []).length ? `<a href="#changes">Later changes</a>` : ""}
+    ${D.bracket3 ? `<a href="#bracket3">${esc(D.bracket3.name)}</a>` : ""}</nav>`;
 
   // Stock analysis
   const A = D.analysis || {};
@@ -269,6 +302,39 @@
       <h2 style="margin:0">${esc(d.name)}${d.picked ? `<span class="pill picked">✓ picked</span>` : ""}${d.recommended ? `<span class="pill rec">★ recommended</span>` : ""}</h2>
       <div class="totals">Direction swaps + core: <b>${both(d.cost_usd, d.cost_eur)}</b> · avg MV ${d.curve.average}</div></div>
       ${d.pitch ? `<p class="muted">${esc(d.pitch)}</p>` : ""}${d.win_conditions_note ? `<p class="small"><b>Win conditions:</b> ${esc(d.win_conditions_note)}</p>` : ""}${buyHTML(d)}${htpHTML(d)}${swapsHTML(d.swaps)}</section>`;
+  }
+
+  // Changes made to the played deck after the picked direction was applied
+  if ((D.deck_changes || []).length) {
+    h += `<section class="dir" id="changes"><div class="dir-head"><h2 style="margin:0">Later changes<span class="pill picked">✓ in the deck</span></h2></div>
+      <p class="muted">Swaps made in ${esc(D.played_deck || "the deck")} after the picked direction was applied. The picked direction plus these is the deck as you play it.</p>
+      ${swapsHTML(D.deck_changes)}</section>`;
+  }
+
+  // Bracket 3 package: against the deck as played, always the last section
+  const B = D.bracket3;
+  if (B) {
+    const gcAll = B.gc_now.length + B.gc_core.length + B.gc_premium.length - B.gc_out.length;
+    const wc = B.win_conditions || {};
+    h += `<section class="dir" id="bracket3"><div class="dir-head">
+      <h2 style="margin:0">${esc(B.name)}<span class="pill gc">up to 3 Game Changers</span></h2>
+      <div class="totals">Package: <b>${both(B.cost_usd, B.cost_eur)}</b>${B.budget_eur != null ? ` · budget €${B.budget_eur}` : ""} · avg MV ${B.avg_now} → ${B.avg_after}</div></div>
+      <p class="muted">${esc(B.description || "")}</p>
+      <p class="small muted">${esc(B.rule || "")} These swaps apply to ${esc(D.played_deck || D.deck)}, the deck as you play it now${B.date ? ` (${esc(B.date)})` : ""}.</p>
+      <div class="panel table-scroll" style="margin:12px 0"><table>
+        <tr><th></th><th class="num">Now</th><th class="num">With the package</th><th class="num">With every premium option</th></tr>
+        <tr><td>Game Changers (bracket 3 allows 3)</td><td class="num">${B.gc_now.length}</td><td class="num">${B.gc_now.length + B.gc_core.length}</td><td class="num">${gcAll}</td></tr>
+        <tr><td>Which</td><td class="small muted">${esc(B.gc_now.join(", ") || "none")}</td><td class="small muted">${esc([...B.gc_now, ...B.gc_core].join(", ") || "none")}</td><td class="small muted">${esc([...B.gc_now, ...B.gc_core, ...B.gc_premium].filter(n => !B.gc_out.includes(n)).join(", ") || "none")}</td></tr>
+        ${wc.now != null ? `<tr><td>Win conditions</td><td class="num">${esc(wc.now)}</td><td class="num">${esc(wc.after)}</td><td class="num"></td></tr>` : ""}
+        <tr><td>Cost of cards in</td><td class="num">—</td><td class="num"><b>${both(B.cost_usd, B.cost_eur)}</b></td><td class="num">${both(B.cost_usd + B.premium_cost_usd, B.cost_eur + B.premium_cost_eur)}</td></tr>
+      </table></div>
+      ${(B.notes || []).length ? `<ul class="notes">${B.notes.map(n => `<li>${esc(n)}</li>`).join("")}</ul>` : ""}
+      ${listHTML("buy-bracket3", "Buy list", B.swaps, true)}
+      ${swapsHTML(B.swaps)}
+      ${(B.premium || []).length ? `<h3 style="margin:24px 0 4px">Premium options</h3>
+        <p class="muted">Stronger and more expensive. Each one is optional and comes with its own cut. Together: ${both(B.premium_cost_usd, B.premium_cost_eur)}.</p>
+        ${listHTML("buy-bracket3-premium", "Premium buy list", B.premium, false)}${swapsHTML(B.premium)}` : ""}
+      </section>`;
   }
 
   h += `<footer>Card images and prices via <a href="https://scryfall.com" target="_blank" rel="noopener">Scryfall</a>. Generated ${esc(D.generated)}. Rebuild with <code>python3 tools/build_comparison.py &lt;spec&gt;.json</code>.</footer>`;

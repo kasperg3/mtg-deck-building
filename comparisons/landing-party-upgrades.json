@@ -360,17 +360,20 @@
         {
           "in": "Far Traveler",
           "out": "Lieutenant Nyota Uhura",
-          "why": "Spock gains 'at the beginning of your end step, blink a tapped creature you control': every attack is followed by a second Spock trigger and another land from Janice Rand, for no mana. It's a Background, but in the 99 it is a plain enchantment. Uhura spends {4} and a tap every turn on a random instant or sorcery from an opponent's library."
+          "why": "Spock gains 'at the beginning of your end step, blink a tapped creature you control': every attack is followed by a second Spock trigger and another land from Janice Rand, for no mana. It's a Background, but in the 99 it is a plain enchantment. Uhura spends {4} and a tap every turn on a random instant or sorcery from an opponent's library.",
+          "pending": true
         },
         {
           "in": "Starfield Vocalist",
           "out": "Syndicate Liquidators",
-          "why": "Every trigger caused by a permanent entering happens twice: all twelve landfall payoffs, Chief Kyle, Spock's reveal and Janice Rand's land. Doubling the payoffs beats adding one more, and Syndicate Liquidators is a five-mana copy of what Amanda Grayson does for four."
+          "why": "Every trigger caused by a permanent entering happens twice: all twelve landfall payoffs, Chief Kyle, Spock's reveal and Janice Rand's land. Doubling the payoffs beats adding one more, and Syndicate Liquidators is a five-mana copy of what Amanda Grayson does for four.",
+          "pending": true
         },
         {
           "in": "Momentary Blink",
           "out": "McCoy, Not a Bricklayer",
-          "why": "Two instant-speed blinks from one card, from hand and again with flashback: each is a Spock reveal and a Janice Rand land, and each answers a removal spell aimed at him. McCoy is a five-mana 0/4 whose team-wide counter happens once."
+          "why": "Two instant-speed blinks from one card, from hand and again with flashback: each is a Spock reveal and a Janice Rand land, and each answers a removal spell aimed at him. McCoy is a five-mana 0/4 whose team-wide counter happens once.",
+          "pending": true
         }
       ],
       "win_conditions_note": "The core trades Planet Killer and Giant Space Amoeba for interaction; Felidar Retreat and Rampaging Baloths turn land drops into an army instead. The deck kept Syndicate Liquidators, so decks/landing-party.md has 9."
@@ -458,5 +461,81 @@
       "win_conditions_note": "Only lands and cheap utility change after the core trades Planet Killer and Giant Space Amoeba for interaction, leaving 7: within the 5–8 target."
     }
   ],
-  "recommendation": "Take Land Engine (picked). After the review it cuts only cards that do nothing for either engine, so it keeps every piece that makes Spock enter again — Chief Kyle, Temporal Tribulation, The Guardian of Forever, Balance of Terror and Colossal Clone Master — and adds four land-drop enablers that keep working when Spock is answered. The three extra swaps cost about €1.50 and tie the two engines together: Far Traveler and Momentary Blink turn Spock's enter trigger into extra lands through Janice Rand, and Starfield Vocalist doubles both. Transporter Room is the stronger Spock-only build at about €9 if you want to push the blink side later; More Worlds is the cheapest and the safest mana base, but it adds no engine."
+  "recommendation": "Take Land Engine (picked). After the review it cuts only cards that do nothing for either engine, so it keeps every piece that makes Spock enter again — Chief Kyle, Temporal Tribulation, The Guardian of Forever, Balance of Terror and Colossal Clone Master — and adds four land-drop enablers that keep working when Spock is answered. The three extra swaps cost about €1.50 and tie the two engines together: Far Traveler and Momentary Blink turn Spock's enter trigger into extra lands through Janice Rand, and Starfield Vocalist doubles both. Transporter Room is the stronger Spock-only build at about €9 if you want to push the blink side later; More Worlds is the cheapest and the safest mana base, but it adds no engine.",
+  "played_deck": "decks/landing-party.md",
+  "bracket3": {
+    "name": "Bracket 3 package",
+    "date": "2026-11-15",
+    "rule": "Bracket 3 (Upgraded) allows up to three Game Changers, no mass land denial, no chained extra turns, and game-ending two-card combos only late in the game.",
+    "budget_eur": 30,
+    "description": "Landing Party at bracket 3 means more land drops, a card for every land, a known top card for Spock's free casts, and a way to end the game with the army the lands make.",
+    "notes": [
+      "Buy the three Land Engine extras first (Far Traveler, Starfield Vocalist, Momentary Blink, about €1.50 together). This package comes on top of them and doesn't reuse their cuts.",
+      "Spock casts the top card for free when its mana value is no more than your number of differently named lands. By the mid-game Avenger of Zendikar and Overwhelming Stampede are free off the top, and Captain Pike and Oracle of Mul Daya show you the top card first.",
+      "Wrath of God comes out, which leaves Austere Command as the only board wipe. That suits a deck that wins with its own army, but it is one fewer reset if you fall behind."
+    ],
+    "win_conditions": {
+      "now": 9,
+      "after": 12
+    },
+    "swaps": [
+      {
+        "in": "Crop Rotation",
+        "out": "Satyr Wayfinder",
+        "why": "Game Changer. One mana at instant speed trades a land for any land in your library. It is a landfall trigger on an opponent's turn and a new land name for Spock, and it fetches Field of the Dead if you add it. Satyr Wayfinder (17% of Spock decks) is a 1/1 that finds one land."
+      },
+      {
+        "in": "Tatyova, Benthic Druid",
+        "out": "Harmonize",
+        "why": "Draw a card and gain 1 life for every land that enters. With Exploration, Azusa or Loot that is three or four cards a turn, every turn. In 47% of Spock decks."
+      },
+      {
+        "in": "Captain Pike, Fullness of Time",
+        "out": "T'Pring, Never Parted",
+        "why": "You may look at the top card of your library at any time and play lands from the top, so you know what Spock will reveal and can play a land out of the way first. Its power and toughness equal your number of differently named lands. T'Pring (23%) is a one-off fight."
+      },
+      {
+        "in": "Oracle of Mul Daya",
+        "out": "Jefferies Tube",
+        "why": "An extra land drop every turn, lands playable from the top of your library, and the top card always revealed: more land drops and the top-card knowledge Spock needs."
+      },
+      {
+        "in": "Captain Kathryn Janeway",
+        "out": "Chief Montgomery Scott",
+        "why": "Another extra land drop, and every creature that enters explores: a land goes to your hand, anything else gives the creature a +1/+1 counter. Tokens from M'Ress, Scute Swarm and Felidar Retreat explore too. Chief Scott's ability costs six mana."
+      },
+      {
+        "in": "Kellan, the Kid",
+        "out": "Starfleet Communicator",
+        "why": "Spock's free cast comes from your library, not your hand, so it triggers Kellan: cast a permanent from your hand with the same or lower mana value for free, or put a land from your hand onto the battlefield. A 3/3 flier with lifelink for three mana."
+      },
+      {
+        "in": "Springheart Nantuko",
+        "out": "U.S.S. Farragut, Bold Explorer",
+        "why": "Bestow it on a creature for two mana. After that, every land that enters lets you pay {1}{G} for a token copy of that creature, or gives you a 1/1 Insect if you don't pay. On Scute Swarm, Rampaging Baloths or M'Ress it snowballs. U.S.S. Farragut costs six and the creature it puts out goes back to your library."
+      },
+      {
+        "in": "Avenger of Zendikar",
+        "out": "Cold-Blooded Crew",
+        "why": "A 0/1 Plant for each land you control, then every land puts a +1/+1 counter on every Plant. Seven mana, or free off the top with Spock. Cold-Blooded Crew is in 8% of Spock decks."
+      },
+      {
+        "in": "Overwhelming Stampede",
+        "out": "Wrath of God",
+        "why": "Until end of turn your creatures get +X/+X and trample, where X is the greatest power among them. With a board of Officers, Insects and Beasts it ends the game, and Spock can cast it for free. Wrath of God destroys your own army."
+      },
+      {
+        "in": "Krosan Verge",
+        "out": "Temple of the False God",
+        "why": "A new land name that later sacrifices itself for a Forest and a Plains: two landfall triggers, and it can fetch Canopy Vista, Scattered Groves or Irrigated Farmland. Temple of the False God makes no mana until you control five lands."
+      }
+    ],
+    "premium": [
+      {
+        "in": "Field of the Dead",
+        "out": "Mosswort Bridge",
+        "why": "Game Changer. Once you control seven differently named lands, every land that enters also makes a 2/2 Zombie. This deck is built on different land names, so it turns land drops into an army with no other card needed. Crop Rotation fetches it."
+      }
+    ]
+  }
 }
