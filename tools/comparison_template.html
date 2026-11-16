@@ -330,7 +330,7 @@
         <tr><td>Cost of cards in</td><td class="num">—</td><td class="num"><b>${both(B.cost_usd, B.cost_eur)}</b></td><td class="num">${both(B.cost_usd + B.premium_cost_usd, B.cost_eur + B.premium_cost_eur)}</td></tr>
       </table></div>
       ${(B.notes || []).length ? `<ul class="notes">${B.notes.map(n => `<li>${esc(n)}</li>`).join("")}</ul>` : ""}
-      ${listHTML("buy-bracket3", "Buy list", B.swaps, true)}
+      ${listHTML("buy-bracket3", B.applied ? "Bought" : "Buy list", B.swaps, !B.applied && !B.declined)}
       ${swapsHTML(B.swaps)}
       ${(B.premium || []).length ? `<h3 style="margin:24px 0 4px">Premium options</h3>
         <p class="muted">Stronger and more expensive. Each one is optional and comes with its own cut. Together: ${both(B.premium_cost_usd, B.premium_cost_eur)}.</p>
