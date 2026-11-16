@@ -14,7 +14,7 @@
 ## Creatures (23)
 1 Lotus Cobra
 1 Augur of Autumn
-1 Azusa, Lost but Seeking
+1 Ka-Zar of the Savage Land
 1 Lieutenant Hikaru Sulu
 1 Loot, Exuberant Explorer
 1 Mole Man, Moloid Master
@@ -140,3 +140,4 @@
   - +Deserted Beach / −Vulcan
   - +Stable Wormhole / −Satyr Wayfinder (not part of Land Engine: a Planet land token on every attack)
 - 2026-11-16 — +Joint Exploration / −The Guardian of Forever (the last Land Engine swap, after comparing with The Command Zone's upgrade). The deck stays at bracket 2; the bracket 3 package is not planned.
+- 2026-11-16 — +Ka-Zar of the Savage Land / −Azusa, Lost but Seeking: the one Azusa moves to World Shaper, which gets cards first. Ka-Zar (from the Bulk pile) lets you play lands from the top of the library and shows the card Spock will reveal.

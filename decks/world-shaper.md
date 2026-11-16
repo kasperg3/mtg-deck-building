@@ -136,3 +136,4 @@
   - +Nahiri's Lithoforming / −Tireless Tracker
   - +Planar Engineering / −Uurg, Spawn of Turg
   - +Avenger of Zendikar / −Multani, Yavimaya's Avatar
+- 2026-11-16 — Azusa, Lost but Seeking comes from Landing Party instead of a new copy.

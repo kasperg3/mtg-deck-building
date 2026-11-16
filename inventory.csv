@@ -406,7 +406,7 @@ Count,Name,Set,Deck,Source,Acquired,Notes
 1,Krosan Grip,,Landing Party,CardTrader,2026-11-09,"for Landing Party (Land Engine), replaces Giant Space Amoeba"
 1,Counterspell,,Landing Party,CardTrader,2026-11-09,"for Landing Party (Land Engine), replaces Echo of Eons"
 1,"Loot, Exuberant Explorer",,Landing Party,CardTrader,2026-11-09,"for Landing Party (Land Engine), replaces Fleet Captain Christopher Pike"
-1,"Azusa, Lost but Seeking",,Landing Party,CardTrader,2026-11-09,"for Landing Party (Land Engine), replaces Tribble Cluster"
+1,"Azusa, Lost but Seeking",,World Shaper,CardTrader,2026-11-09,"bought for Landing Party (Land Engine); moved to World Shaper (Bracket 3 package) on 2026-11-16, replaces Juri, Master of the Revue"
 1,Wayward Swordtooth,,Landing Party,CardTrader,2026-11-09,"for Landing Party (Land Engine), replaces Sam Kirk, Xenoanthropologist"
 1,"Mole Man, Moloid Master",,Landing Party,CardTrader,2026-11-09,"for Landing Party (Land Engine), replaces S.S. Botany Bay"
 1,Felidar Retreat,,Landing Party,CardTrader,2026-11-09,"for Landing Party (Land Engine), replaces Merciful Mandate"
@@ -538,7 +538,7 @@ Count,Name,Set,Deck,Source,Acquired,Notes
 2,Iron Hills Stalwart,HOB,Loose,Bulk,2026-11-11,
 7,Island,HOB,Loose,Bulk,2026-11-11,
 1,Island,DOM,Loose,Bulk,2026-11-11,
-1,Ka-Zar of the Savage Land,MSH,Loose,Bulk,2026-11-11,
+1,Ka-Zar of the Savage Land,MSH,Landing Party,Bulk,2026-11-11,
 1,Kessig Flamebreather,VOW,Loose,Bulk,2026-11-15,
 1,Key to the Side-Door,HOB,Loose,Bulk,2026-11-11,
 1,Kingpin's Enforcers,MSH,Loose,Bulk,2026-11-11,
@@ -729,7 +729,6 @@ Count,Name,Set,Deck,Source,Acquired,Notes
 1,Crop Rotation,,World Shaper,CardTrader,2026-11-16,"for World Shaper (Bracket 3 package), replaces Centaur Vinecrasher"
 1,Sylvan Safekeeper,,World Shaper,To buy,,"for World Shaper (Bracket 3 package), replaces Loamcrafter Faun"
 1,Genesis Device,,World Shaper,CardTrader,2026-11-16,"for World Shaper (Bracket 3 package), replaces Sprouting Goblin"
-1,"Azusa, Lost but Seeking",,World Shaper,To buy,,"for World Shaper (Bracket 3 package), replaces Juri, Master of the Revue"
 1,Tireless Provisioner,,World Shaper,CardTrader,2026-11-16,"for World Shaper (Bracket 3 package), replaces Hammer of Purphoros"
 1,Valakut Exploration,,World Shaper,CardTrader,2026-11-16,"for World Shaper (Bracket 3 package), replaces Pest Infestation"
 1,Assassin's Trophy,,World Shaper,CardTrader,2026-11-16,"for World Shaper (Bracket 3 package), replaces Binding the Old Gods"
