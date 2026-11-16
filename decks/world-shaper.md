@@ -4,33 +4,27 @@
 - **Commander:** Hearthhull, the Worldseed
 - **Colour identity:** Black / Red / Green (Jund)
 - **Format:** Commander · 100 cards
-- **Game Changers:** 0
-- **Bracket:** 2–3 (no Game Changers; Planetary Annihilation is borderline mass land denial)
-- **Status:** Owned · upgraded: Scorched Earth Drain (2026-10-16)
+- **Game Changers:** 1 (Crop Rotation)
+- **Bracket:** 3 (one Game Changer; Planetary Annihilation is borderline mass land denial)
+- **Status:** Owned · upgraded: Scorched Earth Drain (2026-10-16) + Bracket 3 package (2026-11-16)
 
 ## Commander (1)
 1 Hearthhull, the Worldseed
 
-## Creatures (32)
+## Creatures (29)
 1 Aftermath Analyst
-1 Juri, Master of the Revue
 1 Sabotender
-1 Sprouting Goblin
 1 Augur of Autumn
 1 Braids, Arisen Nightmare
 1 Countryside Crusher
 1 Evendo Brushrazer
 1 Horizon Explorer
-1 Loamcrafter Faun
 1 Mayhem Devil
 1 Ramunap Excavator
 1 Scouring Swarm
 1 Springbloom Druid
 1 Tannuk, Memorial Ensign
-1 Tireless Tracker
-1 Uurg, Spawn of Turg
 1 Baloth Prime
-1 Centaur Vinecrasher
 1 Oracle of Mul Daya
 1 Soul of Windgrace
 1 God-Eternal Bontu
@@ -41,11 +35,14 @@
 1 The Gitrog Monster
 1 Titania, Protector of Argoth
 1 Moraug, Fury of Akoum
-1 Multani, Yavimaya's Avatar
 1 Rampaging Baloths
 1 Omnath, Locus of Rage
+1 Sylvan Safekeeper
+1 Azusa, Lost but Seeking
+1 Tireless Provisioner
+1 Avenger of Zendikar
 
-## Instants (10)
+## Instants (12)
 1 Snakeskin Veil
 1 Tamiyo's Safekeeping
 1 Infernal Grasp
@@ -56,9 +53,10 @@
 1 Putrefy
 1 Roiling Regrowth
 1 Windgrace's Judgment
+1 Crop Rotation
+1 Assassin's Trophy
 
-## Sorceries (9)
-1 Pest Infestation
+## Sorceries (10)
 1 Farseek
 1 Nature's Lore
 1 Worldsoul's Rage
@@ -67,17 +65,19 @@
 1 Splendid Reclamation
 1 Planetary Annihilation
 1 Blasphemous Act
+1 Nahiri's Lithoforming
+1 Planar Engineering
 
 ## Artifacts (5)
 1 Zuran Orb
 1 Exploration Broodship
 1 Sol Ring
-1 Hammer of Purphoros
 1 Conduit of Worlds
+1 Genesis Device
 
 ## Enchantments (2)
 1 Retreat to Hagra
-1 Binding the Old Gods
+1 Valakut Exploration
 
 ## Lands (41)
 1 Cabaretti Courtyard
@@ -125,3 +125,14 @@
   - +Lotus Field / −Viridescent Bog
   - +Jund Panorama / −Bojuka Bog
 - 2026-10-16 — Final review: brought back Skyshroud Claim (two untapped Forests = double landfall) and Formless Genesis (repeatable large deathtouch token via retrace). Ramunap Excavator now replaces Arcane Signet, Retreat to Hagra replaces Eumidian Wastewaker. Signet and Wastewaker are loose.
+- 2026-11-16 — Applied the **Bracket 3 package** from `world-shaper-upgrades.json` (10 swaps):
+  - +Crop Rotation / −Centaur Vinecrasher
+  - +Sylvan Safekeeper / −Loamcrafter Faun
+  - +Genesis Device / −Sprouting Goblin
+  - +Azusa, Lost but Seeking / −Juri, Master of the Revue
+  - +Tireless Provisioner / −Hammer of Purphoros
+  - +Valakut Exploration / −Pest Infestation
+  - +Assassin's Trophy / −Binding the Old Gods
+  - +Nahiri's Lithoforming / −Tireless Tracker
+  - +Planar Engineering / −Uurg, Spawn of Turg
+  - +Avenger of Zendikar / −Multani, Yavimaya's Avatar

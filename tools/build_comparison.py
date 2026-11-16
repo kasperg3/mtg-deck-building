@@ -312,10 +312,15 @@ def main():
         def cost(swaps, cur):
             return total([s["in"] for s in swaps if not s.get("owned")], cards, cur)
 
-        after, probs = apply_swaps(played, b3["swaps"])
-        _, probs_all = apply_swaps(played, b3_swaps)
+        if b3.get("applied"):   # the package is in the deck: undo it to get the deck before
+            before, probs_undo = apply_swaps(played, [{"in": s["out"], "out": s["in"]} for s in b3["swaps"]])
+            problems += [f"{b3['name']} (applied): {p}" for p in probs_undo]
+        else:
+            before = played
+        after, probs = apply_swaps(before, b3["swaps"])
+        _, probs_all = apply_swaps(before, b3_swaps)
         problems += [f"{b3['name']}: {p}" for p in dict.fromkeys(probs + probs_all)]
-        gc_now = [n for _, n in played if is_gc(n)]
+        gc_now = [n for _, n in before if is_gc(n)]
         b3 = {**b3,
               "cost_usd": cost(b3["swaps"], "usd"), "cost_eur": cost(b3["swaps"], "eur"),
               "premium_cost_usd": cost(b3.get("premium", []), "usd"),
@@ -324,7 +329,7 @@ def main():
               "gc_core": [s["in"] for s in b3["swaps"] if is_gc(s["in"])],
               "gc_premium": [s["in"] for s in b3.get("premium", []) if is_gc(s["in"])],
               "gc_out": [s["out"] for s in b3_swaps if is_gc(s["out"])],
-              "avg_now": curve(played, cards)["average"], "avg_after": curve(after, cards)["average"]}
+              "avg_now": curve(before, cards)["average"], "avg_after": curve(after, cards)["average"]}
         gc_total = len(gc_now) + len(b3["gc_core"]) + len(b3["gc_premium"]) - len(b3["gc_out"])
         if gc_total > 3:
             problems.append(f"{b3['name']}: {gc_total} Game Changers with every option, bracket 3 allows 3")
