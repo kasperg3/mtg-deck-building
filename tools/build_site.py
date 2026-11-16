@@ -140,6 +140,7 @@ table.inv tr.loose td:nth-child(3) { color: var(--muted); }
 table.inv a.card { color: var(--text); text-decoration: none; border-bottom: 1px dotted var(--muted); }
 .tag { display: inline-block; font-size: 11px; font-weight: 600; padding: 1px 7px; border-radius: 4px; background: var(--surface-2); white-space: nowrap; }
 .tag.bought { background: var(--in-bg); color: var(--in); }
+.tag.tobuy { background: var(--plan-bg); color: var(--plan); }
 #preview { position: fixed; width: 220px; pointer-events: none; z-index: 40; border-radius: 4.75% / 3.5%; display: none; box-shadow: 0 8px 24px rgba(0,0,0,.4); }
 footer { margin-top: 50px; font-size: 12px; color: var(--muted); }
 @media (max-width: 720px) {
@@ -273,7 +274,7 @@ def build_deck(d, cards):
     spec = json.loads(d["comparison"].read_text()) if d["comparison"] else {}
     b3 = spec.get("bracket3") or {}
     planned = [s for dr in spec.get("directions") or [] if dr.get("picked")
-               for s in dr.get("swaps") or [] if s.get("pending")] + (b3.get("swaps") or [])
+               for s in dr.get("swaps") or [] if s.get("pending")] + ([] if b3.get("applied") else (b3.get("swaps") or []))
     premium = b3.get("premium") or []
     plan_cut = Counter(key(s["out"]) for s in planned)
     to_buy = [s for s in planned if not s.get("owned")]
@@ -310,13 +311,14 @@ def build_deck(d, cards):
         comp_link = f'../comparisons/{d["slug"]}.html#bracket3' if b3 else f'../comparisons/{d["slug"]}.html'
         ptiles = "".join(tile(s["in"], 1, "planned", cards.get(key(s["in"])) or {},
                               note=f'for {s["out"]}' + (" · owned" if s.get("owned") else "")) for s in planned)
-        prem = "".join(tile(s["in"], 1, "planned", cards.get(key(s["in"])) or {}, note=f'for {s["out"]}') for s in premium)
         sections.append(
             f'<section data-section id="planned"><h2>Planned upgrades <span class="muted small">{len(planned)} to add · '
             f'{len(planned)} to cut · {len(to_buy)} to buy, ≈ €{plan_cost:.2f}</span></h2>'
             f'<p class="planned-note">Not in the deck yet. The cards they replace are marked "Planned cut" above. '
             f'Reasons and buy list: <a href="{comp_link}">upgrade comparison</a>.</p>'
             f'<div class="grid">{ptiles}</div></section>')
+    if premium:
+        prem = "".join(tile(s["in"], 1, "planned", cards.get(key(s["in"])) or {}, note=f'for {s["out"]}') for s in premium)
         if prem:
             sections.append(f'<details class="cuts"><summary>Premium options ({len(premium)}, optional)</summary>'
                             f'<p class="muted small">Stronger and more expensive; each comes with its own cut.</p>'
@@ -431,7 +433,7 @@ function render() {{
     <td class="num">${{r.q}}</td>
     <td><a class="card" href="${{esc(r.u)}}" target="_blank" rel="noopener" data-img="${{esc(r.img)}}">${{esc(r.n)}}</a></td>
     <td>${{esc(r.d)}}</td><td>${{esc(r.t)}}</td>
-    <td><span class="tag ${{r.s.includes("precon") ? "" : "bought"}}">${{esc(r.s)}}</span></td>
+    <td><span class="tag ${{r.s === "To buy" ? "tobuy" : r.s.includes("precon") ? "" : "bought"}}">${{esc(r.s)}}</span></td>
     <td>${{esc(r.set)}}</td><td style="white-space:nowrap">${{esc(r.a)}}</td>
     <td class="num">${{r.e == null ? "—" : "€" + r.e.toFixed(2)}}</td><td class="small muted">${{esc(r.no)}}</td></tr>`).join("");
   const n = rows.reduce((s, r) => s + r.q, 0), v = rows.reduce((s, r) => s + (r.e || 0) * r.q, 0);

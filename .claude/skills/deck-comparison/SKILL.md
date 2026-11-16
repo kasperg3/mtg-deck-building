@@ -402,6 +402,12 @@ wants a deck moved up to bracket 3.
   cut a finisher without replacing it, don't cut a card the user deliberately
   brought back, and don't reuse the cut of a pending swap. Count win conditions
   before and after in `win_conditions`.
+- **Applying it:** when the user puts the package into the decks, apply the
+  swaps to `decks/<deck>.md` with a changelog entry, set
+  `bracket3.applied` to the date, and add the new cards to `inventory.csv`
+  (Source `To buy` until the user says they are bought, then the shop and
+  date). The page then shows the package as in the deck and compares it with
+  the deck before it; the deck page counts the swaps as added and cut.
 - `verify_comparison.py` checks the package: every cut is in the played deck,
   100 cards with and without the premium options, colour identity, legality, at
   most three Game Changers with every option taken, the budget, and win

@@ -398,7 +398,6 @@
         {
           "in": "Joint Exploration",
           "out": "The Guardian of Forever",
-          "pending": true,
           "why": "Two mana at instant speed: scry 2, then draw a card, so you know and partly choose what Spock reveals on his next trigger. Kicked for {G} more, it also puts a land from your hand onto the battlefield. The Guardian of Forever costs four mana and another creature for one extra Spock trigger; The Command Zone's and TCGplayer's upgrade lists both cut it."
         }
       ],
@@ -564,7 +563,8 @@
         "out": "Mosswort Bridge",
         "why": "Game Changer. Once you control seven differently named lands, every land that enters also makes a 2/2 Zombie. This deck is built on different land names, so it turns land drops into an army with no other card needed. Crop Rotation fetches it."
       }
-    ]
+    ],
+    "applied": "2026-11-16"
   },
   "deck_changes": [
     {
