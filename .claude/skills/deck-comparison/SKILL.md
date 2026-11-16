@@ -402,6 +402,10 @@ wants a deck moved up to bracket 3.
   cut a finisher without replacing it, don't cut a card the user deliberately
   brought back, and don't reuse the cut of a pending swap. Count win conditions
   before and after in `win_conditions`.
+- **Declining it:** if the user decides a deck stays below bracket 3, set
+  `bracket3.declined` to the date and leave the deck file alone. The page keeps
+  the package for reference, marked "not planned", and the deck page and buy
+  lists leave it out.
 - **Applying it:** when the user puts the package into the decks, apply the
   swaps to `decks/<deck>.md` with a changelog entry, set
   `bracket3.applied` to the date, and add the new cards to `inventory.csv`

@@ -4,40 +4,39 @@
 - **Commander:** Commander Spock
 - **Colour identity:** White / Blue / Green (Bant)
 - **Format:** Commander · 100 cards
-- **Game Changers:** 1 (Crop Rotation)
-- **Bracket:** 3 (one Game Changer)
-- **Status:** Owned · upgraded: Land Engine (2026-11-10, completed 2026-11-15) + Bracket 3 package (2026-11-16)
+- **Game Changers:** 0
+- **Bracket:** 2 (no Game Changers, no combos)
+- **Status:** Owned · upgraded: Land Engine (2026-11-10, completed 2026-11-15)
 
 ## Commander (1)
 1 Commander Spock
 
-## Creatures (24)
+## Creatures (23)
 1 Lotus Cobra
 1 Augur of Autumn
 1 Azusa, Lost but Seeking
+1 Lieutenant Hikaru Sulu
 1 Loot, Exuberant Explorer
 1 Mole Man, Moloid Master
 1 Scute Swarm
 1 Tireless Tracker
 1 Wayward Swordtooth
 1 Amanda Grayson, Logic's Link
+1 Captain Kirk, Boldly Going
 1 Chief Kyle, Transporter Tech
+1 Chief Montgomery Scott
 1 Janice Rand, Essential Aide
 1 Pavel Chekov, First Posting
 1 M'Ress, Crew Coordinator
+1 T'Pring, Never Parted
 1 Ancient Greenwarden
 1 Colossal Clone Master
 1 Rampaging Baloths
 1 Sun Titan
 1 Lt. Arex, Ever-Adapting
 1 Starfield Vocalist
-1 Tatyova, Benthic Druid
-1 Captain Pike, Fullness of Time
-1 Oracle of Mul Daya
-1 Captain Kathryn Janeway
-1 Avenger of Zendikar
 
-## Instants (15)
+## Instants (13)
 1 Brainstorm
 1 Path to Exile
 1 Swords to Plowshares
@@ -51,25 +50,26 @@
 1 Temporal Tribulation
 1 Momentary Blink
 1 Joint Exploration
-1 Crop Rotation
-1 Planar Genesis
 
-## Sorceries (7)
+## Sorceries (8)
 1 Ponder
 1 Farseek
 1 Nature's Lore
 1 Rampant Growth
 1 Cultivate
+1 Harmonize
+1 Wrath of God
 1 Austere Command
-1 Overwhelming Stampede
 
-## Artifacts (6)
+## Artifacts (8)
+1 Jefferies Tube
 1 Sol Ring
 1 Arcane Signet
 1 U.S.S. Defiant, Mirror Migrant
+1 Starfleet Communicator
 1 Shuttlecraft Galileo
 1 Starship Enterprise
-1 Genesis Device
+1 U.S.S. Farragut, Bold Explorer
 
 ## Enchantments (7)
 1 Exploration
@@ -109,10 +109,10 @@
 1 Temple of Enlightenment
 1 Temple of Mystery
 1 Temple of Plenty
+1 Temple of the False God
 1 Terramorphic Expanse
 1 Tranquil Landscape
 1 Vineglimmer Snarl
-1 Krosan Verge
 4 Forest
 2 Island
 2 Plains
@@ -139,15 +139,4 @@
   - +Overgrown Farmland / −Risa
   - +Deserted Beach / −Vulcan
   - +Stable Wormhole / −Satyr Wayfinder (not part of Land Engine: a Planet land token on every attack)
-- 2026-11-16 — +Joint Exploration / −The Guardian of Forever (the last Land Engine swap, after comparing with The Command Zone's upgrade).
-- 2026-11-16 — Applied the **Bracket 3 package** from `landing-party-upgrades.json` (10 swaps):
-  - +Crop Rotation / −Lieutenant Hikaru Sulu
-  - +Tatyova, Benthic Druid / −Harmonize
-  - +Captain Pike, Fullness of Time / −T'Pring, Never Parted
-  - +Oracle of Mul Daya / −Jefferies Tube
-  - +Captain Kathryn Janeway / −Chief Montgomery Scott
-  - +Planar Genesis / −Starfleet Communicator
-  - +Genesis Device / −U.S.S. Farragut, Bold Explorer
-  - +Avenger of Zendikar / −Captain Kirk, Boldly Going
-  - +Overwhelming Stampede / −Wrath of God
-  - +Krosan Verge / −Temple of the False God
+- 2026-11-16 — +Joint Exploration / −The Guardian of Forever (the last Land Engine swap, after comparing with The Command Zone's upgrade). The deck stays at bracket 2; the bracket 3 package is not planned.

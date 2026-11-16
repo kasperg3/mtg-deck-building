@@ -274,8 +274,8 @@ def build_deck(d, cards):
     spec = json.loads(d["comparison"].read_text()) if d["comparison"] else {}
     b3 = spec.get("bracket3") or {}
     planned = [s for dr in spec.get("directions") or [] if dr.get("picked")
-               for s in dr.get("swaps") or [] if s.get("pending")] + ([] if b3.get("applied") else (b3.get("swaps") or []))
-    premium = b3.get("premium") or []
+               for s in dr.get("swaps") or [] if s.get("pending")] + ([] if b3.get("applied") or b3.get("declined") else (b3.get("swaps") or []))
+    premium = [] if b3.get("declined") else (b3.get("premium") or [])
     plan_cut = Counter(key(s["out"]) for s in planned)
     to_buy = [s for s in planned if not s.get("owned")]
     plan_cost = sum((cards.get(key(s["in"])) or {}).get("eur") or 0 for s in to_buy)

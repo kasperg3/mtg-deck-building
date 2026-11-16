@@ -317,8 +317,9 @@
     const gcAll = B.gc_now.length + B.gc_core.length + B.gc_premium.length - B.gc_out.length;
     const wc = B.win_conditions || {};
     h += `<section class="dir" id="bracket3"><div class="dir-head">
-      <h2 style="margin:0">${esc(B.name)}${B.applied ? `<span class="pill picked">✓ in the deck since ${esc(B.applied)}</span>` : ""}<span class="pill gc">up to 3 Game Changers</span></h2>
+      <h2 style="margin:0">${esc(B.name)}${B.applied ? `<span class="pill picked">✓ in the deck since ${esc(B.applied)}</span>` : ""}${B.declined ? `<span class="pill">not planned</span>` : ""}<span class="pill gc">up to 3 Game Changers</span></h2>
       <div class="totals">Package: <b>${both(B.cost_usd, B.cost_eur)}</b>${B.budget_eur != null ? ` · budget €${B.budget_eur}` : ""} · avg MV ${B.avg_now} → ${B.avg_after}</div></div>
+      ${B.declined ? `<p><b>Not planned.</b> On ${esc(B.declined)} you chose to keep this deck as it is, so these swaps are kept here for reference only.</p>` : ""}
       <p class="muted">${esc(B.description || "")}</p>
       <p class="small muted">${esc(B.rule || "")} ${B.applied ? `These swaps are in ${esc(D.played_deck || D.deck)} since ${esc(B.applied)}; "Before" is the deck just before them.` : `These swaps apply to ${esc(D.played_deck || D.deck)}, the deck as you play it now${B.date ? ` (${esc(B.date)})` : ""}.`}</p>
       <div class="panel table-scroll" style="margin:12px 0"><table>
