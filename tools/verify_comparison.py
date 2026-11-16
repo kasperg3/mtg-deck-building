@@ -224,7 +224,8 @@ def main():
         picked = [d for d in spec["directions"] if d.get("picked")]
         want = counts(cards)
         applied = core + [s for d in picked for s in d["swaps"] if not s.get("pending")] if picked else []
-        for s in applied + (changes if picked else []):
+        b3_in_deck = b3.get("swaps", []) if b3.get("applied") else []
+        for s in applied + (changes if picked else []) + b3_in_deck:
             swap(want, s, "played deck")
         have = counts(played)
         missing = sorted(n for n in have if have[n] > want.get(n, 0))
@@ -235,6 +236,7 @@ def main():
                          "Add the swap to \"deck_changes\" (or mark an unbought swap \"pending\").")
         pend = [s["in"] for d in picked for s in d["swaps"] if s.get("pending")]
         print(f"played deck: {spec['played_deck']} = stock + {len(applied)} swaps + {len(changes)} later change(s)"
+              + (f" + {b3['name']} ({len(b3_in_deck)})" if b3_in_deck else "")
               + (f" · {len(pend)} pending" if pend else ""))
 
     # --- bracket 3 package -------------------------------------------------
@@ -243,6 +245,10 @@ def main():
             return sorted(n for n, q in pool.items() if q > 0 and (index.get(key(n)) or {}).get("game_changer"))
 
         pool = counts(played)
+        if b3.get("applied"):   # undo the package to check it against the deck before it
+            for s in b3.get("swaps", []):
+                swap(pool, {"in": s["out"], "out": s["in"]}, f"{b3['name']} (applied)")
+        before = dict(pool)
         for s in b3.get("swaps", []):
             swap(pool, s, b3["name"])
         after_core = dict(pool)
@@ -273,7 +279,7 @@ def main():
         elif wc["after"] < wc["now"]:
             fails.append(f"{b3['name']}: win conditions drop from {wc['now']} to {wc['after']}")
         print(f"{b3['name']:<22} {sum(after_core.values()) + len(commanders):>3} cards · {len(b3.get('swaps', []))} swaps "
-              f"+ {len(b3.get('premium', []))} premium · Game Changers {len(gcs(counts(played)))} -> "
+              f"+ {len(b3.get('premium', []))} premium{' (applied)' if b3.get('applied') else ''} · Game Changers {len(gcs(before))} -> "
               f"{len(gcs(after_core))} -> {len(gcs(pool))} · €{cost:.2f} (+€{prem:.2f} premium)")
 
     print()

@@ -402,6 +402,16 @@ wants a deck moved up to bracket 3.
   cut a finisher without replacing it, don't cut a card the user deliberately
   brought back, and don't reuse the cut of a pending swap. Count win conditions
   before and after in `win_conditions`.
+- **Declining it:** if the user decides a deck stays below bracket 3, set
+  `bracket3.declined` to the date and leave the deck file alone. The page keeps
+  the package for reference, marked "not planned", and the deck page and buy
+  lists leave it out.
+- **Applying it:** when the user puts the package into the decks, apply the
+  swaps to `decks/<deck>.md` with a changelog entry, set
+  `bracket3.applied` to the date, and add the new cards to `inventory.csv`
+  (Source `To buy` until the user says they are bought, then the shop and
+  date). The page then shows the package as in the deck and compares it with
+  the deck before it; the deck page counts the swaps as added and cut.
 - `verify_comparison.py` checks the package: every cut is in the played deck,
   100 cards with and without the premium options, colour identity, legality, at
   most three Game Changers with every option taken, the budget, and win
@@ -491,5 +501,8 @@ The repo is published at https://mtg.grontved.xyz by GitHub Actions
 (`.github/workflows/pages.yml` runs `tools/build_site.py` on every push to
 `main`). Pushing a changed deck file, comparison spec or inventory is enough;
 there's nothing to deploy by hand. Deck pages mark cards that differ from
-`decks/precon/<deck>.md` as "Added" and list cut cards. To preview locally:
+`decks/precon/<deck>.md` as "Added" and list cut cards. Planned swaps (pending swaps of the
+picked direction plus the `bracket3` package) show as a "Planned upgrades"
+section, with the cards they replace marked "Planned cut", and the front
+page shows the planned count per deck. To preview locally:
 `python3 tools/build_site.py && xdg-open _site/index.html`.

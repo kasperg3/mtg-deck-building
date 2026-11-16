@@ -134,3 +134,4 @@
   - +Karn's Bastion / −Temple of the False God
 - 2026-11-11 — +Loading Zone / −Bane of Progress (Loading Zone from the Bulk pile; Bane of Progress destroyed the deck's own enchantments, sagas and mana rocks).
 - 2026-11-11 — +Forgotten Ancient / −Summoner's Sending (back from the precon: grows on every spell and hands its counters out each upkeep, feeding Herald of Secret Streams and Chocobo Knights; in ~70% of Tidus decks on EDHREC).
+- 2026-11-16 — The deck stays as it is; the bracket 3 package is not planned. It is bracket 3 on paper only because of Farewell.

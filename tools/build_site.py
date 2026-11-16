@@ -45,18 +45,18 @@ COLOUR_NAMES = {"White": "W", "Blue": "U", "Black": "B", "Red": "R", "Green": "G
 CSS = r"""
 :root {
   --bg: #f6f5f2; --surface: #ffffff; --surface-2: #efede8; --text: #1d1c1a; --muted: #6b6862;
-  --border: #dcd8d0; --accent: #4f46e5; --in: #15803d; --in-bg: #dcfce7; --out: #b91c1c; --out-bg: #fee2e2;
+  --border: #dcd8d0; --accent: #4f46e5; --in: #15803d; --in-bg: #dcfce7; --out: #b91c1c; --out-bg: #fee2e2; --plan: #b45309; --plan-bg: #fef3c7;
   --W: #f3ecd2; --U: #3b82c4; --B: #3d3a36; --R: #d1453b; --G: #3f8f4f;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     --bg: #141413; --surface: #1e1d1b; --surface-2: #2a2926; --text: #ecebe7; --muted: #a29f97;
-    --border: #3a3834; --accent: #8b85ff; --in: #4ade80; --in-bg: #14321f; --out: #f87171; --out-bg: #3b1717;
+    --border: #3a3834; --accent: #8b85ff; --in: #4ade80; --in-bg: #14321f; --out: #f87171; --out-bg: #3b1717; --plan: #fbbf24; --plan-bg: #3a2a0c;
   }
 }
 :root[data-theme="dark"] {
   --bg: #141413; --surface: #1e1d1b; --surface-2: #2a2926; --text: #ecebe7; --muted: #a29f97;
-  --border: #3a3834; --accent: #8b85ff; --in: #4ade80; --in-bg: #14321f; --out: #f87171; --out-bg: #3b1717;
+  --border: #3a3834; --accent: #8b85ff; --in: #4ade80; --in-bg: #14321f; --out: #f87171; --out-bg: #3b1717; --plan: #fbbf24; --plan-bg: #3a2a0c;
 }
 * { box-sizing: border-box; }
 body { margin: 0; background: var(--bg); color: var(--text); font: 15px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; }
@@ -108,6 +108,11 @@ h2 { font-size: 20px; margin: 36px 0 12px; }
 .tile.added img { outline: 3px solid var(--in); outline-offset: 2px; }
 .tile.cut img { filter: grayscale(.7) brightness(.85); }
 .tile.cut .badge { background: var(--out-bg); color: var(--out); }
+.tile.planned .badge, .tile .badge.plan { background: var(--plan-bg); color: var(--plan); }
+.tile.planned img { outline: 3px dashed var(--plan); outline-offset: 2px; }
+.tile[data-plan="cut"] img { outline: 3px dashed var(--out); outline-offset: 2px; }
+.tile .for { font-size: 12px; color: var(--muted); margin-top: 2px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.planned-note { font-size: 14px; color: var(--muted); max-width: 75ch; margin: 0 0 12px; }
 .tile .qty { position: absolute; bottom: 30px; right: 6px; background: rgba(0,0,0,.75); color: #fff; font-weight: 700; font-size: 13px; padding: 1px 8px; border-radius: 6px; }
 .tile .cap { font-size: 12px; margin-top: 4px; display: flex; justify-content: space-between; gap: 6px; }
 .tile .cap span:first-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
@@ -135,6 +140,7 @@ table.inv tr.loose td:nth-child(3) { color: var(--muted); }
 table.inv a.card { color: var(--text); text-decoration: none; border-bottom: 1px dotted var(--muted); }
 .tag { display: inline-block; font-size: 11px; font-weight: 600; padding: 1px 7px; border-radius: 4px; background: var(--surface-2); white-space: nowrap; }
 .tag.bought { background: var(--in-bg); color: var(--in); }
+.tag.tobuy { background: var(--plan-bg); color: var(--plan); }
 #preview { position: fixed; width: 220px; pointer-events: none; z-index: 40; border-radius: 4.75% / 3.5%; display: none; box-shadow: 0 8px 24px rgba(0,0,0,.4); }
 footer { margin-top: 50px; font-size: 12px; color: var(--muted); }
 @media (max-width: 720px) {
@@ -248,17 +254,31 @@ def build_deck(d, cards):
         groups.setdefault(section_for(info.get("type_line", "")), []).append((names[k], q, added, info))
     cut = [(names[k], pre_c[k] - cur_c.get(k, 0), cards.get(k) or {}) for k in pre_c if pre_c[k] > cur_c.get(k, 0)]
 
-    def tile(name, qty, kind, info):
+    def tile(name, qty, kind, info, plan=None, note=None):
         src, large = img_attrs(info)
         img = (f'<img loading="lazy" src="{E(src)}" data-large="{E(large)}" alt="{E(name)}">' if src
                else f'<div class="muted small" style="aspect-ratio:488/680;border:1px dashed var(--border);border-radius:8px;padding:8px">{E(name)}</div>')
-        badge = {"added": "＋ Added", "cut": "Cut", "precon": ""}[kind]
+        badge = {"added": "＋ Added", "cut": "Cut", "precon": "", "planned": "Planned"}[kind]
+        if plan == "cut":
+            badge = f'<span class="badge plan">Planned cut</span>'
+        elif badge:
+            badge = f'<span class="badge">{badge}</span>'
         link = info.get("scryfall_uri") or "#"
-        return (f'<div class="tile {kind}" data-kind="{kind}">{img}'
-                f'{f"<span class=badge>{badge}</span>" if badge else ""}'
+        return (f'<div class="tile {kind}" data-kind="{kind}"{f" data-plan={plan}" if plan else ""}>{img}'
+                f'{badge}'
                 f'{f"<span class=qty>×{qty}</span>" if qty > 1 else ""}'
                 f'<div class="cap"><span title="{E(name)}"><a href="{E(link)}" target="_blank" rel="noopener">{E(name)}</a></span>'
-                f'<span class="muted">{money(info.get("eur"))}</span></div></div>')
+                f'<span class="muted">{money(info.get("eur"))}</span></div>'
+                f'{f"<div class=for>{E(note)}</div>" if note else ""}</div>')
+
+    spec = json.loads(d["comparison"].read_text()) if d["comparison"] else {}
+    b3 = spec.get("bracket3") or {}
+    planned = [s for dr in spec.get("directions") or [] if dr.get("picked")
+               for s in dr.get("swaps") or [] if s.get("pending")] + ([] if b3.get("applied") or b3.get("declined") else (b3.get("swaps") or []))
+    premium = [] if b3.get("declined") else (b3.get("premium") or [])
+    plan_cut = Counter(key(s["out"]) for s in planned)
+    to_buy = [s for s in planned if not s.get("owned")]
+    plan_cost = sum((cards.get(key(s["in"])) or {}).get("eur") or 0 for s in to_buy)
 
     cmd_info = cards.get(key(commanders[0])) if commanders else None
     csrc, clarge = img_attrs(cmd_info)
@@ -275,14 +295,34 @@ def build_deck(d, cards):
         items.sort(key=lambda x: ("Basic" in x[3].get("type_line", ""), x[3].get("cmc", 0), x[0]))
         tiles = []
         for name, q, added, info in items:
-            if added and q - added:   # some copies precon, some added
+            pc = min(plan_cut.get(key(name), 0), q)
+            if pc and q - pc:         # e.g. one of eight Forests is planned to go
+                tiles.append(tile(name, q - pc, "added" if added >= q else "precon", info))
+                tiles.append(tile(name, pc, "added" if added >= q else "precon", info, plan="cut"))
+            elif added and q - added:   # some copies precon, some added
                 tiles.append(tile(name, q - added, "precon", info))
                 tiles.append(tile(name, added, "added", info))
             else:
-                tiles.append(tile(name, q, "added" if added else "precon", info))
+                tiles.append(tile(name, q, "added" if added else "precon", info, plan="cut" if pc else None))
         n_added = sum(a for *_, a, _ in items)
         sections.append(f'<section data-section><h2>{sec} <span class="muted small">{sum(q for _, q, _, _ in items)}'
                         f'{f" · {n_added} added" if n_added else ""}</span></h2><div class="grid">{"".join(tiles)}</div></section>')
+    if planned:
+        comp_link = f'../comparisons/{d["slug"]}.html#bracket3' if b3 else f'../comparisons/{d["slug"]}.html'
+        ptiles = "".join(tile(s["in"], 1, "planned", cards.get(key(s["in"])) or {},
+                              note=f'for {s["out"]}' + (" · owned" if s.get("owned") else "")) for s in planned)
+        sections.append(
+            f'<section data-section id="planned"><h2>Planned upgrades <span class="muted small">{len(planned)} to add · '
+            f'{len(planned)} to cut · {len(to_buy)} to buy, ≈ €{plan_cost:.2f}</span></h2>'
+            f'<p class="planned-note">Not in the deck yet. The cards they replace are marked "Planned cut" above. '
+            f'Reasons and buy list: <a href="{comp_link}">upgrade comparison</a>.</p>'
+            f'<div class="grid">{ptiles}</div></section>')
+    if premium:
+        prem = "".join(tile(s["in"], 1, "planned", cards.get(key(s["in"])) or {}, note=f'for {s["out"]}') for s in premium)
+        if prem:
+            sections.append(f'<details class="cuts"><summary>Premium options ({len(premium)}, optional)</summary>'
+                            f'<p class="muted small">Stronger and more expensive; each comes with its own cut.</p>'
+                            f'<div class="grid">{prem}</div></details>')
     if cut:
         cut.sort(key=lambda x: x[0])
         sections.append(f'<details class="cuts"><summary>Cut from the precon ({sum(q for _, q, _ in cut)})</summary>'
@@ -300,7 +340,7 @@ def build_deck(d, cards):
     <div class="muted small">{E(d["meta"].get("Product", ""))}</div>
     <h1>{E(d["title"])}</h1>
     <div>{pips(d["meta"].get("Colour identity"))} <b>{E(", ".join(commanders))}</b> <span class="muted">· {E(d["meta"].get("Colour identity", ""))}</span></div>
-    <dl class="facts">{facts}<dt>Cards</dt><dd>{total} · <b style="color:var(--in)">{added_total} added</b> · {total - added_total} from the precon</dd>
+    <dl class="facts">{facts}<dt>Cards</dt><dd>{total} · <b style="color:var(--in)">{added_total} added</b> · {total - added_total} from the precon{f' · <b style="color:var(--plan)">{len(planned)} planned</b>' if planned else ""}</dd>
       <dt>Value</dt><dd>≈ €{value:.0f} (cheapest printings)</dd></dl>
     <div style="display:flex;gap:8px;flex-wrap:wrap">{comp}<button class="btn" id="copy" type="button">Copy decklist</button><span id="copied" class="small" style="color:var(--in);align-self:center" hidden>Copied ✓</span></div>
   </div>
@@ -309,8 +349,9 @@ def build_deck(d, cards):
   <button data-filter="all" aria-pressed="true">All cards</button>
   <button data-filter="added" aria-pressed="false">Added ({added_total})</button>
   <button data-filter="precon" aria-pressed="false">From the precon</button>
+  {f'<button data-filter="planned" aria-pressed="false">Planned ({len(planned)})</button>' if planned else ""}
   <span class="spacer"></span>
-  <span class="legend"><span><span class="sw" style="background:var(--in)"></span>Added</span><span><span class="sw" style="background:var(--out)"></span>Cut</span></span>
+  <span class="legend"><span><span class="sw" style="background:var(--in)"></span>Added</span><span><span class="sw" style="background:var(--out)"></span>Cut</span>{'<span><span class="sw" style="background:var(--plan)"></span>Planned</span>' if planned else ""}</span>
 </div>
 {"".join(sections)}
 {f'<h2>Changelog</h2><ul class="changelog">{log}</ul>' if log else ""}
@@ -319,7 +360,7 @@ def build_deck(d, cards):
 document.querySelectorAll(".toolbar button[data-filter]").forEach(b => b.addEventListener("click", () => {{
   const f = b.dataset.filter;
   document.querySelectorAll(".toolbar button[data-filter]").forEach(x => x.setAttribute("aria-pressed", x === b));
-  document.querySelectorAll("section[data-section] .tile").forEach(t => t.classList.toggle("hidden", f !== "all" && t.dataset.kind !== f));
+  document.querySelectorAll("section[data-section] .tile").forEach(t => t.classList.toggle("hidden", f !== "all" && t.dataset.kind !== f && !(f === "planned" && t.dataset.plan === "cut")));
   document.querySelectorAll("section[data-section]").forEach(s => s.classList.toggle("hidden", !s.querySelector(".tile:not(.hidden)")));
 }}));
 document.getElementById("copy").addEventListener("click", async () => {{
@@ -329,6 +370,7 @@ document.getElementById("copy").addEventListener("click", async () => {{
 }});
 </script>"""
     stats = {"total": total, "added": added_total, "value": value, "cut": sum(q for _, q, _ in cut),
+             "planned": len(planned), "plan_cost": plan_cost,
              "art": (cmd_info or {}).get("images", [{}])[0].get("art_crop") or csrc}
     return body, stats
 
@@ -391,7 +433,7 @@ function render() {{
     <td class="num">${{r.q}}</td>
     <td><a class="card" href="${{esc(r.u)}}" target="_blank" rel="noopener" data-img="${{esc(r.img)}}">${{esc(r.n)}}</a></td>
     <td>${{esc(r.d)}}</td><td>${{esc(r.t)}}</td>
-    <td><span class="tag ${{r.s.includes("precon") ? "" : "bought"}}">${{esc(r.s)}}</span></td>
+    <td><span class="tag ${{r.s === "To buy" ? "tobuy" : r.s.includes("precon") ? "" : "bought"}}">${{esc(r.s)}}</span></td>
     <td>${{esc(r.set)}}</td><td style="white-space:nowrap">${{esc(r.a)}}</td>
     <td class="num">${{r.e == null ? "—" : "€" + r.e.toFixed(2)}}</td><td class="small muted">${{esc(r.no)}}</td></tr>`).join("");
   const n = rows.reduce((s, r) => s + r.q, 0), v = rows.reduce((s, r) => s + (r.e || 0) * r.q, 0);
@@ -457,6 +499,8 @@ def main():
                 needed.append(s["in"])
             for dr in cspec.get("directions") or []:
                 needed += [s["in"] for s in dr.get("swaps") or []]
+            b3 = cspec.get("bracket3") or {}
+            needed += [s["in"] for s in (b3.get("swaps") or []) + (b3.get("premium") or [])]
     gaps = fetch_cards(needed, cards)
     if gaps:
         print(f"warning: {len(gaps)} card(s) not on Scryfall: {', '.join(gaps[:5])}", file=sys.stderr)
@@ -491,6 +535,7 @@ def main():
       <dt>Bracket</dt><dd>{E(m.get("Bracket", "—"))}</dd>
       <dt>Status</dt><dd>{E(m.get("Status", ""))}</dd>
       <dt>Cards</dt><dd>{s["total"]} · <b style="color:var(--in)">{s["added"]} added</b> · {s["cut"]} cut</dd>
+      {f'<dt>Planned</dt><dd><a href="decks/{d["slug"]}.html#planned"><b style="color:var(--plan)">{s["planned"]} to add · {s["planned"]} to cut</b></a> · ≈ €{s["plan_cost"]:.0f} to buy</dd>' if s.get("planned") else ""}
       <dt>Value</dt><dd>≈ €{s["value"]:.0f}</dd>
     </dl>
     <div class="links"><a class="btn" href="decks/{d["slug"]}.html">Decklist</a>{comp}</div>

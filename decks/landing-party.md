@@ -11,7 +11,7 @@
 ## Commander (1)
 1 Commander Spock
 
-## Creatures (24)
+## Creatures (23)
 1 Lotus Cobra
 1 Augur of Autumn
 1 Azusa, Lost but Seeking
@@ -19,7 +19,6 @@
 1 Loot, Exuberant Explorer
 1 Mole Man, Moloid Master
 1 Scute Swarm
-1 The Guardian of Forever
 1 Tireless Tracker
 1 Wayward Swordtooth
 1 Amanda Grayson, Logic's Link
@@ -37,7 +36,7 @@
 1 Lt. Arex, Ever-Adapting
 1 Starfield Vocalist
 
-## Instants (12)
+## Instants (13)
 1 Brainstorm
 1 Path to Exile
 1 Swords to Plowshares
@@ -50,6 +49,7 @@
 1 Krosan Grip
 1 Temporal Tribulation
 1 Momentary Blink
+1 Joint Exploration
 
 ## Sorceries (8)
 1 Ponder
@@ -139,3 +139,4 @@
   - +Overgrown Farmland / −Risa
   - +Deserted Beach / −Vulcan
   - +Stable Wormhole / −Satyr Wayfinder (not part of Land Engine: a Planet land token on every attack)
+- 2026-11-16 — +Joint Exploration / −The Guardian of Forever (the last Land Engine swap, after comparing with The Command Zone's upgrade). The deck stays at bracket 2; the bracket 3 package is not planned.
