@@ -1,6 +1,6 @@
 # MTG Collection
 
-Published at **https://mtg.grontved.xyz**: a front page, one page per deck (how to play it, every swap from the precon with the reason, and the current list) and the bulk list. GitHub Actions (`.github/workflows/pages.yml`) rebuilds it on every push to `main` and weekly for fresh prices.
+Published at **https://mtg.grontved.xyz**: a front page, one page per deck (how to play it, what changed from the precon and why, the current list and a git-style history of every swap) and the bulk list. GitHub Actions (`.github/workflows/pages.yml`) rebuilds it on every push to `main` and weekly for fresh prices.
 
 Tracks the Magic: The Gathering decks and singles I own.
 

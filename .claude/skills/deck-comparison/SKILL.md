@@ -360,8 +360,11 @@ there, which is how Counter Blitz ended up two swaps ahead of its own
 comparison. Whenever you change a deck file, in the same commit:
 
 1. Record the swap in the spec's `deck_changes` (`date`, `in`, `out`, `why`).
-   The deck page shows these under **Later changes**, after the bracket 3
-   package when they are dated after it.
+   The deck page's **History** lists it under its date. While its card stays
+   in the deck, the **Swaps** overview shows its `why` as the reason the card
+   is there, so write the why about the card going in. If the swap brings back
+   a card an earlier swap cut, reword that earlier swap's why too: it is now
+   shown next to whatever precon card its card ends up replacing.
 2. If a swap in the picked direction was recommended but isn't bought or
    applied yet, mark it `"pending": true` instead of leaving it looking done.
 3. Keep `played_deck` pointing at `decks/<deck>.md`.
@@ -522,14 +525,19 @@ spec and the local viewer. Each deck page (`decks/<deck>.html`) has three parts:
   Notes that start with "Changed on" are history and are left out. Card names
   in any text are linked for a hover preview; names no longer in the deck are
   struck through.
-- **Swaps**: every swap from the precon with its `why`, in the order it went
-  in: core, picked direction, `deck_changes` up to the package date, the
-  `bracket3` package (applied, or planned if neither applied nor declined),
-  then later `deck_changes`. Pending swaps and an unapplied package are tagged
-  "Planned" and their cuts marked in the decklist; a swap whose card a later
-  swap took out again links to that swap.
+- **Swaps**: the deck as it is now against `decks/precon/<deck>.md`, grouped
+  by card type. Each card that wasn't in the precon is paired with the precon
+  card whose slot it ended up in (`net_swaps` follows A -> B -> C as A -> C,
+  and joins slots when a cut precon card comes back), with the `why` of the
+  swap that brought it in and a tag for where it came from (core, direction,
+  bracket 3 or the date of a deck change). Swaps that were later undone don't
+  appear here. Pending swaps and an unapplied package show at the end as
+  "Planned", with their cuts marked in the decklist.
 - **Decklist**: the current list (cards new since `decks/precon/<deck>.md`
   marked) as text or card images, with a Copy button.
+- **History**: git-log style, newest first. Each package and each date of
+  `deck_changes` is one entry of + / − lines, down to the stock precon. No
+  whys; it is the record, including swaps that were undone.
 
 `inventory.html` is the bulk list: loose cards by default, with chips for each
 deck and for everything. While a spec has no picked direction, the deck page
