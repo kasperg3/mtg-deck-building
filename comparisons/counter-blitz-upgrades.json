@@ -132,7 +132,7 @@
       "id": "cheer",
       "name": "Cheer Every Turn",
       "recommended": true,
-      "pitch": "Make Tidus's Cheer fire every turn: cheap evasive creatures, counters at the start of each combat, and unblockability for anything with a counter. Tekuthal doubles each Cheer's proliferate, and Kutzil stops opponents from responding while you attack.",
+      "pitch": "Make Tidus's Cheer fire every turn: cheap evasive creatures, counters at the start of each combat, and Herald of Secret Streams so anything with a +1/+1 counter can't be blocked (Rikku does it for each creature that gets a counter that turn). Tekuthal doubles every proliferate and Ezuri draws a card for each, while Guiding Hydra, Forgotten Ancient and Wakka spread counters over the whole team; Walking Ballista and Sunscorch Regent are back-up threats. It loses when a wipe catches an overextended board, so commit two or three threats and hold protection.",
       "plays_like": "Fast, evasive pressure; draws every turn",
       "metrics": {
         "Win conditions": 5,
@@ -150,12 +150,12 @@
         {
           "in": "Luminarch Aspirant",
           "out": "Generous Patron",
-          "why": "2 mana: a +1/+1 counter on a creature at the start of every combat, so Tidus always has counters to move. Generous Patron only draws when you put counters on creatures you don't control; with Lulu gone, nothing in the deck does that."
+          "why": "2 mana: a +1/+1 counter on a creature at the start of every combat, so Tidus always has counters to move. Generous Patron only draws when you put counters on creatures you don't control; with Lulu's stun counters gone, only Summon: Valefor's stun counters still do that, so it would rarely draw."
         },
         {
           "in": "Silent Hallcreeper",
           "out": "Summon: Magus Sisters",
-          "why": "Unblockable 2-drop that grows or draws on hit; with a counter it sets off Cheer reliably. Magus Sisters picks its modes at random."
+          "why": "Unblockable 2-drop. Its first three hits each give a bonus it hasn't given yet: two +1/+1 counters, a card, or becoming a copy of another creature you control. With a counter it sets off Cheer reliably. Magus Sisters picks its modes at random."
         },
         {
           "in": "Ray Fillet, Wave Warrior",
@@ -170,7 +170,7 @@
         {
           "in": "Conclave Mentor",
           "out": "Yuna's Decision",
-          "why": "+1 extra counter on every placement (including Tidus's moves) on a 2-mana creature. The same job as Ozolith for €0.26. Yuna's Decision is a clunky 4-mana sorcery."
+          "why": "+1 extra counter on every +1/+1 counter placement (including Tidus's moves) on a 2-mana creature. The same job as Ozolith, the Shattered Spire for €0.26. Yuna's Decision is a clunky 4-mana sorcery."
         },
         {
           "in": "Tekuthal, Inquiry Dominus",
@@ -190,12 +190,12 @@
         {
           "in": "Feat of Resistance",
           "out": "Forgotten Ancient",
-          "why": "2-mana instant: +1/+1 counter and protection from a colour. Saves a creature and pushes damage through. Forgotten Ancient is slow."
+          "why": "2-mana instant: a +1/+1 counter and protection from a colour, so it saves a creature from removal and gets it past blockers of that colour. It first replaced Forgotten Ancient, which later came back in place of Summoner's Sending."
         },
         {
           "in": "Kutzil, Malamet Exemplar",
           "out": "Altered Ego",
-          "why": "Draws a card whenever creatures pumped by counters hit a player, and opponents can't cast spells during your turn, so no removal or tricks while your small evasive creatures attack. Altered Ego is a 4+ mana copy effect with no evasion."
+          "why": "Draws a card whenever creatures pumped by counters hit a player, and opponents can't cast spells during your turn, so no removal spells or tricks while your small evasive creatures attack. Altered Ego is a 4+ mana copy effect with no evasion."
         },
         {
           "in": "Yavimaya Coast",
@@ -215,51 +215,52 @@
       ],
       "picked": true,
       "how_to_play": {
-        "summary": "Get one evasive creature with a counter through every turn: Cheer draws a card and proliferates, and the pressure snowballs.",
+        "summary": "Push a creature with a counter through every turn so Cheer draws and proliferates, then win with Herald of Secret Streams plus three or four creatures with counters: Chocobo Knights' double strike or Biomass Mutation turns that swing into a kill.",
         "sections": [
           {
             "title": "How Tidus works",
             "points": [
-              "Beginning of combat: move a counter from one of your creatures onto another.",
+              "Beginning of combat: move a counter of any kind (+1/+1, shield, flying) from one of your creatures onto another.",
               "Cheer (once per turn): when your creatures with counters deal combat damage to a player, draw a card and proliferate."
             ]
           },
           {
             "title": "Turns 1–3: counters plus evasion",
             "points": [
-              "Counter sources: Luminarch Aspirant, Shelinda, Conclave Mentor or Kami of Whispered Hopes (+1 on every placement), Hardened Scales.",
-              "Evasive creatures: Thrummingbird, Silent Hallcreeper (unblockable), Lord Jyscal Guado, Ray Fillet."
+              "Counter sources: Luminarch Aspirant, Shelinda, Cathedral Acolyte, Guiding Hydra, and Tromell (your other creatures enter with an extra +1/+1 counter). Conclave Mentor, Kami of Whispered Hopes and Hardened Scales add one to every +1/+1 counter placement.",
+              "Evasive creatures: Thrummingbird and Grateful Apparition (flyers that proliferate on hit), Lord Jyscal Guado, Ray Fillet, and Silent Hallcreeper (unblockable).",
+              "Silent Hallcreeper's bonuses run out after three hits, one of each: take the two +1/+1 counters first, then the card. The third hit turns it into a copy of another creature you control and it stops being unblockable, so copy Herald of Secret Streams (with its counters it stays unblockable), never a legendary creature."
             ]
           },
           {
             "title": "Each combat, in this order",
             "points": [
-              "Resolve the counter-placing triggers first (Luminarch, Fight Rigging, Maester Seymour).",
-              "Then use Tidus to move a counter onto your best evasive creature. Conclave Mentor, Kami and Hardened Scales boost moved counters too, so one move can be 2–3 counters.",
-              "Attack with everything that can't be blocked."
+              "Your beginning-of-combat triggers go on the stack together: put Tidus's on first so it resolves last, after Luminarch Aspirant, Fight Rigging, Maester Seymour and Guiding Hydra have placed their counters.",
+              "Tidus then moves a counter onto your best evasive creature. A moved +1/+1 counter gets one more from each of Conclave Mentor, Kami and Hardened Scales and is doubled by Loading Zone; with Rikku out, that creature can't be blocked this turn.",
+              "Attack with everything that can't be blocked. Chocobo Knights gives your creatures with counters double strike as you attack; cast Biomass Mutation after blockers are declared, with X above your creatures' printed power (counters still add on top)."
             ]
           },
           {
             "title": "Turns 4+: engines",
             "points": [
               "Herald of Secret Streams: every creature with a +1/+1 counter is unblockable. This is your most important card.",
-              "Kutzil: opponents can't cast spells during your turn, and you draw when pumped creatures connect.",
-              "Tekuthal doubles every proliferate (Cheer, Thrummingbird, Grateful Apparition, Karn's Bastion, Inexorable Tide, Tromell).",
-              "Ray Fillet, Bred for the Hunt and Blitzball Stadium draw on hits; Chocobo Knights gives your creatures with counters double strike when you attack."
+              "Guiding Hydra turns one of its counters into a +1/+1 counter on each other creature every combat, so with Herald or Rikku the whole team gets through. Forgotten Ancient hands out its counters each upkeep, and Wakka pumps the team at your end step if a counter went on it that turn.",
+              "Tekuthal doubles every proliferate (Cheer, Thrummingbird, Grateful Apparition, Karn's Bastion, Inexorable Tide, Tromell, Ezuri's {3} on entry), and Ezuri draws a card for each one; with Inexorable Tide that is a card for every spell you cast.",
+              "Kutzil: opponents can't cast spells during your turn, and you draw when pumped creatures connect. Ray Fillet, Bred for the Hunt and Blitzball Stadium also draw on hits."
             ]
           },
           {
             "title": "Wipes and tips",
             "points": [
-              "Damning Verdict destroys only creatures without counters, so it's usually one-sided. Farewell is your reset when behind (and the deck's only Game Changer).",
-              "When you proliferate you choose what grows: skip opponents, grow your shield counters from Protection Magic.",
-              "Hold up protection (Feat of Resistance, Protection Magic, Inspiring Call, Gatta and Luzzu with flash). Two or three evasive threats plus Herald is enough; don't overextend into a wipe.",
+              "Damning Verdict destroys only creatures without counters: cast it in your second main phase, after Guiding Hydra and Tidus have handed out counters (Protection Magic's shield counters count too). Farewell is your reset when behind and the deck's only Game Changer; pick only the modes you need, because exiling enchantments also takes your Summon sagas, Silent Hallcreeper, Hardened Scales, Loading Zone and Inexorable Tide.",
+              "When you proliferate you choose what grows: your +1/+1 and shield counters, and the stun counters Summon: Valefor put on opponents' creatures. Skip Summon: Ixion's lore counters, or the creature it exiled comes back sooner.",
+              "Hold up protection (Feat of Resistance, Protection Magic, Inspiring Call); Cathedral Acolyte gives everything with a counter ward {1}. Two or three evasive threats plus Herald is enough; don't overextend into a wipe.",
               "Mulligan hands without a 2-drop counter source or an evasive creature."
             ]
           }
         ]
       },
-      "win_conditions_note": "Cuts Sin and Forgotten Ancient for cheap evasive creatures and adds only Herald of Secret Streams, so it closes through Herald, Chocobo Knights and Wakka. The deck brought Forgotten Ancient back on 2026-11-11 (for Summoner's Sending), so decks/counter-blitz.md has 6."
+      "win_conditions_note": "Cuts Sin and Forgotten Ancient for cheap evasive creatures and adds only Herald of Secret Streams, so its 5 are Walking Ballista, Sunscorch Regent, Herald, Chocobo Knights and Wakka. The deck brought Forgotten Ancient back on 2026-11-11 (for Summoner's Sending) and added Guiding Hydra (a team pump every combat) and Biomass Mutation on 2026-11-18, so decks/counter-blitz.md has 8: Walking Ballista, Sunscorch Regent, Forgotten Ancient, Herald, Chocobo Knights, Wakka, Guiding Hydra and Biomass Mutation."
     },
     {
       "id": "proliferate",
@@ -475,19 +476,19 @@
       "date": "2026-11-18",
       "in": "Ezuri, Stalker of Spheres",
       "out": "Gatta and Luzzu",
-      "why": "From the loose pile. Draws a card whenever you proliferate, twice with Tekuthal. The deck has plenty of protection, and Gatta only prevents damage to one creature."
+      "why": "Draws a card whenever you proliferate, twice with Tekuthal. The deck has plenty of protection, and Gatta only prevents damage to one creature. From the loose pile."
     },
     {
       "date": "2026-11-18",
       "in": "Cathedral Acolyte",
       "out": "Duskshell Crawler",
-      "why": "From the loose pile. Each creature with a counter has ward {1}. Sphere Grid already gives trample to creatures with +1/+1 counters."
+      "why": "Each creature you control with a counter has ward {1}, which taxes removal aimed at Herald of Secret Streams or your attackers. Sphere Grid already gives trample to creatures with +1/+1 counters. From the loose pile."
     },
     {
       "date": "2026-11-18",
       "in": "Biomass Mutation",
       "out": "Rampant Rejuvenator",
-      "why": "From the loose pile. An instant that makes your creatures X/X, with counters on top, as a team finisher. Rampant Rejuvenator only ramps when it dies, and the deck has no sacrifice outlets."
+      "why": "An instant that makes your creatures X/X, with counters on top, as a team finisher. Rampant Rejuvenator only ramps when it dies, and the deck has no sacrifice outlets. From the loose pile."
     }
   ],
   "bracket3": {

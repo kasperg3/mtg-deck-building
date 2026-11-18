@@ -128,7 +128,7 @@
       {
         "in": "Heartless Act",
         "out": "Biomass Mutation",
-        "why": "Kill a creature, or remove 3 counters from one. Biomass is a combat trick that mostly duplicates what your counters already do."
+        "why": "Kill a creature with no counters on it, or remove up to three counters from one. Biomass is a combat trick that mostly duplicates what your counters already do."
       },
       {
         "in": "Beast Within",
@@ -147,7 +147,7 @@
       "id": "counters",
       "name": "Counter Engine",
       "recommended": true,
-      "pitch": "Mill every opponent every turn and turn each mill into +1/+1 counters. Ruin Crab and Mindcrank make rad counters and combat damage mill again; Kami and Evolution Sage grow everything further; Evolution Witness and Struggle for Project Purity keep the cards coming; Radstorm stays as a proliferate finisher.",
+      "pitch": "Mothman puts +1/+1 counters on your creatures whenever nonland cards are milled, so make every player mill as often as you can: Ruin Crab on each of your lands, Mesmeric Orb on each untap, Mindcrank and The Master of Lake-town on each life loss, and rad counters in each player's own first main phase. The Water Crystal adds four cards to every opponent's mill, which makes decking the table a real win; Evolution Sage, Inexorable Tide and Tekuthal proliferate the counters, and Evolution Witness and Hollowmurk Siege keep the cards coming. It struggles when Mothman is removed again and again, and Mesmeric Orb mills you too, so watch your own library.",
       "plays_like": "Big creatures attacking; draws lots of cards",
       "metrics": {
         "Win conditions": 11,
@@ -164,7 +164,7 @@
         {
           "in": "Ruin Crab",
           "out": "Cathedral Acolyte",
-          "why": "Each land you play mills each opponent 3. Simultaneous mills trigger Mothman once, counting every nonland card milled, so that's counters on about 6 creatures per land drop. Acolyte's ward 1 is a small effect."
+          "why": "Each land that enters under your control mills each opponent 3 (7 with The Water Crystal). Simultaneous mills trigger Mothman once, counting every nonland card milled, so that's counters on about 6 creatures per land drop. Acolyte's ward 1 is a small effect."
         },
         {
           "in": "Kami of Whispered Hopes",
@@ -184,7 +184,7 @@
         {
           "in": "Mindcrank",
           "out": "Piper Wright, Publick Reporter",
-          "why": "Whenever an opponent loses life, they mill that many cards. Rad-counter mills already cost life, so every rad mill and every combat hit mills again, and each mill is another Mothman trigger. Piper only does anything when she deals combat damage."
+          "why": "Whenever an opponent loses life, they mill that many cards. Rad-counter mills cost 1 life per nonland card milled, so rad mills and combat hits mill again, and each mill is another Mothman trigger; with Syr Konrad, damage and mill feed each other. Piper only does anything when she deals combat damage."
         },
         {
           "in": "Yavimaya Coast",
@@ -204,36 +204,37 @@
       ],
       "picked": true,
       "how_to_play": {
-        "summary": "Make every player mill every turn. Each mill puts +1/+1 counters on your creatures, so your board grows until you win in combat or by emptying their libraries.",
+        "summary": "Win in the air with counter-loaded Mothman, Tekuthal and Screeching Scorchbeast, by decking the table with Mesmeric Orb and The Water Crystal, with Syr Konrad chaining off Mindcrank, or with twenty growth counters on Simic Ascendancy. The board you want is Mothman plus a repeatable mill source (Ruin Crab, Mesmeric Orb or rad counters), so every turn puts counters on your creatures.",
         "sections": [
           {
             "title": "How Mothman and rad counters work",
             "points": [
-              "Mothman: when it enters or attacks, each player gets a rad counter. Whenever nonland cards are milled, put a +1/+1 counter on each of up to X creatures (X = nonland cards milled). Several players milling at once triggers Mothman once, counting all of them.",
-              "Rad counters: at the start of each player's first main phase they mill one card per rad counter, lose 1 life per nonland card milled and remove one rad counter per nonland card. Milled lands don't remove counters."
+              "Mothman: when it enters or attacks, each player gets a rad counter. Whenever nonland cards are milled, put a +1/+1 counter on each of up to X target creatures (X = nonland cards milled). Several players milling at once (Ruin Crab, Raul) triggers it once, counting all of them; each separate mill, such as each Mesmeric Orb trigger, triggers it again.",
+              "Rad counters: a player with rad counters mills that many cards at the start of their own first main phase, so each player's counters fire once a round, on their turn, not every turn. For each nonland card milled they lose 1 life and remove one rad counter; milled lands don't remove counters. A few counters are usually gone within a turn or two (in one go with The Water Crystal, which adds four cards and more life loss), so keep adding more."
             ]
           },
           {
             "title": "Turns 1–3: mill sources and ramp",
             "points": [
-              "Ruin Crab: each land you play mills every opponent 3.",
-              "Mindcrank: whenever an opponent loses life, they mill that many, so rad life loss and combat damage mill again.",
-              "Ramp: Talismans, Farseek, Rampant Growth."
+              "Ruin Crab: each land that enters under your control mills each opponent 3, including lands from Farseek, Rampant Growth, Cultivate, Evolving Wilds and Tato Farmer.",
+              "Mindcrank: whenever an opponent loses life, they mill that many, so combat damage and rad life loss mill again. The Master of Lake-town does the same for every player, you included.",
+              "Tato Farmer: its rad counters are optional, so usually decline them. Tap it to put a land card milled this turn from any graveyard onto the battlefield under your control: ramp plus an extra landfall for Ruin Crab and Evolution Sage. It untaps only on your turn, so that's once a round; use it on whichever turn a land gets milled.",
+              "Ramp: Sol Ring, Arcane Signet, Talismans, Farseek, Rampant Growth, Cultivate."
             ]
           },
           {
             "title": "Turn 4: Mothman",
             "points": [
-              "Every player's rad mill now triggers Mothman, on every player's turn.",
-              "Spread counters, evasive creatures first: Mothman (flying), Nightkin Ambusher, Infesting Radroach."
+              "From now on every mill that hits a nonland card triggers Mothman: Ruin Crab on your land drops, Mindcrank on life loss, and each player's own rad mill on their turn.",
+              "Spread counters, evasive creatures first: Mothman and Tekuthal (flying), Infesting Radroach, Nightkin Ambusher. Nightkin can't be blocked while the defending player has a rad counter; attack alongside Mothman, whose attack trigger gives them one before blockers are declared."
             ]
           },
           {
             "title": "Keeping rad counters going",
             "points": [
-              "Engines: Evolution Sage proliferates on every land drop and Inexorable Tide on every spell. Protect them.",
-              "Attack triggers: Mothman (each player +1) and Screeching Scorchbeast (each player +2) when they attack. Hitting a player: Glowing One (+4), Infesting Radroach (+damage dealt), Vexing Radgull (+2 or proliferate).",
-              "Bursts: Nightkin Ambusher (+4), The Master and Mirelurk Queen (+2), Vault 12 (each player +3), Nuclear Fallout (+X each), Feral Ghoul on death, Bloatfly Swarm when damaged.",
+              "Proliferate: Evolution Sage on every land, Inexorable Tide on every spell, Karn's Bastion for four mana; Tekuthal doubles each one, and Agent Frank Horrigan proliferates twice when it enters or attacks. Protect them.",
+              "Attack triggers: Mothman (each player +1) and Screeching Scorchbeast (each player +2). Hitting a player: Glowing One (+4), Infesting Radroach (+damage dealt), Vexing Radgull (+2, or proliferate if they already have some).",
+              "Bursts: Nightkin Ambusher (+4) and The Master and Mirelurk Queen (+2) to one target player; Vault 12 (each player +3), Nuclear Fallout (+X each), Feral Ghoul on death (each opponent, equal to its power), Bloatfly Swarm when damaged.",
               "When you proliferate, add to opponents and skip yourself unless you want the mill."
             ]
           },
@@ -241,18 +242,26 @@
             "title": "Engines and card draw",
             "points": [
               "Boosters: Hardened Scales, Kami of Whispered Hopes, Winding Constrictor; doublers: Corpsejack Menace, Branching Evolution.",
-              "Struggle for Project Purity (choose Brotherhood): about 3 cards each upkeep. Opponents drawing is fine; you're milling them out anyway.",
-              "Mirelurk Queen, Marcus, Guardian Project; Evolution Witness returns a permanent from your graveyard each time it gets counters.",
-              "Fraying Sanity: curse the opponent who mills the most; they mill again at end of turn, which is another Mothman trigger."
+              "Hollowmurk Siege (choose Sultai): draw the first time each turn a counter goes on one of your creatures, and Mothman triggers on every player's turn. Mirelurk Queen also draws once a turn off any nonland mill.",
+              "Struggle for Project Purity (choose Brotherhood): about 3 cards each upkeep; the opponents' extra draw only speeds up the mill. Marcus, Guardian Project and Evolution Witness (a permanent card back from your graveyard each time it gets counters) add more.",
+              "Fraying Sanity: curse the opponent whose graveyard fills fastest. At every end step they mill as many cards as went to their graveyard that turn (four more with The Water Crystal), which is another Mothman trigger."
+            ]
+          },
+          {
+            "title": "Closing the game",
+            "points": [
+              "Screeching Scorchbeast: once each turn, when nonland cards are milled, you may create that many 2/2 Zombies. Skip small mills and take a big one, such as a Ruin Crab trigger with The Water Crystal out.",
+              "Simic Ascendancy gets a growth counter for every +1/+1 counter put on your creatures, so one Mothman trigger across five creatures with Hardened Scales out is ten. Proliferate adds to it directly. You win at your upkeep with twenty or more; keep Counterspell or Mutational Advantage up to protect it.",
+              "Decking: Mesmeric Orb with The Water Crystal, Fraying Sanity and Ruin Crab empty libraries fast (see the bracket 3 notes). A player loses when they have to draw from an empty library, and Struggle for Project Purity makes each opponent draw at your upkeep."
             ]
           },
           {
             "title": "Your turn and tips",
             "points": [
-              "Rad mills happen at the start of your first main phase, so counters arrive before combat. Play your land before combat (Ruin Crab, Evolution Sage), then attack with Mothman.",
-              "You get rad counters too: watch your library and life, especially with Harold and Bob, Tato Farmer and Contaminated Drink. Strong makes you gain life from radiation instead.",
+              "Your own rad mill happens at the start of your first main phase, after Mesmeric Orb's upkeep mills, so those counters arrive before combat. Play your land before combat (Ruin Crab, Evolution Sage), then attack with Mothman.",
+              "You get rad counters too, from Mothman, Screeching Scorchbeast, Vault 12, Nuclear Fallout and Bloatfly Swarm, and Winding Constrictor gives you one extra each time. Watch your library and life, especially with Mesmeric Orb and The Master of Lake-town, which mill you as well. Strong makes you gain life from radiation instead.",
               "Nuclear Fallout gives each creature −2X/−2X; your counter-loaded creatures often survive.",
-              "Use the instant-speed removal (Assassin's Trophy, Beast Within, Sultai Charm) at the end of an opponent's turn or in response to a threat.",
+              "Hold up instant-speed answers for the end of an opponent's turn or a key threat: Counterspell and Drown in the Loch (it counts the target controller's graveyard, which the mill fills), Assassin's Trophy, Beast Within, Putrefy, Atomize and Sultai Charm. Binding the Old Gods destroys a nonland permanent now and fetches a Forest next turn, another landfall.",
               "Mulligan hands without 3+ lands and some ramp; you want Mothman on turn 4."
             ]
           }
@@ -409,9 +418,9 @@
     "budget_eur": 30,
     "description": "Mothman gets a trigger every time nonland cards are milled, by any player. This package makes mill happen constantly, turns milled creatures into damage, doubles your proliferate, adds a fourth way to win and gives the deck the counterspells it lacked.",
     "notes": [
-      "Mesmeric Orb mills you too, about one card for each of your permanents that untaps. Play it when you can win within a few turns. Raul and The Master, Transcendent let you use what you mill.",
-      "Mesmeric Orb and The Water Crystal together make each opponent mill five cards for every permanent they untap, which empties a library in two or three turns. That is the top end of bracket 3. Tell your table, and leave one of the two out if it is too much.",
-      "Syr Konrad with Mindcrank or The Master of Lake-town can chain: damage makes opponents mill, and milled creatures make Konrad deal damage again. It often ends the game. Bracket 3 allows a late-game combo like this (Konrad costs five), but tell your table.",
+      "Mesmeric Orb mills you too, about one card for each of your permanents that untaps, and Struggle for Project Purity draws you about three more a turn. Play Orb when you can win within a few turns. If Gaea's Blessing is milled, it shuffles your graveyard, itself included, back into your library, so it only protects you while it is still in your library. Raul casts one spell a turn from what you milled that turn; The Master, Transcendent and Tato Farmer take milled creatures and lands from any graveyard.",
+      "Mesmeric Orb and The Water Crystal together make each opponent mill five cards for every permanent they untap, which empties a library in two or three turns. The Crystal only adds to opponents' mills, not yours. That is the top end of bracket 3. Tell your table, and leave one of the two out if it is too much.",
+      "Syr Konrad with Mindcrank or The Master of Lake-town can chain: damage makes opponents mill, and milled creature cards make Konrad deal damage again. With The Water Crystal each point of damage mills five, and Konrad's {1}{B} (each player mills a card) starts the chain on demand. It often ends the game. Bracket 3 allows a late-game combo like this (Konrad costs five), but tell your table.",
       "Left out on purpose: Bloodchief Ascension. With Mindcrank it is a two-card infinite combo that can be ready on turn three or four. That is bracket 4 play."
     ],
     "win_conditions": {
@@ -422,18 +431,18 @@
       {
         "in": "Mesmeric Orb",
         "out": "Contagion Clasp",
-        "why": "Whenever a permanent untaps, its controller mills a card. Each one is a separate mill, so Mothman triggers many times a turn, on every player's turn. In 62% of Mothman decks, the most-played card your list is missing. Contagion Clasp needs four mana for each proliferate."
+        "why": "Whenever a permanent untaps, its controller mills a card. Each one is a separate mill, so Mothman triggers many times a turn, on every player's turn, and The Water Crystal makes each opponent's mill five cards. It mills you too; Gaea's Blessing is the reset. In 62% of Mothman decks, and the most-played card this list was missing. Contagion Clasp needs four mana for each proliferate."
       },
       {
         "in": "The Master of Lake-town",
         "out": "Young Deathclaws",
-        "why": "You already own it (Bulk pile). A second Mindcrank on a deathtouch body: any player who loses life mills that many cards, so every rad trigger and every attack feeds Mothman. Young Deathclaws is in 15% of Mothman decks.",
+        "why": "A second Mindcrank on a deathtouch body: any player who loses life, you included, mills that many cards, so rad life loss and combat damage feed Mothman, and it chains with Syr Konrad. Already owned (Bulk pile). Young Deathclaws is in 15% of Mothman decks.",
         "owned": true
       },
       {
         "in": "Syr Konrad, the Grim",
         "out": "Jason Bright, Glowing Prophet",
-        "why": "Deals 1 damage to each opponent for every creature card that is milled, by anyone. With four players milling every turn that is steady damage. In 51% of Mothman decks. Jason Bright (19%) needs your Mutants to die."
+        "why": "Deals 1 damage to each opponent whenever another creature dies or a creature card is milled, by anyone. With the whole table milling that is steady damage, and with Mindcrank or The Master of Lake-town each hit mills more creature cards. In 51% of Mothman decks. Jason Bright (19%) needs your Mutants to die."
       },
       {
         "in": "Tekuthal, Inquiry Dominus",
@@ -448,7 +457,7 @@
       {
         "in": "Counterspell",
         "out": "Hancock, Ghoulish Mayor",
-        "why": "The deck had no counterspell. Two mana stops a board wipe or a combo, and bracket 3 tables play both. Hancock (32%) only pumps Zombies and Mutants, and only once it has counters."
+        "why": "Two mana stops a board wipe or a combo, and bracket 3 tables play both; before this the deck had no counterspell. Hancock (32%) only pumps Zombies and Mutants, and only once it has counters."
       },
       {
         "in": "Drown in the Loch",
@@ -485,13 +494,13 @@
       "date": "2026-11-18",
       "in": "Gaea's Blessing",
       "out": "Radstorm",
-      "why": "Mesmeric Orb mills you on every untap. When Gaea's Blessing is milled it shuffles your graveyard back into your library, so you don't deck yourself. Radstorm was 4 mana for one proliferate, and with The Water Crystal opponents' rad counters are usually gone by your turn."
+      "why": "When Gaea's Blessing is milled it shuffles your graveyard, itself included, back into your library, so Mesmeric Orb milling you on every untap doesn't deck you. Radstorm was 4 mana and proliferates only once unless you cast other spells first that turn (storm), and with The Water Crystal opponents' rad counters are usually gone by your turn."
     },
     {
       "date": "2026-11-18",
       "in": "Binding the Old Gods",
       "out": "Vault 87: Forced Evolution",
-      "why": "From the loose pile. Destroys a nonland permanent an opponent controls, then fetches a Forest (a landfall for Ruin Crab and Evolution Sage), for one mana less. Vault 87's steal ends with the Saga."
+      "why": "Destroys a nonland permanent an opponent controls, then fetches a Forest (a landfall for Ruin Crab and Evolution Sage), for one mana less. Already owned (loose pile). Vault 87's steal ends with the Saga."
     }
   ]
 }
