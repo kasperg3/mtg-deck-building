@@ -2,7 +2,7 @@
 
 - **Direction:** Scorched Earth Drain + Core package
 - **Cards to buy:** 12
-- **Total (cheapest printings):** $20.17 · €16.73 (budget €20)
+- **Total (cheapest printings):** $20.17 · €16.73 (budget €30)
 - **Prices:** Scryfall bulk data of 2026-10-16; USD = TCGplayer, EUR = Cardmarket. The cheapest USD and EUR printings can differ.
 - **Comparison page:** [`world-shaper-upgrades.html`](../comparisons/world-shaper-upgrades.html)
 

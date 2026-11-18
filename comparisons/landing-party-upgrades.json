@@ -2,7 +2,7 @@
   "title": "Landing Party — Upgrade Options",
   "deck": "decks/precon/landing-party.md",
   "date": "2026-11-10",
-  "budget_eur": 25,
+  "budget_eur": 30,
   "summary": "Commander Spock pays off land names: whenever he enters or attacks he reveals the top card, lets you cast it for free if its mana value is at most the number of differently named lands you control, puts it onto the battlefield if it's a land, and otherwise draws it. The stock list ramps, lands 35 different names and already carries six blink and copy effects that make Spock enter again (Chief Kyle, Temporal Tribulation, The Guardian of Forever, Balance of Terror, Colossal Clone Master, Shore Leave Planet), but it has only three real answers and fires its ten landfall payoffs off a single extra land drop. Each direction buys four shared answers plus one engine of six cards, and every direction keeps the blink pieces the precon built around Spock.",
   "analysis": {
     "notes": [

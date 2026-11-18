@@ -2,7 +2,7 @@
 
 - **Direction:** Counter Engine + Core interaction package
 - **Cards to buy:** 12
-- **Total (cheapest printings):** $22.51 · €18.00 (budget €20)
+- **Total (cheapest printings):** $22.51 · €18.00 (budget €30)
 - **Prices:** Scryfall bulk data of 2026-10-16; USD = TCGplayer, EUR = Cardmarket. The cheapest USD and EUR printings can differ.
 - **Comparison page:** [`mutant-menace-upgrades.html`](../comparisons/mutant-menace-upgrades.html)
 

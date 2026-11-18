@@ -2,8 +2,8 @@
   "title": "World Shaper — Upgrade Options",
   "deck": "decks/precon/world-shaper.md",
   "date": "2026-10-16",
-  "budget_eur": 20,
-  "summary": "Hearthhull, the Worldseed drains each opponent for 2 whenever you sacrifice a land, and once stationed it trades lands for cards. The stock list ramps far more than it needs to, is top-heavy, and has no way to protect its key pieces. Budget: up to €20 per deck in total (Cardmarket prices).",
+  "budget_eur": 30,
+  "summary": "Hearthhull, the Worldseed drains each opponent for 2 whenever you sacrifice a land, and once stationed it trades lands for cards. The stock list ramps far more than it needs to, is top-heavy, and has no way to protect its key pieces. Budget: up to €30 per deck in total (Cardmarket prices).",
   "analysis": {
     "notes": [
       "Hearthhull's drain ('whenever you sacrifice a land, each opponent loses 2 life') is part of its 8+ station box, so it only works once Hearthhull has 8 charge counters. You station it by tapping creatures, adding counters equal to their power, so the deck needs creatures with high power (Juri, Uurg, Centaur Vinecrasher, Ob Nixilis, Moraug).",

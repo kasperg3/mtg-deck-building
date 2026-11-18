@@ -2,7 +2,7 @@
 
 - **Direction:** Cheer Every Turn
 - **Cards to buy:** 13
-- **Total (cheapest printings):** $20.46 · €19.06 (budget €20)
+- **Total (cheapest printings):** $20.46 · €19.06 (budget €30)
 - **Prices:** Scryfall bulk data of 2026-10-16; USD = TCGplayer, EUR = Cardmarket. The cheapest USD and EUR printings can differ.
 - **Comparison page:** [`counter-blitz-upgrades.html`](../comparisons/counter-blitz-upgrades.html)
 
