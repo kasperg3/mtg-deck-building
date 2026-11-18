@@ -144,22 +144,22 @@
   },
   "core": {
     "name": "Core package",
-    "description": "Cheap protection (Tamiyo's Safekeeping covers Hearthhull before it's a creature; Snakeskin Veil covers creatures), plus a free outlet that turns any land into a 2-life drain with Hearthhull. It also removes the colourless Wastes. Planetary Annihilation stays: with Hearthhull at 8+, Mayhem Devil and Juri, a mass land sacrifice is a finisher.",
+    "description": "Cheap protection (Tamiyo's Safekeeping covers Hearthhull before it's a creature; Snakeskin Veil covers creatures), plus a free outlet that turns any land into a 2-life drain once Hearthhull is at 8+. It also removes the colourless Wastes. Planetary Annihilation stays: with Hearthhull at 8+ and Mayhem Devil out, a mass land sacrifice is a finisher.",
     "swaps": [
       {
         "in": "Tamiyo's Safekeeping",
         "out": "Satyr Wayfinder",
-        "why": "One mana: hexproof and indestructible on any permanent, including Hearthhull before it becomes a creature. Satyr Wayfinder is a weak 2-drop that only digs for a land."
+        "why": "One mana: hexproof and indestructible on any permanent you control, including Hearthhull before it becomes a creature. Satyr Wayfinder is a weak 2-drop that only digs for a land."
       },
       {
         "in": "Snakeskin Veil",
         "out": "Escape to the Wilds",
-        "why": "One mana: hexproof and a +1/+1 counter on a creature, which counters a removal spell. Escape to the Wilds is a 5-mana card-draw spell; Tannuk and Hearthhull cover card draw."
+        "why": "One mana: hexproof and a +1/+1 counter on a creature you control, which makes a targeted removal spell fizzle. Escape to the Wilds is a 5-mana card-draw spell; Tannuk and Hearthhull cover card draw."
       },
       {
         "in": "Zuran Orb",
         "out": "Wastes",
-        "why": "0 mana: sacrifice a land and gain 2 life. With Hearthhull, each opponent also loses 2, so any spare land becomes a drain, at instant speed. Wastes produces colourless mana in a three-colour deck. Cutting one Wastes is deliberate: the deck is 42 lands, Wastes is the only colourless basic, and Zuran Orb is the free sacrifice outlet the whole direction is built on."
+        "why": "0 mana: sacrifice a land and gain 2 life. With Hearthhull at 8+ each opponent also loses 2, so any spare land becomes a drain, at instant speed and for no mana. With Sylvan Safekeeper it is one of the two free sacrifice outlets the deck is built on. Wastes was the only colourless basic in a three-colour deck."
       }
     ]
   },
@@ -168,7 +168,7 @@
       "id": "drain",
       "name": "Scorched Earth Drain",
       "recommended": true,
-      "pitch": "Sacrifice lands every turn and replay them from the graveyard. Landfall pingers (Tannuk, Sabotender, Hagra, Ob Nixilis) deal damage from turn 2; once Hearthhull is stationed to 8, each sacrificed land also drains 2, and Planetary Annihilation becomes a finisher. Juri, Countryside Crusher and Ob Nixilis grow with every land played or sacrificed, so they station Hearthhull quickly.",
+      "pitch": "Sacrifice lands every turn and replay them from the graveyard. Sabotender, Tannuk, Ob Nixilis and Valakut Exploration deal damage on every land that enters from turn 2; once Hearthhull is stationed to 8, each land you sacrifice also costs every opponent 2 life, so Genesis Device, Nahiri's Lithoforming and Planetary Annihilation end games. Juri, Countryside Crusher, Ob Nixilis and Baloth Prime grow or make bodies with every land played or sacrificed, so they station Hearthhull quickly. It struggles when Hearthhull is removed twice or your graveyard is exiled; then Avenger of Zendikar, Omnath and Rampaging Baloths have to win in combat.",
       "plays_like": "Burns the table out with land sacrifices",
       "metrics": {
         "Win conditions": 20,
@@ -185,12 +185,12 @@
         {
           "in": "Ramunap Excavator",
           "out": "Arcane Signet",
-          "why": "Play lands from your graveyard, so every sacrificed land comes back. Arcane Signet is the only ramp piece that doesn't use lands; the deck still has about 13 others."
+          "why": "Play lands from your graveyard, so a land you sacrifice comes back with your next land drop and can be sacrificed again; with Azusa that is up to three a turn. Arcane Signet was a mana rock that did nothing for the land plan, and the deck has plenty of other ramp."
         },
         {
           "in": "Conduit of Worlds",
           "out": "Cultivate",
-          "why": "A second way to replay lands from your graveyard, and it can also recast a permanent from there. Cultivate is redundant ramp."
+          "why": "Another way to play lands from your graveyard, and its tap ability lets you cast a nonland permanent card from there (sorcery speed, as your only spell that turn). Cultivate is redundant ramp."
         },
         {
           "in": "Sabotender",
@@ -210,12 +210,12 @@
         {
           "in": "Countryside Crusher",
           "out": "Gaze of Granite",
-          "why": "Gets a +1/+1 counter every time a land goes to your graveyard (every Zuran Orb, Hearthhull or fetch-land sacrifice), so it grows fast and stations Hearthhull. Each upkeep it mills lands off your library, which Ramunap, Conduit and Szarel let you play. Gaze of Granite also destroys your own cheap permanents (Zuran Orb, Juri, Geopede); Blasphemous Act and Pest Infestation remain as wipes."
+          "why": "Gets a +1/+1 counter every time a land goes to your graveyard (every Zuran Orb, Hearthhull or fetch-land sacrifice), so it grows fast and stations Hearthhull. Each upkeep it mills lands off your library, which Ramunap, Conduit and Szarel let you play. Gaze of Granite also destroys your own cheap permanents (Zuran Orb, Juri, Sabotender); Blasphemous Act stays as the creature wipe."
         },
         {
           "in": "Ob Nixilis, the Fallen",
           "out": "World Breaker",
-          "why": "Every land that enters drains a player for 3 and puts three +1/+1 counters on Ob Nixilis, which makes it the best creature for stationing Hearthhull. World Breaker costs 7."
+          "why": "Every land that enters can make a player lose 3 life and puts three +1/+1 counters on Ob Nixilis, which makes it one of the best creatures for stationing Hearthhull. World Breaker costs 7."
         },
         {
           "in": "Lotus Field",
@@ -225,51 +225,55 @@
         {
           "in": "Jund Panorama",
           "out": "Bojuka Bog",
-          "why": "Land swap. Sacrifices itself for a basic: one drain trigger, then a second landfall, which makes Tannuk draw. Bojuka Bog enters tapped for a one-time graveyard exile."
+          "why": "Land swap. Play it, then pay {1}, tap and sacrifice it for a basic Swamp, Mountain or Forest: a sacrifice trigger between two landfalls (the second makes Tannuk draw), and the replay engines bring it back to do it again."
         }
       ],
       "picked": true,
       "how_to_play": {
-        "summary": "Make extra land drops, sacrifice lands, replay them from the graveyard, and drain the table a little each time.",
+        "summary": "Station Hearthhull to 8 with Zuran Orb or Sylvan Safekeeper on the table: every land you sacrifice then costs each opponent 2 life, and one Genesis Device, Nahiri's Lithoforming or Planetary Annihilation turn finishes the table. Sabotender, Tannuk, Ob Nixilis and Valakut Exploration hit on every land that enters and Mayhem Devil on every sacrifice; Avenger of Zendikar, Rampaging Baloths, Omnath and Moraug win in combat if Hearthhull is answered.",
         "sections": [
           {
             "title": "How Hearthhull works",
             "points": [
-              "Station (sorcery speed): tap another creature to put charge counters equal to its power on Hearthhull.",
+              "Station (sorcery speed): tap another creature you control to put charge counters equal to its power on Hearthhull. A creature that came in this turn can do it.",
               "2+: {1}, tap, sacrifice a land: draw 2 and you may play an extra land this turn. This is your card draw engine.",
-              "8+: it becomes a 6/7 flyer with vigilance and haste, and every land you sacrifice drains each opponent for 2. Before 8 counters nothing drains."
+              "8+: it becomes a 6/7 creature with flying, vigilance and haste, and every land you sacrifice makes each opponent lose 2 life. Before 8 counters Hearthhull drains nothing."
             ]
           },
           {
             "title": "Turns 1–4: set up",
             "points": [
-              "Ramp: Farseek, Nature's Lore, Harrow, Skyshroud Claim (two untapped Forests = two landfalls).",
-              "Get a landfall pinger down: Sabotender, Tannuk, Retreat to Hagra. They deal damage before Hearthhull is stationed.",
-              "Get a replay engine early: Ramunap Excavator, Conduit of Worlds or Szarel. Without one, sacrificed lands are gone for good."
+              "Ramp: Sol Ring, Farseek, Nature's Lore, Harrow (sacrifices a land, then two untapped basics), Skyshroud Claim (two untapped Forests = two landfalls), Tireless Provisioner (a Treasure or Food per land).",
+              "Get a landfall payoff down: Sabotender, Tannuk or Valakut Exploration. They deal damage before Hearthhull is stationed.",
+              "Get a free outlet (Zuran Orb, Sylvan Safekeeper) and a replay engine early: Ramunap Excavator, Conduit of Worlds or Szarel let you play lands from the graveyard, and Undergrowth Recon returns one every upkeep. Without them, sacrificed lands wait for Splendid Reclamation, Aftermath Analyst or Worldsoul's Rage."
             ]
           },
           {
             "title": "Turns 4–7: build the engine",
             "points": [
-              "Cast Hearthhull and station it with high-power creatures: Juri (grows on every sacrifice), Countryside Crusher (grows when lands hit your graveyard), Ob Nixilis (three counters per landfall), Uurg, Centaur Vinecrasher, Formless Genesis tokens and Titania's 5/3s.",
-              "Every turn: sacrifice lands with Zuran Orb, Hammer of Purphoros or Sprouting Goblin, then replay one from the graveyard."
+              "Cast Hearthhull and station it with high-power creatures: Juri (grows on every sacrifice), Countryside Crusher (grows when lands hit your graveyard), Ob Nixilis (three counters per landfall), Baloth Prime (10/10; each land you sacrifice makes a tapped 4/4 Beast and removes one of its six stun counters), The Gitrog Monster, Formless Genesis tokens, Titania's 5/3s and the tokens from Rampaging Baloths and Omnath.",
+              "Szarel puts counters equal to its power on another creature each time you sacrifice a nontoken permanent on your turn: put them on the creature you station with.",
+              "Every turn: sacrifice lands with Zuran Orb or Sylvan Safekeeper (both free), Hearthhull's 2+ ability, Evendo Brushrazer (tap: {R}{R}) or a fetch land, then replay one from the graveyard. Azusa adds two land plays a turn, so with a replay engine you can replay three lands a turn."
             ]
           },
           {
             "title": "Big turns and finishers",
             "points": [
-              "Worldsoul's Rage, Splendid Reclamation and Aftermath Analyst put many lands onto the battlefield at once: Tannuk, Sabotender, Hagra, Ob Nixilis (3 drain each) and Rampaging Baloths all trigger.",
-              "Moraug: a land played in your main phase gives an extra combat.",
-              "Planetary Annihilation with Hearthhull at 8+: every land you sacrifice drains 2, Mayhem Devil pings for every land any player sacrifices, Hearthhull (toughness 7) survives the 6 damage, and Titania's tokens are created after the damage, so they survive."
+              "Genesis Device ({3}{G}{G}, tap and sacrifice it), Nahiri's Lithoforming, Planar Engineering and God-Eternal Bontu sacrifice several lands at once. With Hearthhull at 8+ each one is 2 life from each opponent; Juri and Korvold grow on each (Korvold also draws), Mazirek puts a counter on each of your creatures, Mayhem Devil pings, Titania makes a 5/3 and Baloth Prime a 4/4.",
+              "Worldsoul's Rage, Splendid Reclamation, Aftermath Analyst, Genesis Device and Planar Engineering put many lands onto the battlefield at once: Tannuk, Sabotender, Valakut Exploration, Ob Nixilis (3 life from one player each), Avenger of Zendikar's Plants, Rampaging Baloths and Omnath all trigger.",
+              "Moraug: every land that enters in your main phase gives an extra combat, and your creatures untap for it.",
+              "Planetary Annihilation with Hearthhull at 8+: you keep six lands and every land you sacrifice drains 2, Mayhem Devil pings for every land any player sacrifices, Hearthhull (toughness 7) survives the 6 damage, and Titania's tokens are created after the damage, so they survive. Juri dies to it unless it already has six +1/+1 counters, and then deals its power to any target."
             ]
           },
           {
             "title": "Tips",
             "points": [
-              "Zuran Orb works at instant speed: sacrifice in response to land destruction or a wipe.",
-              "Lotus Field sacrifices two lands when it enters; play it when Hearthhull is at 8+ or a replay engine is out.",
-              "Ramunap lets you play lands from the graveyard, not extra lands. Extra land plays come from Hearthhull, Exploration Broodship, Oracle of Mul Daya and Gitrog.",
-              "Stationing taps your creatures, so they can't block that turn. Keep Tamiyo's Safekeeping for Hearthhull.",
+              "Zuran Orb and Sylvan Safekeeper cost nothing and work at instant speed: sacrifice in response to land destruction, or on an opponent's turn when the drain finishes someone. Undergrowth Recon brings a land back on your upkeep.",
+              "Lotus Field sacrifices two lands when it enters; play it when Hearthhull is at 8+ or a replay engine is out. Crop Rotation ({G}, instant) can fetch it, Ramunap Ruins, or Bojuka Bog to exile a graveyard in response.",
+              "Ramunap Excavator, Conduit of Worlds and Szarel let you play lands from the graveyard, not extra lands. Extra land plays come from Azusa (two), Hearthhull, Exploration Broodship (at 3+ counters), Oracle of Mul Daya, The Gitrog Monster and Nahiri's Lithoforming.",
+              "Nahiri's Lithoforming makes your lands enter tapped for the rest of the turn. Horizon Explorer makes the lands from Genesis Device, Planar Engineering, Splendid Reclamation and Undergrowth Recon enter untapped.",
+              "Stationing taps your creatures, and they stay tapped until your next untap step, so they can't block. Hold Tamiyo's Safekeeping or Defend the Rider for Hearthhull: they protect it even before it is a creature, which Snakeskin Veil and Sylvan Safekeeper can't.",
+              "At 8+, attack with Hearthhull first (vigilance keeps it untapped), then use its draw ability after combat.",
               "Mulligan hands with fewer than 3 lands or with no ramp and no sacrifice outlet."
             ]
           }
@@ -435,10 +439,10 @@
     "date": "2026-11-15",
     "rule": "Bracket 3 (Upgraded) allows up to three Game Changers, no mass land denial, no chained extra turns, and game-ending two-card combos only late in the game.",
     "budget_eur": 30,
-    "description": "The deck already drains hard. What bracket 3 asks for is speed and consistency, so this package adds a second free sacrifice outlet, more land drops and mana, a tutor for your best land, cheaper removal and three cards that each turn a pile of lands into sacrifice triggers at once.",
+    "description": "The deck already drains hard. What bracket 3 asks for is speed and consistency, so this package adds a second free sacrifice outlet, more land drops and mana, a tutor for your best land, cheaper removal and three cards that sacrifice several lands in one go and bring new ones in.",
     "notes": [
       "Planetary Annihilation: bracket 3 does not allow mass land denial. The card leaves every player six lands, so most tables accept it, but ask yours. Toxic Deluge (about €4) is the replacement if they don't.",
-      "How it wins faster: with Hearthhull at 8+ charge counters, Sylvan Safekeeper or Zuran Orb turns every land into 2 life from each opponent for no mana. Genesis Device, Nahiri's Lithoforming and Planar Engineering do it in one card and put lands back.",
+      "How it wins faster: with Hearthhull at 8+ charge counters, Sylvan Safekeeper or Zuran Orb turns every land into 2 life from each opponent for no mana. Genesis Device and Planar Engineering sacrifice several lands in one card and fetch new ones; Nahiri's Lithoforming draws a card for each land and lets you play that many more. Avenger of Zendikar turns the landfall from those turns into an army.",
       "Changed on 2026-11-15: Genesis Device replaced Lotus Cobra in the package, and Scapeshift (about €31) is no longer a premium option because Genesis Device does the same thing."
     ],
     "win_conditions": {
@@ -449,7 +453,7 @@
       {
         "in": "Crop Rotation",
         "out": "Centaur Vinecrasher",
-        "why": "Game Changer. One green mana at instant speed: sacrifice a land (a Hearthhull trigger) and put any land from your library onto the battlefield, such as Lotus Field or Dakmor Salvage, or Field of the Dead if you add it. Centaur Vinecrasher is only a body; 12% of Hearthhull decks keep it."
+        "why": "Game Changer. One green mana at instant speed: sacrifice a land (a Hearthhull trigger) and put any land from your library onto the battlefield, such as Lotus Field (two more sacrifices), Ramunap Ruins or Bojuka Bog, or Field of the Dead if you add it. Centaur Vinecrasher is a trampler that enters with a counter per land card in all graveyards and returns to hand for {G}{G}, but it doesn't sacrifice or replay lands; 12% of Hearthhull decks keep it."
       },
       {
         "in": "Sylvan Safekeeper",
@@ -459,12 +463,12 @@
       {
         "in": "Genesis Device",
         "out": "Sprouting Goblin",
-        "why": "Three mana: it enters and puts a basic land onto the battlefield. Later, for {3}{G}{G} at sorcery speed, you sacrifice it and any number of lands and fetch that many lands. With Hearthhull at 8+ counters and eight lands, that is 16 life from each opponent before the landfall triggers. It is Scapeshift's effect for about a tenth of the price. Sprouting Goblin's sacrifice ability costs {R} and a tap for one card."
+        "why": "Three mana: it enters and puts a basic land onto the battlefield tapped. Later, for {3}{G}{G} at sorcery speed, you tap and sacrifice it, sacrifice any number of lands and fetch that many lands. With Hearthhull at 8+ counters and eight lands, that is 16 life from each opponent before the landfall triggers. It is Scapeshift's effect for about a tenth of the price. Sprouting Goblin's sacrifice ability costs {R} and a tap for one card."
       },
       {
         "in": "Azusa, Lost but Seeking",
         "out": "Juri, Master of the Revue",
-        "why": "Two extra land drops every turn. With Ramunap Excavator, Conduit of Worlds or Szarel you replay the lands you sacrificed, and each one drains again. Juri only grows; it doesn't move the plan forward. This copy came from Landing Party on 2026-11-16, which got Ka-Zar of the Savage Land instead.",
+        "why": "Two extra land drops on each of your turns. With Ramunap Excavator, Conduit of Worlds or Szarel you replay the lands you sacrificed: each one is another landfall, and each can be sacrificed again for another drain. This copy came from Landing Party on 2026-11-16, which got Ka-Zar of the Savage Land instead.",
         "owned": true
       },
       {
@@ -480,22 +484,22 @@
       {
         "in": "Assassin's Trophy",
         "out": "Binding the Old Gods",
-        "why": "Two mana at instant speed destroys any permanent an opponent controls. Binding the Old Gods does the same for four mana at sorcery speed."
+        "why": "Two mana at instant speed destroys any permanent an opponent controls (they may fetch a basic land). Binding the Old Gods costs four at sorcery speed and only hits nonland permanents, though it also fetches a Forest a turn later."
       },
       {
         "in": "Nahiri's Lithoforming",
         "out": "Tireless Tracker",
-        "why": "Sacrifice X lands, draw X cards and play X extra lands this turn. With Hearthhull at 8+ counters that is 2X life from each opponent, and Ramunap Excavator or Conduit of Worlds lets you replay the same lands. Tireless Tracker draws one card for two mana."
+        "why": "Sacrifice X lands, draw X cards and play X extra lands this turn (they enter tapped). With Hearthhull at 8+ counters that is 2X life from each opponent, and Ramunap Excavator or Conduit of Worlds lets you replay the same lands. Tireless Tracker's Clues draw one card for two mana each."
       },
       {
         "in": "Planar Engineering",
         "out": "Uurg, Spawn of Turg",
-        "why": "Sacrifice two lands and put four basic lands onto the battlefield: two sacrifice triggers and four landfall triggers from one card. Ob Nixilis alone takes 12 life with it. Uurg is a sacrifice outlet that costs {B}{G} each time."
+        "why": "Sacrifice two lands and put four basic lands onto the battlefield tapped: two sacrifice triggers and four landfall triggers from one card. Ob Nixilis alone takes 12 life with it. Uurg's sacrifice costs {B}{G} a land where Zuran Orb and Sylvan Safekeeper are free, and its power counts the land cards in your graveyard, which the replay engines keep emptying."
       },
       {
         "in": "Avenger of Zendikar",
         "out": "Multani, Yavimaya's Avatar",
-        "why": "A 0/1 Plant for every land you control, and every land after that puts a +1/+1 counter on each Plant: an army that grows with each land drop. Multani is one large creature that a single removal spell answers."
+        "why": "A 0/1 Plant for every land you control, and every land after that puts a +1/+1 counter on each Plant: an army that grows with each land drop. Multani is one large creature: removal answers it until you pay {1}{G} and return two lands to your hand to get it back, and exile answers it for good."
       }
     ],
     "premium": [
@@ -517,7 +521,7 @@
       "date": "2026-11-18",
       "in": "Undergrowth Recon",
       "out": "Twilight Mire",
-      "why": "Returns a land from your graveyard every upkeep without using a land drop, so a land sacrificed on an opponent's turn comes back and drains again. Twilight Mire only fixed mana."
+      "why": "Returns a land from your graveyard to the battlefield every upkeep without using a land drop, so a land sacrificed on an opponent's turn comes back, triggers landfall and can be sacrificed again. Twilight Mire only fixed mana."
     },
     {
       "date": "2026-11-18",
@@ -529,7 +533,7 @@
       "date": "2026-11-18",
       "in": "Ramunap Ruins",
       "out": "Mountain",
-      "why": "A red source that can sacrifice itself for 2 damage to each opponent, plus Hearthhull's drain at 8+. Ramunap Excavator, Szarel or Conduit of Worlds replay it every turn."
+      "why": "A red source that can pay {2}{R}{R} and sacrifice itself for 2 damage to each opponent, plus Hearthhull's drain at 8+. Ramunap Excavator, Szarel or Conduit of Worlds replay it every turn."
     },
     {
       "date": "2026-11-18",
