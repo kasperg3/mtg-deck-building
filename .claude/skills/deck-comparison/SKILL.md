@@ -6,8 +6,11 @@ description: Analyse one of the user's decks (mana curve, win conditions, remova
 # Deck upgrade comparison
 
 Produces `comparisons/<deck>-upgrades.json` (the spec, written by you) and
-`comparisons/<deck>-upgrades.html` (generated, self-contained viewer). The page
-shows card faces for every swap instead of rules text, so keep prose short.
+`comparisons/<deck>-upgrades.html` (generated, self-contained viewer for
+choosing a direction; `.gitignore` keeps it out of the repo, so open it
+locally). The page shows card faces for every swap instead of rules text, so
+keep prose short. Once a direction is picked, the website's deck page shows
+only what was chosen; see **Website**.
 
 ## Every direction is a plan: an engine *and* a way to win
 
@@ -350,14 +353,15 @@ When the user says they bought the cards:
 
 ## Every deck change goes in the comparison
 
-The comparison page is where the user reads what their deck is and why. A swap
-made only in `decks/<deck>.md` (a card from a booster, a review fix, a card
-brought back from the precon) is invisible there, which is how Counter Blitz
-ended up two swaps ahead of its own comparison. Whenever you change a deck
-file, in the same commit:
+The deck page on the website, built from the spec, is where the user reads
+what their deck is and why. A swap made only in `decks/<deck>.md` (a card from
+a booster, a review fix, a card brought back from the precon) is invisible
+there, which is how Counter Blitz ended up two swaps ahead of its own
+comparison. Whenever you change a deck file, in the same commit:
 
 1. Record the swap in the spec's `deck_changes` (`date`, `in`, `out`, `why`).
-   The page shows these under **Later changes**.
+   The deck page shows these under **Later changes**, after the bracket 3
+   package when they are dated after it.
 2. If a swap in the picked direction was recommended but isn't bought or
    applied yet, mark it `"pending": true` instead of leaving it looking done.
 3. Keep `played_deck` pointing at `decks/<deck>.md`.
@@ -367,6 +371,10 @@ file, in the same commit:
    date order: those dated after `bracket3.applied` come after the package
    (so a later change may bring back a card the package cut), and a package
    is checked against the deck as it was on its `applied` or `declined` date.
+5. If the swap takes out a card that the picked direction's `how_to_play`
+   (or an applied package's `notes`) names, rewrite that point. The deck page
+   strikes through card names that have left the deck, but the guide is what
+   the user plays from, so it should describe the deck as it is.
 
 This also applies to one-off swaps that never went through the three-direction
 workflow. The changelog in the deck file and `deck_changes` in the spec say the
@@ -488,9 +496,9 @@ Change the look there; don't edit generated `.html` files.
 
 Builds are deterministic: `generated` in the page data comes from the spec's
 `date`, and the site footer prints the date of the price snapshot instead of the
-build clock. Rebuilding an unchanged tree therefore produces byte-identical
-files — if a rebuild dirties generated HTML, prices actually moved and the diff
-should be committed deliberately. Every page has the
+build clock, so rebuilding an unchanged tree produces byte-identical files. The
+generated page is not committed. The website publishes it only while the spec
+has no picked direction. Every page has the
 same sections: header with commander, stock analysis (curve and interaction
 table), comparison table (avg MV, cost in, value out, metrics), curve per
 direction against stock, core package, then each direction as OUT → IN card
@@ -503,9 +511,29 @@ double-faced cards.
 The repo is published at https://mtg.grontved.xyz by GitHub Actions
 (`.github/workflows/pages.yml` runs `tools/build_site.py` on every push to
 `main`). Pushing a changed deck file, comparison spec or inventory is enough;
-there's nothing to deploy by hand. Deck pages mark cards that differ from
-`decks/precon/<deck>.md` as "Added" and list cut cards. Planned swaps (pending swaps of the
-picked direction plus the `bracket3` package) show as a "Planned upgrades"
-section, with the cards they replace marked "Planned cut", and the front
-page shows the planned count per deck. To preview locally:
+there's nothing to deploy by hand.
+
+The site shows only what the user chose. Directions that weren't picked, a
+declined `bracket3`, premium options, stock analysis and buy lists stay in the
+spec and the local viewer. Each deck page (`decks/<deck>.html`) has three parts:
+
+- **How to play**: the picked direction's `how_to_play` (summary, `pitch`,
+  then each section as a numbered step), plus the applied package's `notes`.
+  Notes that start with "Changed on" are history and are left out. Card names
+  in any text are linked for a hover preview; names no longer in the deck are
+  struck through.
+- **Swaps**: every swap from the precon with its `why`, in the order it went
+  in: core, picked direction, `deck_changes` up to the package date, the
+  `bracket3` package (applied, or planned if neither applied nor declined),
+  then later `deck_changes`. Pending swaps and an unapplied package are tagged
+  "Planned" and their cuts marked in the decklist; a swap whose card a later
+  swap took out again links to that swap.
+- **Decklist**: the current list (cards new since `decks/precon/<deck>.md`
+  marked) as text or card images, with a Copy button.
+
+`inventory.html` is the bulk list: loose cards by default, with chips for each
+deck and for everything. While a spec has no picked direction, the deck page
+links to the full comparison, published at `comparisons/<deck>.html`. Styles
+and scripts live in `tools/build_site.py` (`TOKENS`, `NAV_CSS`, `CSS`, `JS`);
+`tools/comparison_template.html` uses the same tokens. To preview locally:
 `python3 tools/build_site.py && xdg-open _site/index.html`.
