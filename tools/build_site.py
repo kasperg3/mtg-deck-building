@@ -30,6 +30,7 @@ every push to main (see .github/workflows/pages.yml).
 
 import argparse
 import csv
+import hashlib
 import html
 import json
 import math
@@ -143,8 +144,8 @@ img { max-width: 100%; }
 /* card names in text: hover for a preview, click to enlarge */
 .cn { cursor: zoom-in; text-decoration: underline dotted; text-decoration-color: var(--faint); text-underline-offset: 3px; }
 .cn:hover { color: var(--paper); text-decoration-color: var(--lift); }
-.prose .cn, .why .cn, .step .cn, .phase-d .cn { color: var(--paper); }
-.cn.gone, .prose .cn.gone, .why .cn.gone, .step .cn.gone, .phase-d .cn.gone { color: var(--muted); text-decoration: line-through;
+.prose .cn, .why .cn, .step .cn { color: var(--paper); }
+.cn.gone, .prose .cn.gone, .why .cn.gone, .step .cn.gone { color: var(--muted); text-decoration: line-through;
   text-decoration-color: color-mix(in srgb, var(--out) 65%, transparent); }
 .gone-note { margin: 28px 0 0; }
 .gone-note s { text-decoration-color: var(--out); color: var(--muted); }
@@ -259,15 +260,13 @@ a:hover .duo .c, .duo.live:hover .c { opacity: 1; }
 .step.b3 li::before { background: var(--gc); }
 .review { border: 1px solid var(--line-2); padding: 28px; display: flex; gap: 24px; align-items: center; justify-content: space-between; flex-wrap: wrap; }
 
-.phase { margin-top: clamp(48px, 7vw, 88px); }
-.phase:first-of-type { margin-top: 0; }
-.phase-h { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 10px 24px; align-items: end; padding-bottom: 18px; border-bottom: 1px solid var(--line-2); }
-.phase-h h3 { font: 300 clamp(34px, 4vw, 52px)/1 var(--display); color: var(--paper); margin: 10px 0 0; }
-.phase-h .meta { text-align: right; }
-.phase-h .meta b { color: var(--paper); font-weight: 500; }
-.phase.planned .phase-h { border-bottom-color: color-mix(in srgb, var(--plan) 50%, transparent); }
-.phase.planned .phase-h .lbl:first-child { color: var(--plan); }
-.phase-d { max-width: 72ch; color: var(--muted); margin: 18px 0 0; }
+.og-sum { align-items: center; margin: 0 0 clamp(28px, 4vw, 44px); }
+.og-sum .lbl { color: var(--paper); margin-right: 8px; }
+.ogroup { margin-top: clamp(36px, 5vw, 56px); }
+.og-h { display: flex; justify-content: space-between; gap: 16px; margin: 0; padding-bottom: 10px; border-bottom: 1px solid var(--line-2);
+  font: 500 11px/1.4 var(--mono); letter-spacing: .09em; text-transform: uppercase; color: var(--muted); }
+.og-h span:last-child { color: var(--faint); }
+.ogroup.planned .og-h { color: var(--plan); border-bottom-color: color-mix(in srgb, var(--plan) 50%, transparent); }
 .swap { display: grid; grid-template-columns: 40px 232px minmax(0, 1fr); gap: 24px; padding: 28px 0; border-bottom: 1px solid var(--line); }
 .swap .no { font: 500 12px/1 var(--mono); color: var(--faint); padding-top: 9px; }
 .pair { display: grid; grid-template-columns: 86px 22px 124px; align-items: end; align-self: start; }
@@ -286,7 +285,6 @@ a:hover .duo .c, .duo.live:hover .c { opacity: 1; }
 .swap .out-name .sig { font: 400 12px var(--mono); color: var(--out); margin-right: 8px; }
 .swap .out-name .cn { text-decoration: line-through; text-decoration-color: color-mix(in srgb, var(--out) 70%, transparent); }
 .swap .why { margin: 14px 0 0; max-width: 68ch; }
-.swap.is-gone .in-name { color: var(--muted); }
 .swap.is-planned .thumb.in img { outline: 1px dashed var(--plan); outline-offset: 3px; }
 .tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 14px; }
 .tag { display: inline-flex; align-items: center; font: 500 10px/1 var(--mono); letter-spacing: .09em; text-transform: uppercase; padding: 6px 8px;
@@ -294,8 +292,31 @@ a:hover .duo .c, .duo.live:hover .c { opacity: 1; }
 .tag.gc { color: var(--gc); border-color: color-mix(in srgb, var(--gc) 40%, transparent); }
 .tag.plan { color: var(--plan); border-color: color-mix(in srgb, var(--plan) 45%, transparent); }
 .tag.own { color: var(--in); border-color: color-mix(in srgb, var(--in) 40%, transparent); }
-.tag.gone { color: var(--out); border-color: color-mix(in srgb, var(--out) 40%, transparent); }
+.tag.src { color: var(--lift); border-color: color-mix(in srgb, var(--lift) 45%, transparent); }
 a.tag:hover { color: var(--paper); border-color: var(--paper); }
+
+/* history: git log */
+.log { list-style: none; margin: 0; padding: 0 0 0 22px; border-left: 1px solid var(--line-2); max-width: 980px; }
+.commit { position: relative; padding: 0 0 30px; }
+.commit::before { content: ""; position: absolute; left: -27px; top: 5px; width: 9px; height: 9px; background: var(--ink); border: 1px solid var(--lift); }
+.commit.planned::before { border-color: var(--plan); border-style: dashed; }
+.commit.root::before { background: var(--lift); }
+.commit.root { padding-bottom: 0; }
+.c-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 14px; font: 400 12px/1.5 var(--mono); }
+.c-head .hash { color: var(--gc); }
+.commit.planned .c-head .hash { color: var(--plan); }
+.c-head .c-date { color: var(--faint); }
+.c-head .c-msg { font: 400 18px/1.3 var(--display); color: var(--paper); letter-spacing: .01em; }
+.c-head .c-meta { color: var(--faint); margin-left: auto; }
+.c-diff { list-style: none; margin: 10px 0 0; padding: 10px 14px; background: var(--ink-2); border: 1px solid var(--line); font: 400 13px/1.75 var(--mono); }
+.c-diff li { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 0 24px; }
+.c-diff i { font-style: normal; margin-right: 10px; }
+.c-diff .add { color: var(--text); } .c-diff .add i { color: var(--in); }
+.c-diff .del { color: var(--muted); } .c-diff .del i { color: var(--out); }
+.c-diff .cn { text-decoration-color: transparent; }
+.c-diff .cn:hover { text-decoration-color: var(--lift); }
+.c-diff .cn.gone { text-decoration: none; color: inherit; }
+.c-diff li.plan .add { color: var(--plan); }
 
 .tools { display: flex; gap: 12px 18px; align-items: center; flex-wrap: wrap; margin-bottom: 32px; }
 .tools .sp { flex: 1; }
@@ -410,6 +431,8 @@ table.inv .loc-loose { color: var(--muted); }
   .swap .no { padding: 0; }
   .sec-h .aside { margin-left: 0; }
   .strip figure { width: 26%; }
+  .c-diff li { grid-template-columns: minmax(0, 1fr); }
+  .c-head .c-meta { margin-left: 0; }
   .foot-cols { grid-template-columns: minmax(0, 1fr); }
 }
 @media (max-width: 600px) {
@@ -420,8 +443,6 @@ table.inv .loc-loose { color: var(--muted); }
   .secnav .btn .t { display: none; }
   .secnav .btn.done svg { display: none; }
   .secnav .btn.done::before { content: "✓"; color: var(--in); }
-  .phase-h { grid-template-columns: minmax(0, 1fr); }
-  .phase-h .meta { text-align: left; }
   .pair { grid-template-columns: 96px 26px 140px; }
   table.inv .hide-s { display: none; }
   .ihero .stats { grid-template-columns: repeat(3, minmax(0, 1fr)); }
@@ -769,43 +790,134 @@ def upgrade_phases(spec):
     return phases
 
 
-def swap_html(s, phase, cards, link):
-    no = s["no"]
+def tag_rows(phases):
+    """Every recorded swap, in order, tagged with where and when it came from."""
+    rows = []
+    for ph in phases:
+        for s in ph["swaps"]:
+            rows.append(dict(s, source=None if ph["key"] in ("later", "review") else ph["name"],
+                             when=s.get("date") if ph["key"] in ("later", "review") else ph.get("date")))
+    return rows
+
+
+def net_swaps(rows, pre_c):
+    """The deck as it is now against the precon, as one-for-one pairs.
+
+    Follows each slot through the swaps (A -> B, later B -> C is one slot
+    A -> C), and when a precon card comes back, joins the slot it came back
+    into with the slot it left (X -> Juri, Juri -> Azusa is X -> Azusa).
+    Swaps that were undone drop out. Each pair keeps the swap that brought its
+    current card in (`via`), whose `why` is the reason that card is in the deck.
+    """
+    slots, holder = [], {}
+    for s in rows:
+        if s.get("planned"):
+            continue
+        o, i = key(s["out"]), key(s["in"])
+        if holder.get(o):
+            slot = holder[o].pop()
+        else:
+            slots.append({"orig": s["out"], "chain": []})
+            slot = slots[-1]
+        slot["cur"] = s["in"]
+        slot["chain"].append(s)
+        holder.setdefault(i, []).append(slot)
+    live = list(slots)
+    joined = True
+    while joined:
+        joined = False
+        for a in live:
+            b = next((b for b in live if b is not a and key(b["orig"]) == key(a["cur"]) and key(a["cur"]) in pre_c), None)
+            if b:
+                a["cur"], a["chain"] = b["cur"], a["chain"] + b["chain"]
+                live.remove(b)
+                joined = True
+                break
+    pairs = [x for x in live if key(x["orig"]) != key(x["cur"])]
+    for p in pairs:
+        p["via"] = next(s for s in reversed(p["chain"]) if key(s["in"]) == key(p["cur"]))
+    return pairs
+
+
+def swap_html(no, cur, orig, via, cards, link, net_of=1):
+    """One card in the deck now (or planned), next to the precon card whose slot it took."""
     tags = []
-    if s.get("planned"):
+    if via.get("planned"):
         tags.append('<span class="tag plan">Planned</span>')
-    if s.get("owned"):
+    if via.get("source"):
+        tags.append(f'<span class="tag src">{E(via["source"])}</span>')
+    if via.get("when"):
+        tags.append(f'<span class="tag">{E(via["when"])}</span>')
+    if via.get("owned"):
         tags.append('<span class="tag own">Already owned</span>')
-    if cards.info(s["in"]).get("game_changer"):
+    if cards.info(cur).get("game_changer"):
         tags.append('<span class="tag gc">Game Changer</span>')
-    if phase["key"] in ("later", "review") and s.get("date"):
-        tags.append(f'<span class="tag">{E(s["date"])}</span>')
-    gone = s.get("gone")
-    if gone:
-        tags.append(f'<a class="tag gone" href="#swap-{gone}">Replaced later · #{gone:02d}</a>')
-    elif gone == 0:
-        tags.append('<span class="tag gone">No longer in the deck</span>')
-    cls = "swap" + (" is-planned" if s.get("planned") else "") + (" is-gone" if gone is not None else "")
-    return f"""<article class="{cls}" id="swap-{no}">
+    if net_of > 1:
+        tags.append(f'<a class="tag" href="#history">Net of {net_of} swaps</a>')
+    return f"""<article class="swap{" is-planned" if via.get("planned") else ""}" id="swap-{no}">
   <div class="no">#{no:02d}</div>
   <div class="pair">
-    <figure class="thumb out">{cards.img(s["out"])}<figcaption>Out</figcaption></figure>
+    <figure class="thumb out">{cards.img(orig)}<figcaption>Out</figcaption></figure>
     <span class="arr" aria-hidden="true">→</span>
-    <figure class="thumb in">{cards.img(s["in"])}<figcaption>In</figcaption></figure>
+    <figure class="thumb in">{cards.img(cur)}<figcaption>In</figcaption></figure>
   </div>
   <div class="txt">
-    <h4 class="in-name"><span class="sig">+</span>{cards.name(s["in"])}</h4>
-    <div class="out-name"><span class="sig">−</span>replaces {cards.name(s["out"])}</div>
-    {f'<p class="why">{link(s["why"])}</p>' if s.get("why") else ""}
+    <h4 class="in-name"><span class="sig">+</span>{cards.name(cur)}</h4>
+    <div class="out-name"><span class="sig">−</span>replaces {cards.name(orig)}</div>
+    {f'<p class="why">{link(via["why"])}</p>' if via.get("why") else ""}
     {f'<div class="tags">{"".join(tags)}</div>' if tags else ""}
   </div>
 </article>"""
 
 
+PLAN_CLS = ' class="plan"'
+
+
+def history_html(phases, meta, cards):
+    """Git-log style record, newest first: one entry per package or date of
+    changes, as + / − lines, down to the stock precon."""
+    entries = []
+    for ph in phases:
+        if ph["key"] in ("later", "review"):
+            for date in sorted({s.get("date") or "" for s in ph["swaps"]}):
+                entries.append({"date": date, "msg": "Deck changes", "swaps": [s for s in ph["swaps"] if (s.get("date") or "") == date]})
+        else:
+            entries.append({"date": ph.get("date") or "", "msg": ph["name"], "swaps": ph["swaps"],
+                            "planned": ph.get("planned"), "cost": True})
+    # newest first; on the same date the later entry first (the direction went in after its core package)
+    order = {id(e): i for i, e in enumerate(entries)}
+    entries.sort(key=lambda e: (bool(e.get("planned")), e["date"], order[id(e)]), reverse=True)
+
+    def sha(e):
+        raw = e["date"] + e["msg"] + "".join(s["in"] + s["out"] for s in e["swaps"])
+        return hashlib.sha1(raw.encode()).hexdigest()[:7]
+
+    items = []
+    for e in entries:
+        n = len(e["swaps"])
+        cost = sum(cards.info(s["in"]).get("eur") or 0 for s in e["swaps"] if not s.get("owned"))
+        meta_bits = [f"{n} swap{'s' if n != 1 else ''}"] + ([f"≈ {money(cost)}"] if e.get("cost") else [])
+        lines = "".join(
+            f'<li{PLAN_CLS if s.get("planned") else ""}><span class="add"><i>+</i>{cards.name(s["in"])}</span>'
+            f'<span class="del"><i>−</i>{cards.name(s["out"])}</span></li>' for s in e["swaps"])
+        items.append(f"""<li class="commit{" planned" if e.get("planned") else ""}">
+  <div class="c-head"><span class="hash">{"planned" if e.get("planned") else sha(e)}</span><span class="c-date">{E(e["date"] or "—")}</span>
+    <span class="c-msg">{E(e["msg"])}</span><span class="c-meta">{" · ".join(meta_bits)}</span></div>
+  <ul class="c-diff">{lines}</ul>
+</li>""")
+    released = re.search(r"released (\d{4}-\d{2}-\d{2})", meta.get("Product", ""))
+    items.append(f"""<li class="commit root">
+  <div class="c-head"><span class="hash">precon</span><span class="c-date">{E(released.group(1) if released else "—")}</span>
+    <span class="c-msg">{E(product_short(meta.get("Product")))} precon, stock list</span><span class="c-meta">100 cards</span></div>
+</li>""")
+    return f'<ol class="log">{"".join(items)}</ol>'
+
+
 # ---------------------------------------------------------------- deck page
 
 def build_deck(d, index):
-    """Deck page: plan, swaps with reasons, current decklist."""
+    """Deck page: how to play, the swaps that make the deck what it is now,
+    the decklist, and the history of every swap."""
     cards = Cards(index)
     commanders, current = parse_deck(d["path"])
     precon_path = ROOT / "decks" / "precon" / d["path"].name
@@ -822,14 +934,9 @@ def build_deck(d, index):
     b3 = (spec or {}).get("bracket3") or {}
     meta = d["meta"]
 
-    # Number the swaps across phases and note ones a later swap took out again
-    rows = [s for ph in phases for s in ph["swaps"]]
-    for i, s in enumerate(rows, 1):
-        s["no"] = i
-    for s in rows:
-        if not s.get("planned") and not cur_c.get(key(s["in"])) and key(s["in"]) not in map(key, commanders):
-            later = next((t for t in rows if t["no"] > s["no"] and key(t["out"]) == key(s["in"])), None)
-            s["gone"] = later["no"] if later else 0
+    # The deck now against the precon, as pairs; the full record goes to History
+    rows = tag_rows(phases)
+    pairs = net_swaps(rows, pre_c)
     planned = [s for s in rows if s.get("planned")]
     plan_cut = Counter(key(s["out"]) for s in planned)
 
@@ -854,7 +961,7 @@ def build_deck(d, index):
                      f'<p>{E(picked.get("plays_like") or "")}</p></div>')
     elif spec:
         direction = '<div class="dir"><div class="lbl">Upgrade</div><div class="d3">Options under review</div></div>'
-    swaps_btn = '<a class="btn" href="#swaps">See the swaps</a>' if rows else '<a class="btn" href="#decklist">Decklist</a>'
+    swaps_btn = '<a class="btn" href="#swaps">See the swaps</a>' if pairs or planned else '<a class="btn" href="#decklist">Decklist</a>'
     note_bits = [f"<b>Bracket {E(br)}</b> — {E(br_note)}" if br_note else f"<b>Bracket {E(br)}</b>",
                  f"Game Changers: {E(', '.join(gcs))}" if gcs else "No Game Changers"]
     hero = f"""<section class="dhero">
@@ -884,9 +991,11 @@ def build_deck(d, index):
     secs = []
     if spec:
         secs.append(("plan", "How to play"))
-    if rows:
+    if pairs or planned:
         secs.append(("swaps", "Swaps"))
     secs.append(("decklist", "Decklist"))
+    if rows:
+        secs.append(("history", "History"))
     secnav = (f'<nav class="secnav" aria-label="On this page"><div class="wrap"><span class="title">{E(d["title"])}</span>'
               + "".join(f'<a href="#{i}"><span class="n">{n:02d}</span>{E(t)}</a>' for n, (i, t) in enumerate(secs, 1))
               + f'<span class="sp"></span><button class="btn ghost" type="button" data-copy="decklist-text">{COPY_ICON}'
@@ -927,29 +1036,43 @@ def build_deck(d, index):
     <a class="btn" href="../comparisons/{d["slug"]}.html">Compare the directions</a></div>
 </div></section>"""
 
-    # ---- swaps
+    # ---- swaps: the deck as it is now, against the precon
     swaps = ""
-    if rows:
-        blocks = []
-        for i, ph in enumerate(phases, 1):
-            buy = [s for s in ph["swaps"] if not s.get("owned")]
-            cost = sum(cards.info(s["in"]).get("eur") or 0 for s in buy)
-            meta_bits = [f'<b>{len(ph["swaps"])}</b> swap{"s" if len(ph["swaps"]) != 1 else ""}']
-            if ph["key"] not in ("later", "review"):
-                meta_bits.append(f"≈ {money(cost)}{' to buy' if ph.get('planned') else ''}")
-            if ph.get("date"):
-                meta_bits.append(("applied " if ph["key"] == "bracket3" else "") + E(ph["date"]))
-            blocks.append(f"""<div class="phase{" planned" if ph.get("planned") else ""}" id="phase-{ph["key"]}">
-  <div class="phase-h">
-    <div><div class="lbl">Phase {i:02d}<span class="sep">—</span>{E(ph["kicker"])}</div><h3>{E(ph["name"])}</h3></div>
-    <div class="lbl meta">{'<span class="sep">·</span>'.join(meta_bits)}</div>
-  </div>
-  {f'<p class="phase-d">{linker(ph["text"])}</p>' if ph["text"] else ""}
-  {"".join(swap_html(s, ph, cards, linker) for s in ph["swaps"])}
-</div>""")
+    if pairs or planned:
+        def type_of(name):
+            return section_for(cards.info(name).get("type_line", ""))
+
+        def order(name):
+            info = cards.info(name)
+            return ("Basic" in info.get("type_line", ""), info.get("cmc", 0), name)
+
+        blocks, no = [], 0
+        for sec in SECTIONS + ["Other"]:
+            group = sorted((p for p in pairs if type_of(p["cur"]) == sec), key=lambda p: order(p["cur"]))
+            if not group:
+                continue
+            items = []
+            for p in group:
+                no += 1
+                items.append(swap_html(no, p["cur"], p["orig"], p["via"], cards, linker, len(p["chain"])))
+            blocks.append(f'<div class="ogroup"><h3 class="og-h"><span>{E(sec)}</span><span>{len(group)}</span></h3>'
+                          f'{"".join(items)}</div>')
+        if planned:
+            items = []
+            for s in planned:
+                no += 1
+                items.append(swap_html(no, s["in"], s["out"], s, cards, linker))
+            cost = sum(cards.info(s["in"]).get("eur") or 0 for s in planned if not s.get("owned"))
+            blocks.append(f'<div class="ogroup planned"><h3 class="og-h"><span>Planned · not in the deck yet</span>'
+                          f'<span>{len(planned)} · ≈ {money(cost)} to buy</span></h3>{"".join(items)}</div>')
+        by_source = Counter(p["via"].get("source") or "Deck changes" for p in pairs)
+        order_src = [ph["name"] for ph in phases if ph["key"] not in ("later", "review")] + ["Deck changes"]
+        chips = "".join(f'<span class="tag{" src" if src != "Deck changes" else ""}">{E(src)} · {by_source[src]}</span>'
+                        for src in order_src if by_source.get(src))
         swaps = f"""<section class="sec" id="swaps"><div class="wrap">
   <div class="sec-h"><span class="no">{num["swaps"]:02d}</span><h2 class="d2">Swaps</h2>
-    <p class="aside">Every card that changed from the {E(product_short(meta.get("Product")))} precon, in the order it went in, with the reason. Click a card to enlarge it.</p></div>
+    <p class="aside">The deck as it is now: each card that wasn't in the {E(product_short(meta.get("Product")))} precon, the precon card it replaced, and why it's in. Swaps that were later undone are only in the history.</p></div>
+  <div class="tags og-sum"><span class="lbl">{len(pairs)} cards differ from the precon</span>{chips}</div>
   {"".join(blocks)}
 </div></section>"""
 
@@ -1001,8 +1124,16 @@ def build_deck(d, index):
   <textarea id="decklist-text" hidden>{E(decklist_text)}</textarea>
 </div></section>"""
 
-    body = hero + secnav + plan + swaps + decklist
-    stats = {"total": total, "added": added_total, "value": value, "planned": len(planned), "swaps": len(rows),
+    history = ""
+    if rows:
+        history = f"""<section class="sec" id="history"><div class="wrap">
+  <div class="sec-h"><span class="no">{num["history"]:02d}</span><h2 class="d2">History</h2>
+    <p class="aside">Every swap since the precon, newest first, including ones that were later undone.</p></div>
+  {history_html(phases, meta, cards)}
+</div></section>"""
+
+    body = hero + secnav + plan + swaps + decklist + history
+    stats = {"total": total, "added": added_total, "value": value, "planned": len(planned), "swaps": len(pairs),
              "bracket": br, "art": art, "picked": picked, "b3_applied": bool(b3.get("applied"))}
     return body, cards, stats
 
