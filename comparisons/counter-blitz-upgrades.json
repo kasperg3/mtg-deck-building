@@ -458,6 +458,36 @@
       "in": "Forgotten Ancient",
       "out": "Summoner's Sending",
       "why": "Back from the precon after the win-condition review: it grows on every spell and hands its counters to the creatures that finish games. Summoner's Sending was the lowest-impact card left."
+    },
+    {
+      "date": "2026-11-18",
+      "in": "Swords to Plowshares",
+      "out": "Pull from Tomorrow",
+      "why": "One-mana instant exile: instant-speed answers go from 4 to 5. The deck draws off every combat, so Pull from Tomorrow was spare."
+    },
+    {
+      "date": "2026-11-18",
+      "in": "Guiding Hydra",
+      "out": "Path of Discovery",
+      "why": "Each combat it turns one of its counters into a +1/+1 counter on every other creature you control, so Herald or Rikku makes the whole team unblockable. The counter boosters grow it and Cheer refills it."
+    },
+    {
+      "date": "2026-11-18",
+      "in": "Ezuri, Stalker of Spheres",
+      "out": "Gatta and Luzzu",
+      "why": "From the loose pile. Draws a card whenever you proliferate, twice with Tekuthal. The deck has plenty of protection, and Gatta only prevents damage to one creature."
+    },
+    {
+      "date": "2026-11-18",
+      "in": "Cathedral Acolyte",
+      "out": "Duskshell Crawler",
+      "why": "From the loose pile. Each creature with a counter has ward {1}. Sphere Grid already gives trample to creatures with +1/+1 counters."
+    },
+    {
+      "date": "2026-11-18",
+      "in": "Biomass Mutation",
+      "out": "Rampant Rejuvenator",
+      "why": "From the loose pile. An instant that makes your creatures X/X, with counters on top, as a team finisher. Rampant Rejuvenator only ramps when it dies, and the deck has no sacrifice outlets."
     }
   ],
   "bracket3": {

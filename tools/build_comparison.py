@@ -211,6 +211,14 @@ def curve(cards, cards_by_name):
             "nonland": count}
 
 
+BASIC_LANDS = {"plains", "island", "swamp", "mountain", "forest", "wastes"}
+
+
+def is_basic_name(name):
+    k = key(name)
+    return k in BASIC_LANDS or (k.startswith("snow-covered ") and k[13:] in BASIC_LANDS)
+
+
 def apply_swaps(cards, swaps):
     result = {key(n): [q, n] for q, n in cards}
     problems = []
@@ -222,7 +230,7 @@ def apply_swaps(cards, swaps):
             result[out_k][0] -= 1
             if result[out_k][0] <= 0:
                 del result[out_k]
-        if key(s["in"]) in result:
+        if key(s["in"]) in result and not is_basic_name(s["in"]):  # extra basics are allowed
             problems.append(f"'{s['in']}' is already in the deck")
         result.setdefault(key(s["in"]), [0, s["in"]])[0] += 1
     return [(q, n) for q, n in result.values()], problems
@@ -312,11 +320,17 @@ def main():
         def cost(swaps, cur):
             return total([s["in"] for s in swaps if not s.get("owned")], cards, cur)
 
+        # The package is checked against the deck as it was when it was applied or declined:
+        # undo the deck_changes made after that date, newest first.
+        since = b3.get("applied") or b3.get("declined")
+        later = [c for c in spec.get("deck_changes", []) if since and c["date"] > since]
+        base, probs_later = apply_swaps(played, [{"in": c["out"], "out": c["in"]} for c in reversed(later)])
+        problems += [f"{b3['name']} (undoing later changes): {p}" for p in probs_later]
         if b3.get("applied"):   # the package is in the deck: undo it to get the deck before
-            before, probs_undo = apply_swaps(played, [{"in": s["out"], "out": s["in"]} for s in b3["swaps"]])
+            before, probs_undo = apply_swaps(base, [{"in": s["out"], "out": s["in"]} for s in b3["swaps"]])
             problems += [f"{b3['name']} (applied): {p}" for p in probs_undo]
         else:
-            before = played
+            before = base
         after, probs = apply_swaps(before, b3["swaps"])
         _, probs_all = apply_swaps(before, b3_swaps)
         problems += [f"{b3['name']}: {p}" for p in dict.fromkeys(probs + probs_all)]

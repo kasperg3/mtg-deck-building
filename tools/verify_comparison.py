@@ -225,7 +225,11 @@ def main():
         want = counts(cards)
         applied = core + [s for d in picked for s in d["swaps"] if not s.get("pending")] if picked else []
         b3_in_deck = b3.get("swaps", []) if b3.get("applied") else []
-        for s in applied + (changes if picked else []) + b3_in_deck:
+        # in date order: changes up to the day the package was applied, the package, then later changes
+        b3_date = b3.get("applied")
+        early = [c for c in changes if not b3_date or c["date"] <= b3_date] if picked else []
+        late = [c for c in changes if b3_date and c["date"] > b3_date] if picked else []
+        for s in applied + early + b3_in_deck + late:
             swap(want, s, "played deck")
         have = counts(played)
         missing = sorted(n for n in have if have[n] > want.get(n, 0))
@@ -245,6 +249,11 @@ def main():
             return sorted(n for n, q in pool.items() if q > 0 and (index.get(key(n)) or {}).get("game_changer"))
 
         pool = counts(played)
+        # check the package against the deck as it was when it was applied or declined:
+        # undo the deck_changes made after that date, newest first
+        since = b3.get("applied") or b3.get("declined")
+        for c in reversed([c for c in changes if since and c["date"] > since]):
+            swap(pool, {"in": c["out"], "out": c["in"]}, f"{b3['name']} (undoing later change)")
         if b3.get("applied"):   # undo the package to check it against the deck before it
             for s in b3.get("swaps", []):
                 swap(pool, {"in": s["out"], "out": s["in"]}, f"{b3['name']} (applied)")

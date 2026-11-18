@@ -363,7 +363,10 @@ file, in the same commit:
 3. Keep `played_deck` pointing at `decks/<deck>.md`.
 4. Rebuild the page and run `verify_comparison.py`. It fails unless the stock
    list plus the core, the picked direction (minus pending swaps) and
-   `deck_changes` reproduces the played deck card for card.
+   `deck_changes` reproduces the played deck card for card. Changes apply in
+   date order: those dated after `bracket3.applied` come after the package
+   (so a later change may bring back a card the package cut), and a package
+   is checked against the deck as it was on its `applied` or `declined` date.
 
 This also applies to one-off swaps that never went through the three-direction
 workflow. The changelog in the deck file and `deck_changes` in the spec say the

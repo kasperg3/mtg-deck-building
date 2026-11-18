@@ -479,5 +479,19 @@
       }
     ],
     "applied": "2026-11-16"
-  }
+  },
+  "deck_changes": [
+    {
+      "date": "2026-11-18",
+      "in": "Gaea's Blessing",
+      "out": "Radstorm",
+      "why": "Mesmeric Orb mills you on every untap. When Gaea's Blessing is milled it shuffles your graveyard back into your library, so you don't deck yourself. Radstorm was 4 mana for one proliferate, and with The Water Crystal opponents' rad counters are usually gone by your turn."
+    },
+    {
+      "date": "2026-11-18",
+      "in": "Binding the Old Gods",
+      "out": "Vault 87: Forced Evolution",
+      "why": "From the loose pile. Destroys a nonland permanent an opponent controls, then fetches a Forest (a landfall for Ruin Crab and Evolution Sage), for one mana less. Vault 87's steal ends with the Saga."
+    }
+  ]
 }

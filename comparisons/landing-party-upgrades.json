@@ -577,6 +577,30 @@
       "in": "Ka-Zar of the Savage Land",
       "out": "Azusa, Lost but Seeking",
       "why": "The only Azusa moves to World Shaper, which gets cards first. Ka-Zar comes from the Bulk pile: you may look at the top card any time and play lands from it, which also shows what Spock will reveal, and Zabu grows with every land. Five mana instead of three, so buy a second Azusa later to swap back."
+    },
+    {
+      "date": "2026-11-18",
+      "in": "Oracle of Mul Daya",
+      "out": "Ka-Zar of the Savage Land",
+      "why": "Brings back an extra land drop (3 cards give one since Azusa left), plays lands from the top and reveals the top card, so you know what Spock will hit. One mana cheaper than Ka-Zar, which added no land drop."
+    },
+    {
+      "date": "2026-11-18",
+      "in": "Stroke of Midnight",
+      "out": "Jefferies Tube",
+      "why": "Instant removal for any nonland permanent: spot removal was the one category below target. Jefferies Tube's activations cost {2}-{4} plus a tap."
+    },
+    {
+      "date": "2026-11-18",
+      "in": "Multani, Yavimaya's Avatar",
+      "out": "U.S.S. Farragut, Bold Explorer",
+      "why": "From the loose pile. +1/+1 for each land you control and each land card in your graveyard, with reach and trample, and it returns itself for two lands you then replay. Farragut is a 6-mana landfall payoff that isn't a creature until 7 charge counters."
+    },
+    {
+      "date": "2026-11-18",
+      "in": "Celebrate the Mountain-king",
+      "out": "T'Pring, Never Parted",
+      "why": "From the loose pile. Exiles a nonland permanent from each opponent, and Starfield Vocalist doubles it. T'Pring was a 5-mana fight that needs a big enough creature."
     }
   ]
 }
