@@ -6,7 +6,7 @@
 - **Format:** Commander · 100 cards
 - **Game Changers:** 0
 - **Bracket:** 2 (no Game Changers, no combos)
-- **Status:** Owned · upgraded: Land Engine (2026-11-10, completed 2026-11-15)
+- **Status:** Owned · upgraded: Land Engine (2026-11-10, completed 2026-11-15) + review swaps (2026-11-18)
 
 ## Commander (1)
 1 Commander Spock
@@ -14,7 +14,6 @@
 ## Creatures (23)
 1 Lotus Cobra
 1 Augur of Autumn
-1 Ka-Zar of the Savage Land
 1 Lieutenant Hikaru Sulu
 1 Loot, Exuberant Explorer
 1 Mole Man, Moloid Master
@@ -26,30 +25,32 @@
 1 Chief Kyle, Transporter Tech
 1 Chief Montgomery Scott
 1 Janice Rand, Essential Aide
+1 Oracle of Mul Daya
 1 Pavel Chekov, First Posting
+1 Starfield Vocalist
 1 M'Ress, Crew Coordinator
-1 T'Pring, Never Parted
 1 Ancient Greenwarden
 1 Colossal Clone Master
+1 Multani, Yavimaya's Avatar
 1 Rampaging Baloths
 1 Sun Titan
 1 Lt. Arex, Ever-Adapting
-1 Starfield Vocalist
 
-## Instants (13)
+## Instants (14)
 1 Brainstorm
 1 Path to Exile
 1 Swords to Plowshares
 1 Counterspell
 1 Growth Spiral
 1 Heroic Intervention
+1 Joint Exploration
+1 Momentary Blink
 1 Reality Shift
 1 Beast Within
 1 Generous Gift
 1 Krosan Grip
+1 Stroke of Midnight
 1 Temporal Tribulation
-1 Momentary Blink
-1 Joint Exploration
 
 ## Sorceries (8)
 1 Ponder
@@ -61,24 +62,23 @@
 1 Wrath of God
 1 Austere Command
 
-## Artifacts (8)
-1 Jefferies Tube
+## Artifacts (6)
 1 Sol Ring
 1 Arcane Signet
 1 U.S.S. Defiant, Mirror Migrant
 1 Starfleet Communicator
 1 Shuttlecraft Galileo
 1 Starship Enterprise
-1 U.S.S. Farragut, Bold Explorer
 
-## Enchantments (7)
+## Enchantments (8)
 1 Exploration
 1 Balance of Terror
+1 Far Traveler
+1 Stable Wormhole
+1 Warp Speed
+1 Celebrate the Mountain-king
 1 Felidar Retreat
 1 Guardian Project
-1 Far Traveler
-1 Warp Speed
-1 Stable Wormhole
 
 ## Lands (40)
 1 Canopy Vista
@@ -141,3 +141,8 @@
   - +Stable Wormhole / −Satyr Wayfinder (not part of Land Engine: a Planet land token on every attack)
 - 2026-11-16 — +Joint Exploration / −The Guardian of Forever (the last Land Engine swap, after comparing with The Command Zone's upgrade). The deck stays at bracket 2; the bracket 3 package is not planned.
 - 2026-11-16 — +Ka-Zar of the Savage Land / −Azusa, Lost but Seeking: the one Azusa moves to World Shaper, which gets cards first. Ka-Zar (from the Bulk pile) lets you play lands from the top of the library and shows the card Spock will reveal.
+- 2026-11-18 — Review swaps after the card-search review (4 swaps; bought on CardTrader unless owned):
+  - +Oracle of Mul Daya / −Ka-Zar of the Savage Land
+  - +Stroke of Midnight / −Jefferies Tube
+  - +Multani, Yavimaya's Avatar / −U.S.S. Farragut, Bold Explorer (owned, from the loose pile)
+  - +Celebrate the Mountain-king / −T'Pring, Never Parted (owned, from the loose pile)

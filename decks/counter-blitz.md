@@ -6,15 +6,16 @@
 - **Format:** Commander · 100 cards
 - **Game Changers:** 1 (Farewell) — bracket 3+
 - **Bracket:** 3 (Farewell is a Game Changer; swap it out for bracket 2)
-- **Status:** Owned · upgraded: Cheer Every Turn (2026-10-16)
+- **Status:** Owned · upgraded: Cheer Every Turn (2026-10-16) + review swaps (2026-11-18)
 
 ## Commander (1)
 1 Tidus, Yuna's Guardian
 
 ## Creatures (36)
 1 Walking Ballista
+1 Guiding Hydra
+1 Cathedral Acolyte
 1 Conclave Mentor
-1 Duskshell Crawler
 1 Grateful Apparition
 1 Gyre Sage
 1 Incubation Druid
@@ -25,7 +26,6 @@
 1 Shelinda, Yevon Acolyte
 1 Silent Hallcreeper
 1 Thrummingbird
-1 Gatta and Luzzu
 1 Kami of Whispered Hopes
 1 Kutzil, Malamet Exemplar
 1 Maester Seymour
@@ -36,26 +36,27 @@
 1 Tromell, Seymour's Butler
 1 Auron, Venerated Guardian
 1 Chocobo Knights
+1 Ezuri, Stalker of Spheres
 1 Fathom Mage
+1 Forgotten Ancient
 1 Herald of Secret Streams
 1 Kimahri, Valiant Guardian
 1 Luminous Broodmoth
-1 Rampant Rejuvenator
 1 Summon: Yojimbo
 1 Tekuthal, Inquiry Dominus
 1 Wakka, Devoted Guardian
 1 Yuna, Grand Summoner
 1 Summon: Valefor
 1 Sunscorch Regent
-1 Forgotten Ancient
 
-## Instants (9)
+## Instants (10)
 1 An Offer You Can't Refuse
 1 Path to Exile
+1 Swords to Plowshares
+1 Biomass Mutation
 1 Destroy Evil
 1 Feat of Resistance
 1 Protection Magic
-1 Pull from Tomorrow
 1 Endless Detour
 1 Inspiring Call
 1 Yuna's Whistle
@@ -73,15 +74,14 @@
 1 Sol Ring
 1 Arcane Signet
 
-## Enchantments (8)
+## Enchantments (7)
 1 Hardened Scales
 1 Sphere Grid
 1 Together Forever
 1 Bred for the Hunt
 1 Fight Rigging
-1 Path of Discovery
-1 Inexorable Tide
 1 Loading Zone
+1 Inexorable Tide
 
 ## Lands (37)
 1 Adarkar Wastes
@@ -135,3 +135,9 @@
 - 2026-11-11 — +Loading Zone / −Bane of Progress (Loading Zone from the Bulk pile; Bane of Progress destroyed the deck's own enchantments, sagas and mana rocks).
 - 2026-11-11 — +Forgotten Ancient / −Summoner's Sending (back from the precon: grows on every spell and hands its counters out each upkeep, feeding Herald of Secret Streams and Chocobo Knights; in ~70% of Tidus decks on EDHREC).
 - 2026-11-16 — The deck stays as it is; the bracket 3 package is not planned. It is bracket 3 on paper only because of Farewell.
+- 2026-11-18 — Review swaps after the card-search review (5 swaps; bought on CardTrader unless owned):
+  - +Swords to Plowshares / −Pull from Tomorrow
+  - +Guiding Hydra / −Path of Discovery
+  - +Ezuri, Stalker of Spheres / −Gatta and Luzzu (owned, from the loose pile)
+  - +Cathedral Acolyte / −Duskshell Crawler (owned, from the loose pile)
+  - +Biomass Mutation / −Rampant Rejuvenator (owned, from the loose pile)

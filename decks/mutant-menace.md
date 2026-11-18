@@ -6,7 +6,7 @@
 - **Format:** Commander · 100 cards
 - **Game Changers:** 0
 - **Bracket:** 3 (no Game Changers; Mesmeric Orb with The Water Crystal is a strong mill engine, tell the table)
-- **Status:** Owned · upgraded: Counter Engine (2026-10-16) + Bracket 3 package (2026-11-16)
+- **Status:** Owned · upgraded: Counter Engine (2026-10-16) + Bracket 3 package (2026-11-16) + review swaps (2026-11-18)
 
 ## Commander (1)
 1 The Wise Mothman
@@ -24,23 +24,25 @@
 1 Rampaging Yao Guai
 1 Raul, Trouble Shooter
 1 Tato Farmer
+1 The Master of Lake-town
 1 Bloatfly Swarm
 1 Corpsejack Menace
 1 Lily Bowen, Raging Grandma
 1 Nightkin Ambusher
+1 Tekuthal, Inquiry Dominus
 1 The Master, Transcendent
 1 Marcus, Mutant Mayor
 1 Mirelurk Queen
+1 Syr Konrad, the Grim
 1 Alpha Deathclaw
 1 Screeching Scorchbeast
 1 Strong, the Brutish Thespian
 1 Agent Frank Horrigan
-1 The Master of Lake-town
-1 Syr Konrad, the Grim
-1 Tekuthal, Inquiry Dominus
 
-## Instants (11)
+## Instants (10)
 1 Assassin's Trophy
+1 Counterspell
+1 Drown in the Loch
 1 Heartless Act
 1 Beast Within
 1 Inspiring Call
@@ -48,12 +50,10 @@
 1 Putrefy
 1 Sultai Charm
 1 Atomize
-1 Radstorm
-1 Counterspell
-1 Drown in the Loch
 
-## Sorceries (5)
+## Sorceries (6)
 1 Farseek
+1 Gaea's Blessing
 1 Nuclear Fallout
 1 Rampant Growth
 1 Cultivate
@@ -62,24 +62,24 @@
 ## Artifacts (8)
 1 Sol Ring
 1 Arcane Signet
+1 Mesmeric Orb
 1 Mindcrank
 1 Talisman of Curiosity
 1 Talisman of Dominance
 1 Talisman of Resilience
-1 Mesmeric Orb
 1 The Water Crystal
 
 ## Enchantments (10)
 1 Hardened Scales
+1 Hollowmurk Siege
+1 Simic Ascendancy
 1 Branching Evolution
 1 Fraying Sanity
+1 Binding the Old Gods
 1 Guardian Project
 1 Struggle for Project Purity
 1 Inexorable Tide
-1 Vault 87: Forced Evolution
 1 Vault 12: The Necropolis
-1 Hollowmurk Siege
-1 Simic Ascendancy
 
 ## Lands (39)
 1 Ash Barrens
@@ -90,6 +90,7 @@
 1 Exotic Orchard
 1 Fetid Pools
 1 Hinterland Harbor
+1 Karn's Bastion
 1 Llanowar Wastes
 1 Mariposa Military Base
 1 Mortuary Mire
@@ -105,7 +106,6 @@
 1 Underground River
 1 Woodland Cemetery
 1 Yavimaya Coast
-1 Karn's Bastion
 5 Forest
 5 Island
 5 Swamp
@@ -139,3 +139,6 @@
   - +Hollowmurk Siege / −Harmonize
   - +Simic Ascendancy / −Contaminated Drink
   - +Karn's Bastion / −Temple of Deceit
+- 2026-11-18 — Review swaps after the card-search review (2 swaps; bought on CardTrader unless owned):
+  - +Gaea's Blessing / −Radstorm
+  - +Binding the Old Gods / −Vault 87: Forced Evolution (owned, from the loose pile)

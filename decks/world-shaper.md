@@ -6,15 +6,18 @@
 - **Format:** Commander · 100 cards
 - **Game Changers:** 1 (Crop Rotation)
 - **Bracket:** 3 (one Game Changer; Planetary Annihilation is borderline mass land denial)
-- **Status:** Owned · upgraded: Scorched Earth Drain (2026-10-16) + Bracket 3 package (2026-11-16)
+- **Status:** Owned · upgraded: Scorched Earth Drain (2026-10-16) + Bracket 3 package (2026-11-16) + review swaps (2026-11-18)
 
 ## Commander (1)
 1 Hearthhull, the Worldseed
 
-## Creatures (29)
+## Creatures (30)
+1 Sylvan Safekeeper
 1 Aftermath Analyst
+1 Juri, Master of the Revue
 1 Sabotender
 1 Augur of Autumn
+1 Azusa, Lost but Seeking
 1 Braids, Arisen Nightmare
 1 Countryside Crusher
 1 Evendo Brushrazer
@@ -24,6 +27,7 @@
 1 Scouring Swarm
 1 Springbloom Druid
 1 Tannuk, Memorial Ensign
+1 Tireless Provisioner
 1 Baloth Prime
 1 Oracle of Mul Daya
 1 Soul of Windgrace
@@ -36,50 +40,48 @@
 1 Titania, Protector of Argoth
 1 Moraug, Fury of Akoum
 1 Rampaging Baloths
-1 Omnath, Locus of Rage
-1 Sylvan Safekeeper
-1 Azusa, Lost but Seeking
-1 Tireless Provisioner
 1 Avenger of Zendikar
+1 Omnath, Locus of Rage
 
 ## Instants (12)
+1 Crop Rotation
+1 Defend the Rider
 1 Snakeskin Veil
 1 Tamiyo's Safekeeping
+1 Assassin's Trophy
 1 Infernal Grasp
-1 Rakdos Charm
 1 Tear Asunder
 1 Beast Within
 1 Harrow
 1 Putrefy
 1 Roiling Regrowth
 1 Windgrace's Judgment
-1 Crop Rotation
-1 Assassin's Trophy
 
 ## Sorceries (10)
 1 Farseek
+1 Nahiri's Lithoforming
 1 Nature's Lore
 1 Worldsoul's Rage
 1 Formless Genesis
+1 Planar Engineering
 1 Skyshroud Claim
 1 Splendid Reclamation
 1 Planetary Annihilation
 1 Blasphemous Act
-1 Nahiri's Lithoforming
-1 Planar Engineering
 
 ## Artifacts (5)
 1 Zuran Orb
 1 Exploration Broodship
 1 Sol Ring
-1 Conduit of Worlds
 1 Genesis Device
+1 Conduit of Worlds
 
 ## Enchantments (2)
-1 Retreat to Hagra
+1 Undergrowth Recon
 1 Valakut Exploration
 
-## Lands (41)
+## Lands (40)
+1 Bojuka Bog
 1 Cabaretti Courtyard
 1 Canyon Slough
 1 Cinder Glade
@@ -97,17 +99,17 @@
 1 Maestros Theater
 1 Mountain Valley
 1 Myriad Landscape
+1 Ramunap Ruins
 1 Riveteers Overlook
 1 Rocky Tar Pit
 1 Sheltered Thicket
 1 Smoldering Marsh
 1 Sulfurous Springs
 1 Terramorphic Expanse
-1 Twilight Mire
 1 Vernal Fen
 8 Forest
-3 Mountain
-5 Swamp
+2 Mountain
+4 Swamp
 
 ## Changelog
 - 2026-10-16 — Added stock precon list.
@@ -137,3 +139,9 @@
   - +Planar Engineering / −Uurg, Spawn of Turg
   - +Avenger of Zendikar / −Multani, Yavimaya's Avatar
 - 2026-11-16 — Azusa, Lost but Seeking comes from Landing Party instead of a new copy.
+- 2026-11-18 — Review swaps after the card-search review (5 swaps; bought on CardTrader unless owned):
+  - +Undergrowth Recon / −Twilight Mire
+  - +Defend the Rider / −Rakdos Charm
+  - +Ramunap Ruins / −Mountain
+  - +Juri, Master of the Revue / −Retreat to Hagra (owned, from the loose pile)
+  - +Bojuka Bog / −Swamp (owned, from the loose pile)

@@ -511,5 +511,37 @@
       }
     ],
     "applied": "2026-11-16"
-  }
+  },
+  "deck_changes": [
+    {
+      "date": "2026-11-18",
+      "in": "Undergrowth Recon",
+      "out": "Twilight Mire",
+      "why": "Returns a land from your graveyard every upkeep without using a land drop, so a land sacrificed on an opponent's turn comes back and drains again. Twilight Mire only fixed mana."
+    },
+    {
+      "date": "2026-11-18",
+      "in": "Defend the Rider",
+      "out": "Rakdos Charm",
+      "why": "One mana, instant: hexproof and indestructible for Hearthhull while it is still a noncreature artifact. Rakdos Charm's modes were narrow, and Bojuka Bog takes over the graveyard hate."
+    },
+    {
+      "date": "2026-11-18",
+      "in": "Ramunap Ruins",
+      "out": "Mountain",
+      "why": "A red source that can sacrifice itself for 2 damage to each opponent, plus Hearthhull's drain at 8+. Ramunap Excavator, Szarel or Conduit of Worlds replay it every turn."
+    },
+    {
+      "date": "2026-11-18",
+      "in": "Juri, Master of the Revue",
+      "out": "Retreat to Hagra",
+      "why": "Back from the loose pile. It gets a +1/+1 counter for every permanent you sacrifice, and station counts power, so Juri charges Hearthhull. Retreat to Hagra was the weakest of ten landfall payoffs."
+    },
+    {
+      "date": "2026-11-18",
+      "in": "Bojuka Bog",
+      "out": "Swamp",
+      "why": "Back from the loose pile. The land recursion replays it, so it exiles an opponent's graveyard again and again."
+    }
+  ]
 }
