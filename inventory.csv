@@ -138,7 +138,7 @@ Count,Name,Set,Deck,Source,Acquired,Notes
 1,Power Fist,PIP,Loose,Mutant Menace precon,,
 1,Talisman of Curiosity,PIP,Mutant Menace,Mutant Menace precon,,
 1,Talisman of Dominance,PIP,Mutant Menace,Mutant Menace precon,,
-1,Talisman of Resilience,PIP,Mutant Menace,Mutant Menace precon,,
+1,Talisman of Resilience,PIP,Loose,Mutant Menace precon,,
 1,Strength Bobblehead,PIP,Loose,Mutant Menace precon,,
 1,Recon Craft Theta,PIP,Loose,Mutant Menace precon,,
 1,Hardened Scales,PIP,Mutant Menace,Mutant Menace precon,,
@@ -755,3 +755,4 @@ Count,Name,Set,Deck,Source,Acquired,Notes
 1,Guiding Hydra,,Counter Blitz,CardTrader,2026-11-18,"for Counter Blitz (Review swaps), replaces Path of Discovery"
 1,Oracle of Mul Daya,,Landing Party,CardTrader,2026-11-18,"for Landing Party (Review swaps), replaces Ka-Zar of the Savage Land"
 1,Stroke of Midnight,,Landing Party,CardTrader,2026-11-18,"for Landing Party (Review swaps), replaces Jefferies Tube"
+1,Psychic Spiral,,Mutant Menace,CardTrader,2026-11-18,"for Mutant Menace (Review swaps), replaces Talisman of Resilience"
