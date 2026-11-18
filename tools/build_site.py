@@ -52,6 +52,10 @@ COLOUR_NAMES = {"White": "W", "Blue": "U", "Black": "B", "Red": "R", "Green": "G
 BASICS = {"Plains", "Island", "Swamp", "Mountain", "Forest", "Wastes"}
 NUMBER_WORDS = ["Zero", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten"]
 REPO = "https://github.com/kasperg3/mtg-deck-building"
+# Content hashes of site.css / site.js, appended to their URLs. GitHub Pages
+# caches assets for hours but HTML for minutes, so without this a phone that
+# visited before a redesign renders the new pages with the old stylesheet.
+ASSET_V = {"css": "", "js": ""}
 # Date of the Scryfall bulk snapshot the pages were built from. Kept out of the
 # build clock so rebuilding an unchanged tree produces byte-identical pages.
 PRICES_AS_OF = ""
@@ -114,6 +118,9 @@ html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
 body { margin: 0; background: var(--ink); color: var(--text); font: 400 16px/1.6 var(--body); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
 body::after { content: ""; position: fixed; inset: 0; border: 3px solid var(--frame); pointer-events: none; z-index: 95; }
 ::selection { background: var(--brand); color: #fff; }
+button, input, select { -webkit-appearance: none; appearance: none; border-radius: 0; }
+a, button, [data-k] { -webkit-tap-highlight-color: transparent; }
+.select { padding-right: 26px !important; background-image: linear-gradient(45deg, transparent 50%, currentColor 50%), linear-gradient(135deg, currentColor 50%, transparent 50%); background-position: right 12px center, right 8px center; background-size: 4px 4px; background-repeat: no-repeat; }
 :focus-visible { outline: 2px solid var(--lift); outline-offset: 2px; }
 a { color: var(--paper); text-decoration-color: var(--line-2); text-underline-offset: 3px; }
 a:hover { color: var(--lift); }
@@ -142,7 +149,7 @@ img { max-width: 100%; }
 .pip.W { color: var(--W); } .pip.U { color: var(--U); } .pip.B { color: var(--B); } .pip.R { color: var(--R); } .pip.G { color: var(--G); }
 
 /* card names in text: hover for a preview, click to enlarge */
-.cn { cursor: zoom-in; text-decoration: underline dotted; text-decoration-color: var(--faint); text-underline-offset: 3px; }
+.cn { cursor: zoom-in; text-decoration-line: underline; text-decoration-style: dotted; text-decoration-color: var(--faint); text-underline-offset: 3px; }
 .cn:hover { color: var(--paper); text-decoration-color: var(--lift); }
 .prose .cn, .why .cn, .step .cn { color: var(--paper); }
 .cn.gone, .prose .cn.gone, .why .cn.gone, .step .cn.gone { color: var(--muted); text-decoration: line-through;
@@ -369,7 +376,7 @@ a.tag:hover { color: var(--paper); border-color: var(--paper); }
 .chip:hover { color: var(--paper); border-color: var(--lift); }
 .chip[aria-pressed="true"] { background: var(--paper); color: var(--brand); border-color: var(--paper); }
 .chip .c { opacity: .6; margin-left: 6px; }
-.select { font: 500 11px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; padding: 8px 10px; border: 1px solid var(--line-2); background: var(--ink); color: var(--muted); }
+.select { font: 500 11px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; padding: 8px 10px; border: 1px solid var(--line-2); background-color: var(--ink); color: var(--muted); }
 .result { display: flex; align-items: center; gap: 16px; justify-content: space-between; flex-wrap: wrap; padding: 6px 0 18px; }
 .result .count b { color: var(--paper); font-weight: 500; }
 .table-scroll { overflow-x: auto; }
@@ -447,7 +454,13 @@ table.inv .loc-loose { color: var(--muted); }
   table.inv .hide-s { display: none; }
   .ihero .stats { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .ihero .stats > div { padding: 12px; }
-  .chips .lbl { min-width: 0; width: 100%; }
+  .chips { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; margin: 0 calc(-1 * var(--gut)); padding: 2px var(--gut);
+    -webkit-mask-image: linear-gradient(to right, #000 88%, transparent); mask-image: linear-gradient(to right, #000 88%, transparent); }
+  .chips::-webkit-scrollbar { display: none; }
+  .chips .lbl { min-width: 0; flex: none; margin-right: 2px; }
+  .chip, .chips .select { flex: none; }
+  .filters { gap: 10px; padding: 16px 0; }
+  .ihero { gap: 20px; }
   .cgrid, .inv-cards { grid-template-columns: repeat(auto-fill, minmax(104px, 1fr)); }
   .strip figure:nth-child(n+5) { display: none; }
   .strip figure { width: 30%; }
@@ -729,7 +742,7 @@ def page(title, body, base, decks, current, description="", cards=None, script="
 <link rel="icon" href="{FAVICON}">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="{FONTS}">
-<link rel="stylesheet" href="{base}assets/site.css">
+<link rel="stylesheet" href="{base}assets/site.css?v={ASSET_V["css"]}">
 </head><body>
 {header(decks, base, current)}
 <main>{body}</main>
@@ -737,7 +750,7 @@ def page(title, body, base, decks, current, description="", cards=None, script="
 <div id="lightbox" role="dialog" aria-modal="true" aria-label="Card image"></div>
 <img id="preview" alt="" aria-hidden="true">
 <script id="cards" type="application/json">{cards.json() if cards else "{}"}</script>
-<script src="{base}assets/site.js"></script>{script}
+<script src="{base}assets/site.js?v={ASSET_V["js"]}"></script>{script}
 </body></html>
 """
 
@@ -1344,8 +1357,10 @@ def main():
         shutil.rmtree(out)
     (out / "decks").mkdir(parents=True)
     (out / "assets").mkdir()
-    (out / "assets" / "site.css").write_text(TOKENS + NAV_CSS + CSS)
-    (out / "assets" / "site.js").write_text(JS.lstrip())
+    css, js = TOKENS + NAV_CSS + CSS, JS.lstrip()
+    (out / "assets" / "site.css").write_text(css)
+    (out / "assets" / "site.js").write_text(js)
+    ASSET_V.update(css=hashlib.sha1(css.encode()).hexdigest()[:10], js=hashlib.sha1(js.encode()).hexdigest()[:10])
     if args.cname:
         (out / "CNAME").write_text(args.cname + "\n")
     (out / ".nojekyll").write_text("")
