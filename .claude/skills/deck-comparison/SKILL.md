@@ -216,7 +216,7 @@ file, reduced to `.cache/card-index.json`. The cache is **not in git**
      the deck's own plan.
 
 4. **Respect the budget.** The user buys on Cardmarket. The default is
-   **up to €20 per deck**, counting the core package. Set `budget_eur` in the
+   **up to €30 per deck**, counting the core package (the bracket 3 package has its own €30). Set `budget_eur` in the
    spec (`budget_usd` also works). To price candidates before choosing, look
    them up in `.cache/card-index.json` (fields `eur` and `usd`, cheapest paper
    printing). Real Cardmarket totals have come in below these estimates
@@ -427,7 +427,7 @@ For a new comparison on an already-upgraded deck, point the spec's `deck` at
   "title": "Mutant Menace — Upgrade Options",
   "deck": "decks/mutant-menace.md",          // repo-relative path
   "date": "YYYY-MM-DD",
-  "budget_eur": 20,                          // optional (or budget_usd); build warns when a direction's cards-in cost exceeds it
+  "budget_eur": 30,                          // optional (or budget_usd); build warns when a direction's cards-in cost exceeds it
   "summary": "One paragraph: what the commander does and the overall plan.",
   "analysis": {
     "notes": ["Curve / mana / weakness observations, one line each"],
