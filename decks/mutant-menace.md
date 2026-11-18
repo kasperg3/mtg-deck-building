@@ -39,7 +39,7 @@
 1 Strong, the Brutish Thespian
 1 Agent Frank Horrigan
 
-## Instants (10)
+## Instants (11)
 1 Assassin's Trophy
 1 Counterspell
 1 Drown in the Loch
@@ -50,6 +50,7 @@
 1 Putrefy
 1 Sultai Charm
 1 Atomize
+1 Psychic Spiral
 
 ## Sorceries (6)
 1 Farseek
@@ -59,14 +60,13 @@
 1 Cultivate
 1 Find // Finality
 
-## Artifacts (8)
+## Artifacts (7)
 1 Sol Ring
 1 Arcane Signet
 1 Mesmeric Orb
 1 Mindcrank
 1 Talisman of Curiosity
 1 Talisman of Dominance
-1 Talisman of Resilience
 1 The Water Crystal
 
 ## Enchantments (10)
@@ -142,3 +142,4 @@
 - 2026-11-18 — Review swaps after the card-search review (2 swaps; bought on CardTrader unless owned):
   - +Gaea's Blessing / −Radstorm
   - +Binding the Old Gods / −Vault 87: Forced Evolution (owned, from the loose pile)
+- 2026-11-18 — +Psychic Spiral / −Talisman of Resilience (bought): a reset for your own library that also mills an opponent for your graveyard's size, and one mana rock fewer for Mesmeric Orb to mill you with.

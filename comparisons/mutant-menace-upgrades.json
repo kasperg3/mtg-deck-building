@@ -252,14 +252,15 @@
             "points": [
               "Screeching Scorchbeast: once each turn, when nonland cards are milled, you may create that many 2/2 Zombies. Skip small mills and take a big one, such as a Ruin Crab trigger with The Water Crystal out.",
               "Simic Ascendancy gets a growth counter for every +1/+1 counter put on your creatures, so one Mothman trigger across five creatures with Hardened Scales out is ten. Proliferate adds to it directly. You win at your upkeep with twenty or more; keep Counterspell or Mutational Advantage up to protect it.",
-              "Decking: Mesmeric Orb with The Water Crystal, Fraying Sanity and Ruin Crab empty libraries fast (see the bracket 3 notes). A player loses when they have to draw from an empty library, and Struggle for Project Purity makes each opponent draw at your upkeep."
+              "Decking: Mesmeric Orb with The Water Crystal, Fraying Sanity and Ruin Crab empty libraries fast (see the bracket 3 notes). A player loses when they have to draw from an empty library, and Struggle for Project Purity makes each opponent draw at your upkeep.",
+              "Psychic Spiral: cast it at instant speed, ideally at the end of the turn before an opponent's, targeting the opponent with the fewest cards left. You shuffle your graveyard back and they mill as many cards as it held, plus four with The Water Crystal; late in the game that is often their whole library, and they lose when they draw."
             ]
           },
           {
             "title": "Your turn and tips",
             "points": [
               "Your own rad mill happens at the start of your first main phase, after Mesmeric Orb's upkeep mills, so those counters arrive before combat. Play your land before combat (Ruin Crab, Evolution Sage), then attack with Mothman.",
-              "You get rad counters too, from Mothman, Screeching Scorchbeast, Vault 12, Nuclear Fallout and Bloatfly Swarm, and Winding Constrictor gives you one extra each time. Watch your library and life, especially with Mesmeric Orb and The Master of Lake-town, which mill you as well. Strong makes you gain life from radiation instead.",
+              "You get rad counters too, from Mothman, Screeching Scorchbeast, Vault 12, Nuclear Fallout and Bloatfly Swarm, and Winding Constrictor gives you one extra each time. Watch your library and life, especially with Mesmeric Orb and The Master of Lake-town, which mill you as well. If your library runs low, Psychic Spiral shuffles your graveyard back, and Putrefy or Beast Within can destroy your own Mesmeric Orb at instant speed. Strong makes you gain life from radiation instead.",
               "Nuclear Fallout gives each creature −2X/−2X; your counter-loaded creatures often survive.",
               "Hold up instant-speed answers for the end of an opponent's turn or a key threat: Counterspell and Drown in the Loch (it counts the target controller's graveyard, which the mill fills), Assassin's Trophy, Beast Within, Putrefy, Atomize and Sultai Charm. Binding the Old Gods destroys a nonland permanent now and fetches a Forest next turn, another landfall.",
               "Mulligan hands without 3+ lands and some ramp; you want Mothman on turn 4."
@@ -418,7 +419,7 @@
     "budget_eur": 30,
     "description": "Mothman gets a trigger every time nonland cards are milled, by any player. This package makes mill happen constantly, turns milled creatures into damage, doubles your proliferate, adds a fourth way to win and gives the deck the counterspells it lacked.",
     "notes": [
-      "Mesmeric Orb mills you too, about one card for each of your permanents that untaps, and Struggle for Project Purity draws you about three more a turn. Play Orb when you can win within a few turns. If Gaea's Blessing is milled, it shuffles your graveyard, itself included, back into your library, so it only protects you while it is still in your library. Raul casts one spell a turn from what you milled that turn; The Master, Transcendent and Tato Farmer take milled creatures and lands from any graveyard.",
+      "Mesmeric Orb mills you too, about one card for each of your permanents that untaps, and Struggle for Project Purity draws you about three more a turn. Play Orb when you can win within a few turns. If Gaea's Blessing is milled, it shuffles your graveyard, itself included, back into your library, so it only protects you while it is still in your library. Psychic Spiral is the second reset: it shuffles your graveyard back at instant speed and mills an opponent that many cards. Raul casts one spell a turn from what you milled that turn; The Master, Transcendent and Tato Farmer take milled creatures and lands from any graveyard.",
       "Mesmeric Orb and The Water Crystal together make each opponent mill five cards for every permanent they untap, which empties a library in two or three turns. The Crystal only adds to opponents' mills, not yours. That is the top end of bracket 3. Tell your table, and leave one of the two out if it is too much.",
       "Syr Konrad with Mindcrank or The Master of Lake-town can chain: damage makes opponents mill, and milled creature cards make Konrad deal damage again. With The Water Crystal each point of damage mills five, and Konrad's {1}{B} (each player mills a card) starts the chain on demand. It often ends the game. Bracket 3 allows a late-game combo like this (Konrad costs five), but tell your table.",
       "Left out on purpose: Bloodchief Ascension. With Mindcrank it is a two-card infinite combo that can be ready on turn three or four. That is bracket 4 play."
@@ -501,6 +502,12 @@
       "in": "Binding the Old Gods",
       "out": "Vault 87: Forced Evolution",
       "why": "Destroys a nonland permanent an opponent controls, then fetches a Forest (a landfall for Ruin Crab and Evolution Sage), for one mana less. Already owned (loose pile). Vault 87's steal ends with the Saga."
+    },
+    {
+      "date": "2026-11-18",
+      "in": "Psychic Spiral",
+      "out": "Talisman of Resilience",
+      "why": "Five-mana instant: shuffle your whole graveyard back into your library, then target opponent mills that many cards, four more with The Water Crystal. Late in the game your graveyard is often 40 cards or more, so it can mill a player out on its own and triggers Mothman, and it resets your library when Mesmeric Orb, Struggle for Project Purity or The Master of Lake-town have milled you low. Talisman of Resilience was the most replaceable ramp: 39 lands, Sol Ring, Arcane Signet, two Talismans and three land spells are plenty for a four-mana commander, and every mana rock that untaps under Mesmeric Orb mills you a card."
     }
   ]
 }
