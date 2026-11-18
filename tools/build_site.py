@@ -5,15 +5,23 @@ Usage:
     python3 tools/build_site.py [--out _site] [--cname mtg.grontved.xyz]
 
 Pages:
-    index.html                     front page: every deck with its commander,
-                                   colours, bracket and upgrade status
-    decks/<deck>.html              the full, current decklist with card images;
-                                   cards added since the precon are marked
-                                   "Added", and cut precon cards are listed
-    comparisons/<deck>.html        the upgrade comparison (rebuilt here, so
-                                   prices are current)
-    inventory.html                 every owned card from inventory.csv, with
-                                   search, deck/source/type filters and prices
+    index.html                     front page: the decks, each with its chosen
+                                   upgrade direction, plus the bulk list
+    decks/<deck>.html              one page per deck: how to play it (the
+                                   picked direction and its guide), every
+                                   swap from the precon with the reason for it,
+                                   grouped as core package, picked direction,
+                                   later changes and the bracket 3 package (when
+                                   applied or planned), then the current
+                                   decklist as a list or as card images
+    inventory.html                 the bulk list: every owned card, loose cards
+                                   first, with search, filters and prices
+    comparisons/<deck>.html        only while a deck's spec has no picked
+                                   direction: the comparison page (restyled to
+                                   match), so a direction can be chosen
+
+Only what was chosen is shown: directions that were not picked, declined
+bracket 3 packages and premium options stay in the spec, not on the site.
 
 Card data comes from the local Scryfall index (.cache/card-index.json),
 downloaded automatically when missing or older than a week. CI runs this on
@@ -21,8 +29,10 @@ every push to main (see .github/workflows/pages.yml).
 """
 
 import argparse
+import csv
 import html
 import json
+import math
 import re
 import shutil
 import subprocess
@@ -37,428 +47,1159 @@ from build_comparison import fetch_cards, key, load_index, parse_deck  # noqa: E
 
 E = html.escape
 COLOUR_ORDER = "WUBRG"
+COLOUR_NAMES = {"White": "W", "Blue": "U", "Black": "B", "Red": "R", "Green": "G"}
+BASICS = {"Plains", "Island", "Swamp", "Mountain", "Forest", "Wastes"}
+NUMBER_WORDS = ["Zero", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten"]
+REPO = "https://github.com/kasperg3/mtg-deck-building"
 # Date of the Scryfall bulk snapshot the pages were built from. Kept out of the
 # build clock so rebuilding an unchanged tree produces byte-identical pages.
 PRICES_AS_OF = ""
-COLOUR_NAMES = {"White": "W", "Blue": "U", "Black": "B", "Red": "R", "Green": "G"}
+
+FONTS = ("https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500"
+         "&family=Mona+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap")
+FAVICON = ("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E"
+           "%3Crect width='32' height='32' fill='%231d1df2'/%3E%3Cpath d='M16 5 27 16 16 27 5 16Z' "
+           "fill='none' stroke='white' stroke-width='2'/%3E%3C/svg%3E")
+
+# ---------------------------------------------------------------- styles
+
+# Tokens shared with tools/comparison_template.html (same names), so the
+# header injected into a comparison page looks the same as on the site.
+TOKENS = r"""
+:root {
+  color-scheme: dark;
+  --ink: #0a0a1c; --ink-2: #0f0f27; --ink-3: #16163a;
+  --line: rgba(176,176,255,.12); --line-2: rgba(176,176,255,.24);
+  --paper: #f4f4fb; --text: #d9d9ea; --muted: #9696bd; --faint: #686894;
+  --brand: #1d1df2; --lift: #8c8cff; --frame: #5b5be8;
+  --in: #00f279; --out: #ff4f9a; --gc: #f2f200; --plan: #ffa31a;
+  --W: #f7efcf; --U: #5cb4ff; --B: #c3b9d9; --R: #ff6b55; --G: #3ee08c;
+  --display: "Oswald", "Arial Narrow", sans-serif;
+  --body: "Mona Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --max: 1200px; --gut: clamp(16px, 4vw, 48px);
+}
+"""
+
+NAV_CSS = r"""
+.top { max-width: var(--max); margin: 0 auto; padding: 22px var(--gut) 18px; display: grid;
+  grid-template-columns: minmax(0,1fr) auto minmax(0,1fr); align-items: center; gap: 24px; }
+.top nav { display: flex; align-items: center; justify-content: space-around; gap: 18px; }
+.top nav a { font: 400 13px/1 var(--display); letter-spacing: .09em; text-transform: uppercase;
+  color: var(--text); text-decoration: none; white-space: nowrap; }
+.top nav a:hover, .top nav a.cur { color: var(--lift); }
+.top nav a.cur { text-decoration: underline; text-underline-offset: 7px; text-decoration-thickness: 1px; }
+.top .mark { font: 300 30px/.92 var(--display); color: var(--paper); text-align: center; text-decoration: none; letter-spacing: -.01em; }
+.top .mark:hover { color: var(--lift); }
+.top .nav-m { display: none; }
+.top .btn-w { display: inline-flex; align-items: center; height: 32px; padding: 0 12px; background: var(--paper);
+  color: var(--brand) !important; text-decoration: none !important; font: 500 13px/1 var(--display); letter-spacing: .06em; text-transform: uppercase; }
+.top .btn-w:hover { background: #fff; }
+@media (max-width: 900px) {
+  .top { grid-template-columns: auto 1fr; gap: 10px 16px; padding-top: 18px; }
+  .top .nav-l, .top .nav-r { display: none; }
+  .top .mark { text-align: left; font-size: 24px; }
+  .top .nav-m { display: flex; grid-column: 1 / -1; justify-content: flex-start; gap: 20px; overflow-x: auto;
+    padding: 12px 0 4px; border-top: 1px solid var(--line); scrollbar-width: none;
+    -webkit-mask-image: linear-gradient(to right, #000 82%, transparent); mask-image: linear-gradient(to right, #000 82%, transparent); }
+  .top .nav-m::-webkit-scrollbar { display: none; }
+}
+"""
 
 CSS = r"""
-:root {
-  --bg: #f6f5f2; --surface: #ffffff; --surface-2: #efede8; --text: #1d1c1a; --muted: #6b6862;
-  --border: #dcd8d0; --accent: #4f46e5; --in: #15803d; --in-bg: #dcfce7; --out: #b91c1c; --out-bg: #fee2e2; --plan: #b45309; --plan-bg: #fef3c7;
-  --W: #f3ecd2; --U: #3b82c4; --B: #3d3a36; --R: #d1453b; --G: #3f8f4f;
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --bg: #141413; --surface: #1e1d1b; --surface-2: #2a2926; --text: #ecebe7; --muted: #a29f97;
-    --border: #3a3834; --accent: #8b85ff; --in: #4ade80; --in-bg: #14321f; --out: #f87171; --out-bg: #3b1717; --plan: #fbbf24; --plan-bg: #3a2a0c;
-  }
-}
-:root[data-theme="dark"] {
-  --bg: #141413; --surface: #1e1d1b; --surface-2: #2a2926; --text: #ecebe7; --muted: #a29f97;
-  --border: #3a3834; --accent: #8b85ff; --in: #4ade80; --in-bg: #14321f; --out: #f87171; --out-bg: #3b1717; --plan: #fbbf24; --plan-bg: #3a2a0c;
-}
 * { box-sizing: border-box; }
-body { margin: 0; background: var(--bg); color: var(--text); font: 15px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; }
-a { color: var(--accent); }
-.wrap { max-width: 1180px; margin: 0 auto; padding: 24px 16px 80px; }
-h1 { font-size: 30px; margin: 0 0 6px; }
-h2 { font-size: 20px; margin: 36px 0 12px; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { transition: none !important; animation: none !important; } }
+body { margin: 0; background: var(--ink); color: var(--text); font: 400 16px/1.6 var(--body); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+body::after { content: ""; position: fixed; inset: 0; border: 3px solid var(--frame); pointer-events: none; z-index: 95; }
+::selection { background: var(--brand); color: #fff; }
+:focus-visible { outline: 2px solid var(--lift); outline-offset: 2px; }
+a { color: var(--paper); text-decoration-color: var(--line-2); text-underline-offset: 3px; }
+a:hover { color: var(--lift); }
+img { max-width: 100%; }
+[id] { scroll-margin-top: 72px; }
+.wrap { max-width: var(--max); margin: 0 auto; padding: 0 var(--gut); }
+.lbl { font: 500 11px/1.5 var(--mono); letter-spacing: .09em; text-transform: uppercase; color: var(--muted); }
+.lbl a { color: inherit; text-decoration: none; }
+.lbl a:hover { color: var(--paper); }
+.d1 { font: 300 clamp(60px, 9.5vw, 128px)/.9 var(--display); letter-spacing: -.015em; color: var(--paper); margin: 0; }
+.d2 { font: 300 clamp(46px, 6vw, 80px)/.95 var(--display); letter-spacing: -.01em; color: var(--paper); margin: 0; }
+.d3 { font: 400 clamp(24px, 2.4vw, 32px)/1.08 var(--display); color: var(--paper); margin: 0; }
 .muted { color: var(--muted); }
-.small { font-size: 13px; }
-.pill { display: inline-block; font-size: 12px; padding: 2px 9px; border-radius: 999px; background: var(--surface-2); }
+.sep { color: var(--faint); margin: 0 .5em; }
+
+.btn { display: inline-flex; align-items: center; gap: 8px; height: 36px; padding: 0 15px; border: 1px solid var(--paper);
+  background: var(--paper); color: var(--brand); font: 500 13px/1 var(--display); letter-spacing: .06em; text-transform: uppercase;
+  text-decoration: none; cursor: pointer; white-space: nowrap; }
+.btn:hover { background: #fff; border-color: #fff; color: var(--brand); }
+.btn.ghost { background: transparent; color: var(--paper); border-color: var(--line-2); }
+.btn.ghost:hover { background: rgba(140,140,255,.1); border-color: var(--lift); color: var(--paper); }
+.btn svg { width: 14px; height: 14px; }
+
 .pips { display: inline-flex; gap: 4px; vertical-align: middle; }
-.pip { width: 16px; height: 16px; border-radius: 50%; border: 1px solid rgba(0,0,0,.25); display: inline-block; }
-.pip.W { background: var(--W); } .pip.U { background: var(--U); } .pip.B { background: var(--B); }
-.pip.R { background: var(--R); } .pip.G { background: var(--G); }
+.pip { display: inline-grid; place-items: center; width: 20px; height: 20px; border: 1px solid currentColor; font: 500 11px/1 var(--mono); }
+.pip.W { color: var(--W); } .pip.U { color: var(--U); } .pip.B { color: var(--B); } .pip.R { color: var(--R); } .pip.G { color: var(--G); }
 
-/* front page */
-.hero { padding: 8px 0 18px; }
-.decks { display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)); gap: 18px; }
-.deck { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; }
-.deck .art { height: 190px; background: var(--surface-2) center 18% / cover no-repeat; }
-.deck .body { padding: 14px 16px 16px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
-.deck h2 { margin: 0; font-size: 21px; }
-.deck .facts { display: grid; grid-template-columns: auto 1fr; gap: 2px 12px; font-size: 13px; }
-.deck .facts dt { color: var(--muted); }
-.deck .facts dd { margin: 0; }
-.deck .links { display: flex; gap: 8px; margin-top: auto; padding-top: 8px; flex-wrap: wrap; }
-.btn { display: inline-block; padding: 7px 14px; border-radius: 8px; background: var(--accent); color: #fff; text-decoration: none; font-weight: 600; font-size: 14px; }
-.btn.secondary { background: var(--surface-2); color: var(--text); }
-.stats { display: flex; gap: 22px; flex-wrap: wrap; margin-top: 30px; }
-.stat b { display: block; font-size: 22px; }
+/* card names in text: hover for a preview, click to enlarge */
+.cn { cursor: zoom-in; text-decoration: underline dotted; text-decoration-color: var(--faint); text-underline-offset: 3px; }
+.cn:hover { color: var(--paper); text-decoration-color: var(--lift); }
+.prose .cn, .why .cn, .step .cn, .phase-d .cn { color: var(--paper); }
+.cn.gone, .prose .cn.gone, .why .cn.gone, .step .cn.gone, .phase-d .cn.gone { color: var(--muted); text-decoration: line-through;
+  text-decoration-color: color-mix(in srgb, var(--out) 65%, transparent); }
+.gone-note { margin: 28px 0 0; }
+.gone-note s { text-decoration-color: var(--out); color: var(--muted); }
 
-/* deck page */
-.deckhead { display: flex; gap: 22px; align-items: flex-start; }
-.deckhead img { width: 220px; border-radius: 4.75% / 3.5%; flex: none; cursor: zoom-in; }
-.deckhead .facts { display: grid; grid-template-columns: auto 1fr; gap: 3px 14px; font-size: 14px; margin: 10px 0; }
-.deckhead .facts dt { color: var(--muted); }
-.deckhead .facts dd { margin: 0; }
-.toolbar { position: sticky; top: 0; z-index: 5; background: var(--bg); padding: 10px 0; border-bottom: 1px solid var(--border);
-  display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-top: 20px; }
-.toolbar button { font: inherit; font-size: 13px; padding: 5px 12px; border-radius: 999px; border: 1px solid var(--border);
-  background: var(--surface); color: var(--text); cursor: pointer; }
-.toolbar button[aria-pressed="true"] { background: var(--accent); color: #fff; border-color: var(--accent); }
-.toolbar .spacer { flex: 1; }
-.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; }
-.tile { position: relative; }
-.tile img { width: 100%; display: block; border-radius: 4.75% / 3.5%; aspect-ratio: 488/680; background: var(--surface-2); cursor: zoom-in; }
-.tile .badge { position: absolute; top: 6px; left: 6px; font-size: 11px; font-weight: 700; padding: 1px 7px; border-radius: 4px; }
-.tile.added .badge { background: var(--in-bg); color: var(--in); }
-.tile.added img { outline: 3px solid var(--in); outline-offset: 2px; }
-.tile.cut img { filter: grayscale(.7) brightness(.85); }
-.tile.cut .badge { background: var(--out-bg); color: var(--out); }
-.tile.planned .badge, .tile .badge.plan { background: var(--plan-bg); color: var(--plan); }
-.tile.planned img { outline: 3px dashed var(--plan); outline-offset: 2px; }
-.tile[data-plan="cut"] img { outline: 3px dashed var(--out); outline-offset: 2px; }
-.tile .for { font-size: 12px; color: var(--muted); margin-top: 2px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.planned-note { font-size: 14px; color: var(--muted); max-width: 75ch; margin: 0 0 12px; }
-.tile .qty { position: absolute; bottom: 30px; right: 6px; background: rgba(0,0,0,.75); color: #fff; font-weight: 700; font-size: 13px; padding: 1px 8px; border-radius: 6px; }
-.tile .cap { font-size: 12px; margin-top: 4px; display: flex; justify-content: space-between; gap: 6px; }
-.tile .cap span:first-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.hidden { display: none !important; }
-.legend { display: flex; gap: 14px; font-size: 13px; color: var(--muted); }
-.legend .sw { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 5px; vertical-align: -1px; }
-details.cuts { margin-top: 36px; }
-details.cuts summary { cursor: pointer; font-weight: 600; font-size: 18px; }
-ul.changelog { padding-left: 18px; font-size: 14px; }
-#lightbox { position: fixed; inset: 0; background: rgba(0,0,0,.8); display: none; align-items: center; justify-content: center; gap: 12px; z-index: 50; padding: 16px; cursor: zoom-out; }
-#lightbox.open { display: flex; }
-#lightbox img { max-height: 90vh; max-width: min(46vw, 488px); border-radius: 18px; }
-#lightbox img:only-child { max-width: 92vw; }
-/* inventory page */
-.filters { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin: 18px 0 10px; }
-.filters input, .filters select { font: inherit; font-size: 14px; padding: 6px 10px; border-radius: 8px; border: 1px solid var(--border); background: var(--surface); color: var(--text); }
-.filters input { flex: 1; min-width: 200px; }
+/* duotone art, full colour on hover */
+.duo { position: relative; overflow: hidden; background: var(--brand); isolation: isolate; }
+.duo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+.duo .d { filter: grayscale(1) contrast(1.3) brightness(1.05); mix-blend-mode: luminosity; }
+.duo .c { opacity: 0; transition: opacity .6s ease; }
+.duo::after { content: ""; position: absolute; inset: 0; z-index: 2; pointer-events: none;
+  background: repeating-linear-gradient(0deg, rgba(4,4,40,.3) 0 1px, transparent 1px 3px); }
+a:hover .duo .c, .duo.live:hover .c { opacity: 1; }
+.rays { position: absolute; inset: 0; width: 100%; height: 100%; color: rgba(214,214,255,.4); pointer-events: none; }
+
+/* sections */
+.sec { padding: clamp(64px, 9vw, 120px) 0; border-top: 1px solid var(--line); }
+.sec-h { display: flex; align-items: flex-start; gap: 16px; margin-bottom: clamp(28px, 4vw, 48px); flex-wrap: wrap; }
+.sec-h .no { font: 500 12px/1 var(--mono); color: var(--lift); margin-top: .9em; letter-spacing: .08em; }
+.sec-h .aside { margin-left: auto; align-self: flex-end; max-width: 46ch; color: var(--muted); font-size: 15px; }
+
+/* ---------- front page */
+.hero { display: grid; grid-template-columns: minmax(0, 1.08fr) minmax(0, .92fr); gap: clamp(24px, 4vw, 64px); align-items: center;
+  padding: clamp(20px, 4vw, 48px) 0 clamp(56px, 8vw, 104px); }
+.hero h1 { margin: 18px 0 30px; font-size: clamp(56px, 7.4vw, 108px); }
+.hero .actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.term { border: 1px solid var(--line-2); background: var(--ink-2); max-width: 540px; margin-top: 40px; }
+.term-bar { display: flex; align-items: center; gap: 12px; padding: 7px 12px; background: var(--brand); color: #fff; font: 500 11px/1.4 var(--mono); letter-spacing: .05em; }
+.term-bar .dots { display: inline-flex; gap: 5px; } .term-bar .dots i { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,.45); }
+.term-body { padding: 14px 16px 16px; font: 400 13px/1.55 var(--mono); }
+.term-body .cmd { color: var(--paper); margin-bottom: 8px; } .term-body .cmd b { color: var(--in); font-weight: 400; margin-right: 8px; }
+.term dl { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 3px 22px; }
+.term dt { color: var(--faint); } .term dd { margin: 0; color: var(--text); } .term dd b { color: var(--paper); font-weight: 500; }
+.caret { display: inline-block; width: 8px; height: 15px; background: var(--paper); vertical-align: -2px; animation: blink 1.1s steps(1) infinite; margin-top: 8px; }
+@keyframes blink { 50% { opacity: 0; } }
+.fan { position: relative; aspect-ratio: 1; width: 100%; max-width: 600px; justify-self: center; }
+.fan a { position: absolute; left: 50%; top: 50%; width: 40%; margin: -27.9% 0 0 -20%; transform-origin: 50% 165%;
+  transform: rotate(var(--r)); transition: transform .4s cubic-bezier(.2,.7,.2,1); }
+.fan a:hover, .fan a:focus-visible { transform: rotate(var(--r)) translateY(-9%); z-index: 5; }
+.fan img { width: 100%; display: block; border-radius: 4.75% / 3.5%; box-shadow: 0 22px 50px rgba(0,0,10,.6); aspect-ratio: 488/680; background: var(--ink-3); }
+
+.decks { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(48px, 6vw, 80px) clamp(24px, 3vw, 40px); }
+.deckcard { display: flex; flex-direction: column; text-decoration: none; color: var(--text); }
+.deckcard h3 { font: 300 clamp(38px, 4.2vw, 56px)/1 var(--display); color: var(--paper); margin: 12px 0 10px; transition: color .2s; }
+.deckcard:hover h3 { color: var(--lift); }
+.deckcard .cmdr { font-size: 15px; }
+.deckcard .dirline { margin-top: 18px; display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap; }
+.deckcard .dirline .d { font: 400 20px/1.2 var(--display); color: var(--paper); }
+.deckcard p { margin: 8px 0 0; max-width: 56ch; color: var(--muted); font-size: 15px; }
+.deckcard .duo { margin-top: 24px; aspect-ratio: 16 / 9; }
+.deckcard .row { display: flex; justify-content: space-between; gap: 12px; margin-top: 12px; flex-wrap: wrap; }
+.deckcard .row .go { color: var(--paper); }
+.deckcard:hover .row .go { color: var(--lift); }
+
+.band { position: relative; background: var(--brand); color: #fff; overflow: hidden; }
+.band::before { content: ""; position: absolute; inset: 0; background: repeating-linear-gradient(0deg, rgba(0,0,60,.18) 0 1px, transparent 1px 3px); pointer-events: none; }
+.band .wrap { position: relative; display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 40px; align-items: center; padding-block: clamp(64px, 8vw, 112px); }
+.band .d2 { color: #fff; margin: 14px 0 20px; }
+.band p { color: rgba(255,255,255,.84); max-width: 44ch; margin: 0 0 28px; }
+.band .lbl { color: rgba(255,255,255,.72); }
+.band .btn { background: #fff; border-color: #fff; color: var(--brand); }
+.strip { display: flex; justify-content: center; align-items: flex-end; padding: 12px 4%; }
+.strip figure { margin: 0 -2.6%; width: 21%; transform: rotate(var(--r)) translateY(var(--y)); transition: transform .35s cubic-bezier(.2,.7,.2,1); }
+.strip figure:hover { transform: rotate(0deg) translateY(-14px); z-index: 3; }
+.strip img { width: 100%; display: block; border-radius: 4.75% / 3.5%; box-shadow: 0 16px 36px rgba(0,0,50,.55); cursor: zoom-in; aspect-ratio: 488/680; background: rgba(0,0,40,.4); }
+.strip figcaption { font: 500 10px/1.3 var(--mono); letter-spacing: .06em; text-align: center; color: rgba(255,255,255,.8); margin-top: 10px; }
+
+/* ---------- deck page */
+.dhero { position: relative; overflow: hidden; padding-bottom: clamp(40px, 6vw, 72px); }
+.dhero-bg { position: absolute; inset: 0; opacity: .2; -webkit-mask-image: linear-gradient(to bottom, #000 20%, transparent 92%); mask-image: linear-gradient(to bottom, #000 20%, transparent 92%); }
+.dhero-bg .duo { position: absolute; inset: 0; }
+.dhero-in { position: relative; display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, .8fr); gap: clamp(24px, 5vw, 72px); align-items: center; padding-top: clamp(16px, 4vw, 48px); }
+.dhero h1 { margin: 16px 0 20px; }
+.cmdr { display: flex; align-items: center; gap: 12px; color: var(--paper); flex-wrap: wrap; }
+.dhero .cmdr { font-size: 18px; }
+.dir { margin-top: 34px; padding-left: 18px; border-left: 2px solid var(--brand); }
+.dir .d3 { margin-top: 6px; }
+.dir .plus { color: var(--lift); }
+.dir p { margin: 8px 0 0; color: var(--muted); max-width: 52ch; }
+.dhero .actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 34px; }
+.dhero-card { position: relative; width: 100%; max-width: 440px; justify-self: center; aspect-ratio: 1; display: grid; place-items: center; }
+.dhero-card .rays { inset: -8%; width: 116%; height: 116%; }
+.dhero-card img { position: relative; width: 66%; border-radius: 4.75% / 3.5%; box-shadow: 0 30px 70px rgba(0,0,10,.65); cursor: zoom-in; aspect-ratio: 488/680; background: var(--ink-3); }
+.stats { position: relative; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin: clamp(40px, 6vw, 64px) 0 0; border: 1px solid var(--line-2); background: rgba(10,10,28,.7); }
+.stats > div { padding: 16px 18px 18px; border-right: 1px solid var(--line); }
+.stats > div:last-child { border-right: 0; }
+.stats dt { font: 500 10.5px/1.4 var(--mono); letter-spacing: .09em; text-transform: uppercase; color: var(--muted); }
+.stats dd { margin: 6px 0 0; font: 300 clamp(30px, 3.4vw, 44px)/1 var(--display); color: var(--paper); }
+.stats dd small { font: 400 13px var(--mono); color: var(--faint); margin-left: 6px; letter-spacing: 0; }
+.bnote { position: relative; margin: 12px 0 0; font: 400 12px/1.6 var(--mono); color: var(--faint); }
+.bnote b { color: var(--muted); font-weight: 500; }
+
+.secnav { position: sticky; top: 0; z-index: 30; background: rgba(10,10,28,.86); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); }
+.secnav .wrap { display: flex; align-items: center; gap: 28px; height: 52px; overflow-x: auto; scrollbar-width: none; }
+.secnav .wrap::-webkit-scrollbar { display: none; }
+.secnav a { font: 500 11px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); text-decoration: none; white-space: nowrap; }
+.secnav a .n { color: var(--faint); margin-right: 8px; }
+.secnav a:hover, .secnav a.on { color: var(--paper); }
+.secnav a.on .n { color: var(--lift); }
+.secnav .title { font: 400 15px/1 var(--display); letter-spacing: .04em; color: var(--paper); text-transform: uppercase; margin-right: 8px; white-space: nowrap; }
+.secnav .sp { flex: 1; }
+.secnav .btn { height: 30px; font-size: 12px; }
+
+.plan-intro { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 24px clamp(24px, 5vw, 72px); align-items: start; }
+.lead { font: 300 clamp(26px, 2.8vw, 36px)/1.22 var(--display); color: var(--paper); margin: 0; }
+.prose { margin: 0; max-width: 64ch; }
+.steps { list-style: none; margin: clamp(40px, 6vw, 64px) 0 0; padding: 0; border-top: 1px solid var(--line-2); }
+.step { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: 14px clamp(24px, 5vw, 72px); padding: 30px 0; border-bottom: 1px solid var(--line); }
+.step h3 { font: 400 clamp(24px, 2.4vw, 30px)/1.1 var(--display); color: var(--paper); margin: 8px 0 0; }
+.step ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+.step li { position: relative; padding-left: 24px; max-width: 72ch; }
+.step li::before { content: ""; position: absolute; left: 3px; top: .66em; width: 6px; height: 6px; background: var(--lift); }
+.step.b3 li::before { background: var(--gc); }
+.review { border: 1px solid var(--line-2); padding: 28px; display: flex; gap: 24px; align-items: center; justify-content: space-between; flex-wrap: wrap; }
+
+.phase { margin-top: clamp(48px, 7vw, 88px); }
+.phase:first-of-type { margin-top: 0; }
+.phase-h { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 10px 24px; align-items: end; padding-bottom: 18px; border-bottom: 1px solid var(--line-2); }
+.phase-h h3 { font: 300 clamp(34px, 4vw, 52px)/1 var(--display); color: var(--paper); margin: 10px 0 0; }
+.phase-h .meta { text-align: right; }
+.phase-h .meta b { color: var(--paper); font-weight: 500; }
+.phase.planned .phase-h { border-bottom-color: color-mix(in srgb, var(--plan) 50%, transparent); }
+.phase.planned .phase-h .lbl:first-child { color: var(--plan); }
+.phase-d { max-width: 72ch; color: var(--muted); margin: 18px 0 0; }
+.swap { display: grid; grid-template-columns: 40px 232px minmax(0, 1fr); gap: 24px; padding: 28px 0; border-bottom: 1px solid var(--line); }
+.swap .no { font: 500 12px/1 var(--mono); color: var(--faint); padding-top: 9px; }
+.pair { display: grid; grid-template-columns: 86px 22px 124px; align-items: end; align-self: start; }
+.thumb { margin: 0; position: relative; }
+.thumb img, .thumb .noimg { width: 100%; display: block; border-radius: 4.75% / 3.5%; aspect-ratio: 488/680; background: var(--ink-3); cursor: zoom-in; }
+.thumb.out img { filter: grayscale(1) brightness(.55); transition: filter .25s; }
+.thumb.out:hover img { filter: none; }
+.thumb figcaption { font: 500 9.5px/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; margin-top: 8px; }
+.thumb.out figcaption { color: var(--out); }
+.thumb.in figcaption { color: var(--in); }
+.pair .arr { align-self: center; text-align: center; color: var(--faint); font: 400 14px var(--mono); }
+.noimg { display: grid !important; place-items: center; padding: 8px; text-align: center; font: 500 11px/1.3 var(--mono); color: var(--muted); border: 1px dashed var(--line-2); }
+.swap .in-name { font: 400 clamp(24px, 2.4vw, 30px)/1.1 var(--display); color: var(--paper); margin: 0; }
+.swap .in-name .sig { font: 400 .62em var(--mono); color: var(--in); margin-right: 10px; vertical-align: .12em; }
+.swap .out-name { margin-top: 6px; font-size: 14px; color: var(--muted); }
+.swap .out-name .sig { font: 400 12px var(--mono); color: var(--out); margin-right: 8px; }
+.swap .out-name .cn { text-decoration: line-through; text-decoration-color: color-mix(in srgb, var(--out) 70%, transparent); }
+.swap .why { margin: 14px 0 0; max-width: 68ch; }
+.swap.is-gone .in-name { color: var(--muted); }
+.swap.is-planned .thumb.in img { outline: 1px dashed var(--plan); outline-offset: 3px; }
+.tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 14px; }
+.tag { display: inline-flex; align-items: center; font: 500 10px/1 var(--mono); letter-spacing: .09em; text-transform: uppercase; padding: 6px 8px;
+  border: 1px solid var(--line-2); color: var(--muted); text-decoration: none; }
+.tag.gc { color: var(--gc); border-color: color-mix(in srgb, var(--gc) 40%, transparent); }
+.tag.plan { color: var(--plan); border-color: color-mix(in srgb, var(--plan) 45%, transparent); }
+.tag.own { color: var(--in); border-color: color-mix(in srgb, var(--in) 40%, transparent); }
+.tag.gone { color: var(--out); border-color: color-mix(in srgb, var(--out) 40%, transparent); }
+a.tag:hover { color: var(--paper); border-color: var(--paper); }
+
+.tools { display: flex; gap: 12px 18px; align-items: center; flex-wrap: wrap; margin-bottom: 32px; }
+.tools .sp { flex: 1; }
+.legend { display: flex; gap: 16px; flex-wrap: wrap; }
+.legend .new { color: var(--in); } .legend .cut { color: var(--plan); }
+.seg { display: inline-flex; border: 1px solid var(--line-2); }
+.seg button { font: 500 11px/1 var(--mono); letter-spacing: .09em; text-transform: uppercase; padding: 10px 13px; background: none; color: var(--muted); border: 0; cursor: pointer; }
+.seg button + button { border-left: 1px solid var(--line-2); }
+.seg button:hover { color: var(--paper); }
+.seg button[aria-pressed="true"] { background: var(--paper); color: var(--brand); }
+.dlist { columns: 3 250px; column-gap: 44px; }
+.dgroup { break-inside: avoid; margin: 0 0 30px; }
+.dgroup h4, .cgroup h4 { display: flex; justify-content: space-between; margin: 0 0 8px; padding-bottom: 8px; border-bottom: 1px solid var(--line-2);
+  font: 500 11px/1.4 var(--mono); letter-spacing: .09em; text-transform: uppercase; color: var(--muted); }
+.dgroup h4 span:last-child, .cgroup h4 span:last-child { color: var(--faint); }
+.dgroup ul { list-style: none; margin: 0; padding: 0; }
+.dgroup li { display: grid; grid-template-columns: 24px minmax(0, 1fr) auto; gap: 6px; padding: 3px 0; font-size: 14.5px; line-height: 1.45; }
+.dgroup li .q { font: 400 12px/1.7 var(--mono); color: var(--faint); }
+.dgroup li .cn { text-decoration-color: transparent; }
+.dgroup li .cn:hover { text-decoration-color: var(--lift); }
+.dgroup li.new .cn { color: var(--paper); }
+.mk { font: 500 10.5px/1.8 var(--mono); letter-spacing: .06em; }
+.mk.new { color: var(--in); } .mk.cut { color: var(--plan); text-transform: uppercase; }
+.dl[data-view="list"] .dcards, .dl[data-view="cards"] .dlist { display: none; }
+.cgroup { margin-bottom: 36px; }
+.cgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 16px 14px; padding-top: 8px; }
+.tile { margin: 0; position: relative; }
+.tile img, .tile .noimg { width: 100%; display: block; border-radius: 4.75% / 3.5%; aspect-ratio: 488/680; background: var(--ink-3); cursor: zoom-in; }
+.tile.new img { outline: 2px solid var(--in); outline-offset: 3px; }
+.tile.cut img { outline: 2px dashed var(--plan); outline-offset: 3px; }
+.tile .qty { position: absolute; top: 8px; right: 8px; background: rgba(6,6,20,.85); color: var(--paper); font: 500 11px/1 var(--mono); padding: 5px 7px; }
+.tile figcaption { display: flex; justify-content: space-between; gap: 8px; margin-top: 8px; font: 400 12px/1.35 var(--body); color: var(--muted); }
+.tile figcaption span:first-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.tile figcaption .p { font: 400 11px/1.5 var(--mono); color: var(--faint); white-space: nowrap; }
+
+/* ---------- bulk list */
+.ihero { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 32px; align-items: end; padding: clamp(20px, 4vw, 48px) 0 clamp(32px, 5vw, 56px); }
+.ihero h1 { margin: 16px 0 18px; }
+.ihero p { margin: 0; max-width: 52ch; color: var(--muted); }
+.ihero .stats { margin: 0; grid-template-columns: repeat(3, minmax(120px, 1fr)); }
+.filters { display: grid; gap: 14px; padding: 22px 0; border-top: 1px solid var(--line); }
+.search { display: flex; align-items: center; gap: 12px; border: 1px solid var(--line-2); background: var(--ink-2); padding: 0 16px; height: 52px; }
+.search:focus-within { border-color: var(--lift); }
+.search span { font: 500 15px var(--mono); color: var(--lift); }
+.search input { flex: 1; min-width: 0; background: none; border: 0; color: var(--paper); font: 400 15px var(--mono); outline: none; }
+.search input::placeholder { color: var(--faint); }
+.chips { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.chips .lbl { margin-right: 6px; min-width: 76px; }
+.chip { font: 500 11px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; padding: 8px 10px; border: 1px solid var(--line-2); background: none; color: var(--muted); cursor: pointer; }
+.chip:hover { color: var(--paper); border-color: var(--lift); }
+.chip[aria-pressed="true"] { background: var(--paper); color: var(--brand); border-color: var(--paper); }
+.chip .c { opacity: .6; margin-left: 6px; }
+.select { font: 500 11px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; padding: 8px 10px; border: 1px solid var(--line-2); background: var(--ink); color: var(--muted); }
+.result { display: flex; align-items: center; gap: 16px; justify-content: space-between; flex-wrap: wrap; padding: 6px 0 18px; }
+.result .count b { color: var(--paper); font-weight: 500; }
 .table-scroll { overflow-x: auto; }
-table.inv { border-collapse: collapse; width: 100%; font-size: 14px; }
-table.inv th, table.inv td { text-align: left; padding: 6px 10px; border-bottom: 1px solid var(--border); vertical-align: top; }
-table.inv th { color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: .03em; cursor: pointer; user-select: none; white-space: nowrap; position: sticky; top: 0; background: var(--bg); }
-table.inv th[aria-sort="ascending"]::after { content: " ▲"; } table.inv th[aria-sort="descending"]::after { content: " ▼"; }
-table.inv td.num, table.inv th.num { text-align: right; font-variant-numeric: tabular-nums; }
-table.inv tr.loose td:nth-child(3) { color: var(--muted); }
-table.inv a.card { color: var(--text); text-decoration: none; border-bottom: 1px dotted var(--muted); }
-.tag { display: inline-block; font-size: 11px; font-weight: 600; padding: 1px 7px; border-radius: 4px; background: var(--surface-2); white-space: nowrap; }
-.tag.bought { background: var(--in-bg); color: var(--in); }
-.tag.tobuy { background: var(--plan-bg); color: var(--plan); }
-#preview { position: fixed; width: 220px; pointer-events: none; z-index: 40; border-radius: 4.75% / 3.5%; display: none; box-shadow: 0 8px 24px rgba(0,0,0,.4); }
-footer { margin-top: 50px; font-size: 12px; color: var(--muted); }
-@media (max-width: 720px) {
-  .deckhead { flex-direction: column; }
-  .deckhead img { width: 160px; }
-  .grid { grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); }
+table.inv { width: 100%; border-collapse: collapse; font-size: 14.5px; }
+table.inv th { font: 500 10.5px/1.4 var(--mono); letter-spacing: .09em; text-transform: uppercase; color: var(--muted); text-align: left; padding: 12px 10px;
+  border-bottom: 1px solid var(--line-2); position: sticky; top: 0; background: var(--ink); cursor: pointer; user-select: none; white-space: nowrap; z-index: 2; }
+table.inv th:hover { color: var(--paper); }
+table.inv th[aria-sort="ascending"]::after { content: " ↑"; color: var(--lift); }
+table.inv th[aria-sort="descending"]::after { content: " ↓"; color: var(--lift); }
+table.inv td { padding: 9px 10px; border-bottom: 1px solid var(--line); vertical-align: baseline; }
+table.inv tbody tr { cursor: zoom-in; }
+table.inv tbody tr:hover td { background: rgba(140,140,255,.07); }
+table.inv .num { text-align: right; font: 400 13px var(--mono); white-space: nowrap; }
+table.inv td.q { color: var(--faint); }
+table.inv .nm { color: var(--paper); }
+table.inv .set { font: 400 10.5px var(--mono); color: var(--faint); margin-left: 10px; letter-spacing: .05em; }
+table.inv .loc-loose { color: var(--muted); }
+.one-place table.inv .where { display: none; }
+.src { font: 500 10px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--faint); white-space: nowrap; }
+.src.shop { color: var(--in); } .src.tobuy { color: var(--plan); }
+.inv-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 18px 14px; }
+.empty { padding: 48px 0; text-align: center; color: var(--muted); font: 400 13px var(--mono); }
+
+/* ---------- lightbox, preview, footer */
+#lightbox { position: fixed; inset: 0; z-index: 100; display: none; flex-direction: column; align-items: center; justify-content: center; gap: 20px;
+  padding: 24px; background: rgba(5,5,18,.88); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); cursor: zoom-out; }
+#lightbox.open { display: flex; }
+.lb-cards { display: flex; gap: 16px; justify-content: center; max-width: 100%; }
+.lb-cards img { max-height: min(78vh, 680px); max-width: min(44vw, 488px); border-radius: 4.75% / 3.5%; box-shadow: 0 30px 80px rgba(0,0,0,.6); }
+.lb-cards img:only-child { max-width: 92vw; }
+.lb-cap { display: flex; gap: 18px; align-items: center; flex-wrap: wrap; justify-content: center; font: 500 11px/1.4 var(--mono); letter-spacing: .09em; text-transform: uppercase; color: var(--muted); }
+.lb-cap .n { color: var(--paper); }
+.lb-cap a { color: var(--lift); text-decoration: none; cursor: pointer; }
+#preview { position: fixed; left: 0; top: 0; width: 244px; aspect-ratio: 488/680; border-radius: 4.75% / 3.5%; z-index: 80; pointer-events: none;
+  opacity: 0; transition: opacity .12s; box-shadow: 0 20px 50px rgba(0,0,0,.6); background: var(--ink-3); }
+#preview.on { opacity: 1; }
+.foot { border-top: 1px solid var(--line); margin-top: clamp(40px, 6vw, 80px); padding-top: 48px; overflow: hidden; }
+.foot-cols { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; }
+.foot-cols a { display: block; color: var(--text); text-decoration: none; font-size: 14px; padding: 3px 0; }
+.foot-cols a:hover { color: var(--lift); }
+.foot-cols p { margin: 6px 0; font-size: 14px; color: var(--muted); max-width: 40ch; }
+.foot-cols .lbl { margin-bottom: 10px; color: var(--faint); }
+.foot-mark { font: 300 clamp(80px, 17vw, 236px)/.8 var(--display); letter-spacing: -.02em; color: transparent; -webkit-text-stroke: 1px rgba(176,176,255,.3);
+  margin: 56px 0 0; padding-bottom: 8px; white-space: nowrap; user-select: none; }
+
+@media (max-width: 900px) {
+  .hero, .dhero-in, .band .wrap, .plan-intro, .ihero { grid-template-columns: minmax(0, 1fr); }
+  .fan { max-width: 440px; }
+  .decks { grid-template-columns: minmax(0, 1fr); }
+  .dhero-card { max-width: 320px; }
+  .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .stats > div:nth-child(2) { border-right: 0; }
+  .stats > div:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
+  .ihero .stats { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .ihero .stats > div { border-bottom: 0; border-right: 1px solid var(--line); }
+  .ihero .stats > div:last-child { border-right: 0; }
+  .step { grid-template-columns: minmax(0, 1fr); }
+  .swap { grid-template-columns: minmax(0, 1fr); gap: 16px; }
+  .swap .no { padding: 0; }
+  .sec-h .aside { margin-left: 0; }
+  .strip figure { width: 26%; }
+  .foot-cols { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 600px) {
+  body::after { border-width: 2px; }
+  .secnav .title { display: none; }
+  .secnav .wrap { gap: 20px; }
+  .secnav .btn { padding: 0 9px; }
+  .secnav .btn .t { display: none; }
+  .secnav .btn.done svg { display: none; }
+  .secnav .btn.done::before { content: "✓"; color: var(--in); }
+  .phase-h { grid-template-columns: minmax(0, 1fr); }
+  .phase-h .meta { text-align: left; }
+  .pair { grid-template-columns: 96px 26px 140px; }
+  table.inv .hide-s { display: none; }
+  .ihero .stats { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .ihero .stats > div { padding: 12px; }
+  .chips .lbl { min-width: 0; width: 100%; }
+  .cgrid, .inv-cards { grid-template-columns: repeat(auto-fill, minmax(104px, 1fr)); }
+  .strip figure:nth-child(n+5) { display: none; }
+  .strip figure { width: 30%; }
 }
 """
 
-NAV_CSS = """
-.site-nav { background: var(--surface); border-bottom: 1px solid var(--border); }
-.site-nav .in { max-width: 1180px; margin: 0 auto; padding: 10px 16px; display: flex; gap: 6px 16px; align-items: center; flex-wrap: wrap; font-size: 14px; }
-.site-nav a { color: var(--text); text-decoration: none; }
-.site-nav a:hover { color: var(--accent); }
-.site-nav .brand { font-weight: 700; margin-right: 8px; }
-.site-nav .cur { color: var(--accent); font-weight: 600; }
+JS = r"""
+(() => {
+  const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
+  const data = $("#cards");
+  const C = window.CARDS = Object.assign(window.CARDS || {}, data ? JSON.parse(data.textContent) : {});
+  const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+  // Lightbox: click any card (image, name or table row) for the large scan, both faces for DFCs
+  const lb = $("#lightbox"), pv = $("#preview");
+  const hidePv = () => { if (pv) pv.classList.remove("on"); };
+  const close = () => { lb.classList.remove("open"); lb.innerHTML = ""; };
+  const open = k => {
+    const c = C[k];
+    if (!c || !c.l || !c.l.length) return false;
+    lb.innerHTML = `<div class="lb-cards">${c.l.map(u => `<img src="${esc(u)}" alt="${esc(c.n)}">`).join("")}</div>
+      <div class="lb-cap"><span class="n">${esc(c.n)}</span>${c.e != null ? `<span>€${c.e.toFixed(2)}</span>` : ""}
+      ${c.u ? `<a href="${esc(c.u)}" target="_blank" rel="noopener">Scryfall ↗</a>` : ""}<span>Esc to close</span></div>`;
+    lb.classList.add("open"); hidePv(); return true;
+  };
+  document.addEventListener("click", e => {
+    if (lb.classList.contains("open")) { if (!e.target.closest(".lb-cap a")) close(); return; }
+    const el = e.target.closest("[data-k]");
+    if (!el) return;
+    const link = e.target.closest("a[href]");
+    if (link && !link.hasAttribute("data-k")) return;
+    if (open(el.dataset.k)) e.preventDefault();
+  });
+  document.addEventListener("keydown", e => {
+    if (e.key === "Escape") return close();
+    if ((e.key === "Enter" || e.key === " ") && e.target.matches("[data-k][tabindex]")) { e.preventDefault(); open(e.target.dataset.k); }
+  });
+
+  // Hover preview for card names and table rows (mouse only)
+  if (pv && matchMedia("(hover: hover) and (pointer: fine)").matches) {
+    let cur = null;
+    document.addEventListener("mousemove", e => {
+      const el = lb.classList.contains("open") ? null : e.target.closest(".cn[data-k], tr[data-k]");
+      const c = el && C[el.dataset.k];
+      if (!c || !c.i) { hidePv(); cur = null; return; }
+      if (cur !== el.dataset.k) { pv.src = c.i; cur = el.dataset.k; }
+      const w = 244, h = 340;
+      let x = e.clientX + 24, y = e.clientY - h / 2;
+      if (x + w > innerWidth - 16) x = e.clientX - w - 24;
+      y = Math.max(16, Math.min(y, innerHeight - h - 16));
+      pv.style.transform = `translate(${x}px, ${y}px)`;
+      pv.classList.add("on");
+    }, { passive: true });
+    document.addEventListener("scroll", hidePv, { passive: true });
+  }
+
+  // Copy buttons: data-copy names a <textarea>
+  document.addEventListener("click", async e => {
+    const b = e.target.closest("[data-copy]");
+    if (!b) return;
+    const ta = document.getElementById(b.dataset.copy);
+    try { await navigator.clipboard.writeText(ta.value); }
+    catch { ta.hidden = false; ta.select(); document.execCommand("copy"); ta.hidden = true; }
+    const t = b.querySelector(".t") || b, old = t.textContent;
+    t.textContent = "Copied ✓"; b.classList.add("done");
+    setTimeout(() => { t.textContent = old; b.classList.remove("done"); }, 1600);
+  });
+
+  // List / cards toggles: data-views names the element whose data-view changes
+  $$("[data-views]").forEach(g => {
+    const target = document.getElementById(g.dataset.views), store = "view:" + g.dataset.views;
+    const set = v => {
+      $$("button", g).forEach(x => x.setAttribute("aria-pressed", String(x.dataset.v === v)));
+      target.dataset.view = v; target.dispatchEvent(new CustomEvent("view"));
+    };
+    g.addEventListener("click", e => {
+      const b = e.target.closest("button[data-v]");
+      if (!b) return;
+      set(b.dataset.v);
+      try { localStorage.setItem(store, b.dataset.v); } catch {}
+    });
+    let saved = null;
+    try { saved = localStorage.getItem(store); } catch {}
+    if (saved && g.querySelector(`button[data-v="${saved}"]`)) set(saved);
+  });
+
+  // Section nav: highlight the section in view
+  const links = $$(".secnav a[href^='#']");
+  if (links.length && "IntersectionObserver" in window) {
+    const byId = new Map(links.map(a => [a.getAttribute("href").slice(1), a]));
+    const io = new IntersectionObserver(es => es.forEach(en => {
+      if (en.isIntersecting) links.forEach(a => a.classList.toggle("on", a === byId.get(en.target.id)));
+    }), { rootMargin: "-40% 0px -55% 0px" });
+    byId.forEach((a, id) => { const s = document.getElementById(id); if (s) io.observe(s); });
+  }
+})();
 """
 
-LIGHTBOX_JS = """
-const lb = document.getElementById("lightbox");
-document.addEventListener("click", e => {
-  if (e.target.closest("#lightbox")) { lb.classList.remove("open"); lb.innerHTML = ""; return; }
-  const img = e.target.closest("img[data-large]");
-  if (!img) return;
-  lb.innerHTML = img.dataset.large.split("|").map(u => `<img src="${u}" alt="">`).join("");
-  lb.classList.add("open");
-});
-document.addEventListener("keydown", e => { if (e.key === "Escape") { lb.classList.remove("open"); lb.innerHTML = ""; } });
-"""
+COPY_ICON = ('<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true">'
+             '<rect x="5" y="5" width="8.5" height="8.5"/><path d="M3 10.5V2.5h8"/></svg>')
+
+
+# ---------------------------------------------------------------- helpers
+
+class Cards:
+    """Card lookups for one page; records every card the page shows so the
+    page can carry its images (hover preview, lightbox) as one JSON map."""
+
+    def __init__(self, index):
+        self.index, self.used = index, {}
+
+    def info(self, name):
+        return self.index.get(key(name)) or {}
+
+    def ref(self, name):
+        k = key(name)
+        if k not in self.used:
+            info = self.info(name)
+            imgs = info.get("images") or []
+            self.used[k] = {"n": info.get("name") or name, "i": imgs[0].get("normal") if imgs else "",
+                            "l": [i.get("large") or i.get("normal") for i in imgs],
+                            "u": info.get("scryfall_uri") or "", "e": info.get("eur")}
+        return k
+
+    def img(self, name, lazy=True, zoom=True):
+        """<img> for a card. zoom=False leaves out data-k (no lightbox), for an image inside a link."""
+        k = self.ref(name)
+        src = self.used[k]["i"]
+        dk = f' data-k="{E(k)}"' if zoom else ""
+        if not src:
+            return f'<div class="noimg"{dk}>{E(name)}</div>'
+        load = ' loading="lazy"' if lazy else ""
+        return f'<img src="{E(src)}" alt="{E(name)}"{dk}{load} decoding="async">'
+
+    def name(self, name, label=None):
+        k = self.ref(name)
+        return f'<span class="cn" data-k="{E(k)}" tabindex="0" role="button">{E(label or name)}</span>'
+
+    def art(self, name):
+        imgs = self.info(name).get("images") or [{}]
+        return imgs[0].get("art_crop") or imgs[0].get("normal") or ""
+
+    def json(self):
+        return json.dumps(self.used, sort_keys=True, separators=(",", ":")).replace("</", "<\\/")
+
+
+class Linker:
+    """Wrap card names that appear in a piece of text in hoverable spans."""
+
+    def __init__(self, cards, names, present=None):
+        self.cards, forms, short = cards, {}, Counter()
+        self.present, self.gone = present, set()   # keys in the deck now; names found that aren't
+        for n in dict.fromkeys(names):
+            for full in [n, *(n.split(" // ") if " // " in n else [])]:
+                if len(full) >= 4 and full not in BASICS:
+                    forms.setdefault(full, n)
+                if ", " in full and len(full.split(", ")[0]) >= 4:
+                    short[full.split(", ")[0]] += 1
+        for s, count in short.items():      # "Hearthhull" for "Hearthhull, the Worldseed", unless ambiguous
+            if count == 1:
+                forms.setdefault(s, next(n for n in names if n.startswith(s + ", ")))
+        self.forms = forms
+        pats = sorted(forms, key=len, reverse=True)
+        self.rx = re.compile(r"(?<!\w)(" + "|".join(re.escape(E(p, quote=False)) for p in pats) + r")(?!\w)") if pats else None
+
+    def __call__(self, text):
+        t = E(text or "", quote=False)
+        if not self.rx:
+            return t
+
+        def sub(m):
+            k = self.cards.ref(self.forms[html.unescape(m.group(1))])
+            if self.present is not None and k not in self.present:
+                self.gone.add(k)
+                return (f'<span class="cn gone" data-k="{E(k)}" tabindex="0" role="button" '
+                        f'title="No longer in the deck">{m.group(1)}</span>')
+            return f'<span class="cn" data-k="{E(k)}" tabindex="0" role="button">{m.group(1)}</span>'
+        return self.rx.sub(sub, t)
 
 
 def deck_meta(path):
     """Title and '- **Key:** value' bullets from a deck file header."""
     lines = path.read_text().splitlines()
     title = lines[0].lstrip("# ").strip()
-    meta, changelog, in_log = {}, [], False
+    meta = {}
     for line in lines:
-        m = re.match(r"- \*\*(.+?):\*\*\s*(.*)", line)
-        if m and not in_log:
-            meta[m.group(1)] = m.group(2)
         if line.startswith("## "):
-            in_log = line.startswith("## Changelog")
-            continue
-        if in_log and line.startswith("- "):
-            changelog.append(line[2:])
-    return title, meta, changelog
+            break
+        m = re.match(r"- \*\*(.+?):\*\*\s*(.*)", line)
+        if m:
+            meta[m.group(1)] = m.group(2)
+    return title, meta
+
+
+def colours(identity_text):
+    cols = [COLOUR_NAMES[w] for w in re.findall(r"White|Blue|Black|Red|Green", identity_text or "")]
+    return sorted(cols, key=COLOUR_ORDER.index)
 
 
 def pips(identity_text):
-    cols = [COLOUR_NAMES[w] for w in re.findall(r"White|Blue|Black|Red|Green", identity_text or "")]
-    cols.sort(key=COLOUR_ORDER.index)
-    return '<span class="pips">' + "".join(f'<span class="pip {c}" title="{c}"></span>' for c in cols) + "</span>"
+    return ('<span class="pips">' + "".join(f'<span class="pip {c}" title="{c}">{c}</span>' for c in colours(identity_text))
+            + "</span>")
 
 
-def nav(decks, base, current=None):
-    items = [f'<a class="brand{" cur" if current == "home" else ""}" href="{base}index.html">MTG Decks</a>']
-    for d in decks:
-        cur = ' class="cur"' if current == d["slug"] else ""
-        items.append(f'<a{cur} href="{base}decks/{d["slug"]}.html">{E(d["title"])}</a>')
-    cur = ' class="cur"' if current == "inventory" else ""
-    items.append(f'<a{cur} href="{base}inventory.html">Inventory</a>')
-    return f'<nav class="site-nav"><div class="in">{"".join(items)}</div></nav>'
+def guild(identity_text):
+    m = re.search(r"\(([^)]+)\)", identity_text or "")
+    return m.group(1) if m else " / ".join(colours(identity_text)) or "Colourless"
 
 
-def page(title, body, base, decks, current, description=""):
+def product_short(product):
+    return re.sub(r"\s*Commander precon.*|,? released.*", "", product or "").strip() or "Precon"
+
+
+def bracket(meta):
+    m = re.match(r"\s*(\d)\s*(?:\((.*)\))?", meta.get("Bracket", ""))
+    return (m.group(1), (m.group(2) or "").strip()) if m else ("—", "")
+
+
+def money(v, digits=2):
+    return "—" if v is None else f"€{v:.{digits}f}"
+
+
+def rays(n=132):
+    """Engraving-style sunburst (deterministic, no randomness)."""
+    out = []
+    for i in range(n):
+        a = 2 * math.pi * i / n
+        r1 = 0.33 + 0.07 * ((i * 37) % 7) / 6
+        r2 = 0.62 + 0.36 * ((i * 53) % 11) / 10
+        out.append(f'<line x1="{r1 * math.cos(a):.4f}" y1="{r1 * math.sin(a):.4f}" '
+                   f'x2="{r2 * math.cos(a):.4f}" y2="{r2 * math.sin(a):.4f}"/>')
+    return ('<svg class="rays" viewBox="-1 -1 2 2" aria-hidden="true"><g stroke="currentColor" stroke-width=".0032" '
+            f'stroke-linecap="round">{"".join(out)}</g><circle r=".3" fill="none" stroke="currentColor" stroke-width=".003"/>'
+            '<circle r=".985" fill="none" stroke="currentColor" stroke-width=".0025" stroke-dasharray=".006 .018"/></svg>')
+
+
+def duo(src, live=False):
+    if not src:
+        return '<div class="duo"></div>'
+    return (f'<div class="duo{" live" if live else ""}"><img class="d" src="{E(src)}" alt="" loading="lazy" decoding="async">'
+            f'<img class="c" src="{E(src)}" alt="" loading="lazy" decoding="async"></div>')
+
+
+def header(decks, base, current):
+    def link(d):
+        cur = ' class="cur" aria-current="page"' if current == d["slug"] else ""
+        return f'<a href="{base}decks/{d["slug"]}.html"{cur}>{E(d["title"])}</a>'
+    links = [link(d) for d in decks]
+    half = (len(links) + 1) // 2
+    bulk_cur = ' aria-current="page"' if current == "inventory" else ""
+    return f"""<header class="top">
+<nav class="nav-l" aria-label="Decks">{"".join(links[:half])}</nav>
+<a class="mark" href="{base}index.html">MTG<br>Decks</a>
+<nav class="nav-r" aria-label="Decks and bulk list">{"".join(links[half:])}<a class="btn-w" href="{base}inventory.html"{bulk_cur}>Bulk list</a></nav>
+<nav class="nav-m" aria-label="Site">{"".join(links)}<a href="{base}inventory.html"{' class="cur"' if current == "inventory" else ""}>Bulk list</a></nav>
+</header>"""
+
+
+def footer(decks, base):
+    deck_links = "".join(f'<a href="{base}decks/{d["slug"]}.html">{E(d["title"])}</a>' for d in decks)
+    return f"""<footer class="foot"><div class="wrap">
+<div class="foot-cols">
+  <div><div class="lbl">Decks</div>{deck_links}</div>
+  <div><div class="lbl">Collection</div><a href="{base}inventory.html">Bulk list</a><a href="{base}inventory.html?deck=all">Every card owned</a></div>
+  <div><div class="lbl">Data</div><p>Card images and prices from <a style="display:inline" href="https://scryfall.com" target="_blank" rel="noopener">Scryfall</a>, cheapest paper printing, as of {E(PRICES_AS_OF) or "?"}.</p>
+    <a href="{REPO}" target="_blank" rel="noopener">Source on GitHub ↗</a></div>
+</div>
+<div class="foot-mark" aria-hidden="true">MTG Decks</div>
+</div></footer>"""
+
+
+def page(title, body, base, decks, current, description="", cards=None, script=""):
     return f"""<!doctype html>
 <html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{E(title)}</title>
 <meta name="description" content="{E(description)}">
+<meta name="theme-color" content="#0a0a1c">
+<link rel="icon" href="{FAVICON}">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="{FONTS}">
 <link rel="stylesheet" href="{base}assets/site.css">
 </head><body>
-{nav(decks, base, current)}
-<div class="wrap">
-{body}
-<footer>Card images and prices from <a href="https://scryfall.com" target="_blank" rel="noopener">Scryfall</a> (cheapest paper printing). Prices as of {E(PRICES_AS_OF) or "?"} from <a href="https://github.com/kasperg3/mtg-deck-building">kasperg3/mtg-deck-building</a>.</footer>
-</div>
-<div id="lightbox"></div>
-<script>{LIGHTBOX_JS}</script>
+{header(decks, base, current)}
+<main>{body}</main>
+{footer(decks, base)}
+<div id="lightbox" role="dialog" aria-modal="true" aria-label="Card image"></div>
+<img id="preview" alt="" aria-hidden="true">
+<script id="cards" type="application/json">{cards.json() if cards else "{}"}</script>
+<script src="{base}assets/site.js"></script>{script}
 </body></html>
 """
 
 
-def img_attrs(info):
-    imgs = (info or {}).get("images") or []
-    if not imgs:
-        return None, ""
-    large = "|".join(i.get("large") or i.get("normal") for i in imgs)
-    return imgs[0].get("normal"), large
+# ---------------------------------------------------------------- upgrades
+
+def picked_direction(spec):
+    return next((d for d in (spec or {}).get("directions") or [] if d.get("picked")), None)
 
 
-def money(v):
-    return "" if v is None else f"€{v:.2f}"
+def upgrade_phases(spec):
+    """What was chosen for a deck, in the order it went in: core package, the
+    picked direction, later changes, and the bracket 3 package unless it was
+    declined. Changes dated after the package was applied come after it, the
+    same order verify_comparison.py replays them in. Empty until a direction
+    is picked."""
+    picked = picked_direction(spec)
+    if not picked:
+        return []
+    phases = []
+    core = spec.get("core") or {}
+    if core.get("swaps"):
+        phases.append({"key": "core", "kicker": "Goes in every direction", "name": core.get("name") or "Core package",
+                       "date": spec.get("date"), "text": core.get("description") or "",
+                       "swaps": [dict(s) for s in core["swaps"]]})
+    phases.append({"key": "direction", "kicker": "Chosen direction", "name": picked["name"], "date": spec.get("date"),
+                   "text": picked.get("plays_like") or "",
+                   "swaps": [dict(s, planned=bool(s.get("pending"))) for s in picked.get("swaps") or []]})
+    b3 = spec.get("bracket3") or {}
+    b3_date = b3.get("applied") if b3.get("swaps") and not b3.get("declined") else None
+    changes = spec.get("deck_changes") or []
+
+    def changes_phase(key_, cs):
+        dates = sorted({c["date"] for c in cs if c.get("date")})
+        span = (dates[0] if len(dates) == 1 else f"{dates[0]} → {dates[-1]}") if dates else None
+        return {"key": key_, "kicker": "After playing it", "name": "Later changes", "date": span,
+                "text": "", "swaps": [dict(c) for c in cs]}
+
+    early = [c for c in changes if not b3_date or (c.get("date") or "") <= b3_date]
+    late = [c for c in changes if b3_date and (c.get("date") or "") > b3_date]
+    if early:
+        phases.append(changes_phase("later", early))
+    if b3.get("swaps") and not b3.get("declined"):
+        planned = not b3.get("applied")
+        phases.append({"key": "bracket3", "kicker": "Planned · not in the deck yet" if planned else "Power level",
+                       "name": b3.get("name") or "Bracket 3 package", "date": b3.get("applied"), "planned": planned,
+                       "text": b3.get("description") or "", "swaps": [dict(s, planned=planned) for s in b3["swaps"]]})
+    if late:
+        phases.append(changes_phase("review", late))
+    return phases
 
 
-def build_deck(d, cards):
-    """Decklist page: current list vs precon snapshot."""
+def swap_html(s, phase, cards, link):
+    no = s["no"]
+    tags = []
+    if s.get("planned"):
+        tags.append('<span class="tag plan">Planned</span>')
+    if s.get("owned"):
+        tags.append('<span class="tag own">Already owned</span>')
+    if cards.info(s["in"]).get("game_changer"):
+        tags.append('<span class="tag gc">Game Changer</span>')
+    if phase["key"] in ("later", "review") and s.get("date"):
+        tags.append(f'<span class="tag">{E(s["date"])}</span>')
+    gone = s.get("gone")
+    if gone:
+        tags.append(f'<a class="tag gone" href="#swap-{gone}">Replaced later · #{gone:02d}</a>')
+    elif gone == 0:
+        tags.append('<span class="tag gone">No longer in the deck</span>')
+    cls = "swap" + (" is-planned" if s.get("planned") else "") + (" is-gone" if gone is not None else "")
+    return f"""<article class="{cls}" id="swap-{no}">
+  <div class="no">#{no:02d}</div>
+  <div class="pair">
+    <figure class="thumb out">{cards.img(s["out"])}<figcaption>Out</figcaption></figure>
+    <span class="arr" aria-hidden="true">→</span>
+    <figure class="thumb in">{cards.img(s["in"])}<figcaption>In</figcaption></figure>
+  </div>
+  <div class="txt">
+    <h4 class="in-name"><span class="sig">+</span>{cards.name(s["in"])}</h4>
+    <div class="out-name"><span class="sig">−</span>replaces {cards.name(s["out"])}</div>
+    {f'<p class="why">{link(s["why"])}</p>' if s.get("why") else ""}
+    {f'<div class="tags">{"".join(tags)}</div>' if tags else ""}
+  </div>
+</article>"""
+
+
+# ---------------------------------------------------------------- deck page
+
+def build_deck(d, index):
+    """Deck page: plan, swaps with reasons, current decklist."""
+    cards = Cards(index)
     commanders, current = parse_deck(d["path"])
     precon_path = ROOT / "decks" / "precon" / d["path"].name
     pre_cmd, pre = parse_deck(precon_path) if precon_path.exists() else (commanders, current)
-    cur_c = Counter({key(n): q for q, n in current})
-    pre_c = Counter({key(n): q for q, n in pre})
-    names = {key(n): n for _, n in current + pre}
+    cur_c, pre_c = Counter(), Counter()
+    for q, n in current:
+        cur_c[key(n)] += q
+    for q, n in pre:
+        pre_c[key(n)] += q
+    names = {key(n): n for _, n in pre + current}
+    spec = d["spec"]
+    picked = picked_direction(spec)
+    phases = upgrade_phases(spec)
+    b3 = (spec or {}).get("bracket3") or {}
+    meta = d["meta"]
 
-    groups, value, added_total = {}, 0.0, 0
-    for k, q in cur_c.items():
-        info = cards.get(k) or {}
-        added = max(0, q - pre_c.get(k, 0))
-        added_total += added
-        value += (info.get("eur") or 0) * q
-        groups.setdefault(section_for(info.get("type_line", "")), []).append((names[k], q, added, info))
-    cut = [(names[k], pre_c[k] - cur_c.get(k, 0), cards.get(k) or {}) for k in pre_c if pre_c[k] > cur_c.get(k, 0)]
-
-    def tile(name, qty, kind, info, plan=None, note=None):
-        src, large = img_attrs(info)
-        img = (f'<img loading="lazy" src="{E(src)}" data-large="{E(large)}" alt="{E(name)}">' if src
-               else f'<div class="muted small" style="aspect-ratio:488/680;border:1px dashed var(--border);border-radius:8px;padding:8px">{E(name)}</div>')
-        badge = {"added": "＋ Added", "cut": "Cut", "precon": "", "planned": "Planned"}[kind]
-        if plan == "cut":
-            badge = f'<span class="badge plan">Planned cut</span>'
-        elif badge:
-            badge = f'<span class="badge">{badge}</span>'
-        link = info.get("scryfall_uri") or "#"
-        return (f'<div class="tile {kind}" data-kind="{kind}"{f" data-plan={plan}" if plan else ""}>{img}'
-                f'{badge}'
-                f'{f"<span class=qty>×{qty}</span>" if qty > 1 else ""}'
-                f'<div class="cap"><span title="{E(name)}"><a href="{E(link)}" target="_blank" rel="noopener">{E(name)}</a></span>'
-                f'<span class="muted">{money(info.get("eur"))}</span></div>'
-                f'{f"<div class=for>{E(note)}</div>" if note else ""}</div>')
-
-    spec = json.loads(d["comparison"].read_text()) if d["comparison"] else {}
-    b3 = spec.get("bracket3") or {}
-    planned = [s for dr in spec.get("directions") or [] if dr.get("picked")
-               for s in dr.get("swaps") or [] if s.get("pending")] + ([] if b3.get("applied") or b3.get("declined") else (b3.get("swaps") or []))
-    premium = [] if b3.get("declined") else (b3.get("premium") or [])
+    # Number the swaps across phases and note ones a later swap took out again
+    rows = [s for ph in phases for s in ph["swaps"]]
+    for i, s in enumerate(rows, 1):
+        s["no"] = i
+    for s in rows:
+        if not s.get("planned") and not cur_c.get(key(s["in"])) and key(s["in"]) not in map(key, commanders):
+            later = next((t for t in rows if t["no"] > s["no"] and key(t["out"]) == key(s["in"])), None)
+            s["gone"] = later["no"] if later else 0
+    planned = [s for s in rows if s.get("planned")]
     plan_cut = Counter(key(s["out"]) for s in planned)
-    to_buy = [s for s in planned if not s.get("owned")]
-    plan_cost = sum((cards.get(key(s["in"])) or {}).get("eur") or 0 for s in to_buy)
 
-    cmd_info = cards.get(key(commanders[0])) if commanders else None
-    csrc, clarge = img_attrs(cmd_info)
-    facts = "".join(f"<dt>{E(k)}</dt><dd>{E(v)}</dd>" for k, v in d["meta"].items()
-                    if k not in ("Commander", "Colour identity", "Product"))
-    sections = []
-    cmd_tiles = "".join(tile(c, 1, "precon" if key(c) in {key(x) for x in pre_cmd} else "added",
-                             cards.get(key(c)) or {}) for c in commanders)
-    sections.append(f'<h2>Commander</h2><div class="grid">{cmd_tiles}</div>')
-    for sec in SECTIONS + ["Other"]:
-        items = groups.get(sec)
-        if not items:
-            continue
-        items.sort(key=lambda x: ("Basic" in x[3].get("type_line", ""), x[3].get("cmc", 0), x[0]))
-        tiles = []
-        for name, q, added, info in items:
-            pc = min(plan_cut.get(key(name), 0), q)
-            if pc and q - pc:         # e.g. one of eight Forests is planned to go
-                tiles.append(tile(name, q - pc, "added" if added >= q else "precon", info))
-                tiles.append(tile(name, pc, "added" if added >= q else "precon", info, plan="cut"))
-            elif added and q - added:   # some copies precon, some added
-                tiles.append(tile(name, q - added, "precon", info))
-                tiles.append(tile(name, added, "added", info))
-            else:
-                tiles.append(tile(name, q, "added" if added else "precon", info, plan="cut" if pc else None))
-        n_added = sum(a for *_, a, _ in items)
-        sections.append(f'<section data-section><h2>{sec} <span class="muted small">{sum(q for _, q, _, _ in items)}'
-                        f'{f" · {n_added} added" if n_added else ""}</span></h2><div class="grid">{"".join(tiles)}</div></section>')
-    if planned:
-        comp_link = f'../comparisons/{d["slug"]}.html#bracket3' if b3 else f'../comparisons/{d["slug"]}.html'
-        ptiles = "".join(tile(s["in"], 1, "planned", cards.get(key(s["in"])) or {},
-                              note=f'for {s["out"]}' + (" · owned" if s.get("owned") else "")) for s in planned)
-        sections.append(
-            f'<section data-section id="planned"><h2>Planned upgrades <span class="muted small">{len(planned)} to add · '
-            f'{len(planned)} to cut · {len(to_buy)} to buy, ≈ €{plan_cost:.2f}</span></h2>'
-            f'<p class="planned-note">Not in the deck yet. The cards they replace are marked "Planned cut" above. '
-            f'Reasons and buy list: <a href="{comp_link}">upgrade comparison</a>.</p>'
-            f'<div class="grid">{ptiles}</div></section>')
-    if premium:
-        prem = "".join(tile(s["in"], 1, "planned", cards.get(key(s["in"])) or {}, note=f'for {s["out"]}') for s in premium)
-        if prem:
-            sections.append(f'<details class="cuts"><summary>Premium options ({len(premium)}, optional)</summary>'
-                            f'<p class="muted small">Stronger and more expensive; each comes with its own cut.</p>'
-                            f'<div class="grid">{prem}</div></details>')
-    if cut:
-        cut.sort(key=lambda x: x[0])
-        sections.append(f'<details class="cuts"><summary>Cut from the precon ({sum(q for _, q, _ in cut)})</summary>'
-                        f'<p class="muted small">Still owned; these are loose singles now.</p>'
-                        f'<div class="grid">{"".join(tile(n, q, "cut", i) for n, q, i in cut)}</div></details>')
+    present = set(cur_c) | {key(c) for c in commanders} | {key(s["in"]) for s in planned}
+    linker = Linker(cards, commanders + [n for _, n in current + pre] + [n for s in rows for n in (s["in"], s["out"])],
+                    present)
 
-    decklist = "\n".join([*(f"1 {c}" for c in commanders), *(f"{q} {n}" for q, n in current)])
+    added_total = sum(max(0, q - pre_c.get(k, 0)) for k, q in cur_c.items())
     total = len(commanders) + sum(cur_c.values())
-    comp = f'<a class="btn secondary" href="../comparisons/{d["slug"]}.html">Upgrade comparison</a>' if d["comparison"] else ""
-    log = "".join(f"<li>{E(re.sub(r'[*`]', '', l))}</li>" for l in d["changelog"])
-    body = f"""
-<div class="deckhead">
-  {f'<img src="{E(csrc)}" data-large="{E(clarge)}" alt="{E(commanders[0])}">' if csrc else ""}
-  <div>
-    <div class="muted small">{E(d["meta"].get("Product", ""))}</div>
-    <h1>{E(d["title"])}</h1>
-    <div>{pips(d["meta"].get("Colour identity"))} <b>{E(", ".join(commanders))}</b> <span class="muted">· {E(d["meta"].get("Colour identity", ""))}</span></div>
-    <dl class="facts">{facts}<dt>Cards</dt><dd>{total} · <b style="color:var(--in)">{added_total} added</b> · {total - added_total} from the precon{f' · <b style="color:var(--plan)">{len(planned)} planned</b>' if planned else ""}</dd>
-      <dt>Value</dt><dd>≈ €{value:.0f} (cheapest printings)</dd></dl>
-    <div style="display:flex;gap:8px;flex-wrap:wrap">{comp}<button class="btn" id="copy" type="button">Copy decklist</button><span id="copied" class="small" style="color:var(--in);align-self:center" hidden>Copied ✓</span></div>
+    value = sum((cards.info(names[k]).get("eur") or 0) * q for k, q in cur_c.items()) + \
+        sum(cards.info(c).get("eur") or 0 for c in commanders)
+    gcs = [names[k] for k in cur_c if cards.info(names[k]).get("game_changer")]
+    br, br_note = bracket(meta)
+    cmd = commanders[0] if commanders else d["title"]
+    art = cards.art(cmd)
+
+    # ---- hero
+    direction = ""
+    if picked:
+        extra = ' <span class="plus">+ Bracket 3</span>' if b3.get("applied") else ""
+        direction = (f'<div class="dir"><div class="lbl">Chosen direction</div><div class="d3">{E(picked["name"])}{extra}</div>'
+                     f'<p>{E(picked.get("plays_like") or "")}</p></div>')
+    elif spec:
+        direction = '<div class="dir"><div class="lbl">Upgrade</div><div class="d3">Options under review</div></div>'
+    swaps_btn = '<a class="btn" href="#swaps">See the swaps</a>' if rows else '<a class="btn" href="#decklist">Decklist</a>'
+    note_bits = [f"<b>Bracket {E(br)}</b> — {E(br_note)}" if br_note else f"<b>Bracket {E(br)}</b>",
+                 f"Game Changers: {E(', '.join(gcs))}" if gcs else "No Game Changers"]
+    hero = f"""<section class="dhero">
+  <div class="dhero-bg" aria-hidden="true">{duo(art)}</div>
+  <div class="wrap dhero-in">
+    <div>
+      <div class="lbl"><a href="../index.html">Decks</a><span class="sep">/</span>#{d["no"]:02d}<span class="sep">/</span>{E(guild(meta.get("Colour identity")))}<span class="sep">·</span>{E(product_short(meta.get("Product")))} precon</div>
+      <h1 class="d1">{E(d["title"])}</h1>
+      <div class="cmdr">{pips(meta.get("Colour identity"))}<span>{" &amp; ".join(cards.name(c) for c in commanders)}</span></div>
+      {direction}
+      <div class="actions">{swaps_btn}<button class="btn ghost" type="button" data-copy="decklist-text">{COPY_ICON}<span class="t">Copy decklist</span></button></div>
+    </div>
+    <div class="dhero-card">{rays()}{cards.img(cmd, lazy=False)}</div>
   </div>
-</div>
-<div class="toolbar">
-  <button data-filter="all" aria-pressed="true">All cards</button>
-  <button data-filter="added" aria-pressed="false">Added ({added_total})</button>
-  <button data-filter="precon" aria-pressed="false">From the precon</button>
-  {f'<button data-filter="planned" aria-pressed="false">Planned ({len(planned)})</button>' if planned else ""}
-  <span class="spacer"></span>
-  <span class="legend"><span><span class="sw" style="background:var(--in)"></span>Added</span><span><span class="sw" style="background:var(--out)"></span>Cut</span>{'<span><span class="sw" style="background:var(--plan)"></span>Planned</span>' if planned else ""}</span>
-</div>
-{"".join(sections)}
-{f'<h2>Changelog</h2><ul class="changelog">{log}</ul>' if log else ""}
-<textarea id="decklist" hidden>{E(decklist)}</textarea>
-<script>
-document.querySelectorAll(".toolbar button[data-filter]").forEach(b => b.addEventListener("click", () => {{
-  const f = b.dataset.filter;
-  document.querySelectorAll(".toolbar button[data-filter]").forEach(x => x.setAttribute("aria-pressed", x === b));
-  document.querySelectorAll("section[data-section] .tile").forEach(t => t.classList.toggle("hidden", f !== "all" && t.dataset.kind !== f && !(f === "planned" && t.dataset.plan === "cut")));
-  document.querySelectorAll("section[data-section]").forEach(s => s.classList.toggle("hidden", !s.querySelector(".tile:not(.hidden)")));
-}}));
-document.getElementById("copy").addEventListener("click", async () => {{
-  const t = document.getElementById("decklist").value;
-  try {{ await navigator.clipboard.writeText(t); }} catch {{ const a = document.getElementById("decklist"); a.hidden = false; a.select(); document.execCommand("copy"); a.hidden = true; }}
-  const ok = document.getElementById("copied"); ok.hidden = false; setTimeout(() => ok.hidden = true, 1800);
-}});
-</script>"""
-    stats = {"total": total, "added": added_total, "value": value, "cut": sum(q for _, q, _ in cut),
-             "planned": len(planned), "plan_cost": plan_cost,
-             "art": (cmd_info or {}).get("images", [{}])[0].get("art_crop") or csrc}
-    return body, stats
+  <div class="wrap">
+    <dl class="stats">
+      <div><dt>Cards</dt><dd>{total}</dd></div>
+      <div><dt>New since precon</dt><dd>{added_total}{f"<small>+{len(planned)} planned</small>" if planned else ""}</dd></div>
+      <div><dt>Bracket</dt><dd>{E(br)}</dd></div>
+      <div><dt>Value</dt><dd>≈ €{value:.0f}</dd></div>
+    </dl>
+    <p class="bnote">{" · ".join(note_bits)}</p>
+  </div>
+</section>"""
+
+    # ---- section nav
+    secs = []
+    if spec:
+        secs.append(("plan", "How to play"))
+    if rows:
+        secs.append(("swaps", "Swaps"))
+    secs.append(("decklist", "Decklist"))
+    secnav = (f'<nav class="secnav" aria-label="On this page"><div class="wrap"><span class="title">{E(d["title"])}</span>'
+              + "".join(f'<a href="#{i}"><span class="n">{n:02d}</span>{E(t)}</a>' for n, (i, t) in enumerate(secs, 1))
+              + f'<span class="sp"></span><button class="btn ghost" type="button" data-copy="decklist-text">{COPY_ICON}'
+              '<span class="t">Copy decklist</span></button></div></nav>')
+    num = {i: n for n, (i, _) in enumerate(secs, 1)}
+
+    # ---- the plan
+    plan = ""
+    if picked:
+        htp = picked.get("how_to_play") or {}
+        lead_html = linker(htp.get("summary") or picked.get("plays_like") or "")
+        pitch_html = linker(picked.get("pitch") or "")
+        steps = [(sec.get("title", ""), sec.get("points") or [], "") for sec in htp.get("sections") or []]
+        if b3.get("applied"):
+            tips = [n for n in b3.get("notes") or [] if not n.startswith("Changed on")]
+            if tips:
+                steps.append(("Bracket 3 notes", tips, " b3"))
+        steps_html = "".join(
+            f'<li class="step{cls}"><div><div class="lbl">#{i:02d}</div><h3>{E(t)}</h3></div>'
+            f'<ul>{"".join(f"<li>{linker(p)}</li>" for p in pts)}</ul></li>'
+            for i, (t, pts, cls) in enumerate(steps, 1))
+        gone_note = ('<p class="lbl gone-note">Names in <s>strikethrough</s> have left the deck since this guide was '
+                     'written; see the swaps below for what replaced them.</p>') if linker.gone else ""
+        plan = f"""<section class="sec" id="plan"><div class="wrap">
+  <div class="sec-h"><span class="no">{num["plan"]:02d}</span><h2 class="d2">How to play</h2></div>
+  <div class="plan-intro">
+    <p class="lead">{lead_html}</p>
+    <p class="prose">{pitch_html}</p>
+  </div>
+  {f'<ol class="steps">{steps_html}</ol>' if steps_html else ""}
+  {gone_note}
+</div></section>"""
+    elif spec:
+        plan = f"""<section class="sec" id="plan"><div class="wrap">
+  <div class="sec-h"><span class="no">{num["plan"]:02d}</span><h2 class="d2">How to play</h2></div>
+  <div class="review"><div><div class="lbl">Upgrade options under review</div>
+    <p class="prose" style="margin-top:8px">{E(spec.get("summary") or "")}</p></div>
+    <a class="btn" href="../comparisons/{d["slug"]}.html">Compare the directions</a></div>
+</div></section>"""
+
+    # ---- swaps
+    swaps = ""
+    if rows:
+        blocks = []
+        for i, ph in enumerate(phases, 1):
+            buy = [s for s in ph["swaps"] if not s.get("owned")]
+            cost = sum(cards.info(s["in"]).get("eur") or 0 for s in buy)
+            meta_bits = [f'<b>{len(ph["swaps"])}</b> swap{"s" if len(ph["swaps"]) != 1 else ""}']
+            if ph["key"] not in ("later", "review"):
+                meta_bits.append(f"≈ {money(cost)}{' to buy' if ph.get('planned') else ''}")
+            if ph.get("date"):
+                meta_bits.append(("applied " if ph["key"] == "bracket3" else "") + E(ph["date"]))
+            blocks.append(f"""<div class="phase{" planned" if ph.get("planned") else ""}" id="phase-{ph["key"]}">
+  <div class="phase-h">
+    <div><div class="lbl">Phase {i:02d}<span class="sep">—</span>{E(ph["kicker"])}</div><h3>{E(ph["name"])}</h3></div>
+    <div class="lbl meta">{'<span class="sep">·</span>'.join(meta_bits)}</div>
+  </div>
+  {f'<p class="phase-d">{linker(ph["text"])}</p>' if ph["text"] else ""}
+  {"".join(swap_html(s, ph, cards, linker) for s in ph["swaps"])}
+</div>""")
+        swaps = f"""<section class="sec" id="swaps"><div class="wrap">
+  <div class="sec-h"><span class="no">{num["swaps"]:02d}</span><h2 class="d2">Swaps</h2>
+    <p class="aside">Every card that changed from the {E(product_short(meta.get("Product")))} precon, in the order it went in, with the reason. Click a card to enlarge it.</p></div>
+  {"".join(blocks)}
+</div></section>"""
+
+    # ---- decklist
+    groups = {}
+    for k, q in cur_c.items():
+        info = cards.info(names[k])
+        groups.setdefault(section_for(info.get("type_line", "")), []).append(
+            (names[k], q, max(0, q - pre_c.get(k, 0)), info))
+    ordered = [("Commander", [(c, 1, 0 if key(c) in {key(x) for x in pre_cmd} else 1, cards.info(c)) for c in commanders])]
+    for sec in SECTIONS + ["Other"]:
+        if groups.get(sec):
+            items = sorted(groups[sec], key=lambda x: ("Basic" in x[3].get("type_line", ""), x[3].get("cmc", 0), x[0]))
+            ordered.append((sec, items))
+
+    def marker(name, q, added):
+        if plan_cut.get(key(name)):
+            return '<span class="mk cut" title="Planned cut">out</span>'
+        if added:
+            return f'<span class="mk new" title="New since the precon">+{added if q > 1 else ""}</span>'
+        return ""
+
+    lists, grids = [], []
+    for sec, items in ordered:
+        n = sum(q for _, q, _, _ in items)
+        lis = "".join(f'<li class="{"new" if a else ""}"><span class="q">{q}</span>{cards.name(nm)}{marker(nm, q, a)}</li>'
+                      for nm, q, a, _ in items)
+        lists.append(f'<div class="dgroup"><h4><span>{E(sec)}</span><span>{n}</span></h4><ul>{lis}</ul></div>')
+        tiles = "".join(
+            f'<figure class="tile{" cut" if plan_cut.get(key(nm)) else " new" if a else ""}">{cards.img(nm)}'
+            f'{f"<span class=qty>×{q}</span>" if q > 1 else ""}'
+            f'<figcaption><span>{E(nm)}</span><span class="p">{money(info.get("eur"))}</span></figcaption></figure>'
+            for nm, q, a, info in items)
+        grids.append(f'<div class="cgroup"><h4><span>{E(sec)}</span><span>{n}</span></h4><div class="cgrid">{tiles}</div></div>')
+    decklist_text = "\n".join([*(f"1 {c}" for c in commanders), *(f"{q} {n}" for q, n in current)])
+    legend = '<span class="lbl legend"><span class="new">+ new since the precon</span>' + \
+        ('<span class="cut">out · planned cut</span>' if planned else "") + "</span>"
+    decklist = f"""<section class="sec" id="decklist"><div class="wrap">
+  <div class="sec-h"><span class="no">{num["decklist"]:02d}</span><h2 class="d2">Decklist</h2>
+    <p class="aside">The deck as it is now: {total} cards, ready to paste into Moxfield or Archidekt.</p></div>
+  <div class="tools">
+    <div class="seg" data-views="dl" role="group" aria-label="View"><button type="button" data-v="list" aria-pressed="true">List</button><button type="button" data-v="cards" aria-pressed="false">Cards</button></div>
+    {legend}
+  </div>
+  <div class="dl" id="dl" data-view="list">
+    <div class="dlist">{"".join(lists)}</div>
+    <div class="dcards">{"".join(grids)}</div>
+  </div>
+  <textarea id="decklist-text" hidden>{E(decklist_text)}</textarea>
+</div></section>"""
+
+    body = hero + secnav + plan + swaps + decklist
+    stats = {"total": total, "added": added_total, "value": value, "planned": len(planned), "swaps": len(rows),
+             "bracket": br, "art": art, "picked": picked, "b3_applied": bool(b3.get("applied"))}
+    return body, cards, stats
 
 
-def build_inventory(cards):
-    """Inventory page from inventory.csv: every owned card, deck or Loose."""
-    import csv
+# ---------------------------------------------------------------- bulk list
+
+def build_inventory(index, decks):
+    """The bulk list from inventory.csv: every owned card, loose ones first."""
+    cards = Cards(index)
     rows = list(csv.DictReader((ROOT / "inventory.csv").open()))
     data, totals = [], Counter()
     for r in rows:
-        info = cards.get(key(r["Name"])) or {}
-        src, large = img_attrs(info)
+        info = cards.info(r["Name"])
         q = int(r["Count"])
-        eur = info.get("eur")
-        totals[r["Deck"] or "Loose"] += q
-        data.append({"q": q, "n": r["Name"], "d": r["Deck"] or "Loose", "s": r["Source"], "set": r.get("Set", ""),
-                     "a": r.get("Acquired", ""), "no": r.get("Notes", ""), "t": section_for(info.get("type_line", "")),
-                     "e": eur, "img": src or "", "u": info.get("scryfall_uri") or ""})
+        loc = r["Deck"] or "Loose"
+        totals[loc] += q
+        data.append({"q": q, "n": r["Name"], "k": cards.ref(r["Name"]), "d": loc, "s": r["Source"],
+                     "set": r.get("Set", ""), "a": r.get("Acquired", ""), "no": r.get("Notes", ""),
+                     "t": section_for(info.get("type_line", "")), "e": info.get("eur")})
     value = sum((x["e"] or 0) * x["q"] for x in data)
-    loose_value = sum((x["e"] or 0) * x["q"] for x in data if x["d"] == "Loose")
-    decks_opts = "".join(f'<option value="{E(d)}">{E(d)} ({n})</option>' for d, n in sorted(totals.items()))
-    sources = sorted({x["s"] for x in data})
-    src_opts = "".join(f'<option value="{E(s)}">{E(s)}</option>' for s in sources)
+    loose = [x for x in data if x["d"] == "Loose"]
+    loose_value = sum((x["e"] or 0) * x["q"] for x in loose)
+    deck_order = [d["title"] for d in decks]
+    locs = [("Loose", "Loose", totals.get("Loose", 0))] + \
+        [(t, t, totals[t]) for t in deck_order if totals.get(t)] + \
+        [(t, t, n) for t, n in sorted(totals.items()) if t != "Loose" and t not in deck_order] + \
+        [("all", "Everything", sum(totals.values()))]
+    loc_chips = "".join(f'<button class="chip" type="button" data-loc="{E(v)}" aria-pressed="false">{E(lab)}<span class="c">{n}</span></button>'
+                        for v, lab, n in locs)
     types = [s for s in SECTIONS + ["Other"] if any(x["t"] == s for x in data)]
-    type_opts = "".join(f'<option value="{E(s)}">{E(s)}</option>' for s in types)
-    body = f"""
-<h1>Inventory</h1>
-<p class="muted">Every card I own: what's in each deck and what's loose, where it came from, and what it's worth (cheapest paper printing).</p>
-<div class="stats" style="margin-top:12px">
-  <div class="stat"><b>{sum(totals.values())}</b><span class="muted small">cards</span></div>
-  {"".join(f'<div class="stat"><b>{n}</b><span class="muted small">{E(d)}</span></div>' for d, n in sorted(totals.items()))}
-  <div class="stat"><b>≈ €{value:.0f}</b><span class="muted small">total value</span></div>
-  <div class="stat"><b>≈ €{loose_value:.0f}</b><span class="muted small">loose value</span></div>
+    type_chips = '<button class="chip" type="button" data-type="" aria-pressed="true">All</button>' + \
+        "".join(f'<button class="chip" type="button" data-type="{E(t)}" aria-pressed="false">{E(t)}</button>' for t in types)
+    src_opts = "".join(f'<option value="{E(s)}">{E(s)}</option>' for s in sorted({x["s"] for x in data}))
+    body = f"""<div class="wrap">
+<section class="ihero">
+  <div>
+    <div class="lbl">Collection<span class="sep">/</span>{sum(totals.values())} cards owned<span class="sep">·</span>≈ €{value:.0f}</div>
+    <h1 class="d1">Bulk list</h1>
+    <p>Every card that isn't in a deck, searchable, with the cheapest paper price. Switch to a deck or to everything with the chips below; click a card to see it.</p>
+  </div>
+  <dl class="stats">
+    <div><dt>Loose</dt><dd>{totals.get("Loose", 0)}</dd></div>
+    <div><dt>In decks</dt><dd>{sum(n for t, n in totals.items() if t != "Loose")}</dd></div>
+    <div><dt>Loose value</dt><dd>€{loose_value:.0f}</dd></div>
+  </dl>
+</section>
+<section class="filters" aria-label="Filters">
+  <label class="search"><span aria-hidden="true">›</span><input id="q" type="search" placeholder="search cards, sets, notes…" aria-label="Search" autocomplete="off" spellcheck="false"></label>
+  <div class="chips" id="locs"><span class="lbl">Where</span>{loc_chips}</div>
+  <div class="chips" id="types"><span class="lbl">Type</span>{type_chips}
+    <select class="select" id="src" aria-label="Source"><option value="">Any source</option>{src_opts}</select></div>
+</section>
+<div class="result">
+  <span class="lbl count" id="count"></span>
+  <div class="seg" data-views="inv" role="group" aria-label="View"><button type="button" data-v="list" aria-pressed="true">List</button><button type="button" data-v="cards" aria-pressed="false">Cards</button></div>
 </div>
-<div class="filters">
-  <input id="q" type="search" placeholder="Search card, notes…" aria-label="Search">
-  <select id="fd" aria-label="Deck"><option value="">All decks + loose</option>{decks_opts}</select>
-  <select id="fs" aria-label="Source"><option value="">All sources</option>{src_opts}</select>
-  <select id="ft" aria-label="Type"><option value="">All types</option>{type_opts}</select>
-  <span id="count" class="muted small"></span>
+<div id="inv" data-view="list">
+  <div class="table-scroll" id="inv-list"><table class="inv">
+    <thead><tr><th class="num" data-s="q">Qty</th><th data-s="n">Card</th><th class="hide-s" data-s="t">Type</th><th class="where" data-s="d">Where</th>
+    <th class="hide-s" data-s="s">Source</th><th class="num" data-s="e">Price</th></tr></thead>
+    <tbody id="rows"></tbody>
+  </table></div>
+  <div class="inv-cards" id="inv-cards" hidden></div>
+  <div class="empty" id="empty" hidden>No cards match.</div>
 </div>
-<div class="table-scroll"><table class="inv">
-  <thead><tr><th class="num" data-k="q">Qty</th><th data-k="n">Card</th><th data-k="d">Deck</th><th data-k="t">Type</th>
-  <th data-k="s">Source</th><th data-k="set">Set</th><th data-k="a">Acquired</th><th class="num" data-k="e">Price</th><th data-k="no">Notes</th></tr></thead>
-  <tbody id="rows"></tbody>
-</table></div>
-<img id="preview" alt="">
+</div>"""
+    script = """
 <script>
-const DATA = {json.dumps(data).replace("</", "<\\/")};
-const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}}[c]));
-let sortK = "d", sortDir = 1;
-function render() {{
-  const q = document.getElementById("q").value.toLowerCase(), fd = document.getElementById("fd").value,
-        fs = document.getElementById("fs").value, ft = document.getElementById("ft").value;
-  const rows = DATA.filter(r => (!fd || r.d === fd) && (!fs || r.s === fs) && (!ft || r.t === ft)
-      && (!q || (r.n + " " + r.no + " " + r.d).toLowerCase().includes(q)))
-    .sort((a, b) => {{ const x = a[sortK] ?? "", y = b[sortK] ?? "";
-      return (typeof x === "number" && typeof y === "number" ? x - y : String(x).localeCompare(String(y))) * sortDir || a.n.localeCompare(b.n); }});
-  document.getElementById("rows").innerHTML = rows.map(r => `<tr class="${{r.d === "Loose" ? "loose" : ""}}">
-    <td class="num">${{r.q}}</td>
-    <td><a class="card" href="${{esc(r.u)}}" target="_blank" rel="noopener" data-img="${{esc(r.img)}}">${{esc(r.n)}}</a></td>
-    <td>${{esc(r.d)}}</td><td>${{esc(r.t)}}</td>
-    <td><span class="tag ${{r.s === "To buy" ? "tobuy" : r.s.includes("precon") ? "" : "bought"}}">${{esc(r.s)}}</span></td>
-    <td>${{esc(r.set)}}</td><td style="white-space:nowrap">${{esc(r.a)}}</td>
-    <td class="num">${{r.e == null ? "—" : "€" + r.e.toFixed(2)}}</td><td class="small muted">${{esc(r.no)}}</td></tr>`).join("");
-  const n = rows.reduce((s, r) => s + r.q, 0), v = rows.reduce((s, r) => s + (r.e || 0) * r.q, 0);
-  document.getElementById("count").textContent = `${{n}} cards · ≈ €${{v.toFixed(0)}}`;
-  document.querySelectorAll("table.inv th").forEach(th => th.removeAttribute("aria-sort"));
-  document.querySelector(`th[data-k="${{sortK}}"]`).setAttribute("aria-sort", sortDir > 0 ? "ascending" : "descending");
-}}
-["q", "fd", "fs", "ft"].forEach(id => document.getElementById(id).addEventListener("input", render));
-document.querySelectorAll("table.inv th").forEach(th => th.addEventListener("click", () => {{
-  sortDir = sortK === th.dataset.k ? -sortDir : (th.dataset.k === "e" || th.dataset.k === "q" ? -1 : 1); sortK = th.dataset.k; render(); }}));
-const pv = document.getElementById("preview");
-document.addEventListener("mousemove", e => {{
-  const a = e.target.closest("a[data-img]");
-  if (!a || !a.dataset.img) {{ pv.style.display = "none"; return; }}
-  if (pv.src !== a.dataset.img) pv.src = a.dataset.img;
-  pv.style.display = "block";
-  pv.style.left = Math.min(e.clientX + 18, innerWidth - 236) + "px";
-  pv.style.top = Math.min(e.clientY + 12, innerHeight - 320) + "px";
-}});
-const deck = new URLSearchParams(location.search).get("deck");
-if (deck) document.getElementById("fd").value = deck;
-render();
-</script>"""
-    return body, sum(totals.values()), totals.get("Loose", 0)
+(() => {
+  const DATA = %s;
+  const C = window.CARDS, $ = s => document.querySelector(s);
+  const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+  const eur = v => v == null ? "—" : "€" + v.toFixed(2);
+  const params = new URLSearchParams(location.search);
+  const st = { loc: params.get("deck") || "Loose", type: "", src: "", q: "", sort: "e", dir: -1 };
+  if (!document.querySelector(`#locs [data-loc="${CSS.escape(st.loc)}"]`)) st.loc = "Loose";
+  const view = $("#inv");
+  function rows() {
+    const q = st.q.toLowerCase();
+    return DATA.filter(r => (st.loc === "all" || r.d === st.loc) && (!st.type || r.t === st.type) && (!st.src || r.s === st.src)
+        && (!q || `${r.n} ${r.set} ${r.no} ${r.d} ${r.s}`.toLowerCase().includes(q)))
+      .sort((a, b) => {
+        const x = a[st.sort] ?? (st.sort === "e" ? -1 : ""), y = b[st.sort] ?? (st.sort === "e" ? -1 : "");
+        return (typeof x === "number" && typeof y === "number" ? x - y : String(x).localeCompare(String(y))) * st.dir || a.n.localeCompare(b.n);
+      });
+  }
+  function srcCls(s) { return s === "To buy" ? "tobuy" : /precon|bulk/i.test(s) ? "" : "shop"; }
+  function render() {
+    const rs = rows(), cards = view.dataset.view === "cards";
+    view.classList.toggle("one-place", st.loc !== "all");
+    $("#inv-list").hidden = cards; $("#inv-cards").hidden = !cards; $("#empty").hidden = rs.length > 0;
+    if (cards) {
+      $("#inv-cards").innerHTML = rs.map(r => { const c = C[r.k] || {};
+        return `<figure class="tile">${c.i ? `<img src="${esc(c.i)}" alt="${esc(r.n)}" data-k="${esc(r.k)}" loading="lazy" decoding="async">` : `<div class="noimg" data-k="${esc(r.k)}">${esc(r.n)}</div>`}
+          ${r.q > 1 ? `<span class="qty">×${r.q}</span>` : ""}<figcaption><span title="${esc(r.n)}">${esc(r.n)}</span><span class="p">${eur(r.e)}</span></figcaption></figure>`; }).join("");
+    } else {
+      $("#rows").innerHTML = rs.map(r => `<tr data-k="${esc(r.k)}"${r.no ? ` title="${esc(r.no)}"` : ""}>
+        <td class="num q">${r.q}</td><td><span class="nm">${esc(r.n)}</span><span class="set">${esc(r.set)}</span></td>
+        <td class="hide-s muted">${esc(r.t)}</td><td class="where${r.d === "Loose" ? " loc-loose" : ""}">${esc(r.d)}</td>
+        <td class="hide-s"><span class="src ${srcCls(r.s)}">${esc(r.s)}</span></td><td class="num">${eur(r.e)}</td></tr>`).join("");
+      document.querySelectorAll("table.inv th").forEach(th => th.setAttribute("aria-sort", th.dataset.s === st.sort ? (st.dir > 0 ? "ascending" : "descending") : "none"));
+    }
+    const n = rs.reduce((s, r) => s + r.q, 0), v = rs.reduce((s, r) => s + (r.e || 0) * r.q, 0);
+    $("#count").innerHTML = `<b>${n}</b> card${n === 1 ? "" : "s"} · ≈ <b>€${v.toFixed(0)}</b>`;
+  }
+  const press = (sel, attr, val) => document.querySelectorAll(sel).forEach(b => b.setAttribute("aria-pressed", String(b.dataset[attr] === val)));
+  $("#locs").addEventListener("click", e => { const b = e.target.closest("[data-loc]"); if (!b) return; st.loc = b.dataset.loc; press("#locs .chip", "loc", st.loc); render();
+    const u = new URL(location.href); st.loc === "Loose" ? u.searchParams.delete("deck") : u.searchParams.set("deck", st.loc); history.replaceState(null, "", u); });
+  $("#types").addEventListener("click", e => { const b = e.target.closest("[data-type]"); if (!b) return; st.type = b.dataset.type; press("#types .chip", "type", st.type); render(); });
+  $("#src").addEventListener("change", e => { st.src = e.target.value; render(); });
+  $("#q").addEventListener("input", e => { st.q = e.target.value; render(); });
+  document.querySelectorAll("table.inv th").forEach(th => th.addEventListener("click", () => {
+    st.dir = st.sort === th.dataset.s ? -st.dir : (th.dataset.s === "e" || th.dataset.s === "q" ? -1 : 1); st.sort = th.dataset.s; render(); }));
+  view.addEventListener("view", render);
+  press("#locs .chip", "loc", st.loc);
+  render();
+})();
+</script>""" % json.dumps(data, separators=(",", ":")).replace("</", "<\\/")
+    top_loose = sorted({x["k"]: x for x in loose if x["e"]}.values(), key=lambda x: (-x["e"], x["n"]))[:6]
+    stats = {"total": sum(totals.values()), "loose": totals.get("Loose", 0), "loose_value": loose_value,
+             "value": value, "top_loose": top_loose}
+    return body, cards, script, stats
 
+
+# ---------------------------------------------------------------- front page
+
+def build_index(decks, inv, index):
+    cards = Cards(index)
+    n = len(decks)
+    word = NUMBER_WORDS[n] if n < len(NUMBER_WORDS) else str(n)
+    fan = "".join(
+        f'<a href="decks/{d["slug"]}.html" style="--r:{(i - (n - 1) / 2) * 15:.1f}deg" aria-label="{E(d["title"])}">'
+        f'{cards.img(d["commanders"][0] if d["commanders"] else d["title"], lazy=False, zoom=False)}</a>'
+        for i, d in enumerate(decks))
+    in_decks = sum(d["stats"]["total"] for d in decks)
+    added = sum(d["stats"]["added"] for d in decks)
+    guilds = Counter(guild(d["meta"].get("Colour identity")) for d in decks)
+    guild_txt = " · ".join(f"{g}{f' ×{c}' if c > 1 else ''}" for g, c in sorted(guilds.items()))
+    hero = f"""<div class="wrap"><section class="hero">
+  <div>
+    <div class="lbl">Commander<span class="sep">/</span>{n} decks<span class="sep">·</span>{inv["total"]} cards owned</div>
+    <h1 class="d1">{word} Precon{"s" if n != 1 else ""}<br>Rebuilt Card<br>By Card</h1>
+    <div class="actions"><a class="btn" href="#decks">Browse the decks</a><a class="btn ghost" href="inventory.html">Bulk list</a></div>
+    <div class="term" aria-label="Collection summary">
+      <div class="term-bar"><span class="dots"><i></i><i></i><i></i></span><span>~/collection — status</span></div>
+      <div class="term-body">
+        <div class="cmd"><b>~ %</b>collection status</div>
+        <dl>
+          <dt>decks</dt><dd><b>{n}</b> · {E(guild_txt)}</dd>
+          <dt>cards</dt><dd><b>{in_decks}</b> in decks · <b>{inv["total"]}</b> owned</dd>
+          <dt>upgrades</dt><dd><b>{added}</b> new cards since the precons</dd>
+          <dt>bulk</dt><dd><b>{inv["loose"]}</b> loose · ≈ €{inv["loose_value"]:.0f}</dd>
+          <dt>prices</dt><dd>scryfall · {E(PRICES_AS_OF or "?")}</dd>
+        </dl>
+        <span class="caret" aria-hidden="true"></span>
+      </div>
+    </div>
+  </div>
+  <div class="fan">{rays()}{fan}</div>
+</section></div>"""
+    tiles = []
+    for d in decks:
+        s, m = d["stats"], d["meta"]
+        p = s["picked"]
+        dir_name = (p["name"] + (" + Bracket 3" if s["b3_applied"] else "")) if p else ("Options under review" if d["spec"] else "Stock")
+        summary = ((p.get("how_to_play") or {}).get("summary") or p.get("plays_like") or "") if p else ""
+        tiles.append(f"""<a class="deckcard" href="decks/{d["slug"]}.html">
+  <div class="lbl">#{d["no"]:02d}<span class="sep">·</span>{E(guild(m.get("Colour identity")))}<span class="sep">·</span>Bracket {E(s["bracket"])}</div>
+  <h3>{E(d["title"])}</h3>
+  <div class="cmdr">{pips(m.get("Colour identity"))}<span>{E(", ".join(d["commanders"]))}</span></div>
+  <div class="dirline"><span class="lbl">Direction</span><span class="d">{E(dir_name)}</span></div>
+  {f"<p>{E(summary)}</p>" if summary else ""}
+  {duo(s["art"])}
+  <div class="row lbl"><span>{s["swaps"]} swaps<span class="sep">·</span>{s["added"]} new cards<span class="sep">·</span>≈ €{s["value"]:.0f}</span><span class="go">Open deck →</span></div>
+</a>""")
+    strip = "".join(
+        f'<figure style="--r:{(i - 2.5) * 5:.1f}deg;--y:{abs(i - 2.5) * 9:.0f}px">{cards.img(x["n"])}<figcaption>{E(money(x["e"]))}</figcaption></figure>'
+        for i, x in enumerate(inv["top_loose"]))
+    body = hero + f"""
+<section class="sec" id="decks"><div class="wrap">
+  <div class="sec-h"><h2 class="d2">Decks</h2><span class="no">[{n:02d}]</span>
+    <p class="aside">Each deck started as a precon. Open one for how to play it, every swap with its reason, and the list as it is now.</p></div>
+  <div class="decks">{"".join(tiles)}</div>
+</div></section>
+<section class="band"><div class="wrap">
+  <div>
+    <div class="lbl">Collection<span class="sep">/</span>Not in a deck</div>
+    <h2 class="d2">Bulk list</h2>
+    <p>{inv["loose"]} loose cards, worth about €{inv["loose_value"]:.0f} together: cuts from the precons and singles waiting for a deck. Search them by name, type or set.</p>
+    <a class="btn" href="inventory.html">Open the bulk list</a>
+  </div>
+  <div class="strip" aria-label="Most valuable loose cards">{strip}</div>
+</div></section>"""
+    return body, cards
+
+
+# ---------------------------------------------------------------- main
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -471,92 +1212,66 @@ def main():
     if out.exists():
         shutil.rmtree(out)
     (out / "decks").mkdir(parents=True)
-    (out / "comparisons").mkdir()
     (out / "assets").mkdir()
-    (out / "assets" / "site.css").write_text(CSS + NAV_CSS)
+    (out / "assets" / "site.css").write_text(TOKENS + NAV_CSS + CSS)
+    (out / "assets" / "site.js").write_text(JS.lstrip())
     if args.cname:
         (out / "CNAME").write_text(args.cname + "\n")
     (out / ".nojekyll").write_text("")
 
-    cards = load_index(refresh=False, max_age_days=args.max_age_days)
+    loaded = load_index(refresh=False, max_age_days=args.max_age_days)
     global PRICES_AS_OF
-    PRICES_AS_OF = (cards.get("bulk_updated") or "")[:10]
-    cards = cards["cards"]
+    PRICES_AS_OF = (loaded.get("bulk_updated") or "")[:10]
+    index = loaded["cards"]
     decks = []
-    for path in sorted((ROOT / "decks").glob("*.md")):
-        title, meta, changelog = deck_meta(path)
-        spec = ROOT / "comparisons" / f"{path.stem}-upgrades.json"
-        decks.append({"slug": path.stem, "path": path, "title": title, "meta": meta,
-                      "changelog": changelog, "comparison": spec if spec.exists() else None})
+    for i, path in enumerate(sorted((ROOT / "decks").glob("*.md")), 1):
+        title, meta = deck_meta(path)
+        spec_path = ROOT / "comparisons" / f"{path.stem}-upgrades.json"
+        decks.append({"no": i, "slug": path.stem, "path": path, "title": title, "meta": meta,
+                      "spec_path": spec_path if spec_path.exists() else None,
+                      "spec": json.loads(spec_path.read_text()) if spec_path.exists() else None,
+                      "commanders": parse_deck(path)[0]})
 
     needed = []
     for d in decks:
         cmdr, dcards = parse_deck(d["path"])
-        needed += cmdr + [n for _, n in dcards]
-        if d["comparison"]:
-            cspec = json.loads(d["comparison"].read_text())
-            for s in (cspec.get("core") or {}).get("swaps") or []:
-                needed.append(s["in"])
-            for dr in cspec.get("directions") or []:
-                needed += [s["in"] for s in dr.get("swaps") or []]
-            b3 = cspec.get("bracket3") or {}
-            needed += [s["in"] for s in (b3.get("swaps") or []) + (b3.get("premium") or [])]
-    gaps = fetch_cards(needed, cards)
+        precon = ROOT / "decks" / "precon" / d["path"].name
+        needed += cmdr + [n for _, n in dcards] + ([n for _, n in parse_deck(precon)[1]] if precon.exists() else [])
+        for ph in upgrade_phases(d["spec"]):
+            needed += [n for s in ph["swaps"] for n in (s["in"], s["out"])]
+    gaps = fetch_cards(needed, index)
     if gaps:
         print(f"warning: {len(gaps)} card(s) not on Scryfall: {', '.join(gaps[:5])}", file=sys.stderr)
 
     for d in decks:
-        body, d["stats"] = build_deck(d, cards)
+        body, cards, d["stats"] = build_deck(d, index)
         (out / "decks" / f"{d['slug']}.html").write_text(
-            page(f"{d['title']} — decklist", body, "../", decks, d["slug"],
-                 f"{d['title']}: full decklist with upgrades marked"))
-        if d["comparison"]:
+            page(f"{d['title']} — MTG Decks", body, "../", decks, d["slug"],
+                 f"{d['title']}: the plan, every swap from the precon with the reason, and the decklist", cards))
+        if d["spec"] and not picked_direction(d["spec"]):
+            # nothing picked yet: publish the comparison so a direction can be chosen
             target = out / "comparisons" / f"{d['slug']}.html"
+            target.parent.mkdir(exist_ok=True)
             subprocess.run([sys.executable, "-B", str(ROOT / "tools" / "build_comparison.py"),
-                            str(d["comparison"]), "-o", str(target)], check=True, stdout=subprocess.DEVNULL)
-            nav_html = f"<style>{NAV_CSS}</style>" + nav(decks, "../", d["slug"])
+                            str(d["spec_path"]), "-o", str(target)], check=True, stdout=subprocess.DEVNULL)
+            nav_html = f"<style>{NAV_CSS}</style>" + header(decks, "../", d["slug"])
             target.write_text(target.read_text().replace("<!--SITE_NAV-->", nav_html, 1))
 
-    inv_body, inv_total, inv_loose = build_inventory(cards)
-    (out / "inventory.html").write_text(page("Inventory", inv_body, "", decks, "inventory",
-                                             "Every MTG card I own, by deck and source"))
+    inv_body, inv_cards, inv_script, inv = build_inventory(index, decks)
+    (out / "inventory.html").write_text(page("Bulk list — MTG Decks", inv_body, "", decks, "inventory",
+                                             "Every MTG card I own that isn't in a deck, plus the deck cards",
+                                             inv_cards, inv_script))
 
-    tiles = []
-    for d in decks:
-        s, m = d["stats"], d["meta"]
-        comp = f'<a class="btn secondary" href="comparisons/{d["slug"]}.html">Upgrade comparison</a>' if d["comparison"] else ""
-        tiles.append(f"""<article class="deck">
-  <div class="art" style="background-image:url('{E(s["art"] or "")}')"></div>
-  <div class="body">
-    <h2>{E(d["title"])}</h2>
-    <div>{pips(m.get("Colour identity"))} <b>{E(m.get("Commander", ""))}</b></div>
-    <dl class="facts">
-      <dt>Precon</dt><dd>{E(re.sub(r",? released.*", "", m.get("Product", "")))}</dd>
-      <dt>Bracket</dt><dd>{E(m.get("Bracket", "—"))}</dd>
-      <dt>Status</dt><dd>{E(m.get("Status", ""))}</dd>
-      <dt>Cards</dt><dd>{s["total"]} · <b style="color:var(--in)">{s["added"]} added</b> · {s["cut"]} cut</dd>
-      {f'<dt>Planned</dt><dd><a href="decks/{d["slug"]}.html#planned"><b style="color:var(--plan)">{s["planned"]} to add · {s["planned"]} to cut</b></a> · ≈ €{s["plan_cost"]:.0f} to buy</dd>' if s.get("planned") else ""}
-      <dt>Value</dt><dd>≈ €{s["value"]:.0f}</dd>
-    </dl>
-    <div class="links"><a class="btn" href="decks/{d["slug"]}.html">Decklist</a>{comp}</div>
-  </div>
-</article>""")
-    total = sum(d["stats"]["total"] for d in decks)
-    added = sum(d["stats"]["added"] for d in decks)
-    body = f"""<div class="hero"><h1>My Commander decks</h1>
-<p class="muted">The decks I own, as I play them: full decklists with every upgrade marked, plus the comparisons behind each upgrade.</p></div>
-<div class="decks">{"".join(tiles)}</div>
-<div class="stats"><div class="stat"><b>{len(decks)}</b><span class="muted small">decks</span></div>
-<div class="stat"><b>{total}</b><span class="muted small">cards in decks</span></div>
-<div class="stat"><b>{added}</b><span class="muted small">upgrades added</span></div>
-<div class="stat"><b><a href="inventory.html">{inv_total}</a></b><span class="muted small">cards owned</span></div>
-<div class="stat"><b><a href="inventory.html?deck=Loose">{inv_loose}</a></b><span class="muted small">loose singles</span></div></div>"""
-    (out / "index.html").write_text(page("MTG Decks", body, "", decks, "home", "Kasper's Commander decks and upgrades"))
+    body, cards = build_index(decks, inv, index)
+    (out / "index.html").write_text(page("MTG Decks", body, "", decks, "home",
+                                         "Commander decks rebuilt from precons: the plan and every swap, explained", cards))
     try:
         shown = out.relative_to(ROOT)
     except ValueError:          # --out outside the repo
         shown = out
-    print(f"built {shown}: index + inventory + {len(decks)} decks + {sum(1 for d in decks if d['comparison'])} comparisons")
+    undecided = sum(1 for d in decks if d["spec"] and not picked_direction(d["spec"]))
+    print(f"built {shown}: index + bulk list + {len(decks)} decks"
+          + (f" + {undecided} comparison(s) awaiting a pick" if undecided else ""))
 
 
 if __name__ == "__main__":
